@@ -35,7 +35,7 @@ module.exports = options => new Promise((resolve, reject) => {
     const json = stats.toJson();
 
     //if we weren't able to compile the module then we can't proceed
-    if (json.errors.length && json.warnings.length) {
+    if (reporter.errors.length) {
       if (!options.watch) {
         reject();
       }

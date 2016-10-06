@@ -50,6 +50,12 @@ module.exports = options => {
     createServerBundle(),
     createVendorBundle()
       .then(() => createClientBundle())
-  ]);
+  ])
+    .then(() => {
+      if (!options.watch && reporter.errors.length) {
+        throw undefined;
+      }
+    })
+  ;
 
 };

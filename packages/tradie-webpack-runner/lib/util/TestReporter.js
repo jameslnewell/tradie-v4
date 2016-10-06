@@ -5,6 +5,9 @@ const formatWebpackMessages = require('./formatWebpackMessages');
 
 class TestReporter {
 
+  /**
+   * @private
+   */
   onStartCompiling() {
 
     clear();
@@ -13,8 +16,14 @@ class TestReporter {
     console.log('Compiling...');
     console.log();
 
+    this.errors = [];
+    this.warnings = [];
+
   }
 
+  /**
+   * @private
+   */
   onFinishCompiling(stats) {
 
     clear();
@@ -45,6 +54,9 @@ class TestReporter {
 
   }
 
+  /**
+   * @public
+   */
   observe(compiler) {
 
     compiler.plugin('compile', () => {

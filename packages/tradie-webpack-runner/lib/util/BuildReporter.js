@@ -25,6 +25,9 @@ class Reporter {
       console.log('Compiling...');
       console.log();
 
+      this.errors = [];
+      this.warnings = [];
+
     }
 
     ++this.compiling;
@@ -73,9 +76,6 @@ class Reporter {
           console.log();
 
         }
-
-        this.errors = [];
-        this.warnings = [];
 
       }
 
