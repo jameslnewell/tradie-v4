@@ -1,6 +1,11 @@
-
 {
+  "dependencies": {
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2"
+  },
   "devDependencies": {
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
     "tradie": "^2.0.0-preview.1",
     "tradie-template-default": "^2.0.0-preview.1"
   },
