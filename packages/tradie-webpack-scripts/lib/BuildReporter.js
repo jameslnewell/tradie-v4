@@ -42,7 +42,7 @@ class Reporter {
     this.errors = uniq(this.errors.concat(msgs.errors));
     this.warnings = uniq(this.warnings.concat(msgs.warnings));
 
-    setTimeout(() => {
+    setImmediate(() => {
       --this.compiling;
 
       if (this.compiling === 0) {
@@ -79,7 +79,7 @@ class Reporter {
 
       }
 
-    }, 0);
+    });
 
   }
 

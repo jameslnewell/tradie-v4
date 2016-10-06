@@ -1,0 +1,11 @@
+
+{
+  "devDependencies": {
+    "tradie": "^2.0.0-preview.1",
+    "tradie-template-default": "^2.0.0-preview.1"
+  },
+  "scripts": {
+    "build": "env NODE_PATH=./node_modules tradie-v2 build",
+    "test": "env NODE_PATH=./node_modules tradie-v2 test"
+  }
+}

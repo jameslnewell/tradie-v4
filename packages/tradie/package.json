@@ -1,0 +1,13 @@
+{
+  "name": "tradie",
+  "version": "2.0.0-preview.1",
+  "dependencies": {
+    "chalk": "^1.1.3",
+    "commander": "^2.9.0",
+    "find-and-read-package-json": "^1.0.0",
+    "tradie-webpack-scripts": "2.0.0-preview.1"
+  },
+  "bin": {
+    "tradie-v2": "./bin/tradie.js"
+  }
+}

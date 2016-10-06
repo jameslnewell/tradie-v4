@@ -1,7 +1,7 @@
 'use strict';
 const webpack = require('webpack');
-const BuildReporter = require('./util/BuildReporter');
-const runWebpack = require('./util/runWebpack');
+const BuildReporter = require('./lib/BuildReporter');
+const runWebpack = require('./lib/runWebpack');
 
 /**
  * Run webpack on multiple bundles and display the results
@@ -52,9 +52,11 @@ module.exports = options => {
       .then(() => createClientBundle())
   ])
     .then(() => {
-      if (!options.watch && reporter.errors.length) {
-        throw undefined;
-      }
+      setImmediate(() => { //hack to wait for BuildReporter to finish reporting
+        if (!options.watch && reporter.errors.length) {
+          throw undefined;
+        }
+      });
     })
   ;
 

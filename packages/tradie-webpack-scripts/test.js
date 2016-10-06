@@ -1,16 +1,16 @@
 'use strict';
+const path = require('path');
 const spawn = require('child_process').spawn;
 const webpack = require('webpack');
 const MemoryFS = require('memory-fs');
-const TestReporter = require('./util/TestReporter');
-const runWebpack = require('./util/runWebpack');
+const TestReporter = require('./lib/TestReporter');
+const runWebpack = require('./lib/runWebpack');
 
 /**
  * Run webpack on multiple bundles and display the results
  * @param {object} options
  * @param {string} [options.cwd]
  * @param {boolean} [options.watch]
- * @param {boolean} options.path
  * @param {object} options.webpack
  * @returns {Promise.<null>}
  */
@@ -43,10 +43,15 @@ module.exports = options => new Promise((resolve, reject) => {
     }
 
     //read the compiled output from the virtual filesystem
-    const compiledOutput = virtualFileSystem.readFileSync(options.path);
+    const compiledPath = path.join(options.root, 'tests.js');
+    if (!virtualFileSystem.existsSync(compiledPath)) {
+      reject(new Error(`tradie: Test bundle was not found in virtual filesystem at \`${compiledPath}\``));
+      return;
+    }
+    const compiledOutput = virtualFileSystem.readFileSync(compiledPath);
 
     //create the test runner
-    runner = spawn('node', {cwd: options.cwd});
+    runner = spawn('node', {cwd: options.root});
 
     //handle errors running the test runner
     runner

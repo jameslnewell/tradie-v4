@@ -1,10 +1,10 @@
-# tradie-webpack-runner
+# tradie-webpack-scripts
 
-Task runner using `webpack` to bundle assets.
+Scripts for compiling bundles with `webpack`.
  
 ## Installation
 
-    npm install --save tradie-webpack-runner
+    npm install --save tradie-webpack-script
     
 ## API
 
@@ -35,11 +35,14 @@ the promise is resolved when an interrupt signal is received.
 
 Compile and run a test bundle, reporting errors and warnings to the user.
 
+> Use a test-runner that has an API to run on NodeJS. e.g. [`mocha`](https://github.com/mochajs/mocha/wiki/Using-mocha-programmatically), [`tape`](https://www.npmjs.com/package/tape) etc.
+
+> Bundle must be created at `${options.root}/tests.js`.
+
 **Parameters:**
 
 - `options : Object`
     - `watch : boolean`
-    - `path : string` - the `output.path + output.filename` for the test bundle
     - `webpack : Object` - `webpack` configuration for the test bundle
 
 

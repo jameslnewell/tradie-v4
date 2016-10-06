@@ -1,5 +1,5 @@
 const path = require('path');
-const test = require('./../lib/test');
+const test = require('../test');
 
 const options = {
 
