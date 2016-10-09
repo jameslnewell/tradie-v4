@@ -37,7 +37,7 @@ class Reporter {
    * @private
    */
   onFinishCompiling(stats) {
-console.log(stats.toJson().errors)
+
     const msgs = formatWebpackMessages(stats.toJson());
     this.errors = uniq(this.errors.concat(msgs.errors));
     this.warnings = uniq(this.warnings.concat(msgs.warnings));

@@ -19,6 +19,7 @@
     "resolve-url-loader": "^1.6.0",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
+    "tradie-webpack-config": "^2.0.0-preview.1",
     "webpack-resolve-short-path-plugin": "^1.0.4"
   },
   "peerDependencies": {

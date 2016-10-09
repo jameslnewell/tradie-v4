@@ -1,49 +1,32 @@
 const path = require('path');
 const webpack = require('webpack');
-const extensionsToRegex = require('ext-to-regex');
 const ResolveShortPathPlugin = require('webpack-resolve-short-path-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+const WebpackConfigBuilder = require('tradie-webpack-config');
 
 module.exports = tradieConfig => {
-  const loaders = [];
 
-  //transpile project scripts with the babel loader
-  if (Object.keys(tradieConfig.babel).length) {
-    loaders.push(
-      {
-        test: extensionsToRegex(tradieConfig.script.extensions),
-        include: tradieConfig.src,
-        loader: 'babel-loader',
-        query: Object.assign({}, tradieConfig.babel, {
-          babelrc: false,
-          cacheDirectory: tradieConfig.tmp
-        })
-      }
-    );
-  }
-
-  //node and browserify loads JSON files like NodeJS does... emulate that for compatibility
-  loaders.push({
-    test: /\.json$/,
-    loader: 'json-loader'
+  const builder = new WebpackConfigBuilder({
+    root: tradieConfig.root,
+    src: tradieConfig.src,
+    tmp: tradieConfig.tmp,
+    dest: tradieConfig.dest
   });
 
-  const plugins = [
+  builder.configureScripts({
+    babel: tradieConfig.babel,
+    extensions: tradieConfig.script.extensions
+  });
 
-    //enforce case sensitive paths to avoid issues between file systems
-    new CaseSensitivePathsPlugin(),
+  builder.configureJson();
 
-    new webpack.LoaderOptionsPlugin({
-      minimize: tradieConfig.optimize,
-      debug: !tradieConfig.optimize
-    })
+  //enforce case sensitive paths to avoid issues between file systems
+  builder.plugin(new CaseSensitivePathsPlugin());
 
-  ];
-
-  //TODO: look for loaders in tradie's and user's node_modules
-  //config.resolveLoader = {root: [
-  // path.join(__dirname, "node_modules")
-  //]});
+  builder.plugin(new webpack.LoaderOptionsPlugin({
+    minimize: tradieConfig.optimize,
+    debug: !tradieConfig.optimize
+  }));
 
   return {
 
