@@ -3,11 +3,8 @@ const extensionsToRegex = require('ext-to-regex');
 
 const fs = require('fs');
 const path = require('path');
-const resolve = require('resolve');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const autoprefixer = require('autoprefixer');
-const CheckVersionConflictPlugin = require('./CheckVersionConflictPlugin');
+
 class WebpackConfigBuilder {
 
   /**
@@ -111,7 +108,18 @@ class WebpackConfigBuilder {
 
   }
 
+  /**
+   * Configure Babel
+   * @param {object}          options
+   * @param {boolean}         options.extract
+   * @param {Array.<string>}  options.extensions
+   */
   configureStyles(options) {
+
+    const resolve = require('resolve');
+    const autoprefixer = require('autoprefixer');
+    const ExtractTextPlugin = require('extract-text-webpack-plugin');
+    const CheckVersionConflictPlugin = require('./CheckVersionConflictPlugin');
 
     //configure the style filename
     let filename = this.optimize ? '[name].[contenthash].css' : '[name].css';
@@ -177,24 +185,37 @@ class WebpackConfigBuilder {
       })
     );
 
-    this.webpackConfig.module.loaders.push({
-      test: extensionsToRegex(options.extensions),
-      loader: ExtractTextPlugin.extract({
-        fallbackLoader: 'style-loader',
-        loader: [
-          `css-loader?-autoprefixer${this.optimize ? '' : '&sourceMap'}`,
-          `postcss-loader${this.optimize ? '' : '?sourceMap'}`,
-          `resolve-url-loader${this.optimize ? '' : '?sourceMap'}`, //devtool: [inline-]source-map is required for CSS source maps to work
-          'sass-loader?sourceMap' //sourceMap required by resolve-url-loader
-        ]
-      })
-    });
+    const loaders = [
+      `css-loader?-autoprefixer${this.optimize ? '' : '&sourceMap'}`,
+      `postcss-loader${this.optimize ? '' : '?sourceMap'}`,
+      `resolve-url-loader${this.optimize ? '' : '?sourceMap'}`, //devtool: [inline-]source-map is required for CSS source maps to work
+      'sass-loader?sourceMap' //sourceMap required by resolve-url-loader
+    ];
 
-    this.webpackConfig.plugins.push(new ExtractTextPlugin({
-      //other chunks should have styles in the JS and load the styles automatically onto the page (that way styles make use of code splitting) e.g. https://github.com/facebookincubator/create-react-app/issues/408
-      allChunks: false,
-      filename
-    }));
+    if (options.extract) {
+
+      this.webpackConfig.module.loaders.push({
+        test: extensionsToRegex(options.extensions),
+        loader: ExtractTextPlugin.extract({
+          fallbackLoader: 'style-loader',
+          loader: loaders
+        })
+      });
+
+      this.webpackConfig.plugins.push(new ExtractTextPlugin({
+        //other chunks should have styles in the JS and load the styles automatically onto the page (that way styles make use of code splitting) e.g. https://github.com/facebookincubator/create-react-app/issues/408
+        allChunks: false,
+        filename
+      }));
+
+    } else {
+
+      this.webpackConfig.module.loaders.push({
+        test: extensionsToRegex(options.extensions),
+        loaders: ['style-loader']
+      });
+
+    }
 
     // new CheckVersionConflictPlugin({
     //   include: extensionsToRegex(tradieConfig.style.extensions)
