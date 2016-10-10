@@ -108,8 +108,27 @@ class WebpackConfigBuilder {
 
   }
 
+  // ===================================================================================================================
+  // STYLES
+  // ===================================================================================================================
+
   /**
-   * Configure Babel
+   * Ignore styles
+   * @param {object}          options
+   * @param {Array.<string>}  options.extensions
+   */
+  ignoreStyles(options) {
+
+    this.webpackConfig.module.loaders.push({
+      test: extensionsToRegex(options.extensions),
+      include: this.sourceDirectory,
+      loader: 'ignore-loader'
+    });
+
+  }
+
+  /**
+   * Configure styles
    * @param {object}          options
    * @param {boolean}         options.extract
    * @param {Array.<string>}  options.extensions
