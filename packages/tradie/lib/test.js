@@ -1,5 +1,5 @@
 'use strict';
-const test = require('tradie-webpack-scripts/test');
+const test = require('tradie-webpack-scripts').test;
 const requireTemplateModule = require('./util/requireTemplateModule');
 
 module.exports = options => requireTemplateModule('config/createTestConfig', () => {})
