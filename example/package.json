@@ -11,6 +11,7 @@
   },
   "scripts": {
     "build": "env NODE_PATH=./node_modules tradie-v2 build",
+    "serve": "env NODE_PATH=./node_modules tradie-v2 serve",
     "test": "env NODE_PATH=./node_modules tradie-v2 test"
   }
 }

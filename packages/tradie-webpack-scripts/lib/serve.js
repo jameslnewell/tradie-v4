@@ -1,10 +1,13 @@
 'use strict';
 const webpack = require('webpack');
-const BuildReporter = require('./lib/BuildReporter');
-const runWebpack = require('./lib/runWebpack');
+const BuildReporter = require('./util/BuildReporter');
+const configureClientHMR = require('./util/configureClientHMR');
+const configureServerHMR = require('./util/configureServerHMR');
+const runWebpack = require('./util/runWebpack');
+const runWebpackServer = require('./util/runWebpackServer');
 
 /**
- * Run webpack on multiple bundles and display the results
+ * Run webpack dev-server on multiple bundles and display the results
  * @param {object} options
  * @param {boolean} [options.watch]
  * @param {object} [options.webpack]
@@ -26,30 +29,38 @@ module.exports = options => {
     }
   };
 
-  const createClientBundle = () => {
-    if (options.webpack.client) {
-      const compiler = webpack(options.webpack.client);
+  const startClientBundle = () => {
+    const config = options.webpack.client;
+    console.log('starting client');
+    if (config) {
+      configureClientHMR(config);
+      const compiler = webpack(config);
       reporter.observe(compiler);
-      return runWebpack(options.watch, compiler);
+      return runWebpackServer({
+        publicDir: config.output.path,
+        publicUrl: config.output.publicPath
+      }, compiler);
     } else {
       return Promise.resolve();
     }
   };
 
-  const createServerBundle = () => {
-    if (options.webpack.server) {
-      const compiler = webpack(options.webpack.server);
+  const startServerBundle = () => {
+    const config = options.webpack.server;
+    if (config) {
+      configureServerHMR(config);
+      const compiler = webpack(config);
       reporter.observe(compiler);
-      return runWebpack(options.watch, compiler);
+      return runWebpack(true, compiler);
     } else {
       return Promise.resolve();
     }
   };
 
   return Promise.all([
-    createServerBundle(),
+    startServerBundle(),
     createVendorBundle()
-      .then(() => createClientBundle())
+      .then(() => startClientBundle())
   ])
     .then(() => {
       setImmediate(() => { //hack to wait for BuildReporter to finish reporting
@@ -58,6 +69,7 @@ module.exports = options => {
         }
       });
     })
+    .catch(err => console.log('foobar', err))
   ;
 
 };

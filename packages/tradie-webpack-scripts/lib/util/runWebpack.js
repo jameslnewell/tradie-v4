@@ -21,7 +21,7 @@ module.exports = (watch, compiler) => new Promise((resolve, reject) => {
 
   } else {
 
-    compiler.run(error => {
+    compiler.run((error, stats) => {
       if (error) {
         console.error(error);
         reject();

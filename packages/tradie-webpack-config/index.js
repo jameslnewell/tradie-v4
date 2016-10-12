@@ -122,7 +122,7 @@ class WebpackConfigBuilder {
     this.webpackConfig.module.loaders.push({
       test: extensionsToRegex(options.extensions),
       include: this.sourceDirectory,
-      loader: 'ignore-loader'
+      loader: 'null-loader'
     });
 
   }

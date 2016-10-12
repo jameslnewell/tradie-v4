@@ -1,2 +1,2 @@
 
-module.exports = (a, b) => a + c;
+module.exports = (a, b) => a + b + 1;

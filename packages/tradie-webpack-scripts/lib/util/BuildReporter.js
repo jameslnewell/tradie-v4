@@ -6,10 +6,11 @@ const formatWebpackMessages = require('./formatWebpackMessages');
 
 class Reporter {
 
-  constructor() {
+  constructor(options) {
     this.compiling = 0;
     this.errors = [];
     this.warnings = [];
+    this.clear = !options || options && options.clear !== false;
   }
 
   /**
@@ -19,7 +20,9 @@ class Reporter {
 
     if (this.compiling === 0) {
 
-      clear();
+      if (this.clear) {
+        clear();
+      }
 
       console.log();
       console.log('Compiling...');
@@ -47,7 +50,9 @@ class Reporter {
 
       if (this.compiling === 0) {
 
-        clear();
+        if (this.clear) {
+          clear();
+        }
 
         if (this.errors.length) {
 
