@@ -3,8 +3,8 @@ const path = require('path');
 const spawn = require('child_process').spawn;
 const webpack = require('webpack');
 const MemoryFS = require('memory-fs');
-const TestReporter = require('./lib/TestReporter');
-const runWebpack = require('./lib/runWebpack');
+const TestReporter = require('./util/TestReporter');
+const runWebpack = require('./util/runWebpack');
 
 /**
  * Run webpack on multiple bundles and display the results

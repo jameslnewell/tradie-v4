@@ -62,14 +62,16 @@ module.exports = options => {
     createVendorBundle()
       .then(() => startClientBundle())
   ])
-    .then(() => {
-      setImmediate(() => { //hack to wait for BuildReporter to finish reporting
-        if (!options.watch && reporter.errors.length) {
-          throw undefined;
-        }
-      });
-    })
-    .catch(err => console.log('foobar', err))
+
+    //FIXME: hack to wait for BuildReporter to finish reporting
+    .then(() => new Promise((resolve, reject) => setImmediate(() => {
+      if (!options.watch && reporter.errors.length) {
+        reject();
+      } else {
+        resolve();
+      }
+    })))
+
   ;
 
 };

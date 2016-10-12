@@ -137,8 +137,6 @@ class WebpackConfigBuilder {
 
     const resolve = require('resolve');
     const autoprefixer = require('autoprefixer');
-    const ExtractTextPlugin = require('extract-text-webpack-plugin');
-    const CheckVersionConflictPlugin = require('./CheckVersionConflictPlugin');
 
     //configure the style filename
     let filename = this.optimize ? '[name].[contenthash].css' : '[name].css';
@@ -207,11 +205,13 @@ class WebpackConfigBuilder {
     const loaders = [
       `css-loader?-autoprefixer${this.optimize ? '' : '&sourceMap'}`,
       `postcss-loader${this.optimize ? '' : '?sourceMap'}`,
-      `resolve-url-loader${this.optimize ? '' : '?sourceMap'}`, //devtool: [inline-]source-map is required for CSS source maps to work
-      'sass-loader?sourceMap' //sourceMap required by resolve-url-loader
+      `resolve-url-loader${this.optimize ? '' : '?sourceMap'}`, //devtool: [inline-]source-map is required for CSS source maps to work in the browser
+      'sass-loader?sourceMap' //sourceMap is required by resolve-url-loader
     ];
 
     if (options.extract) {
+
+      const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
       this.webpackConfig.module.loaders.push({
         test: extensionsToRegex(options.extensions),
@@ -231,11 +231,12 @@ class WebpackConfigBuilder {
 
       this.webpackConfig.module.loaders.push({
         test: extensionsToRegex(options.extensions),
-        loaders: ['style-loader']
+        loaders: ['style-loader'].concat(loaders)
       });
 
     }
 
+    // const CheckVersionConflictPlugin = require('./CheckVersionConflictPlugin');
     // new CheckVersionConflictPlugin({
     //   include: extensionsToRegex(tradieConfig.style.extensions)
     // })
