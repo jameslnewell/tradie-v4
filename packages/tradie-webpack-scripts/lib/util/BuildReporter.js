@@ -10,7 +10,7 @@ class Reporter {
     this.compiling = 0;
     this.errors = [];
     this.warnings = [];
-    this.clear = !options || options && options.clear !== false;
+    this.clear = false;//!options || options && options.clear !== false;
   }
 
   /**

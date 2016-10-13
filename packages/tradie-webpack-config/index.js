@@ -1,4 +1,5 @@
 'use strict';
+const mergeWith = require('lodash.mergewith');
 const extensionsToRegex = require('ext-to-regex');
 
 const fs = require('fs');
@@ -21,13 +22,15 @@ class WebpackConfigBuilder {
     this.outputDirectory = config.dest;
     this.webpackConfig = {
 
+      devtool: 'eval',
+
       context: this.sourceDirectory,
 
       entry: {},
 
       output: {
         path: this.outputDirectory,
-        filename: '[name].js'
+        filename: this.optimize ? '[name].[contenthash].css' : '[name].js'
       },
 
       resolve: {
@@ -42,6 +45,16 @@ class WebpackConfigBuilder {
       plugins: []
 
     };
+  }
+
+  merge(config) {
+   return mergeWith(this.webpackConfig, config, (prev, next) => {
+     if (Array.isArray(prev)) {
+       return prev.concat(next);
+     } else {
+       return;
+     }
+   });
   }
 
   /**
@@ -138,12 +151,6 @@ class WebpackConfigBuilder {
     const resolve = require('resolve');
     const autoprefixer = require('autoprefixer');
 
-    //configure the style filename
-    let filename = this.optimize ? '[name].[contenthash].css' : '[name].css';
-    if (options.outputFilename) {
-      filename = options.outputFilename;
-    }
-
     this.webpackConfig.plugins.push(
       new webpack.LoaderOptionsPlugin({
         test: extensionsToRegex(options.extensions),
@@ -224,7 +231,7 @@ class WebpackConfigBuilder {
       this.webpackConfig.plugins.push(new ExtractTextPlugin({
         //other chunks should have styles in the JS and load the styles automatically onto the page (that way styles make use of code splitting) e.g. https://github.com/facebookincubator/create-react-app/issues/408
         allChunks: false,
-        filename
+        filename: this.optimize ? '[name].[contenthash].css' : '[name].css'
       }));
 
     } else {
@@ -246,7 +253,7 @@ class WebpackConfigBuilder {
   /**
    * Configure JSON
    */
-  configureJson() {
+  configureJSON() {
 
     this.webpackConfig.resolve.extensions.push('.json');
 
@@ -256,6 +263,63 @@ class WebpackConfigBuilder {
     });
 
     return this;
+  }
+
+  /**
+   * @param {object}          options
+   * @param {Array.<string>}  options.extensions
+   */
+  configureFiles(options) {
+
+    this.webpackConfig.module.loaders.push({
+      test: extensionsToRegex(options.extensions),
+      loader: 'file-loader',
+      query: {name: this.optimize ? '[path][name][hash].[ext]' : '[path][name].[ext]'}
+    });
+
+    return this;
+  }
+
+  /**
+   * Configure DLL
+   */
+  configureDLL() {
+
+    const name = this.optimize ? '[name]' : '[name]_[chunkhash]';
+
+    this.webpackConfig.output.library = name;
+
+    this.webpackConfig.plugins.push(new webpack.DllPlugin({
+      path: path.join(this.tempDirectory, '[name]-manifest.json'),
+      name: name
+    }));
+
+    return this;
+  }
+
+  configureDLLReference() {
+    if (vendors.length > 0) {
+      //chose DLLPlugin for long-term-caching based on https://github.com/webpack/webpack/issues/1315
+      config.plugins = config.plugins.concat([
+        new webpack.DllReferencePlugin({
+          context: dest,
+          manifest: require(path.join(tmp, 'vendor-manifest.json')) //eslint-disable-line global-require
+        })
+      ]);
+    }
+  }
+
+  configureCommonBundle() {
+    if (clientBundles.length > 1) {
+      config.plugins = config.plugins.concat([
+        new webpack.optimize.CommonsChunkPlugin({
+          name: 'common',
+          filename: this.optimize ? '[name].[chunkhash].js' : '[name].js',
+          chunks: clientBundles, //exclude modules from the vendor chunk
+          minChunks: clientBundles.length //modules must be used across all the chunks to be included
+        })
+      ]);
+    }//TODO: what about for a single page app where require.ensure is used - I want a common stuff for all chunks in the main entry point
   }
 
   plugin(plugin) {
