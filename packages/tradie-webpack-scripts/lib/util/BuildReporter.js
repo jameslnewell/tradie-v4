@@ -4,13 +4,13 @@ const chalk = require('chalk');
 const uniq = require('lodash.uniq');
 const formatWebpackMessages = require('./formatWebpackMessages');
 
-class Reporter {
+class BuildReporter {
 
   constructor(options) {
     this.compiling = 0;
     this.errors = [];
     this.warnings = [];
-    this.clear = false;//!options || options && options.clear !== false;
+    this.debug = options && options.debug;
   }
 
   /**
@@ -20,7 +20,7 @@ class Reporter {
 
     if (this.compiling === 0) {
 
-      if (this.clear) {
+      if (!this.debug) {
         clear();
       }
 
@@ -50,7 +50,7 @@ class Reporter {
 
       if (this.compiling === 0) {
 
-        if (this.clear) {
+        if (!this.debug) {
           clear();
         }
 
@@ -106,4 +106,4 @@ class Reporter {
 
 }
 
-module.exports = Reporter;
+module.exports = BuildReporter;

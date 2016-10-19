@@ -6,6 +6,7 @@ module.exports = options => requireTemplateModule('config/createTestConfig', () 
   .then(fn => fn(options))
   .then(config => test({
     root: options.root,
+    debug: options.debug,
     watch: options.watch,
     webpack: config
   }))

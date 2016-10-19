@@ -8,14 +8,15 @@ const runWebpack = require('./util/runWebpack');
 
 /**
  * Run webpack on multiple bundles and display the results
- * @param {object} options
- * @param {string} [options.cwd]
+ * @param {object}  options
+ * @param {string}  [options.cwd]
  * @param {boolean} [options.watch]
- * @param {object} options.webpack
+ * @param {boolean} [options.debug]
+ * @param {object}  options.webpack
  * @returns {Promise.<null>}
  */
 module.exports = options => new Promise((resolve, reject) => {
-  const reporter = new TestReporter();
+  const reporter = new TestReporter({debug: options.debug});
 
   let runner = null;
   const compiler = webpack(options.webpack);

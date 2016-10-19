@@ -7,14 +7,15 @@ const runWebpack = require('./util/runWebpack');
  * Run webpack on multiple bundles and display the results
  * @param {object} options
  * @param {boolean} [options.watch]
- * @param {object} [options.webpack]
- * @param {object} [options.webpack.vendor]
- * @param {object} [options.webpack.client]
- * @param {object} [options.webpack.server]
+ * @param {boolean} [options.debug]
+ * @param {object}  [options.webpack]
+ * @param {object}  [options.webpack.vendor]
+ * @param {object}  [options.webpack.client]
+ * @param {object}  [options.webpack.server]
  * @returns {Promise.<null>}
  */
 module.exports = options => {
-  const reporter = new BuildReporter();
+  const reporter = new BuildReporter({debug: options.debug});
 
   const createVendorBundle = () => {
     if (options.webpack.vendor) {

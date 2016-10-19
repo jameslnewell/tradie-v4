@@ -5,12 +5,18 @@ const formatWebpackMessages = require('./formatWebpackMessages');
 
 class TestReporter {
 
+  constructor(options) {
+    this.debug = options && options.debug;
+  }
+
   /**
    * @private
    */
   onStartCompiling() {
 
-    clear();
+    if (!this.debug) {
+      clear();
+    }
 
     console.log();
     console.log('Compiling...');
@@ -26,7 +32,9 @@ class TestReporter {
    */
   onFinishCompiling(stats) {
 
-    clear();
+    if (!this.debug) {
+      clear();
+    }
 
     const msgs = formatWebpackMessages(stats.toJson());
 
