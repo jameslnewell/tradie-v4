@@ -20,7 +20,6 @@ module.exports = options => new Promise((resolve, reject) => {
 
   let runner = null;
   const compiler = webpack(options.webpack);
-  const virtualFileSystem = new MemoryFS();
 
   reporter.observe(compiler);
 
@@ -79,6 +78,7 @@ module.exports = options => new Promise((resolve, reject) => {
   });
 
   //we don't want to write the compiled tests to disk so use a virtual filesystem
+  const virtualFileSystem = new MemoryFS();
   compiler.outputFileSystem = virtualFileSystem;
 
   //compile the tests
