@@ -20,6 +20,7 @@ module.exports = options => new Promise((resolve, reject) => {
 
   let runner = null;
   const compiler = webpack(options.webpack);
+  const virtualFileSystem = new MemoryFS();
 
   reporter.observe(compiler);
 
@@ -42,13 +43,15 @@ module.exports = options => new Promise((resolve, reject) => {
       return;
     }
 
-    //find the first JS file and get the output
-    const asset = Object.keys(json.assets).find(path => /\.js$/.test(path));
+    //find the first JS file and read the output
+    const asset = json.assets.find(asset => /\.js$/.test(asset.name));
     if (!asset) {
       reject(new Error(`tradie: No test bundle found.`));
       return;
     }
-    const compiledOutput = asset.source();
+    const compiledOutput = virtualFileSystem.readFileSync(
+      path.join(options.webpack.output.path, asset.name)
+    );
 
     //create the test runner
     runner = spawn('node', {cwd: options.root});
@@ -78,7 +81,6 @@ module.exports = options => new Promise((resolve, reject) => {
   });
 
   //we don't want to write the compiled tests to disk so use a virtual filesystem
-  const virtualFileSystem = new MemoryFS();
   compiler.outputFileSystem = virtualFileSystem;
 
   //compile the tests
