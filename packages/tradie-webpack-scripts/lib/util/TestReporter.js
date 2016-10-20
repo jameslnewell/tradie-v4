@@ -22,9 +22,6 @@ class TestReporter {
     console.log('Compiling...');
     console.log();
 
-    this.errors = [];
-    this.warnings = [];
-
   }
 
   /**

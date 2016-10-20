@@ -9,17 +9,20 @@ const webpack = require('webpack');
 class WebpackConfigBuilder {
 
   /**
-   * @param   {object} config
-   * @param   {string} config.root
-   * @param   {string} config.src
-   * @param   {string} config.tmp
-   * @param   {string} config.dest
+   * @param   {object} options
+   * @param   {string} options.root
+   * @param   {string} options.src
+   * @param   {string} options.tmp
+   * @param   {string} options.dest
+   * @param   {string} options.publicPath
    */
-  constructor(config) {
-    this.rootDirectory = config.root;
-    this.sourceDirectory = config.src;
-    this.tempDirectory = config.tmp;
-    this.outputDirectory = config.dest;
+  constructor(options) {
+    this.rootDirectory = options.root;
+    this.sourceDirectory = options.src;
+    this.tempDirectory = options.tmp;
+    this.outputDirectory = options.dest;
+    this.publicPath = options.publicPath || '/';
+
     this.webpackConfig = {
 
       devtool: 'eval',
@@ -29,8 +32,9 @@ class WebpackConfigBuilder {
       entry: {},
 
       output: {
+        publicPath: this.publicPath,
         path: this.outputDirectory,
-        filename: this.optimize ? '[name].[contenthash].css' : '[name].js'
+        filename: 'scripts/[name].[hash].js'
       },
 
       resolve: {
@@ -231,7 +235,7 @@ class WebpackConfigBuilder {
       this.webpackConfig.plugins.push(new ExtractTextPlugin({
         //other chunks should have styles in the JS and load the styles automatically onto the page (that way styles make use of code splitting) e.g. https://github.com/facebookincubator/create-react-app/issues/408
         allChunks: false,
-        filename: this.optimize ? '[name].[contenthash].css' : '[name].css'
+        filename: this.optimize ? 'styles/[contenthash].css' : 'styles/[contenthash].css'
       }));
 
     } else {
@@ -274,7 +278,7 @@ class WebpackConfigBuilder {
     this.webpackConfig.module.loaders.push({
       test: extensionsToRegex(options.extensions),
       loader: 'file-loader',
-      query: {name: this.optimize ? '[path][name][hash].[ext]' : '[path][name].[ext]'}
+      query: {name: 'files/[hash].[ext]'}
     });
 
     return this;

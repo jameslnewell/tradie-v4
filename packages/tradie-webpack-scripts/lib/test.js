@@ -36,20 +36,20 @@ module.exports = options => new Promise((resolve, reject) => {
     const json = stats.toJson();
 
     //if we weren't able to compile the module then we can't proceed
-    if (reporter.errors.length) {
+    if (json.errors.length) {
       if (!options.watch) {
         reject();
       }
       return;
     }
 
-    //read the compiled output from the virtual filesystem
-    const compiledPath = path.join(options.root, 'tests.js');
-    if (!virtualFileSystem.existsSync(compiledPath)) {
-      reject(new Error(`tradie: Test bundle was not found in virtual filesystem at \`${compiledPath}\``));
+    //find the first JS file and get the output
+    const asset = Object.keys(json.assets).find(path => /\.js$/.test(path));
+    if (!asset) {
+      reject(new Error(`tradie: No test bundle found.`));
       return;
     }
-    const compiledOutput = virtualFileSystem.readFileSync(compiledPath);
+    const compiledOutput = asset.source();
 
     //create the test runner
     runner = spawn('node', {cwd: options.root});
