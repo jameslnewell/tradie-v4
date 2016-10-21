@@ -3,3 +3,4 @@ lerna-debug.log
 node_modules
 dist
 tmp
+.idea

@@ -9,6 +9,7 @@ module.exports = options => Promise.all([
   requireTemplateModule('config/createServerConfig', () => {}).then(fn => fn(options))
 ])
   .then(configs => build({
+    cmd: options.cmd,
     root: options.root,
     debug: options.debug,
     watch: options.watch,

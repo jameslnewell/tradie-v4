@@ -10,6 +10,7 @@ const createAction = function() {
   const cmdOptions = this.opts();
 
   const apiOptions = Object.assign({}, cmdOptions, {
+    cmd: cmdName,
     root: path.resolve(process.cwd()),
     debug: Boolean(process.env.DEBUG)
   });
