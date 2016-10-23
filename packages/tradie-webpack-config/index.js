@@ -34,7 +34,8 @@ class WebpackConfigBuilder {
       output: {
         publicPath: this.publicPath,
         path: this.outputDirectory,
-        filename: 'scripts/[name].[hash].js'
+        filename: 'scripts/[chunkhash:8].js',
+        chunkFilename: 'scripts/[chunkhash:8]-[id].js',
       },
 
       resolve: {
@@ -235,7 +236,7 @@ class WebpackConfigBuilder {
       this.webpackConfig.plugins.push(new ExtractTextPlugin({
         //other chunks should have styles in the JS and load the styles automatically onto the page (that way styles make use of code splitting) e.g. https://github.com/facebookincubator/create-react-app/issues/408
         allChunks: false,
-        filename: this.optimize ? 'styles/[contenthash].css' : 'styles/[contenthash].css'
+        filename: 'styles/[contenthash:8].css'
       }));
 
     } else {
@@ -278,7 +279,7 @@ class WebpackConfigBuilder {
     this.webpackConfig.module.loaders.push({
       test: extensionsToRegex(options.extensions),
       loader: 'file-loader',
-      query: {name: 'files/[hash].[ext]'}
+      query: {name: 'files/[name].[hash:8].[ext]'} //always include the file name for SEO benefits
     });
 
     return this;
@@ -318,7 +319,7 @@ class WebpackConfigBuilder {
       config.plugins = config.plugins.concat([
         new webpack.optimize.CommonsChunkPlugin({
           name: 'common',
-          filename: this.optimize ? '[name].[chunkhash].js' : '[name].js',
+          filename: 'scripts/[name].[chunkhash:8].js',
           chunks: clientBundles, //exclude modules from the vendor chunk
           minChunks: clientBundles.length //modules must be used across all the chunks to be included
         })

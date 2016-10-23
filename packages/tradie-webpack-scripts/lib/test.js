@@ -35,8 +35,8 @@ module.exports = options => new Promise((resolve, reject) => {
   compiler.plugin('done', stats => {
     const json = stats.toJson();
 
-    //if we weren't able to compile the module then we can't proceed
-    if (json.errors.length) {
+    //if we have a syntax error or a resolve error, then show the webpack error and don't try and run the test bundle (which is guaranteed to fail and produce a similar, more verbose error)
+    if (json.errors.find(error => /SyntaxError/.test(error) || /Error: Can't resolve/.test(error))) {
       if (!options.watch) {
         reject();
       }
