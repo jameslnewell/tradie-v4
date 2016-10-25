@@ -1,3 +1,4 @@
+/* @flow weak */
 'use strict';
 const webpack = require('webpack');
 const BuildReporter = require('./util/BuildReporter');
