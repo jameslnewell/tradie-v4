@@ -9,12 +9,13 @@ const webpack = require('webpack');
 class WebpackConfigBuilder {
 
   /**
-   * @param   {object} options
-   * @param   {string} options.root
-   * @param   {string} options.src
-   * @param   {string} options.tmp
-   * @param   {string} options.dest
-   * @param   {string} options.publicPath
+   * @param   {object}  options
+   * @param   {string}  options.root
+   * @param   {string}  options.src
+   * @param   {string}  options.tmp
+   * @param   {string}  options.dest
+   * @param   {string}  options.publicPath
+   * @param   {boolean} options.optimize
    */
   constructor(options) {
     this.rootDirectory = options.root;
@@ -22,10 +23,11 @@ class WebpackConfigBuilder {
     this.tempDirectory = options.tmp;
     this.outputDirectory = options.dest;
     this.publicPath = options.publicPath || '/';
+    this.optimize = options.optimize || false;
 
     this.webpackConfig = {
 
-      devtool: 'eval',
+      devtool: this.optimize ? false : 'eval',
 
       context: this.sourceDirectory,
 
@@ -47,7 +49,12 @@ class WebpackConfigBuilder {
         loaders: []
       },
 
-      plugins: []
+      plugins: [
+        new webpack.LoaderOptionsPlugin({
+          minimize: this.optimize,
+          debug: !this.optimize
+        })
+      ]
 
     };
   }
@@ -122,6 +129,29 @@ class WebpackConfigBuilder {
         babel: options.babel,
         extensions: options.extensions
       });
+    }
+
+    if (this.optimize) {
+
+      this.webpackConfig.plugins.push(new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify('production')
+      }));
+
+      this.webpackConfig.plugins.push(new webpack.optimize.DedupePlugin());
+
+      this.webpackConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({
+        compress: {
+          screw_ie8: true,
+          warnings: false
+        },
+        mangle: {
+          screw_ie8: true
+        },
+        output: {
+          comments: false,
+          screw_ie8: true
+        }
+      }));
     }
 
   }
