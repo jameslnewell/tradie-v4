@@ -3,19 +3,12 @@ const serve = require('tradie-webpack-scripts').serve;
 const requireTemplateModule = require('./util/requireTemplateModule');
 const util = require('util')
 
-module.exports = options => Promise.all([
-  requireTemplateModule('config/createVendorConfig', () => {}).then(fn => fn(options)),
-  requireTemplateModule('config/createClientConfig', () => {}).then(fn => fn(options)),
-  requireTemplateModule('config/createServerConfig', () => {}).then(fn => fn(options))
-])
-  .then(configs => serve({
-    cmd: options.cmd,
-    root: options.root,
-    debug: options.debug,
-    webpack: {
-      vendor: configs[0],
-      client: configs[1],
-      server: configs[2],
-    }
+module.exports = cliOptions => requireTemplateModule('config/serve', () => ({}))
+  .then(createWebpackConfigs => createWebpackConfigs(cliOptions))
+  .then(webpackConfigs => serve({
+    cmd: cliOptions.cmd,
+    root: cliOptions.root,
+    debug: cliOptions.debug,
+    webpack: webpackConfigs
   }))
 ;
