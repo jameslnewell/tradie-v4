@@ -5,6 +5,7 @@
     "chalk": "^1.1.3",
     "clear": "0.0.1",
     "lodash.uniq": "^4.5.0",
+    "promised-del": "^1.0.2",
     "webpack-dev-server": "^2.1.0-beta.8"
   },
   "peerDependencies": {

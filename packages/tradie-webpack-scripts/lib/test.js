@@ -1,17 +1,17 @@
 'use strict';
 const path = require('path');
 const spawn = require('child_process').spawn;
-const webpack = require('webpack');
 const MemoryFS = require('memory-fs');
-const TestReporter = require('./util/TestReporter');
+const webpack = require('webpack');
 const runWebpack = require('./util/runWebpack');
+const TestReporter = require('./util/TestReporter');
 
 /**
  * Run webpack on multiple bundles and display the results
  * @param {object}  options
- * @param {string}  [options.cwd]
- * @param {boolean} [options.watch]
- * @param {boolean} [options.debug]
+ * @param {string}  [options.root]
+ * @param {boolean} [options.debug=false]
+ * @param {boolean} [options.watch=false]
  * @param {object}  options.webpack
  * @returns {Promise.<null>}
  */

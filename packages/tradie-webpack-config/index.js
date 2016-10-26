@@ -1,6 +1,7 @@
 'use strict';
 const mergeWith = require('lodash.mergewith');
 const extensionsToRegex = require('ext-to-regex');
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 
 const fs = require('fs');
 const path = require('path');
@@ -50,6 +51,10 @@ class WebpackConfigBuilder {
       },
 
       plugins: [
+
+        //enforce case sensitive paths to avoid issues between file systems
+        new CaseSensitivePathsPlugin(),
+
         new webpack.LoaderOptionsPlugin({
           minimize: this.optimize,
           debug: !this.optimize

@@ -9,9 +9,8 @@ const runWebpackServer = require('./util/runWebpackServer');
 /**
  * Run webpack dev-server on multiple bundles and display the results
  * @param {object} options
- * @param {boolean} [options.watch]
- * @param {boolean} [options.debug]
- * @param {object}  [options.webpack]
+ * @param {boolean} [options.debug=false]
+ * @param {object}  options.webpack
  * @param {object}  [options.webpack.vendor]
  * @param {object}  [options.webpack.client]
  * @param {object}  [options.webpack.server]

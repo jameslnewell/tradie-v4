@@ -1,15 +1,15 @@
 /* @flow weak */
 'use strict';
 const webpack = require('webpack');
-const BuildReporter = require('./util/BuildReporter');
 const runWebpack = require('./util/runWebpack');
+const BuildReporter = require('./util/BuildReporter');
 
 /**
  * Run webpack on multiple bundles and display the results
  * @param {object} options
- * @param {boolean} [options.watch]
- * @param {boolean} [options.debug]
- * @param {object}  [options.webpack]
+ * @param {boolean} [options.debug=false]
+ * @param {boolean} [options.watch=false]
+ * @param {object}  options.webpack
  * @param {object}  [options.webpack.vendor]
  * @param {object}  [options.webpack.client]
  * @param {object}  [options.webpack.server]
