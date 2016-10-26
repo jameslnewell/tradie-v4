@@ -4,9 +4,14 @@
   "dependencies": {
     "chalk": "^1.1.3",
     "clear": "0.0.1",
+    "connect": "^3.5.0",
+    "detect-port": "^1.0.1",
     "lodash.uniq": "^4.5.0",
     "promised-del": "^1.0.2",
-    "webpack-dev-server": "^2.1.0-beta.8"
+    "serve-index": "^1.8.0",
+    "serve-static": "^1.11.1",
+    "webpack-dev-middleware": "^1.8.4",
+    "webpack-hot-middleware": "^2.13.0"
   },
   "peerDependencies": {
     "webpack": "1 || ^2.1.0-beta"

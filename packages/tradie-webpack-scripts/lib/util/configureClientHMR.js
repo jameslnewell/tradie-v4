@@ -8,7 +8,7 @@ const port = '3000';
 module.exports = config => {
 
   const devServerEntries = [
-    `webpack-dev-server/client?${protocol}://${host}:${port}/`,
+    `webpack-hot-middleware/client`,
     'webpack/hot/dev-server'
   ];
 

@@ -1,10 +1,6 @@
 'use strict';
 const webpack = require('webpack');
 
-const protocol = 'http';
-const host = 'localhost';
-const port = '3000';
-
 module.exports = config => {
 
   const devServerEntries = [

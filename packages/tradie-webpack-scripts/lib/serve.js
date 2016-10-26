@@ -1,4 +1,12 @@
 'use strict';
+const chalk = require('chalk');
+const connect = require('connect');
+const detectPort = require('detect-port');
+const serveIndex = require('serve-index');
+const serveStatic = require('serve-static');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
+
 const webpack = require('webpack');
 const BuildReporter = require('./util/BuildReporter');
 const configureClientHMR = require('./util/configureClientHMR');
@@ -57,10 +65,59 @@ module.exports = options => {
     }
   };
 
+  const startServer = () => new Promise((resolve, reject) => {
+    let server;
+    const app = connect();
+
+    //setup the server
+    app
+      .use(serveStatic('./dist'))
+      .use(serveIndex('./dist'))
+    ;
+
+    //if there is a client bundle
+    const clientConfig = options.webpack.client;
+    if (clientConfig) {
+      console.log('configuring the client');
+      configureClientHMR(clientConfig);
+      const compiler = webpack(clientConfig);
+      reporter.observe(compiler);
+
+      app
+        .use(webpackDevMiddleware(compiler, {
+
+        }))
+        .use(webpackHotMiddleware(compiler, {
+          log: console.log
+        }))
+      ;
+
+    }
+
+    //start the server on a free port
+    detectPort(3000)
+      .then(port => {
+        server = app.listen(port, (err) => {
+          if (err) return reject(err);
+          console.log(chalk.blue(`Server running at http://localhost:${port}`));
+        });
+      })
+      .catch(reject)
+    ;
+
+    //stop serving and exit when the user presses CTL-C
+    process.on('SIGINT', () => {
+      if (server) {
+        server.close(() => resolve());
+      }
+    });
+
+  });
+
   return Promise.all([
     startServerBundle(),
     createVendorBundle()
-      .then(() => startClientBundle())
+      .then(() => startServer())
   ])
 
     //FIXME: hack to wait for BuildReporter to finish reporting

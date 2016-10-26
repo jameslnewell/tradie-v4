@@ -37,8 +37,10 @@ class WebpackConfigBuilder {
       output: {
         publicPath: this.publicPath,
         path: this.outputDirectory,
-        filename: 'scripts/[chunkhash:8].js',
-        chunkFilename: 'scripts/[chunkhash:8]-[id].js',
+
+        //use name vs https://github.com/webpack/webpack-dev-server/issues/377#issuecomment-241258405
+        filename: this.optimize ? 'scripts/[chunkhash:8].js' : 'scripts/[name].js',
+        chunkFilename: this.optimize ? 'scripts/[chunkhash:8]-[id].js' : 'scripts/[name].js',
       },
 
       resolve: {
