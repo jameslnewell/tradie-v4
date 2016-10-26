@@ -1,7 +1,6 @@
 'use strict';
 const serve = require('tradie-webpack-scripts').serve;
 const requireTemplateModule = require('./util/requireTemplateModule');
-const util = require('util')
 
 module.exports = cliOptions => requireTemplateModule('config/serve', () => ({}))
   .then(createWebpackConfigs => createWebpackConfigs(cliOptions))
