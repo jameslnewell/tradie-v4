@@ -273,7 +273,7 @@ class WebpackConfigBuilder {
       this.webpackConfig.plugins.push(new ExtractTextPlugin({
         //other chunks should have styles in the JS and load the styles automatically onto the page (that way styles make use of code splitting) e.g. https://github.com/facebookincubator/create-react-app/issues/408
         allChunks: false,
-        filename: 'styles/[contenthash:8].css'
+        filename: this.optimize ? 'styles/[contenthash:8].css' : 'styles/[name].css'
       }));
 
     } else {

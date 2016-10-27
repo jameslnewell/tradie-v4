@@ -4,8 +4,8 @@ const connect = require('connect');
 const detectPort = require('detect-port');
 const serveIndex = require('serve-index');
 const serveStatic = require('serve-static');
-const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpackHotMiddleware = require('webpack-hot-middleware');
+const createWebpackDevMiddleware = require('webpack-dev-middleware');
+const createWebpackHotMiddleware = require('webpack-hot-middleware');
 
 const webpack = require('webpack');
 const BuildReporter = require('./util/BuildReporter');
@@ -54,6 +54,7 @@ module.exports = options => {
   };
 
   const startServerBundle = () => {
+    return Promise.resolve();
     const config = options.webpack.server;
     if (config) {
       configureServerHMR(config);
@@ -76,23 +77,30 @@ module.exports = options => {
     ;
 
     //if there is a client bundle
+    let webpackDevMiddleware;
+    let webpackHotMiddleware;
     const clientConfig = options.webpack.client;
-    if (clientConfig) {
-      console.log('configuring the client');
-      configureClientHMR(clientConfig);
-      const compiler = webpack(clientConfig);
-      reporter.observe(compiler);
-
-      app
-        .use(webpackDevMiddleware(compiler, {
-
-        }))
-        .use(webpackHotMiddleware(compiler, {
-          log: console.log
-        }))
-      ;
-
-    }
+    // if (clientConfig) {
+    //   console.log('configuring the client');
+    //   configureClientHMR(clientConfig);
+    //   const compiler = webpack(clientConfig);
+    //
+    //   reporter.observe(compiler);
+    //
+    //   webpackDevMiddleware = createWebpackDevMiddleware(compiler, {
+    //
+    //   });
+    //
+    //   webpackHotMiddleware = createWebpackHotMiddleware(compiler, {
+    //     // log: console.log
+    //   });
+    //
+    //   app
+    //     .use(webpackDevMiddleware)
+    //     .use(webpackHotMiddleware)
+    //   ;
+    //
+    // }
 
     //start the server on a free port
     detectPort(3000)
@@ -107,9 +115,44 @@ module.exports = options => {
 
     //stop serving and exit when the user presses CTL-C
     process.on('SIGINT', () => {
-      if (server) {
-        server.close(() => resolve());
-      }
+      console.log('CTL-C');
+      Promise.all([
+
+        //stop the webpack-dev-middleware
+        () => new Promise((resolve, reject) => {
+          console.log('has middleware?');
+          if (webpackDevMiddleware) {
+            console.log('closing middleware');
+            webpackDevMiddleware.close(error => {
+              console.log('closed middleware', error);
+              if (error) {
+                reject(error);
+              } else {
+                resolve();
+              }
+            });
+          }
+        }),
+
+        //stop the server
+        () => new Promise((resolve, reject) => {
+          console.log('has server?');
+          if (server) {
+            console.log('closing server');
+            server.close(error => {
+              console.log('closed server', error);
+              if (error) {
+                reject(error);
+              } else {
+                resolve();
+              }
+            });
+          }
+        })
+
+      ])
+        .then(resolve, reject)
+      ;
     });
 
   });
