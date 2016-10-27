@@ -54,7 +54,7 @@ module.exports = options => {
   };
 
   const startServerBundle = () => {
-    return Promise.resolve();
+    // return Promise.resolve();
     const config = options.webpack.server;
     if (config) {
       configureServerHMR(config);
@@ -119,7 +119,7 @@ module.exports = options => {
       Promise.all([
 
         //stop the webpack-dev-middleware
-        () => new Promise((resolve, reject) => {
+        new Promise((resolve, reject) => {
           console.log('has middleware?');
           if (webpackDevMiddleware) {
             console.log('closing middleware');
@@ -135,10 +135,10 @@ module.exports = options => {
         }),
 
         //stop the server
-        () => new Promise((resolve, reject) => {
+        new Promise((resolve, reject) => {
           console.log('has server?');
           if (server) {
-            console.log('closing server');
+            console.log('closing server', server.close);
             server.close(error => {
               console.log('closed server', error);
               if (error) {
@@ -153,6 +153,7 @@ module.exports = options => {
       ])
         .then(resolve, reject)
       ;
+      console.log('tick');
     });
 
   });
