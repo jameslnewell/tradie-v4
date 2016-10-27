@@ -1,7 +1,7 @@
 /* @flow weak */
 'use strict';
 const webpack = require('webpack');
-const runWebpack = require('./util/runWebpack');
+const createBundler = require('./util/createBundler');
 const BuildReporter = require('./util/BuildReporter');
 
 /**
@@ -16,42 +16,92 @@ const BuildReporter = require('./util/BuildReporter');
  * @returns {Promise.<null>}
  */
 module.exports = options => {
+  let
+    vendorBundler,
+    clientBundler,
+    buildBundler,
+    serverBundler
+  ;
   const reporter = new BuildReporter({debug: options.debug});
 
   const createVendorBundle = () => {
     if (options.webpack.vendor) {
-      const compiler = webpack(options.webpack.vendor);
-      reporter.observe(compiler);
-      return runWebpack(false, compiler);
+      vendorBundler = createBundler(options.webpack.vendor, {reporter});
+      return vendorBundler.run();
     } else {
       return Promise.resolve();
     }
   };
 
-  const createClientBundle = () => {
+  const createClientAndBuildBundles = () => {
+
+    //create the client bundler
     if (options.webpack.client) {
-      const compiler = webpack(options.webpack.client);
-      reporter.observe(compiler);
-      return runWebpack(options.watch, compiler);
-    } else {
-      return Promise.resolve();
+      clientBundler = createBundler(options.webpack.client, {
+        reporter,
+        watch: options.watch
+      });
     }
+
+    //create the build bundler
+    if (options.webpack.build) {
+      buildBundler = createBundler(options.webpack.build, {
+        reporter,
+        watch: options.watch
+      });
+    }
+
+    if (clientBundler && buildBundler) {
+
+      //start the build bundler after the client bundler has run for the first time,
+      // and re-build the build bundler whenever the client bundler finishes
+      return Promise.all([
+
+        new Promise((resolve, reject) => {
+          let started = false;
+
+          clientBundler.plugin('done', () => {
+            if (started) {
+              buildBundler.invalidate()
+            } else {
+              started = true;
+              buildBundler.run().then(resolve, reject);
+            }
+          });
+
+        }),
+
+        clientBundler.run()
+
+      ]);
+
+    } else if (clientBundler) {
+      return clientBundler.run();
+    } else if (buildBundler) {
+      return buildBundler.run();
+    }
+
   };
 
   const createServerBundle = () => {
     if (options.webpack.server) {
-      const compiler = webpack(options.webpack.server);
-      reporter.observe(compiler);
-      return runWebpack(options.watch, compiler);
+      serverBundler = createBundler(options.webpack.server, {
+        reporter,
+        watch: options.watch
+      });
+      return serverBundler.run();
     } else {
       return Promise.resolve();
     }
   };
 
   return Promise.all([
-    createServerBundle(),
+
     createVendorBundle()
-      .then(() => createClientBundle())
+      .then(() => createClientAndBuildBundles()),
+
+    createServerBundle()
+
   ])
 
     //FIXME: hack to wait for BuildReporter to finish reporting
