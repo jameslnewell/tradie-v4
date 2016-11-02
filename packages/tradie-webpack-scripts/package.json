@@ -5,11 +5,13 @@
     "chalk": "^1.1.3",
     "clear": "0.0.1",
     "connect": "^3.5.0",
+    "debug": "^2.2.0",
     "detect-port": "^1.0.1",
     "lodash.uniq": "^4.5.0",
     "promised-del": "^1.0.2",
     "serve-index": "^1.8.0",
     "serve-static": "^1.11.1",
+    "wait-for-event": "^1.0.0",
     "webpack-dev-middleware": "^1.8.4",
     "webpack-hot-middleware": "^2.13.0"
   },

@@ -1,6 +1,6 @@
 /* @flow weak */
 'use strict';
-const webpack = require('webpack');
+const wfe = require('wait-for-event');
 const createBundler = require('./util/createBundler');
 const BuildReporter = require('./util/BuildReporter');
 
@@ -12,107 +12,130 @@ const BuildReporter = require('./util/BuildReporter');
  * @param {object}  options.webpack
  * @param {object}  [options.webpack.vendor]
  * @param {object}  [options.webpack.client]
+ * @param {object}  [options.webpack.build]
  * @param {object}  [options.webpack.server]
  * @returns {Promise.<null>}
  */
 module.exports = options => {
   let
+    bundlers = [],
     vendorBundler,
     clientBundler,
     buildBundler,
     serverBundler
   ;
-  const reporter = new BuildReporter({debug: options.debug});
 
-  const createVendorBundle = () => {
-    if (options.webpack.vendor) {
-      vendorBundler = createBundler(options.webpack.vendor, {reporter});
-      return vendorBundler.run();
-    } else {
-      return Promise.resolve();
-    }
-  };
+  //create the vendor bundler
+  if (options.webpack.vendor) {
+    vendorBundler = createBundler(options.webpack.vendor, {
+      name: 'vendor'
+    });
+    bundlers.push(vendorBundler);
+  }
 
-  const createClientAndBuildBundles = () => {
+  //create the client bundler
+  if (options.webpack.client) {
+    clientBundler = createBundler(options.webpack.client, {
+      name: 'client',
+      watch: options.watch
+    });
+    bundlers.push(clientBundler);
+  }
 
-    //create the client bundler
-    if (options.webpack.client) {
-      clientBundler = createBundler(options.webpack.client, {
-        reporter,
-        watch: options.watch
-      });
-    }
+  //create the build bundler
+  if (options.webpack.build) {
+    buildBundler = createBundler(options.webpack.build, {
+      name: 'build',
+      watch: options.watch
+    });
+    bundlers.push(buildBundler);
+  }
 
-    //create the build bundler
-    if (options.webpack.build) {
-      buildBundler = createBundler(options.webpack.build, {
-        reporter,
-        watch: options.watch
-      });
-    }
+  //create the server bundler
+  if (options.webpack.server) {
+    serverBundler = createBundler(options.webpack.server, {
+      name: 'server',
+      watch: options.watch
+    });
+    bundlers.push(serverBundler);
+  }
+
+  //create the reporter
+  const reporter = new BuildReporter({
+    debug: options.debug,
+    bundlers
+  });
+
+  const runClientAndBuildBundles = () => {
 
     if (clientBundler && buildBundler) {
 
       //start the build bundler after the client bundler has run for the first time,
       // and re-build the build bundler whenever the client bundler finishes
-      return Promise.all([
+      clientBundler.once('finish', () => {
 
-        new Promise((resolve, reject) => {
-          let started = false;
+        //run the build bundler
+        buildBundler.run();
 
-          clientBundler.plugin('done', () => {
-            if (started) {
-              buildBundler.invalidate()
-            } else {
-              started = true;
-              buildBundler.run().then(resolve, reject);
-            }
-          });
+        //re-run the build bundler
+        clientBundler.on('finish', () => buildBundler.invalidate());
 
-        }),
+      });
 
-        clientBundler.run()
-
-      ]);
+      //run the client bundler
+      clientBundler.run();
 
     } else if (clientBundler) {
-      return clientBundler.run();
+
+      //run the client bundler
+      clientBundler.run();
+
     } else if (buildBundler) {
-      return buildBundler.run();
+
+      //run the build bundler
+      buildBundler.run();
+
     }
 
   };
 
-  const createServerBundle = () => {
-    if (options.webpack.server) {
-      serverBundler = createBundler(options.webpack.server, {
-        reporter,
-        watch: options.watch
+  //run the vendor, client and build bundlers
+  if (vendorBundler) {
+    vendorBundler
+      .once('finish', () => {
+
+        //remove the finished bundle
+        bundlers.splice(0, 1);
+
+        //run the client and build bundlers
+        runClientAndBuildBundles();
+
+      })
+      .run()
+    ;
+  } else {
+
+    //run the client and build bundlers
+    runClientAndBuildBundles();
+
+  }
+
+  //run the server bundler
+  if (serverBundler) {
+    serverBundler.run();
+  }
+
+  //wait for all the bundlers to close before resolving or rejecting
+  return new Promise((resolve, reject) => {
+    wfe.waitForAll('close', bundlers, errors => {
+      setImmediate(() => { //hack: wait for build-reporter
+        if (errors.length) {
+          reject(errors);
+        } else {
+          resolve();
+        }
       });
-      return serverBundler.run();
-    } else {
-      return Promise.resolve();
-    }
-  };
-
-  return Promise.all([
-
-    createVendorBundle()
-      .then(() => createClientAndBuildBundles()),
-
-    createServerBundle()
-
-  ])
-
-    //FIXME: hack to wait for BuildReporter to finish reporting
-    .then(() => new Promise((resolve, reject) => setImmediate(() => {
-      if (!options.watch && reporter.errors.length) {
-        reject();
-      } else {
-        resolve();
-      }
-    })))
-
-  ;
+    });
+  });
 
 };
