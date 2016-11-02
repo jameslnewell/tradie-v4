@@ -59,17 +59,14 @@ class Server {
 
     //close the server when the user presses CTL-C
     process.on('SIGINT', () => {
-      if (server) {
-        console.log('closing');
-        server.close(error => {
-          console.log('closed', error);
+      if (this.server) {
+        this.server.close(error => {
           if (error) {
             this.emitter.emit(error);
           } else {
             this.emitter.emit('close');
           }
         });
-        console.log('closing started');
       }
     });
 

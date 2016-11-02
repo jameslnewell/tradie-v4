@@ -1,7 +1,7 @@
 /* @flow weak */
 'use strict';
 const wfe = require('wait-for-event');
-const createBundler = require('./util/createBundler');
+const Bundler = require('./util/Bundler');
 const BuildReporter = require('./util/BuildReporter');
 
 /**
@@ -27,7 +27,7 @@ module.exports = options => {
 
   //create the vendor bundler
   if (options.webpack.vendor) {
-    vendorBundler = createBundler(options.webpack.vendor, {
+    vendorBundler = new Bundler(options.webpack.vendor, {
       name: 'vendor'
     });
     bundlers.push(vendorBundler);
@@ -35,7 +35,7 @@ module.exports = options => {
 
   //create the client bundler
   if (options.webpack.client) {
-    clientBundler = createBundler(options.webpack.client, {
+    clientBundler = new Bundler(options.webpack.client, {
       name: 'client',
       watch: options.watch
     });
@@ -44,7 +44,7 @@ module.exports = options => {
 
   //create the build bundler
   if (options.webpack.build) {
-    buildBundler = createBundler(options.webpack.build, {
+    buildBundler = new Bundler(options.webpack.build, {
       name: 'build',
       watch: options.watch
     });
@@ -53,7 +53,7 @@ module.exports = options => {
 
   //create the server bundler
   if (options.webpack.server) {
-    serverBundler = createBundler(options.webpack.server, {
+    serverBundler = new Bundler(options.webpack.server, {
       name: 'server',
       watch: options.watch
     });

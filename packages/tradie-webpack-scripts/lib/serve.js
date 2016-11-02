@@ -2,7 +2,7 @@
 'use strict';
 const wfe = require('wait-for-event');
 const Server = require('./util/Server');
-const createBundler = require('./util/createBundler');
+const Bundler = require('./util/Bundler');
 const BuildReporter = require('./util/BuildReporter');
 
 /**
@@ -28,7 +28,7 @@ module.exports = options => {
 
   //create the vendor bundler
   if (options.webpack.vendor) {
-    vendorBundler = createBundler(options.webpack.vendor, {
+    vendorBundler = new Bundler(options.webpack.vendor, {
       name: 'vendor'
     });
     bundlers.push(vendorBundler);
@@ -36,7 +36,7 @@ module.exports = options => {
 
   //create the client bundler
   if (options.webpack.client) {
-    clientBundler = createBundler(options.webpack.client, {
+    clientBundler = new Bundler(options.webpack.client, {
       name: 'client',
       watch: true
     });
@@ -45,7 +45,7 @@ module.exports = options => {
 
   //create the build bundler
   if (options.webpack.build) {
-    buildBundler = createBundler(options.webpack.build, {
+    buildBundler = new Bundler(options.webpack.build, {
       name: 'build',
       watch: true
     });
@@ -54,7 +54,7 @@ module.exports = options => {
 
   //create the server bundler
   if (options.webpack.server) {
-    serverBundler = createBundler(options.webpack.server, {
+    serverBundler = new Bundler(options.webpack.server, {
       name: 'server',
       watch: true
     });
@@ -129,13 +129,14 @@ module.exports = options => {
     serverBundler.run();
   }
 
+  //run the server after the other bundlers finish
   wfe.waitForAll('finish', bundlers, () => {
     server.run()
   });
 
-  //wait for all the bundlers to close before resolving or rejecting
+  //wait for all the bundlers and server to close before resolving or rejecting
   return new Promise((resolve, reject) => {
-    wfe.waitForAll('close', bundlers.concat(server), errors => {
+    wfe.waitForAll('close', bundlers.concat(server), errors => { //FIXME: if CTL-C before server is started then don't wait for the server
       setImmediate(() => { //hack: wait for build-reporter
         if (errors.length) {
           reject(errors);
@@ -145,5 +146,7 @@ module.exports = options => {
       });
     });
   });
+
+
 
 };
