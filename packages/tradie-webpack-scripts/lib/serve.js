@@ -1,301 +1,149 @@
-// 'use strict';
-// const chalk = require('chalk');
-// const connect = require('connect');
-// const detectPort = require('detect-port');
-// const serveIndex = require('serve-index');
-// const serveStatic = require('serve-static');
-// const createWebpackDevMiddleware = require('webpack-dev-middleware');
-// const createWebpackHotMiddleware = require('webpack-hot-middleware');
-//
-// const webpack = require('webpack');
-// const BuildReporter = require('./util/BuildReporter');
-// const configureClientHMR = require('./util/configureClientHMR');
-// const configureServerHMR = require('./util/configureServerHMR');
-// const runWebpack = require('./util/runWebpack');
-// const runWebpackServer = require('./util/runWebpackServer');
-//
-//
-// /**
-//  * Run webpack dev-server on multiple bundles and display the results
-//  * @param {object} options
-//  * @param {boolean} [options.debug=false]
-//  * @param {object}  options.webpack
-//  * @param {object}  [options.webpack.vendor]
-//  * @param {object}  [options.webpack.client]
-//  * @param {object}  [options.webpack.server]
-//  * @returns {Promise.<null>}
-//  */
-// module.exports = options => {
-//   const reporter = new BuildReporter({debug: options.debug});
-//
-//   const createVendorBundle = () => {
-//     if (options.webpack.vendor) {
-//       const compiler = webpack(options.webpack.vendor);
-//       reporter.observe(compiler);
-//       return runWebpack(false, compiler);
-//     } else {
-//       return Promise.resolve();
-//     }
-//   };
-//
-//   const startClientBundle = () => {
-//     const config = options.webpack.client;
-//     console.log('starting client');
-//     if (config) {
-//       configureClientHMR(config);
-//       const compiler = webpack(config);
-//       reporter.observe(compiler);
-//       return runWebpackServer({
-//         publicDir: config.output.path,
-//         publicUrl: config.output.publicPath
-//       }, compiler);
-//     } else {
-//       return Promise.resolve();
-//     }
-//   };
-//
-//   const startServerBundle = () => {
-//     // return Promise.resolve();
-//     const config = options.webpack.server;
-//     if (config) {
-//       configureServerHMR(config);
-//       const compiler = webpack(config);
-//       reporter.observe(compiler);
-//       return runWebpack(true, compiler);
-//     } else {
-//       return Promise.resolve();
-//     }
-//   };
-//
-//   const startServer = () => new Promise((resolve, reject) => {
-//     let server;
-//     const app = connect();
-//
-//     //setup the server
-//     app
-//       .use(serveStatic('./dist'))
-//       .use(serveIndex('./dist'))
-//     ;
-//
-//     //if there is a client bundle
-//     let webpackDevMiddleware;
-//     let webpackHotMiddleware;
-//     const clientConfig = options.webpack.client;
-//     // if (clientConfig) {
-//     //   console.log('configuring the client');
-//     //   configureClientHMR(clientConfig);
-//     //   const compiler = webpack(clientConfig);
-//     //
-//     //   reporter.observe(compiler);
-//     //
-//     //   webpackDevMiddleware = createWebpackDevMiddleware(compiler, {
-//     //
-//     //   });
-//     //
-//     //   webpackHotMiddleware = createWebpackHotMiddleware(compiler, {
-//     //     // log: console.log
-//     //   });
-//     //
-//     //   app
-//     //     .use(webpackDevMiddleware)
-//     //     .use(webpackHotMiddleware)
-//     //   ;
-//     //
-//     // }
-//
-//     //start the server on a free port
-//     detectPort(3000)
-//       .then(port => {
-//         server = app.listen(port, (err) => {
-//           if (err) return reject(err);
-//           console.log(chalk.blue(`Server running at http://localhost:${port}`));
-//         });
-//       })
-//       .catch(reject)
-//     ;
-//
-//     //stop serving and exit when the user presses CTL-C
-//     process.on('SIGINT', () => {
-//       console.log('CTL-C');
-//       Promise.all([
-//
-//         //stop the webpack-dev-middleware
-//         new Promise((resolve, reject) => {
-//           console.log('has middleware?');
-//           if (webpackDevMiddleware) {
-//             console.log('closing middleware');
-//             webpackDevMiddleware.close(error => {
-//               console.log('closed middleware', error);
-//               if (error) {
-//                 reject(error);
-//               } else {
-//                 resolve();
-//               }
-//             });
-//           }
-//         }),
-//
-//         //stop the server
-//         new Promise((resolve, reject) => {
-//           console.log('has server?');
-//           if (server) {
-//             console.log('closing server', server.close);
-//             server.close(error => {
-//               console.log('closed server', error);
-//               if (error) {
-//                 reject(error);
-//               } else {
-//                 resolve();
-//               }
-//             });
-//           }
-//         })
-//
-//       ])
-//         .then(resolve, reject)
-//       ;
-//       console.log('tick');
-//     });
-//
-//   });
-//
-//   return Promise.all([
-//     startServerBundle(),
-//     createVendorBundle()
-//       .then(() => startServer())
-//   ])
-//
-//     //FIXME: hack to wait for BuildReporter to finish reporting
-//     .then(() => new Promise((resolve, reject) => setImmediate(() => {
-//       if (!options.watch && reporter.errors.length) {
-//         reject();
-//       } else {
-//         resolve();
-//       }
-//     })))
-//
-//   ;
-//
-// };
-//
-//
-//
-//
-// /* @flow weak */
-// 'use strict';
-// const webpack = require('webpack');
-// const createBundler = require('./util/createBundler');
-// const BuildReporter = require('./util/BuildReporter');
-//
-// /**
-//  * Run webpack on multiple bundles and display the results
-//  * @param {object} options
-//  * @param {boolean} [options.debug=false]
-//  * @param {boolean} [options.watch=false]
-//  * @param {object}  options.webpack
-//  * @param {object}  [options.webpack.vendor]
-//  * @param {object}  [options.webpack.client]
-//  * @param {object}  [options.webpack.server]
-//  * @returns {Promise.<null>}
-//  */
-// module.exports = options => {
-//   let
-//     vendorBundler,
-//     clientBundler,
-//     buildBundler,
-//     serverBundler
-//     ;
-//   const reporter = new BuildReporter({debug: options.debug});
-//
-//   const createVendorBundle = () => {
-//     if (options.webpack.vendor) {
-//       vendorBundler = createBundler(options.webpack.vendor, {reporter});
-//       return vendorBundler.run();
-//     } else {
-//       return Promise.resolve();
-//     }
-//   };
-//
-//   const createClientAndBuildBundles = () => {
-//
-//     //create the client bundler
-//     if (options.webpack.client) {
-//       clientBundler = createBundler(options.webpack.client, {
-//         reporter,
-//         watch: options.watch
-//       });
-//     }
-//
-//     //create the build bundler
-//     if (options.webpack.build) {
-//       buildBundler = createBundler(options.webpack.build, {
-//         reporter,
-//         watch: options.watch
-//       });
-//     }
-//
-//     if (clientBundler && buildBundler) {
-//
-//       //start the build bundler after the client bundler has run for the first time,
-//       // and re-build the build bundler whenever the client bundler finishes
-//       return Promise.all([
-//
-//         new Promise((resolve, reject) => {
-//           let started = false;
-//
-//           clientBundler.plugin('done', () => {
-//             if (started) {
-//               buildBundler.invalidate()
-//             } else {
-//               started = true;
-//               buildBundler.run().then(resolve, reject);
-//             }
-//           });
-//
-//         }),
-//
-//         clientBundler.run()
-//
-//       ]);
-//
-//     } else if (clientBundler) {
-//       return clientBundler.run();
-//     } else if (buildBundler) {
-//       return buildBundler.run();
-//     }
-//
-//   };
-//
-//   const createServerBundle = () => {
-//     if (options.webpack.server) {
-//       serverBundler = createBundler(options.webpack.server, {
-//         reporter,
-//         watch: options.watch
-//       });
-//       return serverBundler.run();
-//     } else {
-//       return Promise.resolve();
-//     }
-//   };
-//
-//   return Promise.all([
-//
-//     createVendorBundle()
-//       .then(() => createClientAndBuildBundles()),
-//
-//     createServerBundle()
-//
-//   ])
-//
-//   //FIXME: hack to wait for BuildReporter to finish reporting
-//     .then(() => new Promise((resolve, reject) => setImmediate(() => {
-//       if (!options.watch && reporter.errors.length) {
-//         reject();
-//       } else {
-//         resolve();
-//       }
-//     })))
-//
-//     ;
-//
-// };
+/* @flow weak */
+'use strict';
+const wfe = require('wait-for-event');
+const Server = require('./util/Server');
+const createBundler = require('./util/createBundler');
+const BuildReporter = require('./util/BuildReporter');
+
+/**
+ * Run webpack on multiple bundles and display the results
+ * @param {object} options
+ * @param {boolean} [options.debug=false]
+ * @param {object}  options.webpack
+ * @param {object}  [options.webpack.vendor]
+ * @param {object}  [options.webpack.client]
+ * @param {object}  [options.webpack.build]
+ * @param {object}  [options.webpack.server]
+ * @returns {Promise.<null>}
+ */
+module.exports = options => {
+  let
+    bundlers = [],
+    vendorBundler,
+    clientBundler,
+    buildBundler,
+    serverBundler,
+    server
+  ;
+
+  //create the vendor bundler
+  if (options.webpack.vendor) {
+    vendorBundler = createBundler(options.webpack.vendor, {
+      name: 'vendor'
+    });
+    bundlers.push(vendorBundler);
+  }
+
+  //create the client bundler
+  if (options.webpack.client) {
+    clientBundler = createBundler(options.webpack.client, {
+      name: 'client',
+      watch: true
+    });
+    bundlers.push(clientBundler);
+  }
+
+  //create the build bundler
+  if (options.webpack.build) {
+    buildBundler = createBundler(options.webpack.build, {
+      name: 'build',
+      watch: true
+    });
+    bundlers.push(buildBundler);
+  }
+
+  //create the server bundler
+  if (options.webpack.server) {
+    serverBundler = createBundler(options.webpack.server, {
+      name: 'server',
+      watch: true
+    });
+    bundlers.push(serverBundler);
+  }
+
+  //create the server
+  server = new Server();
+
+  //create the reporter
+  const reporter = new BuildReporter({
+    debug: options.debug,
+    bundlers
+  });
+
+  const runClientAndBuildBundles = () => {
+
+    if (clientBundler && buildBundler) {
+
+      //start the build bundler after the client bundler has run for the first time,
+      // and re-build the build bundler whenever the client bundler finishes
+      clientBundler.once('finish', () => {
+
+        //run the build bundler
+        buildBundler.run();
+
+        //re-run the build bundler
+        clientBundler.on('finish', () => buildBundler.invalidate());
+
+      });
+
+      //run the client bundler
+      clientBundler.run();
+
+    } else if (clientBundler) {
+
+      //run the client bundler
+      clientBundler.run();
+
+    } else if (buildBundler) {
+
+      //run the build bundler
+      buildBundler.run();
+
+    }
+
+  };
+
+  //run the vendor, client and build bundlers
+  if (vendorBundler) {
+    vendorBundler
+      .once('finish', () => {
+
+        //remove the finished bundle
+        bundlers.splice(0, 1);
+
+        //run the client and build bundlers
+        runClientAndBuildBundles();
+
+      })
+      .run()
+    ;
+  } else {
+
+    //run the client and build bundlers
+    runClientAndBuildBundles();
+
+  }
+
+  //run the server bundler
+  if (serverBundler) {
+    serverBundler.run();
+  }
+
+  wfe.waitForAll('finish', bundlers, () => {
+    server.run()
+  });
+
+  //wait for all the bundlers to close before resolving or rejecting
+  return new Promise((resolve, reject) => {
+    wfe.waitForAll('close', bundlers.concat(server), errors => {
+      setImmediate(() => { //hack: wait for build-reporter
+        if (errors.length) {
+          reject(errors);
+        } else {
+          resolve();
+        }
+      });
+    });
+  });
+
+};

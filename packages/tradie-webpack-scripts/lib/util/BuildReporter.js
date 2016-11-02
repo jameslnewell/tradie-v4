@@ -1,8 +1,6 @@
 'use strict';
-const debug = require('debug')('tradie-webpack-scripts');
 const clear = require('clear');
 const chalk = require('chalk');
-const wfe = require('wait-for-event');
 const uniq = require('lodash.uniq');
 const formatWebpackMessages = require('./formatWebpackMessages');
 
@@ -88,6 +86,7 @@ class BuildReporter {
    */
   collateStats(stats) {
 
+    //note: linting and other errors may be duplicated when multiple bundles use the same source files - de-dupe them
     const msgs = formatWebpackMessages(stats.toJson());
     this.errors = uniq(this.errors.concat(msgs.errors));
     this.warnings = uniq(this.warnings.concat(msgs.warnings));
@@ -104,7 +103,6 @@ class BuildReporter {
 
       bundler
         .on('start', () => {
-          debug(`starting ${bundler.name} bundle...`);
 
           if (this.compiling === 0) {
             this.printStartMessage();
@@ -113,7 +111,6 @@ class BuildReporter {
           ++this.compiling;
         })
         .on('finish', stats => {
-          debug(`finished ${bundler.name} bundle`);
 
           this.collateStats(stats);
 

@@ -20,6 +20,7 @@ module.exports = (config, options) => {
   let watcher;
   const compiler = webpack(config);
   const emitter = new EventEmitter();
+  const debug = require('debug')(`tradie-webpack-scripts:bundler:${options.name}`);
 
   compiler.plugin('compile', () => {
     emitter.emit('start');
@@ -28,6 +29,13 @@ module.exports = (config, options) => {
   compiler.plugin('done', stats => {
     emitter.emit('finish', stats);
   });
+
+  //debug information
+  emitter
+    .on('start', () => debug(`starting`))
+    .on('finish', () => debug(`finished`))
+    .on('close', () => debug(`closed`))
+  ;
 
   return {
 
