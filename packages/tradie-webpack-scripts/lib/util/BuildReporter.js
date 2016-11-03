@@ -119,8 +119,8 @@ class BuildReporter {
             --this.compiling;
 
             if (this.compiling === 0) {
-              this.clearStats();
               this.printFinishMessage();
+              this.clearStats();
             }
 
           });
