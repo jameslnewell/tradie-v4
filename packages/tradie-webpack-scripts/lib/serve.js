@@ -131,15 +131,18 @@ module.exports = options => {
 
   //run the server after the other bundlers finish
   wfe.waitForAll('finish', bundlers, () => {
+    //TODO: handle CTL-C logic in serve.js/build.js so we know whether we're exiting already and can skip running the server
     server.run()
   });
 
   //wait for all the bundlers and server to close before resolving or rejecting
   return new Promise((resolve, reject) => {
     wfe.waitForAll('close', bundlers.concat(server), errors => { //FIXME: if CTL-C before server is started then don't wait for the server
-      setImmediate(() => { //hack: wait for build-reporter
+      setImmediate(() => { //HACK: wait for build-reporter
         if (errors.length) {
           reject(errors);
+        } else if (reporter.errors.length) {
+          reject();
         } else {
           resolve();
         }

@@ -6,6 +6,7 @@ const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
+const ensureTrailingSlash = require('./lib/ensureTrailingSlash');
 
 class WebpackConfigBuilder {
 
@@ -23,7 +24,7 @@ class WebpackConfigBuilder {
     this.sourceDirectory = options.src;
     this.tempDirectory = options.tmp;
     this.outputDirectory = options.dest;
-    this.publicPath = options.publicPath || '/';
+    this.publicPath = ensureTrailingSlash(options.publicPath);
     this.optimize = options.optimize || false;
 
     this.webpackConfig = {
@@ -157,7 +158,8 @@ class WebpackConfigBuilder {
         output: {
           comments: false,
           screw_ie8: true
-        }
+        },
+        sourceMap: false
       }));
     }
 

@@ -128,9 +128,11 @@ module.exports = options => {
   //wait for all the bundlers to close before resolving or rejecting
   return new Promise((resolve, reject) => {
     wfe.waitForAll('close', bundlers, errors => {
-      setImmediate(() => { //hack: wait for build-reporter
+      setImmediate(() => { //HACK: wait for build-reporter
         if (errors.length) {
           reject(errors);
+        } else if (reporter.errors.length) {
+          reject();
         } else {
           resolve();
         }

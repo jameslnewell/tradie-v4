@@ -105,6 +105,7 @@ class BuildReporter {
         .on('start', () => {
 
           if (this.compiling === 0) {
+            this.clearStats();
             this.printStartMessage();
           }
 
@@ -120,7 +121,6 @@ class BuildReporter {
 
             if (this.compiling === 0) {
               this.printFinishMessage();
-              this.clearStats();
             }
 
           });
