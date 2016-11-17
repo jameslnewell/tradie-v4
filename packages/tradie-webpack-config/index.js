@@ -1,12 +1,12 @@
 'use strict';
-const mergeWith = require('lodash.mergewith');
-const extensionsToRegex = require('ext-to-regex');
-const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
-
 const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
+const mergeWith = require('lodash.mergewith');
+const extensionsToRegex = require('ext-to-regex');
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const ensureTrailingSlash = require('./lib/ensureTrailingSlash');
+const WatchMissingNodeModulesPlugin = require('./lib/WatchMissingNodeModulesPlugin');
 
 class WebpackConfigBuilder {
 
@@ -57,6 +57,7 @@ class WebpackConfigBuilder {
 
         //enforce case sensitive paths to avoid issues between file systems
         new CaseSensitivePathsPlugin(),
+        new WatchMissingNodeModulesPlugin(path.join(this.rootDirectory, 'node_modules')), //TODO: only do when watching for slight perf increase?
 
         new webpack.LoaderOptionsPlugin({
           minimize: this.optimize,
