@@ -35,13 +35,13 @@ class TestReporter {
 
     const msgs = formatWebpackMessages(stats.toJson());
 
-    if (msgs.errors.length) {
+    if (msgs.errors.length) {  //TODO: use method from build reporter
 
       console.log();
       console.log(chalk.red('Compiled with errors'));
       console.log();
-      msgs.errors.forEach(msg => {
-        console.error(msg);
+      this.errors.forEach((msg, i) => {
+        console.error(`${chalk.underline.red(`Error #${i + 1}:`)} \n\n${msg}\n\n`);
         console.log();
       });
 
@@ -50,8 +50,8 @@ class TestReporter {
       console.log();
       console.log(chalk.yellow('Compiled with warnings'));
       console.log();
-      msgs.warnings.forEach(msg => {
-        console.error(msg);
+      this.warnings.forEach((msg, i) => {
+        console.error(`${chalk.underline.yellow(`Warning #${i + 1}:`)} \n\n${msg}\n\n`);
         console.log();
       });
 
