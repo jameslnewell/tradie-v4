@@ -69,7 +69,6 @@ class Server {
   stop() {
     return new Promise((resolve, reject) => {
       if (this.server) {
-        console.log('stopping the server');
         this.server.close(error => {
           if (error) {
             this.emitter.emit('error', error);

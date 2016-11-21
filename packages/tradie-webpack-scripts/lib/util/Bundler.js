@@ -95,7 +95,6 @@ class Bundler {
 
   stop() {
     if (this.watcher) {
-      console.log('stopping the watcher');
       this.watcher.close(() => this.emitter.emit('stopped'));
     } else {
       this.emitter.emit('stopped');

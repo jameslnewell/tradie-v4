@@ -154,8 +154,7 @@ module.exports = options => {
   //wait for all the bundlers and server to close before resolving or rejecting
   return new Promise((resolve, reject) => {
     wfe.waitForAll('stopped', bundlers, errors => {
-
-      server.close()
+      server.stop()
         .then(() => onServerStop())
         .then(() => setImmediate(() => { //HACK: wait for build-reporter
           if (errors.length) {
