@@ -18,7 +18,7 @@ const BuildReporter = require('./util/BuildReporter');
  */
 module.exports = options => {
   let
-    activeBundlers = [],
+    bundlers = [],
     vendorBundler,
     clientBundler,
     buildBundler,
@@ -31,7 +31,7 @@ module.exports = options => {
     vendorBundler = new Bundler(options.webpack.vendor, {
       name: 'vendor'
     });
-    activeBundlers.push(vendorBundler);
+    bundlers.push(vendorBundler);
   }
 
   //create the client bundler
@@ -40,7 +40,7 @@ module.exports = options => {
       name: 'client',
       watch: options.watch
     });
-    activeBundlers.push(clientBundler);
+    bundlers.push(clientBundler);
   }
 
   //create the build bundler
@@ -49,7 +49,7 @@ module.exports = options => {
       name: 'build',
       watch: options.watch
     });
-    activeBundlers.push(buildBundler);
+    bundlers.push(buildBundler);
   }
 
   //create the server bundler
@@ -58,13 +58,13 @@ module.exports = options => {
       name: 'server',
       watch: options.watch
     });
-    activeBundlers.push(serverBundler);
+    bundlers.push(serverBundler);
   }
 
   //create the reporter
   const reporter = new BuildReporter({
     debug: options.debug,
-    bundlers: activeBundlers
+    bundlers
   });
 
   const runClientAndBuildBundles = () => {
@@ -108,7 +108,7 @@ module.exports = options => {
         if (exiting) return;
 
         //remove the completed bundler
-        activeBundlers.splice(0, 1);
+        bundlers.splice(0, 1);
 
         //run the client and build bundlers
         runClientAndBuildBundles();
@@ -132,12 +132,12 @@ module.exports = options => {
   process.on('SIGINT', () => {
     exiting = true;
     server.stop();
-    activeBundlers.forEach(bundler => bundler.stop());
+    bundlers.forEach(bundler => bundler.stop());
   });
 
   //wait for all the bundlers to close before resolving or rejecting
   return new Promise((resolve, reject) => {
-    wfe.waitForAll('stopped', activeBundlers, errors => {
+    wfe.waitForAll('stopped', bundlers, errors => {
       setImmediate(() => { //HACK: wait for build-reporter
         if (errors.length) {
           reject(errors);

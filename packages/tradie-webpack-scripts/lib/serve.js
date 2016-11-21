@@ -8,17 +8,21 @@ const BuildReporter = require('./util/BuildReporter');
 /**
  * Run webpack on multiple bundles and display the results
  * @param {object} options
- * @param {boolean} [options.debug=false]
- * @param {object}  options.webpack
- * @param {object}  [options.webpack.vendor]
- * @param {object}  [options.webpack.client]
- * @param {object}  [options.webpack.build]
- * @param {object}  [options.webpack.server]
+ * @param {boolean}   [options.debug=false]
+ * @param {object}    options.webpack
+ * @param {object}    [options.webpack.vendor]
+ * @param {object}    [options.webpack.client]
+ * @param {object}    [options.webpack.build]
+ * @param {object}    [options.webpack.server]
+ * @param {function}  [options.onServerStart]
+ * @param {function}  [options.onServerStop]
  * @returns {Promise.<null>}
  */
 module.exports = options => {
+  const onServerStart = options.onServerStart || () => {/* do nothing */};
+  const onServerStop = options.onServerStop || () => {/* do nothing */};
   let
-    activeBundlers = [],
+    bundlers = [],
     vendorBundler,
     clientBundler,
     buildBundler,
@@ -32,7 +36,7 @@ module.exports = options => {
     vendorBundler = new Bundler(options.webpack.vendor, {
       name: 'vendor'
     });
-    activeBundlers.push(vendorBundler);
+    bundlers.push(vendorBundler);
   }
 
   //create the client bundler
@@ -41,7 +45,7 @@ module.exports = options => {
       name: 'client',
       watch: true
     });
-    activeBundlers.push(clientBundler);
+    bundlers.push(clientBundler);
   }
 
   //create the build bundler
@@ -50,7 +54,7 @@ module.exports = options => {
       name: 'build',
       watch: true
     });
-    activeBundlers.push(buildBundler);
+    bundlers.push(buildBundler);
   }
 
   //create the server bundler
@@ -59,7 +63,7 @@ module.exports = options => {
       name: 'server',
       watch: true
     });
-    activeBundlers.push(serverBundler);
+    bundlers.push(serverBundler);
   }
 
   //create the server
@@ -69,7 +73,7 @@ module.exports = options => {
   const reporter = new BuildReporter({
     debug: options.debug,
     server,
-    bundlers: activeBundlers
+    bundlers
   });
 
   const runClientAndBuildBundles = () => {
@@ -113,7 +117,7 @@ module.exports = options => {
         if (exiting) return;
 
         //remove the finished bundler
-        activeBundlers.splice(0, 1);
+        bundlers.splice(0, 1);
 
         //run the client and build bundlers
         runClientAndBuildBundles();
@@ -136,31 +140,34 @@ module.exports = options => {
   //stop all the things when the user wants to exit
   process.on('SIGINT', () => {
     exiting = true;
-    console.log('stopping all the things');
-    server.stop();
-    activeBundlers.forEach(bundler => bundler.stop());
+    bundlers.forEach(bundler => bundler.stop());
   });
 
   //start the server after the other bundlers finish if the user doesn't want to ext
-  wfe.waitForAll('completed', activeBundlers, () => {
+  wfe.waitForAll('completed', bundlers, () => {
     if (!exiting) {
       server.start();
+      onServerStart();
     }
   });
 
   //wait for all the bundlers and server to close before resolving or rejecting
   return new Promise((resolve, reject) => {
-    wfe.waitForAll('stopped', activeBundlers.concat(server), errors => {
-      console.log('stopped all the things');
-      setImmediate(() => { //HACK: wait for build-reporter
-        if (errors.length) {
-          reject(errors);
-        } else if (reporter.errors.length) {
-          reject();
-        } else {
-          resolve();
-        }
-      });
+    wfe.waitForAll('stopped', bundlers, errors => {
+
+      server.close()
+        .then(() => onServerStop())
+        .then(() => setImmediate(() => { //HACK: wait for build-reporter
+          if (errors.length) {
+            reject(errors);
+          } else if (reporter.errors.length) {
+            reject();
+          } else {
+            resolve();
+          }
+        }))
+      ;
+
     });
   });
 
