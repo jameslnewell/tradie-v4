@@ -74,6 +74,7 @@ module.exports = options => {
       //start the build bundler after the client bundler has run for the first time,
       // and re-build the build bundler whenever the client bundler finishes
       clientBundler.once('completed', () => {
+        if (exiting) return;
 
         //run the build bundler
         buildBundler.start();
