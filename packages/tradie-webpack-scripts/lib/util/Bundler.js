@@ -9,8 +9,8 @@ const EventEmitter = require('events').EventEmitter;
  *
  * Events:
  *  - start - emitted when a compilation has started
- *  - finish - emitted when a compilation has finished
- *  - close - emitted when the bundler has been closed
+ *  - complete - emitted when a compilation has been completed
+ *  - stop - emitted when the bundler has been stopped
  *
  * @param {object}  config
  * @param {object}  [options]
@@ -28,18 +28,18 @@ class Bundler {
     this.watching = options && options.watch;
 
     this.compiler.plugin('compile', () => {
-      this.emitter.emit('start');
+      this.emitter.emit('started');
     });
 
     this.compiler.plugin('done', stats => {
-      this.emitter.emit('finish', stats);
+      this.emitter.emit('completed', stats);
     });
 
     //debug information
     this.emitter
-      .on('start', () => this.debug(`starting`))
-      .on('finish', () => this.debug(`finished`))
-      .on('close', () => this.debug(`closed`))
+      .on('started', () => this.debug(`started`))
+      .on('completed', () => this.debug(`completed`))
+      .on('stopped', () => this.debug(`stopped`))
     ;
 
   }
@@ -66,7 +66,7 @@ class Bundler {
     return this;
   }
 
-  run() {
+  start() {
 
     if (this.watching) {
 
@@ -77,12 +77,6 @@ class Bundler {
         }
       });
 
-      //stop watching and exit when the user presses CTL-C
-      process.on('SIGINT', () => {
-        this.watcher.close(() => this.emitter.emit('close'));
-      });
-
-
     } else {
 
       //compile in run mode
@@ -90,12 +84,22 @@ class Bundler {
         if (error) {
           this.emitter.emit('error', error);
         } else {
-          this.emitter.emit('close');
+          this.emitter.emit('stopped');
         }
       });
 
     }
 
+    return this;
+  }
+
+  stop() {
+    if (this.watcher) {
+      console.log('stopping the watcher');
+      this.watcher.close(() => this.emitter.emit('stopped'));
+    } else {
+      this.emitter.emit('stopped');
+    }
     return this;
   }
 

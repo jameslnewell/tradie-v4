@@ -18,11 +18,12 @@ const BuildReporter = require('./util/BuildReporter');
  */
 module.exports = options => {
   let
-    bundlers = [],
+    activeBundlers = [],
     vendorBundler,
     clientBundler,
     buildBundler,
-    serverBundler
+    serverBundler,
+    exiting
   ;
 
   //create the vendor bundler
@@ -30,7 +31,7 @@ module.exports = options => {
     vendorBundler = new Bundler(options.webpack.vendor, {
       name: 'vendor'
     });
-    bundlers.push(vendorBundler);
+    activeBundlers.push(vendorBundler);
   }
 
   //create the client bundler
@@ -39,7 +40,7 @@ module.exports = options => {
       name: 'client',
       watch: options.watch
     });
-    bundlers.push(clientBundler);
+    activeBundlers.push(clientBundler);
   }
 
   //create the build bundler
@@ -48,7 +49,7 @@ module.exports = options => {
       name: 'build',
       watch: options.watch
     });
-    bundlers.push(buildBundler);
+    activeBundlers.push(buildBundler);
   }
 
   //create the server bundler
@@ -57,13 +58,13 @@ module.exports = options => {
       name: 'server',
       watch: options.watch
     });
-    bundlers.push(serverBundler);
+    activeBundlers.push(serverBundler);
   }
 
   //create the reporter
   const reporter = new BuildReporter({
     debug: options.debug,
-    bundlers
+    bundlers: activeBundlers
   });
 
   const runClientAndBuildBundles = () => {
@@ -72,28 +73,28 @@ module.exports = options => {
 
       //start the build bundler after the client bundler has run for the first time,
       // and re-build the build bundler whenever the client bundler finishes
-      clientBundler.once('finish', () => {
+      clientBundler.once('completed', () => {
 
         //run the build bundler
-        buildBundler.run();
+        buildBundler.start();
 
         //re-run the build bundler
-        clientBundler.on('finish', () => buildBundler.invalidate());
+        clientBundler.on('completed', () => buildBundler.invalidate());
 
       });
 
       //run the client bundler
-      clientBundler.run();
+      clientBundler.start();
 
     } else if (clientBundler) {
 
       //run the client bundler
-      clientBundler.run();
+      clientBundler.start();
 
     } else if (buildBundler) {
 
       //run the build bundler
-      buildBundler.run();
+      buildBundler.start();
 
     }
 
@@ -102,16 +103,17 @@ module.exports = options => {
   //run the vendor, client and build bundlers
   if (vendorBundler) {
     vendorBundler
-      .once('finish', () => {
+      .once('completed', () => {
+        if (exiting) return;
 
-        //remove the finished bundle
-        bundlers.splice(0, 1);
+        //remove the completed bundler
+        activeBundlers.splice(0, 1);
 
         //run the client and build bundlers
         runClientAndBuildBundles();
 
       })
-      .run()
+      .start()
     ;
   } else {
 
@@ -122,12 +124,19 @@ module.exports = options => {
 
   //run the server bundler
   if (serverBundler) {
-    serverBundler.run();
+    serverBundler.start();
   }
+
+  //stop all the things when the user wants to exit
+  process.on('SIGINT', () => {
+    exiting = true;
+    server.stop();
+    activeBundlers.forEach(bundler => bundler.stop());
+  });
 
   //wait for all the bundlers to close before resolving or rejecting
   return new Promise((resolve, reject) => {
-    wfe.waitForAll('close', bundlers, errors => {
+    wfe.waitForAll('stopped', activeBundlers, errors => {
       setImmediate(() => { //HACK: wait for build-reporter
         if (errors.length) {
           reject(errors);

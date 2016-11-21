@@ -18,11 +18,12 @@ const BuildReporter = require('./util/BuildReporter');
  */
 module.exports = options => {
   let
-    bundlers = [],
+    activeBundlers = [],
     vendorBundler,
     clientBundler,
     buildBundler,
     serverBundler,
+    exiting,
     server
   ;
 
@@ -31,7 +32,7 @@ module.exports = options => {
     vendorBundler = new Bundler(options.webpack.vendor, {
       name: 'vendor'
     });
-    bundlers.push(vendorBundler);
+    activeBundlers.push(vendorBundler);
   }
 
   //create the client bundler
@@ -40,7 +41,7 @@ module.exports = options => {
       name: 'client',
       watch: true
     });
-    bundlers.push(clientBundler);
+    activeBundlers.push(clientBundler);
   }
 
   //create the build bundler
@@ -49,7 +50,7 @@ module.exports = options => {
       name: 'build',
       watch: true
     });
-    bundlers.push(buildBundler);
+    activeBundlers.push(buildBundler);
   }
 
   //create the server bundler
@@ -58,7 +59,7 @@ module.exports = options => {
       name: 'server',
       watch: true
     });
-    bundlers.push(serverBundler);
+    activeBundlers.push(serverBundler);
   }
 
   //create the server
@@ -67,7 +68,8 @@ module.exports = options => {
   //create the reporter
   const reporter = new BuildReporter({
     debug: options.debug,
-    bundlers
+    server,
+    bundlers: activeBundlers
   });
 
   const runClientAndBuildBundles = () => {
@@ -76,28 +78,28 @@ module.exports = options => {
 
       //start the build bundler after the client bundler has run for the first time,
       // and re-build the build bundler whenever the client bundler finishes
-      clientBundler.once('finish', () => {
+      clientBundler.once('completed', () => {
 
         //run the build bundler
-        buildBundler.run();
+        buildBundler.start();
 
         //re-run the build bundler
-        clientBundler.on('finish', () => buildBundler.invalidate());
+        clientBundler.on('completed', () => buildBundler.invalidate());
 
       });
 
       //run the client bundler
-      clientBundler.run();
+      clientBundler.start();
 
     } else if (clientBundler) {
 
       //run the client bundler
-      clientBundler.run();
+      clientBundler.start();
 
     } else if (buildBundler) {
 
       //run the build bundler
-      buildBundler.run();
+      buildBundler.start();
 
     }
 
@@ -106,16 +108,17 @@ module.exports = options => {
   //run the vendor, client and build bundlers
   if (vendorBundler) {
     vendorBundler
-      .once('finish', () => {
+      .once('completed', () => {
+        if (exiting) return;
 
-        //remove the finished bundle
-        bundlers.splice(0, 1);
+        //remove the finished bundler
+        activeBundlers.splice(0, 1);
 
         //run the client and build bundlers
         runClientAndBuildBundles();
 
       })
-      .run()
+      .start()
     ;
   } else {
 
@@ -126,18 +129,28 @@ module.exports = options => {
 
   //run the server bundler
   if (serverBundler) {
-    serverBundler.run();
+    serverBundler.start();
   }
 
-  //run the server after the other bundlers finish
-  wfe.waitForAll('finish', bundlers, () => {
-    //TODO: handle CTL-C logic in serve.js/build.js so we know whether we're exiting already and can skip running the server
-    server.run()
+  //stop all the things when the user wants to exit
+  process.on('SIGINT', () => {
+    exiting = true;
+    console.log('stopping all the things');
+    server.stop();
+    activeBundlers.forEach(bundler => bundler.stop());
+  });
+
+  //start the server after the other bundlers finish if the user doesn't want to ext
+  wfe.waitForAll('completed', activeBundlers, () => {
+    if (!exiting) {
+      server.start();
+    }
   });
 
   //wait for all the bundlers and server to close before resolving or rejecting
   return new Promise((resolve, reject) => {
-    wfe.waitForAll('close', bundlers.concat(server), errors => { //FIXME: if CTL-C before server is started then don't wait for the server
+    wfe.waitForAll('stopped', activeBundlers.concat(server), errors => {
+      console.log('stopped all the things');
       setImmediate(() => { //HACK: wait for build-reporter
         if (errors.length) {
           reject(errors);
@@ -149,7 +162,5 @@ module.exports = options => {
       });
     });
   });
-
-
 
 };

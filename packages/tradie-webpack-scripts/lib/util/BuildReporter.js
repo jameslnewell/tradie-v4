@@ -9,17 +9,23 @@ class BuildReporter {
   constructor(options) {
     this.errors = [];
     this.warnings = [];
-    this.compiling = 0;
+    this.inProgressCount = 0;
     this.debug = options && options.debug;
 
     this.observe(options.bundlers);
+
+    if (options.server) {
+      options.server.on('started', (_, port) => {
+        console.log(chalk.blue(`Server running at http://localhost:${port}`));
+      });
+    }
 
   }
 
   /**
    * @private
    */
-  printStartMessage() {
+  printStartedMessage() {
 
     if (!this.debug) {
       clear();
@@ -34,7 +40,7 @@ class BuildReporter {
   /**
    * @private
    */
-  printFinishMessage() {
+  printCompletedMessage() {
 
     if (!this.debug) {
       clear();
@@ -100,27 +106,25 @@ class BuildReporter {
     bundlers.forEach(bundler => {
 
       bundler
-        .on('start', () => {
+        .on('started', () => {
 
-          if (this.compiling === 0) {
+          if (this.inProgressCount === 0) {
             this.clearStats();
-            this.printStartMessage();
+            this.printStartedMessage();
           }
 
-          ++this.compiling;
+          ++this.inProgressCount;
         })
-        .on('finish', stats => {
+        .on('completed', stats => {
 
           this.collateStats(stats);
 
           //wait to next tick to allow the next compilation to start before we say compilation is finished
           setImmediate(() => {
-            --this.compiling;
+            --this.inProgressCount;
 
-            if (this.compiling === 0) {
-              // this.errors.forEach((err, i) => console.log(`#${i}: \n ${err}\n\n`));
-              // process.exit();
-              this.printFinishMessage();
+            if (this.inProgressCount === 0) {
+              this.printCompletedMessage();
             }
 
           });

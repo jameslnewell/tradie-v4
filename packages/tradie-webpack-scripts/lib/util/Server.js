@@ -1,6 +1,5 @@
 'use strict';
 const debug = require('debug');
-const chalk = require('chalk');
 const connect = require('connect');
 const detectPort = require('detect-port');
 const serveIndex = require('serve-index');
@@ -36,40 +35,55 @@ class Server {
 
   off(event, handler) {
     this.emitter.removeListener(event, handler);
-    return
+    return this;
   }
 
-  run() {
+  /**
+   * @returns {Promise}
+   */
+  start() {
+    return new Promise((resolve, reject) => {
+      detectPort(3000)
+        .then(port => {
+          this.server = this.app.listen(port, error => {
+            if (error) {
+              this.emitter.emit('error', error);
+              reject(error);
+            } else {
+              this.emitter.emit('started', 'localhost', port);
+              resolve();
+            }
+          });
+        })
+        .catch(error => {
+          this.emitter.emit('error', error);
+          reject(error);
+        })
+      ;
+    });
+  }
 
-    //start the server on a free port
-    detectPort(3000)
-      .then(port => {
-        this.server = this.app.listen(port, error => {
-          if (error) {
-            this.emitter.emit(error);
-          } else {
-            console.log(chalk.blue(`Server running at http://localhost:${port}`)); //TODO: move logging somewhere else?
-          }
-        });
-      })
-      .catch(error => {
-        this.emitter.emit(error);
-      })
-    ;
-
-    //close the server when the user presses CTL-C
-    process.on('SIGINT', () => {
+  /**
+   * @returns {Promise}
+   */
+  stop() {
+    return new Promise((resolve, reject) => {
       if (this.server) {
+        console.log('stopping the server');
         this.server.close(error => {
           if (error) {
-            this.emitter.emit(error);
+            this.emitter.emit('error', error);
+            reject(error);
           } else {
-            this.emitter.emit('close');
+            this.emitter.emit('stopped');
+            resolve();
           }
         });
+      } else {
+        this.emitter.emit('stopped');
+        resolve();
       }
     });
-
   }
 
 }
