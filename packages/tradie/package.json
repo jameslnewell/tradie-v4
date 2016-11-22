@@ -1,7 +1,7 @@
 {
   "name": "tradie",
   "description": "A semi-opinionated build tool for frontend projects. Use it to lint, bundle and test your script and style files.",
-  "version": "2.0.0-preview.8",
+  "version": "2.0.0-preview.14",
   "repository": {
     "type": "git",
     "url": "git@github.com:jameslnewell/tradie.git"
@@ -10,7 +10,7 @@
     "chalk": "^1.1.3",
     "commander": "^2.9.0",
     "find-and-read-package-json": "^1.0.0",
-    "tradie-webpack-scripts": "^2.0.0-preview.8"
+    "tradie-webpack-scripts": "^2.0.0-preview.12"
   },
   "bin": {
     "tradie-v2": "./bin/tradie.js"
