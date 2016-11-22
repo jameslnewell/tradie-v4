@@ -5,6 +5,8 @@ const Server = require('./util/Server');
 const Bundler = require('./util/Bundler');
 const BuildReporter = require('./util/BuildReporter');
 
+const noop = () => {/* do nothing */};
+
 /**
  * Run webpack on multiple bundles and display the results
  * @param {object} options
@@ -19,8 +21,8 @@ const BuildReporter = require('./util/BuildReporter');
  * @returns {Promise.<null>}
  */
 module.exports = options => {
-  const onServerStart = options.onServerStart || () => {/* do nothing */};
-  const onServerStop = options.onServerStop || () => {/* do nothing */};
+  const onServerStart = options.onServerStart || noop;
+  const onServerStop = options.onServerStop || noop;
   let
     bundlers = [],
     vendorBundler,
