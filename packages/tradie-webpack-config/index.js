@@ -146,8 +146,6 @@ class WebpackConfigBuilder {
         'process.env.NODE_ENV': JSON.stringify('production')
       }));
 
-      this.webpackConfig.plugins.push(new webpack.optimize.DedupePlugin());
-
       this.webpackConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({
         compress: {
           screw_ie8: true,
