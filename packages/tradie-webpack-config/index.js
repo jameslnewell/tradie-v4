@@ -146,8 +146,6 @@ class WebpackConfigBuilder {
         'process.env.NODE_ENV': JSON.stringify('production')
       }));
 
-      this.webpackConfig.plugins.push(new webpack.optimize.DedupePlugin());
-
       this.webpackConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({
         compress: {
           screw_ie8: true,
@@ -312,15 +310,27 @@ class WebpackConfigBuilder {
 
   /**
    * @param {object}          options
-   * @param {Array.<string>}  options.extensions
+   * @param {Array.<string>}  options.includeExtensions
+   * @param {Array.<string>}  options.excludeExtensions
    */
   configureFiles(options) {
 
-    this.webpackConfig.module.loaders.push({
-      test: extensionsToRegex(options.extensions),
+    const loader = {
       loader: 'file-loader',
-      query: {name: 'files/[name].[hash:8].[ext]'} //always include the file name for SEO benefits
-    });
+      query: {
+        name: 'files/[name].[hash:8].[ext]' //always include the file name for SEO benefits
+      }
+    };
+
+    if (options.includeExtensions) {
+      loader.test = extensionsToRegex(options.includeExtensions);
+    }
+
+    if (options.excludeExtensions) {
+      loader.exclude = extensionsToRegex(options.excludeExtensions);
+    }
+
+    this.webpackConfig.module.loaders.push(loader);
 
     return this;
   }
