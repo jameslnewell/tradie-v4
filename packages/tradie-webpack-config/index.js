@@ -253,9 +253,9 @@ class WebpackConfigBuilder {
     );
 
     const loaders = [
-      `css-loader?-autoprefixer`,
-      `postcss-loader`,
-      `resolve-url-loader`, //devtool: [inline-]source-map is required for CSS source maps to work in the browser
+      `css-loader?-autoprefixer${this.optimize || !options.extract ? '' : '&sourceMap'}`,
+      `postcss-loader${this.optimize || !options.extract ? '' : '?sourceMap'}`,
+      `resolve-url-loader${this.optimize || !options.extract ? '' : '?sourceMap'}`, //devtool: [inline-]source-map is required for CSS source maps to work in the browser
       'sass-loader?sourceMap' //sourceMap is required by resolve-url-loader
     ];
 
