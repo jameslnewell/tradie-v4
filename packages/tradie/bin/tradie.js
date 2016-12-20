@@ -27,7 +27,6 @@ const createAction = function() {
       }
       process.exit(1);
     })
-    .then(() => console.log('exiting'))
   ;
 };
 

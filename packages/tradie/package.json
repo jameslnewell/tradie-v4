@@ -13,7 +13,7 @@
     "tradie-webpack-scripts": "^2.0.0-preview.12"
   },
   "bin": {
-    "tradie-v2": "./bin/tradie.js"
+    "tradie": "./bin/tradie.js"
   },
   "license": "MIT"
 }
