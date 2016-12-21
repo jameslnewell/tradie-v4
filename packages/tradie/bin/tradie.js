@@ -17,7 +17,6 @@ const createAction = function() {
 
   require(`../lib/${cmdName}`)(apiOptions)
     .catch(error => {
-      console.log('erroring');
       if (error) {
         if (error instanceof Error) {
           console.error(chalk.red(error.stack));

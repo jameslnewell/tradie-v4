@@ -112,7 +112,7 @@ class WebpackConfigBuilder {
       loader: 'babel-loader',
       query: Object.assign({}, options.babel, {
         babelrc: false,
-        cacheDirectory: this.tempDirectory
+        cacheDirectory: path.join(this.tempDirectory, 'babel-cache')
       })
     });
 

@@ -1,6 +1,7 @@
 /* @flow weak */
 'use strict';
 const debug = require('debug');
+const MemoryFS = require('memory-fs');
 const webpack = require('webpack');
 const EventEmitter = require('events').EventEmitter;
 
@@ -13,19 +14,24 @@ const EventEmitter = require('events').EventEmitter;
  *  - stop - emitted when the bundler has been stopped
  *
  * @param {object}  config
- * @param {object}  [options]
+ * @param {object}  options
  * @param {string}  [options.name]
  * @param {boolean} [options.watch]
+ * @param {boolean} [options.virtual]
  */
 class Bundler {
 
   constructor(config, options) {
     this.debug = debug(`tradie-webpack-scripts:bundler:${options.name}`);
+    this.watch = options.watch;
     this.emitter = new EventEmitter();
     this.compiler = webpack(config);
     this.watcher = null;
-    this.name = options && options.name || '';
-    this.watching = options && options.watch;
+
+    //use a virtual file system
+    if (options.virtual) {
+      this.compiler.outputFileSystem = new MemoryFS();
+    }
 
     this.compiler.plugin('compile', () => {
       this.emitter.emit('started');
@@ -68,7 +74,7 @@ class Bundler {
 
   start() {
 
-    if (this.watching) {
+    if (this.watch) {
 
       //compile in watch mode
       this.watcher = this.compiler.watch({}, error => {
