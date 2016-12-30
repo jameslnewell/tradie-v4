@@ -16,6 +16,6 @@
     "webpack-hot-middleware": "^2.13.0"
   },
   "peerDependencies": {
-    "webpack": "1 || ^2.1.0-beta"
+    "webpack": "^1 || ^2.2.0-rc"
   }
 }

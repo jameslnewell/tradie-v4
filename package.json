@@ -2,7 +2,7 @@
   "devDependencies": {
     "flow-bin": "^0.33.0",
     "lerna": "2.0.0-beta.30",
-    "webpack": "^2.1.0-beta.25"
+    "webpack": "^2.2.0-rc.3"
   },
   "scripts": {
     "flow": "flow"
