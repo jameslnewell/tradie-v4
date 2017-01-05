@@ -1,6 +1,6 @@
 {
   "name": "tradie-webpack-config",
-  "version": "2.0.0-preview.18",
+  "version": "2.0.0-preview.21",
   "dependencies": {
     "case-sensitive-paths-webpack-plugin": "^1.1.4",
     "ext-to-regex": "^0.1.0",
