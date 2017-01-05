@@ -1,7 +1,7 @@
 {
   "name": "tradie",
   "description": "A semi-opinionated build tool for frontend projects. Use it to lint, bundle and test your script and style files.",
-  "version": "2.0.0-preview.17",
+  "version": "2.0.0-preview.20",
   "repository": {
     "type": "git",
     "url": "git@github.com:jameslnewell/tradie.git"
