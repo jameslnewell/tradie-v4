@@ -1,4 +1,5 @@
 'use strict';
+const wfe = require('wait-for-event');
 const Bundler = require('./util/Bundler');
 const BuildReporter = require('./util/BuildReporter');
 
@@ -35,7 +36,7 @@ module.exports = options => new Promise((resolve, reject) => {
 
   //wait for the bundler to close before resolving or rejecting
   return new Promise((resolve, reject) => {
-    wfe.waitForAll('stopped', bundlers, errors => {
+    wfe.waitForAll('stopped', [bundler], errors => {
       setImmediate(() => { //HACK: wait for build-reporter
         if (errors.length) {
           reject(errors);
