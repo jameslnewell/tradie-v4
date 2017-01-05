@@ -338,43 +338,47 @@ class WebpackConfigBuilder {
   /**
    * Configure DLL
    */
-  configureDLL() {
+  configureVendorDLL() {
 
     const name = this.optimize ? '[name]' : '[name]_[chunkhash]';
 
     this.webpackConfig.output.library = name;
 
-    this.webpackConfig.plugins.push(new webpack.DllPlugin({
-      path: path.join(this.tempDirectory, '[name]-manifest.json'),
-      name: name
-    }));
+    this.webpackConfig.plugins.push(
+      new webpack.DllPlugin({
+        path: path.join(this.tempDirectory, 'vendor-manifest.json'),
+        name: name
+      })
+    );
 
     return this;
   }
 
-  configureDLLReference() {
-    if (vendors.length > 0) {
-      //chose DLLPlugin for long-term-caching based on https://github.com/webpack/webpack/issues/1315
-      config.plugins = config.plugins.concat([
-        new webpack.DllReferencePlugin({
-          context: dest,
-          manifest: require(path.join(tmp, 'vendor-manifest.json')) //eslint-disable-line global-require
-        })
-      ]);
-    }
+  referenceVendorDLL() {
+
+    //chose DLLPlugin for long-term-caching based on https://github.com/webpack/webpack/issues/1315
+    this.webpackConfig.plugins.push(
+      new webpack.DllReferencePlugin({
+        context: this.sourceDirectory,
+        manifest: path.join(this.tempDirectory, 'vendor-manifest.json')
+      })
+    );
+
+    return this;
   }
 
   configureCommonBundle() {
-    if (clientBundles.length > 1) {
-      config.plugins = config.plugins.concat([
-        new webpack.optimize.CommonsChunkPlugin({
-          name: 'common',
-          filename: 'scripts/[name].[chunkhash:8].js',
-          chunks: clientBundles, //exclude modules from the vendor chunk
-          minChunks: clientBundles.length //modules must be used across all the chunks to be included
-        })
-      ]);
-    }//TODO: what about for a single page app where require.ensure is used - I want a common stuff for all chunks in the main entry point
+
+    this.webpackConfig.plugins.push(
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'common',
+        filename: 'scripts/[name].[chunkhash:8].js',
+        chunks: clientBundles, //exclude modules from the vendor chunk
+        minChunks: clientBundles.length //modules must be used across all the chunks to be included
+      })
+    );//TODO: what about for a single page app where require.ensure is used - I want a common stuff for all chunks in the main entry point
+
+    return this;
   }
 
   plugin(plugin) {
