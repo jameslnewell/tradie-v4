@@ -16,7 +16,8 @@ module.exports = options => new Promise((resolve, reject) => {
   //create the test bundler
   const bundler = new Bundler(options.webpack, {
     name: 'test',
-    watch: options.watch
+    watch: options.watch,
+    virtual: true
   });
 
   //create the reporter
