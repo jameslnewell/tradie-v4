@@ -1,6 +1,6 @@
 {
   "name": "tradie-template-react-static-site",
-  "version": "1.0.0-preview.19",
+  "version": "1.0.0-preview.20",
   "description": "Tradie template for building static sites with React.",
   "repository": {
     "type": "git",
@@ -38,7 +38,7 @@
     "static-react-render-webpack-plugin": "^0.4.0",
     "style-loader": "^0.13.1",
     "tiny-lr": "^1.0.3",
-    "tradie-webpack-config": "^2.0.0-preview.21",
+    "tradie-webpack-config": "^2.0.0-preview.26",
     "webpack": "^2.2.0",
     "webpack-node-externals": "^1.5.4"
   },
