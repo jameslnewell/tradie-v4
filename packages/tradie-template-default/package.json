@@ -1,6 +1,6 @@
 {
   "name": "tradie-template-default",
-  "version": "2.0.0-preview.18",
+  "version": "2.0.0-preview.22",
   "dependencies": {
     "autoprefixer": "^6.5.0",
     "babel-core": "^6.17.0",
@@ -19,7 +19,7 @@
     "resolve-url-loader": "^1.6.0",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
-    "tradie-webpack-config": "^2.0.0-preview.18",
+    "tradie-webpack-config": "^2.0.0-preview.22",
     "webpack-resolve-short-path-plugin": "^1.0.4"
   },
   "peerDependencies": {
