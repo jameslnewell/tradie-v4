@@ -131,7 +131,6 @@ module.exports = options => {
   //stop all the things when the user wants to exit
   process.on('SIGINT', () => {
     exiting = true;
-    server.stop();
     bundlers.forEach(bundler => bundler.stop());
   });
 
