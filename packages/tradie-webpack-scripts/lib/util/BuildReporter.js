@@ -116,18 +116,17 @@ class BuildReporter {
           ++this.inProgressCount;
         })
         .on('completed', stats => {
-
           this.collateStats(stats);
 
           //wait to next tick to allow the next compilation to start before we say compilation is finished
-          setImmediate(() => {
+          setTimeout(() => {
             --this.inProgressCount;
 
             if (this.inProgressCount === 0) {
               this.printCompletedMessage();
             }
 
-          });
+          }, 10);
 
         })
       ;

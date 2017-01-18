@@ -23,6 +23,6 @@
     "webpack-resolve-short-path-plugin": "^1.0.4"
   },
   "peerDependencies": {
-    "webpack": "1 || ^2.1.0-beta"
+    "webpack": "^2.2.0"
   }
 }
