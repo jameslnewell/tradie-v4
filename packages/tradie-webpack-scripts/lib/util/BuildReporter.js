@@ -7,15 +7,17 @@ const formatWebpackMessages = require('./formatWebpackMessages');
 class BuildReporter {
 
   constructor(options) {
-    this.errors = [];
-    this.warnings = [];
-    this.inProgressCount = 0;
-    this.debug = options && options.debug;
+    this.compiling = false;
 
-    this.observe(options.bundlers);
+    this.debug = options.debug;
+    this.server = options.server;
+    this.bundlers = options.bundlers;
 
-    if (options.server) {
-      options.server.on('started', (_, port) => {
+    this.clearStats();
+    this.observe(this.bundlers);
+
+    if (this.server) {
+      this.server.on('started', (_, port) => {
         console.log(chalk.blue(`Server running at http://localhost:${port}`));
       });
     }
@@ -108,25 +110,27 @@ class BuildReporter {
       bundler
         .on('started', () => {
 
-          if (this.inProgressCount === 0) {
+          //if this is the first bundler compiling, clear the screen and show the started message
+          if (!this.compiling) {
             this.clearStats();
             this.printStartedMessage();
           }
 
-          ++this.inProgressCount;
+          this.compiling = true;
         })
         .on('completed', stats => {
           this.collateStats(stats);
 
-          //wait to next tick to allow the next compilation to start before we say compilation is finished
-          setTimeout(() => {
-            --this.inProgressCount;
+          //wait to next tick to allow the next bundler to start compiling before we show the completed message
+          setImmediate(() => {
 
-            if (this.inProgressCount === 0) {
+            //if there are no bundlers compiling, clear the screen and show the completed message
+            if (this.bundlers.every(bundler => !bundler.isCompiling())) {
+              this.compiling = false;
               this.printCompletedMessage();
             }
 
-          }, 10);
+          });
 
         })
       ;

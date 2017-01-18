@@ -31,7 +31,7 @@ module.exports = options => {
     serverBundler,
     exiting,
     server
-  ;
+    ;
 
   //create the vendor bundler
   if (options.webpack.vendor) {
@@ -148,8 +148,10 @@ module.exports = options => {
   //start the server after the other bundlers finish if the user doesn't want to ext
   wfe.waitForAll('completed', bundlers, () => {
     if (!exiting) {
-      server.start();
-      onServerStart();
+      setImmediate(() => { //HACK: wait for build-reporter
+        server.start();
+        onServerStart();
+      });
     }
   });
 

@@ -27,18 +27,35 @@ class Bundler {
     this.emitter = new EventEmitter();
     this.compiler = webpack(config);
     this.watcher = null;
+    this.compiling = false;
 
     //use a virtual file system
     if (options.virtual) {
       this.compiler.outputFileSystem = new MemoryFS();
     }
 
-    this.compiler.plugin('compile', () => {
+    //listen for when Webpack starts compiling
+    this.compiler.plugin(['run', 'watch-run'], (compilerOrWatcher, callback) => {
+      this.compiling = true;
       this.emitter.emit('started');
+      callback();
     });
 
+    //listen for when Webpack finishes emitting the compiled files
     this.compiler.plugin('done', stats => {
+      this.compiling = false;
       this.emitter.emit('completed', stats);
+    });
+
+    //listen for when Webpack encounters an error and can't recover
+    this.compiler.plugin('failed', stats => {
+      this.compiling = false;
+      this.emitter.emit('error', error);
+    });
+
+    //listen for when a file is changed
+    this.compiler.plugin('invalid', (file, time) => {
+      this.debug(`modified: ${file}`);
     });
 
     //debug information
@@ -48,6 +65,10 @@ class Bundler {
       .on('stopped', () => this.debug(`stopped`))
     ;
 
+  }
+
+  isCompiling() {
+    return this.compiling;
   }
 
   on(event, handler) {
