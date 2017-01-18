@@ -5,7 +5,7 @@ const webpack = require('webpack');
 const mergeWith = require('lodash.mergewith');
 const extensionsToRegex = require('ext-to-regex');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
-const ensureTrailingSlash = require('./lib/ensureTrailingSlash');
+const ensureTrailingSlash = require('./lib/addTrailingSlash');
 const WatchMissingNodeModulesPlugin = require('./lib/WatchMissingNodeModulesPlugin');
 
 class WebpackConfigBuilder {
@@ -355,11 +355,11 @@ class WebpackConfigBuilder {
   }
 
   referenceVendorDLL() {
+    const ReferenceDLLPlugin = require('./lib/ReferenceDLLPlugin');
 
     //chose DLLPlugin for long-term-caching based on https://github.com/webpack/webpack/issues/1315
     this.webpackConfig.plugins.push(
-      new webpack.DllReferencePlugin({
-        context: this.sourceDirectory,
+      new ReferenceDLLPlugin({
         manifest: path.join(this.tempDirectory, 'vendor-manifest.json')
       })
     );
