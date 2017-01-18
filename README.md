@@ -1,6 +1,6 @@
 # tradie
 
-A framework for creating targeted build tools similar to `create-react-app`.
+A framework for creating targeted build tools like `create-react-app`.
 
 ## Installation
 
