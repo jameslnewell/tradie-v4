@@ -1,6 +1,6 @@
 {
   "name": "tradie-template-react-static-site",
-  "version": "1.0.0-preview.21",
+  "version": "1.0.0-preview.22",
   "description": "Tradie template for building static sites with React.",
   "repository": {
     "type": "git",
@@ -20,7 +20,7 @@
     "css-loader": "^0.26.1",
     "debug": "^2.3.3",
     "eslint": "^3.7.1",
-    "eslint-config-jameslnewell": "^2.0.0-preview.3",
+    "eslint-config-jameslnewell": "^2.0.0-preview.5",
     "eslint-loader": "^1.6.1",
     "eval": "^0.1.1",
     "extract-text-webpack-plugin": "^2.0.0-beta.5",
