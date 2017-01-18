@@ -74,6 +74,7 @@ class Server {
             this.emitter.emit('error', error);
             reject(error);
           } else {
+            this.server = null;
             this.emitter.emit('stopped');
             resolve();
           }
