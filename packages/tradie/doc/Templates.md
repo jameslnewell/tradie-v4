@@ -1,6 +1,6 @@
 # Templates
 
-Templates tell `tradie` what/how to build and test scripts.
+Templates tell `tradie` what and how to build, serve and test your files.
 
 Templates `MUST` be named like:
 
@@ -15,6 +15,6 @@ Templates may contain:
 - `package.json` - Required.
 - `config/createVendorConfig.js` - Optional.
 - `config/createClientConfig.js` - Recommended.
+- `config/createBuildConfig.js` - Optional.
 - `config/createServerConfig.js` - Optional.
 - `config/createTestConfig.js` - Required.
- 

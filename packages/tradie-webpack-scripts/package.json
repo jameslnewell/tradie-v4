@@ -1,6 +1,7 @@
 {
   "name": "tradie-webpack-scripts",
   "version": "2.0.0-preview.25",
+  "description": "Scripts for compiling bundles with Webpack.",
   "dependencies": {
     "chalk": "^1.1.3",
     "clear": "0.0.1",
