@@ -9,21 +9,28 @@ const LiveReloadWebpackPlugin = require('./lib/LiveReloadWebpackPlugin');
 
 module.exports = cliOptions => {
   const assetsByChunkNameCache = {};
-  let liveReloadServer = tinylr();
+  let liveReloadServer;
 
   const onServerStart = () => {
     return new Promise((resolve, reject) => {
-      liveReloadServer.listen(35729, err => {
-        if (err) {
+
+      liveReloadServer = tinylr({
+        errorListener: err => {
           if (err.code === 'EADDRINUSE') {
+            console.warn(chalk.yellow(
+              'WARN: A LiveReload server is already running.\n' +
+              'If the already running LiveReload server is shut down while this instance of tradie is running,' +
+              ' LiveReload will cease to work.'
+            ));
             resolve(); //use the already running server
           } else {
             reject(err);
           }
-        } else {
-          resolve();
         }
       });
+
+      liveReloadServer.listen(35729, resolve);
+
     });
   };
 
