@@ -1,6 +1,6 @@
 # Why
 
-Projects are created from many different tools and technologies. Setting up a new project from scratch is slow, manual and error prone. 
+We use many different tools and technologies in a project. Setting up a new project from scratch is slow, manual and error prone. 
 Getting all the pieces to work together, and in the optimal configuration is difficult and can take weeks to months of 
 experimentation and learning.
 
