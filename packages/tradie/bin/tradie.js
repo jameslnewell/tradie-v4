@@ -12,7 +12,7 @@ const createAction = function() {
   const apiOptions = Object.assign({}, cmdOptions, {
     cmd: cmdName,
     root: path.resolve(process.cwd()),
-    debug: Boolean(process.env.DEBUG) || Boolean(process.env.CI)
+    debug: Boolean(process.env.DEBUG)
   });
 
   require(`../lib/${cmdName}`)(apiOptions)

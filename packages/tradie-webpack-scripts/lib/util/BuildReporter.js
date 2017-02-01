@@ -1,5 +1,5 @@
 'use strict';
-const clear = require('clear');
+const clear = require('./clear-screen');
 const chalk = require('chalk');
 const uniq = require('lodash.uniq');
 const formatWebpackMessages = require('./formatWebpackMessages');
