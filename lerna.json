@@ -1,6 +1,6 @@
 {
   "lerna": "2.0.0-beta.32",
-  "version": "2.0.0-preview.28",
+  "version": "2.0.0-preview.29",
   "packages": [
     "packages/*"
   ]
