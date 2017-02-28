@@ -12,9 +12,9 @@ module.exports = () => {
   }
 
   //clear the screen
-  console.log('\x1B[2J');
+  process.stdout.write('\x1B[2J');
 
   //move the cursor to 1:1
-  console.log('\x1B[1;1H');
+  process.stdout.write('\x1B[1;1H');
 
 };
