@@ -38,6 +38,11 @@ class Server {
     return this;
   }
 
+  use(route, fn) {
+    this.app.use(route, fn);
+    return this;
+  }
+
   /**
    * @returns {Promise}
    */

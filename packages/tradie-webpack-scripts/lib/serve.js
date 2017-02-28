@@ -150,7 +150,7 @@ module.exports = options => {
     if (!exiting) {
       setImmediate(() => { //HACK: wait for build-reporter
         server.start();
-        onServerStart();
+        onServerStart(server);
       });
     }
   });
@@ -159,7 +159,7 @@ module.exports = options => {
   return new Promise((resolve, reject) => {
     wfe.waitForAll('stopped', bundlers, errors => {
       server.stop()
-        .then(() => onServerStop())
+        .then(() => onServerStop(server))
         .then(() => setImmediate(() => { //HACK: wait for build-reporter
           if (errors.length) {
             reject(errors);
