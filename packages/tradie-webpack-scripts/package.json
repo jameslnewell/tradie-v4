@@ -11,9 +11,7 @@
     "promised-del": "^1.0.2",
     "serve-index": "^1.8.0",
     "serve-static": "^1.11.1",
-    "wait-for-event": "^1.0.0",
-    "webpack-dev-middleware": "^1.8.4",
-    "webpack-hot-middleware": "^2.13.0"
+    "wait-for-event": "^1.0.0"
   },
   "peerDependencies": {
     "webpack": "^2.2.0"
