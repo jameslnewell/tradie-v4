@@ -8,6 +8,18 @@ Scripts for compiling bundles with Webpack.
     
 ## API
 
+### clean(options)
+
+Remove all temporary and generated files.
+
+**Parameters:**
+- `options : Object`
+    - `globs : Array<String>` - The file paths to remove.
+
+**Returns:**
+
+A `Promise`. The promise is resolved when the temporary and generated files have been successfully removed. The promise is rejected when the deletion fails to remove files.
+
 ### serve(options)
 
 > Yet-to-be-implemented.
