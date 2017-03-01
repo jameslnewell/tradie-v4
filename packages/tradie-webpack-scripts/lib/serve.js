@@ -1,6 +1,7 @@
 /* @flow weak */
 'use strict';
 const wfe = require('wait-for-event');
+const webpack = require('webpack');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const Server = require('./util/Server');
@@ -26,7 +27,7 @@ module.exports = options => {
 
   //this should be called after the reporter is setup (so we don't miss reporting any events)
   // and after the vendor bundle is compiled (so we can refer to the vendor bundle)
-  const useMiddleware = () => {
+  const applyHMRMiddleware = () => {
     if (bundlers.client) {
 
       //create the middlewares
@@ -58,7 +59,26 @@ module.exports = options => {
   //create the client bundler
   if (options.webpack.client) {
 
-    //configure the middleware
+    //configure the HMR client
+    const hmrEntry = 'webpack-hot-middleware/client?reload=true';
+    if (Array.isArray(options.webpack.client.entry)) {
+      options.webpack.client.entry.push(hmrEntry);
+    } else if (typeof options.webpack.client.entry === 'object') {
+      Object.keys(options.webpack.client.entry).forEach(entry => {
+        if (Array.isArray(options.webpack.client.entry[entry])) {
+          options.webpack.client.entry[entry].push(hmrEntry);
+        } else {
+          options.webpack.client.entry[entry] = [options.webpack.client.entry[entry], hmrEntry];
+        }
+      });
+      options.webpack.client.entry = [options.webpack.client.entry, hmrEntry];
+    } else {
+      options.webpack.client.entry = [options.webpack.client.entry, hmrEntry];
+    }
+
+    //configure the HMR plugin
+    options.webpack.client.plugins = options.webpack.client.plugins || [];
+    options.webpack.client.plugins.push(new webpack.HotModuleReplacementPlugin());
 
     //create the compiler
     bundlers.client = new Bundler(options.webpack.client);
@@ -98,8 +118,8 @@ module.exports = options => {
         delete bundlers.vendor;
 
         //start the server
+        applyHMRMiddleware();
         server.start();
-        useMiddleware();
 
       })
       .start()
@@ -107,8 +127,8 @@ module.exports = options => {
   } else {
 
     //start the server
+    applyHMRMiddleware();
     server.start();
-    useMiddleware();
 
   }
 
@@ -116,18 +136,37 @@ module.exports = options => {
   process.on('SIGINT', () => {
     exiting = true;
 
-    //stop the client bundler
+    //stop the client from compiling
     if (devMiddleware) {
-      devMiddleware.close();
+      devMiddleware.close(); //TODO: wait for client close before resolving
     }
 
-    //stop the build and server bundlers
+    //stop the build and server from compiling
     if (bundlers.build) bundlers.build.stop();
     if (bundlers.server) bundlers.server.stop();
 
     //stop the server
     server.stop();
 
+  });
+
+  //wait for all the compilers and server to close before resolving or rejecting
+  return new Promise((resolve, reject) => {
+    const arr = [server];
+    if (bundlers.build) arr.push(bundlers.build);
+    if (bundlers.server) arr.push(bundlers.server);
+    wfe.waitForAll('stopped', arr, errors => { //TODO: wait for the client compiler too
+      setImmediate(() => { //HACK: wait for build-reporter
+        if (errors.length) {
+          reject(errors);
+        } else if (reporter.errors.length) {
+          reject();
+        } else {
+          resolve();
+        }
+      });
+
+    });
   });
 
 };

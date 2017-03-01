@@ -1,6 +1,7 @@
 'use strict';
 const debug = require('debug');
 const connect = require('connect');
+const serverDestroy = require('server-destroy');
 const detectPort = require('detect-port');
 const serveIndex = require('serve-index');
 const serveStatic = require('serve-static');
@@ -19,6 +20,12 @@ class Server {
    this.app
       .use(serveStatic('./dist')) //FIXME: configure directory
       .use(serveIndex('./dist')) //FIXME: configure directory
+    ;
+
+    //debug information
+    this.emitter
+      .on('started', () => this.debug(`started`))
+      .on('stopped', () => this.debug(`stopped`))
     ;
 
   }
@@ -59,6 +66,7 @@ class Server {
               resolve();
             }
           });
+          serverDestroy(this.server);
         })
         .catch(error => {
           this.emitter.emit('error', error);
@@ -74,7 +82,7 @@ class Server {
   stop() {
     return new Promise((resolve, reject) => {
       if (this.server) {
-        this.server.close(error => {
+        this.server.destroy(error => {
           if (error) {
             this.emitter.emit('error', error);
             reject(error);
