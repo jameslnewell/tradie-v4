@@ -38,8 +38,8 @@ class Server {
     return this;
   }
 
-  use(route, fn) {
-    this.app.use(route, fn);
+  use(url, middleware) {
+    this.app.use(url, middleware);
     return this;
   }
 

@@ -1,6 +1,7 @@
+
 module.exports = {
-  clean: require('./lib/clean'),
-  build: require('./lib/build'),
-  serve: require('./lib/serve'),
-  test: require('./lib/test')
+  clean: options => require('./lib/clean')(options),
+  build: options => require('./lib/build')(options),
+  serve: options => require('./lib/serve')(options),
+  test: options => require('./lib/test')(options)
 };

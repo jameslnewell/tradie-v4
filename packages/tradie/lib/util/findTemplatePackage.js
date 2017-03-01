@@ -19,7 +19,7 @@ class MultipleTemplatesError extends Error {
   }
 }
 
-module.exports = (dir) => findAndReadPackageJson(dir, {cache: PACKAGE_CACHE, transform: json => json.devDependencies}) //TODO: move cache to a higher level
+module.exports = dir => findAndReadPackageJson(dir, {cache: PACKAGE_CACHE, transform: json => json.devDependencies}) //TODO: move cache to a higher level
   .then(devDependencies => {
 
     if (typeof devDependencies !== 'object') {

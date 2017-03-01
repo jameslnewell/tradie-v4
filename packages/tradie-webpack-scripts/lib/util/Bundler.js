@@ -15,22 +15,21 @@ const EventEmitter = require('events').EventEmitter;
  *
  * @param {object}  config
  * @param {object}  options
- * @param {string}  [options.name]
  * @param {boolean} [options.watch]
  * @param {boolean} [options.virtual]
  */
 class Bundler {
 
   constructor(config, options) {
-    this.debug = debug(`tradie-webpack-scripts:bundler:${options.name}`);
-    this.watch = options.watch;
+    this.watch = options && options.watch;
     this.emitter = new EventEmitter();
     this.compiler = webpack(config);
     this.watcher = null;
     this.compiling = false;
+    this.debug = debug(`tradie-webpack-scripts:bundler`);
 
     //use a virtual file system
-    if (options.virtual) {
+    if (options && options.virtual) {
       this.compiler.outputFileSystem = new MemoryFS();
     }
 
