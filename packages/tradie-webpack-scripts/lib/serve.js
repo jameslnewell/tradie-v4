@@ -60,15 +60,16 @@ module.exports = options => {
   if (options.webpack.client) {
 
     //configure the HMR client
-    const hmrEntry = 'webpack-hot-middleware/client?reload=true';
+    const hmrEntry = 'webpack-hot-middleware/client?reload=true&overlay=true';
     if (Array.isArray(options.webpack.client.entry)) {
       options.webpack.client.entry.push(hmrEntry);
     } else if (typeof options.webpack.client.entry === 'object') {
       Object.keys(options.webpack.client.entry).forEach(entry => {
+        console.log(`${hmrEntry}&name=${encodeURIComponent(entry)}`);
         if (Array.isArray(options.webpack.client.entry[entry])) {
-          options.webpack.client.entry[entry].push(hmrEntry);
+          options.webpack.client.entry[entry].push(`${hmrEntry}&name=${encodeURIComponent(entry)}`);
         } else {
-          options.webpack.client.entry[entry] = [options.webpack.client.entry[entry], hmrEntry];
+          options.webpack.client.entry[entry] = [options.webpack.client.entry[entry], `${hmrEntry}&name=${encodeURIComponent(entry)}`];
         }
       });
       options.webpack.client.entry = [options.webpack.client.entry, hmrEntry];
