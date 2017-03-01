@@ -65,11 +65,10 @@ module.exports = options => {
       options.webpack.client.entry.push(hmrEntry);
     } else if (typeof options.webpack.client.entry === 'object') {
       Object.keys(options.webpack.client.entry).forEach(entry => {
-        console.log(`${hmrEntry}&name=${encodeURIComponent(entry)}`);
         if (Array.isArray(options.webpack.client.entry[entry])) {
-          options.webpack.client.entry[entry].push(`${hmrEntry}&name=${encodeURIComponent(entry)}`);
+          options.webpack.client.entry[entry].push(hmrEntry);
         } else {
-          options.webpack.client.entry[entry] = [options.webpack.client.entry[entry], `${hmrEntry}&name=${encodeURIComponent(entry)}`];
+          options.webpack.client.entry[entry] = [options.webpack.client.entry[entry], hmrEntry];
         }
       });
       options.webpack.client.entry = [options.webpack.client.entry, hmrEntry];
