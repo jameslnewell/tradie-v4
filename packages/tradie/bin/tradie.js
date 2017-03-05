@@ -5,6 +5,16 @@ const chalk = require('chalk');
 const commander = require('commander');
 const metadata = require('../package.json');
 
+const printErrorAndExit = error => {
+  if (error) {
+    console.error(chalk.red(error));
+    if (error instanceof Error) {
+      console.error(chalk.red(error.stack));
+    }
+  }
+  process.exit(1);
+};
+
 const createAction = function() {
   const cmdName = this.name();
   const cmdOptions = this.opts();
@@ -15,18 +25,14 @@ const createAction = function() {
     debug: Boolean(process.env.DEBUG)
   });
 
-  require(`../lib/${cmdName}`)(apiOptions)
-    .catch(error => {
-      if (error) {
-        if (error instanceof Error) {
-          console.error(chalk.red(error.stack));
-        } else {
-          console.error(chalk.red(error));
-        }
-      }
-      process.exit(1);
-    })
-  ;
+  try {
+    require(`../lib/${cmdName}`)(apiOptions)
+      .catch(printErrorAndExit)
+    ;
+  } catch (error) {
+    printErrorAndExit(error);
+  }
+
 };
 
 commander

@@ -49,7 +49,7 @@ class Bundler {
     //listen for when Webpack encounters an error and can't recover
     this.compiler.plugin('failed', stats => {
       this.compiling = false;
-      this.emitter.emit('error', error);
+      // this.emitter.emit('error', error);
     });
 
     //listen for when a file is changed

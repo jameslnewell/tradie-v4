@@ -2,6 +2,7 @@
 'use strict';
 const wfe = require('wait-for-event');
 const webpack = require('webpack');
+const proxyMiddleware = require('http-proxy-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const Server = require('./util/Server');
@@ -9,7 +10,34 @@ const Bundler = require('./util/Bundler');
 const BuildReporter = require('./util/BuildReporter');
 
 /**
- * Run webpack on multiple bundles and display the results
+ * Add a new entry to the Webpack config
+ * @param {object} webpackConfig
+ * @param {object} newEntry
+ */
+const addEntry = (webpackConfig, newEntry) => {
+  if (Array.isArray(webpackConfig.entry)) {
+    webpackConfig.entry.push(newEntry);
+  } else if (typeof webpackConfig.entry === 'object') {
+    Object.keys(webpackConfig.entry).forEach(entry => {
+      webpackConfig.entry[entry] = [].concat(webpackConfig.entry[entry], newEntry);
+    });
+  } else {
+    webpackConfig.entry = [webpackConfig.entry, newEntry];
+  }
+};
+
+/**
+ * Add a new plugin to the Webpack config
+ * @param {object} webpackConfig
+ * @param {object} newPlugin
+ */
+const addPlugin = (webpackConfig, newPlugin) => {
+  webpackConfig.plugins = webpackConfig.plugins || [];
+  webpackConfig.plugins.push(newPlugin);
+};
+
+/**
+ * Run Webpack on multiple bundles and display the results
  * @param {object} options
  * @param {boolean}   [options.debug=false]
  * @param {object}    options.webpack
@@ -59,26 +87,9 @@ module.exports = options => {
   //create the client bundler
   if (options.webpack.client) {
 
-    //configure the HMR client
-    const hmrEntry = 'webpack-hot-middleware/client?reload=true&overlay=true';
-    if (Array.isArray(options.webpack.client.entry)) {
-      options.webpack.client.entry.push(hmrEntry);
-    } else if (typeof options.webpack.client.entry === 'object') {
-      Object.keys(options.webpack.client.entry).forEach(entry => {
-        if (Array.isArray(options.webpack.client.entry[entry])) {
-          options.webpack.client.entry[entry].push(hmrEntry);
-        } else {
-          options.webpack.client.entry[entry] = [options.webpack.client.entry[entry], hmrEntry];
-        }
-      });
-      options.webpack.client.entry = [options.webpack.client.entry, hmrEntry];
-    } else {
-      options.webpack.client.entry = [options.webpack.client.entry, hmrEntry];
-    }
-
-    //configure the HMR plugin
-    options.webpack.client.plugins = options.webpack.client.plugins || [];
-    options.webpack.client.plugins.push(new webpack.HotModuleReplacementPlugin());
+    //configure HMR
+    addEntry(options.webpack.client, `${require.resolve('webpack-hot-middleware/client')}?reload=true&overlay=true`);
+    addPlugin(options.webpack.client, new webpack.HotModuleReplacementPlugin());
 
     //create the compiler
     bundlers.client = new Bundler(options.webpack.client);
@@ -87,16 +98,28 @@ module.exports = options => {
 
   //create the build bundler
   if (options.webpack.build) {
+
     bundlers.build = new Bundler(options.webpack.build, {
       watch: true
     });
+
   }
 
   //create the server bundler
   if (options.webpack.server) {
+
+    //configure HMR
+    //"webpack/hot/signal" - https://github.com/webpack/webpack/issues/3558
+    addEntry(options.webpack.server, `${require.resolve('webpack/hot/poll')}?1000`);
+    addPlugin(options.webpack.server, new webpack.NamedModulesPlugin());
+    addPlugin(options.webpack.server, new webpack.HotModuleReplacementPlugin());
+
     bundlers.server = new Bundler(options.webpack.server, {
       watch: true
     });
+
+    //TODO: start node process if it isn't already running
+
   }
 
   //create the reporter
@@ -129,6 +152,17 @@ module.exports = options => {
     //start the server
     applyHMRMiddleware();
     server.start();
+
+  }
+
+  if (bundlers.server) {
+
+    //start compiling the server
+    //TODO: wait till client is finished so we have access to asset manifest?
+    bundlers.server.start();
+
+    //proxy requests to the server
+    server.use(proxyMiddleware({target: 'http://localhost:4000'}));//TODO: make configurable
 
   }
 
