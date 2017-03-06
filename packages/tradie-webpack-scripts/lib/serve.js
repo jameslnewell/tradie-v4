@@ -162,7 +162,10 @@ module.exports = options => {
     bundlers.server.start();
 
     //proxy requests to the server
-    server.use(proxyMiddleware({target: 'http://localhost:4000'}));//TODO: make configurable
+    server.use(proxyMiddleware({
+      target: 'http://localhost:4000', //TODO: make configurable
+      logLevel: 'warn'
+    }));
 
   }
 
