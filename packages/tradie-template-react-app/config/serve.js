@@ -25,7 +25,7 @@ const commonConfig = {
           loader: require.resolve('babel-loader'),
           options: {
             presets: [
-              [require.resolve('babel-preset-latest'), {}],
+              [require.resolve('babel-preset-latest'), {modules: false}], //don't transpile ES2015 imports/exports, let Webpack do tree shaking
               require.resolve('babel-preset-react')
             ],
             plugins: [
@@ -37,6 +37,17 @@ const commonConfig = {
             ]
           }
         }
+      },
+
+      //include CSS
+      {
+        test: /\.css$/,
+        use: [
+          //TODO: use extract-text plugin when optimized
+          //TODO: ignore CSS on server? or only support it imported from the root file?
+          require.resolve('style-loader'),
+          require.resolve('css-loader')
+        ]
       }
 
     ]
