@@ -24,6 +24,7 @@ const getPaths = root => ({
 //TODO: eslint, stylelint
 //TODO: WatchMissingNodeModulesPlugin
 //TODO: start and shutdown server when app is served
+//TODO: compiles heaps of times when starting
 
 class AsyncAssetPlugin {
   apply(compiler) {
