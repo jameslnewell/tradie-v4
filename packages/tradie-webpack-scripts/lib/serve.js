@@ -63,17 +63,35 @@ module.exports = options => {
         log: false
       });
       devMiddleware = webpackDevMiddleware(bundlers.client.compiler, {
-        noInfo: true,
-        quiet: true
+        // noInfo: true,
+        // quiet: true,
+        serverSideRender: false
       });
 
       //apply the middlewares
+      console.log('setup dev middleware')
       server
         .use(hotMiddleware)
         .use(devMiddleware)
       ;
 
     }
+
+    if (bundlers.server) {
+
+      //start compiling the server
+      //TODO: wait till client is finished so we have access to asset manifest?
+      bundlers.server.start();
+
+      // proxy requests to the server
+      console.log('setup proxy')
+      server.use(proxyMiddleware({
+        target: 'http://localhost:4000', //TODO: make configurable
+        logLevel: 'warn'
+      }));
+
+    }
+
   };
 
   //create the server
@@ -152,20 +170,6 @@ module.exports = options => {
     //start the server
     applyHMRMiddleware();
     server.start();
-
-  }
-
-  if (bundlers.server) {
-
-    //start compiling the server
-    //TODO: wait till client is finished so we have access to asset manifest?
-    bundlers.server.start();
-
-    //proxy requests to the server
-    server.use(proxyMiddleware({
-      target: 'http://localhost:4000', //TODO: make configurable
-      logLevel: 'warn'
-    }));
 
   }
 
