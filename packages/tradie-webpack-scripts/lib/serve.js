@@ -131,8 +131,8 @@ module.exports = options => {
         log: false
       });
       devMiddleware = webpackDevMiddleware(bundlers.client.compiler, {
-        // noInfo: true,
-        // quiet: true,
+        noInfo: true,
+        quiet: true,
         serverSideRender: false
       });
 
