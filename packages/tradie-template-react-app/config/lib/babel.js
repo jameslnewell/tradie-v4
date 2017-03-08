@@ -11,6 +11,14 @@ const getCommonConfig = options => {
     ],
     plugins: [
 
+      //improve styled-components experience
+      [require.resolve('babel-plugin-styled-components'), {
+        displayName: !optimize,
+        ssr: true,
+        minify: optimize,
+        transpileTemplateLiterals: optimize
+      }],
+
       //makes classes easier
       require.resolve('babel-plugin-transform-class-properties'),
 
@@ -27,10 +35,6 @@ const getCommonConfig = options => {
 
     ]
   };
-
-  //improve styled-components experience
-  config.plugins.push([require.resolve('babel-plugin-styled-components'), {displayNames: !optimize}]);
-
 
   if (!optimize) {
 

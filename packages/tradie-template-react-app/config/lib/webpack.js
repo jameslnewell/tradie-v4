@@ -137,7 +137,7 @@ module.exports.getVendorConfig = options => {
 
     // === configure the DLL ===
 
-    config.output.library = optimize ? '[name]' : '[name]_[chunkhash:8]';
+    config.output.library = optimize ? '[name]_[chunkhash:8]' : '[name]';
     config.plugins.push(new webpack.DllPlugin({
       path: getVendorManifest(paths),
       name: config.output.library
