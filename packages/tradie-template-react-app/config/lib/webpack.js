@@ -6,6 +6,8 @@ const extensionsToRegex = require('ext-to-regex');
 const nodeExternals = require('webpack-node-externals');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
+const CachedDllReferencePlugin = require('tradie-webpack-utils/CachedDllReferencePlugin');
+const WatchMissingNodeModulesPlugin = require('tradie-webpack-utils/WatchMissingNodeModulesPlugin');
 const babel = require('./babel');
 
 const jsExtensions = ['.js', '.jsx'];
@@ -20,36 +22,9 @@ const getPaths = root => ({
 //TODO: service worker
 //TODO: env vars
 //TODO: dead code removal on server, after webpack bundled
-//TODO: list assets in file for preload and fingerprinting // config.plugins.push(new AsyncAssetPlugin());
+//TODO: list assets in file for preload and fingerprinting // config.plugins.push(new AssetManifestPlugin());
 //TODO: eslint, stylelint
-//TODO: WatchMissingNodeModulesPlugin
 //TODO: start and shutdown server when app is served
-//TODO: compiles heaps of times when starting
-
-class AsyncAssetPlugin {
-  apply(compiler) {
-    compiler.plugin('compilation', compilation => {
-
-      const publicPath = compilation.outputOptions.publicPath;
-
-      compiler.plugin('done', stats => {
-        const json = stats.toJson();
-
-        let asyncChunks = json.chunks
-            .filter(chunk => !chunk.initial)//TODO: exclude /\.hot-update\.js$/
-            .map(chunk => chunk.files)
-          ;
-
-        asyncChunks = asyncChunks.concat.apply([], asyncChunks)
-          .map(asyncChunk => `${publicPath}${asyncChunk}`)
-        ;
-
-        fs.writeFileSync(path.join(dest, 'async-scripts.json'), JSON.stringify(asyncChunks));
-
-      });
-    });
-  }
-}
 
 const getVendorEntry = paths => path.join(paths.src, 'vendor.js');
 const getVendorManifest = paths => path.join(paths.tmp, 'vendor.json');
@@ -104,6 +79,9 @@ const getCommonConfig = options => {
     },
 
     plugins: [
+
+      //rebuild if the user installs a missing package
+      new WatchMissingNodeModulesPlugin(path.join(options.root, 'node_modules'))
 
     ]
 
@@ -239,8 +217,7 @@ module.exports.getClientConfig = options => {
 
   const vendorEntry = getVendorEntry(paths);
   if (fs.existsSync(vendorEntry)) {
-    config.plugins.push(new webpack.DllReferencePlugin({
-      context: paths.src,
+    config.plugins.push(new CachedDllReferencePlugin({
       manifest: getVendorManifest(paths)
     }));
   }
