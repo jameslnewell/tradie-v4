@@ -54,47 +54,6 @@ module.exports = options => {
   let hotMiddleware;
   let devMiddleware;
 
-  //this should be called after the reporter is setup (so we don't miss reporting any events)
-  // and after the vendor bundle is compiled (so we can refer to the vendor bundle)
-  const applyHMRMiddleware = () => {
-    if (bundlers.client) {
-
-      //create the middlewares
-      hotMiddleware = webpackHotMiddleware(bundlers.client.compiler, {
-        log: false
-      });
-      devMiddleware = webpackDevMiddleware(bundlers.client.compiler, {
-        // noInfo: true,
-        // quiet: true,
-        serverSideRender: false
-      });
-
-      //apply the middlewares
-      console.log('setup dev middleware')
-      server
-        .use(hotMiddleware)
-        .use(devMiddleware)
-      ;
-
-    }
-
-    if (bundlers.server) {
-
-      //start compiling the server
-      //TODO: wait till client is finished so we have access to asset manifest?
-      bundlers.server.start();
-
-      // proxy requests to the server
-      console.log('setup proxy')
-      server.use(proxyMiddleware({
-        target: 'http://localhost:4000', //TODO: make configurable
-        logLevel: 'warn'
-      }));
-
-    }
-
-  };
-
   //create the server
   const server = new Server();
 
@@ -115,15 +74,6 @@ module.exports = options => {
 
   }
 
-  //create the build bundler
-  if (options.webpack.build) {
-
-    bundlers.build = new Bundler(options.webpack.build, {
-      watch: true
-    });
-
-  }
-
   //create the server bundler
   if (options.webpack.server) {
 
@@ -133,12 +83,18 @@ module.exports = options => {
     addPlugin(options.webpack.server, new webpack.NamedModulesPlugin());
     addPlugin(options.webpack.server, new webpack.HotModuleReplacementPlugin());
 
+    //create the compiler
     bundlers.server = new Bundler(options.webpack.server, {
       watch: true
     });
 
-    //TODO: start node process if it isn't already running
+  }
 
+  //create the build bundler
+  if (options.webpack.build) {
+    bundlers.build = new Bundler(options.webpack.build, {
+      watch: true
+    });
   }
 
   //create the reporter
@@ -148,31 +104,100 @@ module.exports = options => {
     bundlers: objectValues(bundlers)
   });
 
-  //run the vendor bundler and then start the server
-  if (bundlers.vendor) {
-    bundlers.vendor
-      .once('completed', () => {
+  const startVendorCompiler = () => new Promise((resolve, reject) => {
+    if (bundlers.vendor) {
+      bundlers.vendor
+        .once('completed', () => {
 
-        //if the user has CTL-C'd then don't bother starting the server
-        if (exiting) return;
+          //stop tracking the vendor bundler which has finished
+          delete bundlers.vendor;
 
-        //stop tracking the vendor bundler which has finished
-        delete bundlers.vendor;
+          resolve();
 
-        //start the server
-        applyHMRMiddleware();
-        server.start();
+        })
+        .once('error', reject)
+        .start()
+      ;
+    } else {
+      resolve();
+    }
+  });
 
-      })
-      .start()
-    ;
-  } else {
+  const startClientCompiler = () => new Promise((resolve, reject) => {
+    if (bundlers.client) {
+
+      //create the middlewares (dev middleware starts watching)
+      hotMiddleware = webpackHotMiddleware(bundlers.client.compiler, {
+        log: false
+      });
+      devMiddleware = webpackDevMiddleware(bundlers.client.compiler, {
+        // noInfo: true,
+        // quiet: true,
+        serverSideRender: false
+      });
+
+      bundlers.client
+        .once('completed', resolve)
+        .once('error', reject)
+        .start()
+      ;
+
+    } else {
+      resolve();
+    }
+  });
+
+  const startServerCompiler = () => new Promise((resolve, reject) => {
+    if (bundlers.server) {
+      bundlers.server
+        .once('completed', resolve)
+        .once('error', reject)
+        .start()
+      ;
+    } else {
+      resolve();
+    }
+  });
+
+  const startBuildCompiler = () => new Promise((resolve, reject) => {
+    if (bundlers.build) {
+      bundlers.build
+        .once('completed', resolve)
+        .once('error', reject)
+        .start()
+      ;
+    } else {
+      resolve();
+    }
+  });
+
+  const startServer = () => {
+
+    //if the user has CTL-C'd then don't bother starting the server
+    if (exiting) return;
+
+    //serve client files
+    if (bundlers.client) {
+      server
+        .use(hotMiddleware)
+        .use(devMiddleware)
+      ;
+    }
+
+    //proxy server
+    if (bundlers.server) {
+      server.use(proxyMiddleware({
+        target: 'http://localhost:4000', //TODO: make configurable
+        logLevel: 'warn'
+      }));
+    }
 
     //start the server
-    applyHMRMiddleware();
     server.start();
 
-  }
+    //TODO: start server app node process if it isn't already running
+
+  };
 
   //stop all the things when the user wants to exit
   process.on('SIGINT', () => {
@@ -192,23 +217,35 @@ module.exports = options => {
 
   });
 
-  //wait for all the compilers and server to close before resolving or rejecting
-  return new Promise((resolve, reject) => {
-    const arr = [server];
-    if (bundlers.build) arr.push(bundlers.build);
-    if (bundlers.server) arr.push(bundlers.server);
-    wfe.waitForAll('stopped', arr, errors => { //TODO: wait for the client compiler too
-      setImmediate(() => { //HACK: wait for build-reporter
-        if (errors.length) {
-          reject(errors);
-        } else if (reporter.errors.length) {
-          reject();
-        } else {
-          resolve();
-        }
+  return Promise.resolve()
+    .then(() => startVendorCompiler())
+    .then(() => startClientCompiler())
+    .then(() => Promise.all([
+      startServerCompiler(),
+      startBuildCompiler()
+    ]))
+    .then(() => startServer())
+    .then(() => {
+
+      //wait for all the compilers and server to close before resolving or rejecting
+      return new Promise((resolve, reject) => {
+        const arr = [server];
+        if (bundlers.build) arr.push(bundlers.build);
+        if (bundlers.server) arr.push(bundlers.server);
+        wfe.waitForAll('stopped', arr, errors => { //TODO: wait for the client compiler too
+          setImmediate(() => { //HACK: wait for build-reporter
+            if (errors.length) {
+              reject(errors);
+            } else if (reporter.errors.length) {
+              reject();
+            } else {
+              resolve();
+            }
+          });
+        });
       });
 
-    });
-  });
+    })
+  ;
 
 };
