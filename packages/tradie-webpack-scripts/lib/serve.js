@@ -1,6 +1,7 @@
 /* @flow weak */
 'use strict';
 const wfe = require('wait-for-event');
+const objectValues = require('object.values');
 const webpack = require('webpack');
 const proxyMiddleware = require('http-proxy-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
@@ -144,7 +145,7 @@ module.exports = options => {
   const reporter = new BuildReporter({
     debug: options.debug,
     server,
-    bundlers: Object.values(bundlers)
+    bundlers: objectValues(bundlers)
   });
 
   //run the vendor bundler and then start the server
