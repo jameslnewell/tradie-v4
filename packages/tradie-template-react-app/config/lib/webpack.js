@@ -227,6 +227,7 @@ module.exports.getClientConfig = options => {
           //always include the original file name for SEO benefits
           name: 'files/[name].[hash:8].[ext]',
 
+          //don't emit them, the client will have done this already
           emitFile: true
 
         }
