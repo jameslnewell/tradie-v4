@@ -20,7 +20,6 @@ const getPaths = root => ({
   tmp: path.resolve(root, './tmp')
 });
 
-//TODO: fix bug - first time dev-middleware runs i get "__webpack_require__.i(...) is not a function"
 //TODO: baseurl
 //TODO: service worker
 //TODO: env vars
@@ -29,6 +28,8 @@ const getPaths = root => ({
 //TODO: start and shutdown server when app is served
 //TODO: support enzyme and sinon
 //TODO: add autoprefixer?
+//TODO: jest
+//TODO: refactor into separate files
 
 const getVendorEntry = paths => path.join(paths.src, 'vendor.js');
 const getVendorManifest = paths => path.join(paths.tmp, 'vendor.json');
