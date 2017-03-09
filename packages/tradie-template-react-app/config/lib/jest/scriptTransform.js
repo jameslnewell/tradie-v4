@@ -1,7 +1,7 @@
 'use strict';
 const path = require('path');
 const babelJest = require('babel-jest');
-const getTestConfig = require('../babel/getTestConfig');
+const getTestConfig = require('../getBabelTestConfig');
 
 module.exports = babelJest.createTransformer(getTestConfig({
   optimize: false,

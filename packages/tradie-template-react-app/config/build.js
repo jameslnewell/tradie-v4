@@ -1,5 +1,7 @@
 'use strict';
-const webpack = require('./lib/webpack');
+const getWebpackVendorConfig = require('./lib/getWebpackVendorConfig');
+const getWebpackClientConfig = require('./lib/getWebpackClientConfig');
+const getWebpackServerConfig = require('./lib/getWebpackServerConfig');
 
 module.exports = options => {
   const root = options.root;
@@ -7,9 +9,9 @@ module.exports = options => {
 
   return {
     webpack: {
-      vendor: webpack.getVendorConfig({root, optimize}),
-      client: webpack.getClientConfig({root, optimize}),
-      server: webpack.getServerConfig({root, optimize})
+      vendor: getWebpackVendorConfig({root, optimize}),
+      client: getWebpackClientConfig({root, optimize}),
+      server: getWebpackServerConfig({root, optimize})
     }
   };
 

@@ -1,4 +1,4 @@
-const getCommonConfig = require('./getCommonConfig');
+const getCommonConfig = require('./getBabelCommonConfig');
 
 module.exports = options => {
   const optimize = options.optimize;
