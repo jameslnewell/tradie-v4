@@ -6,6 +6,7 @@ const extensionsToRegex = require('ext-to-regex');
 const nodeExternals = require('webpack-node-externals');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
+const BabiliPlugin = require("babili-webpack-plugin");
 const CachedDllReferencePlugin = require('tradie-webpack-utils/CachedDllReferencePlugin');
 const WatchMissingNodeModulesPlugin = require('tradie-webpack-utils/WatchMissingNodeModulesPlugin');
 const babel = require('./babel');
@@ -19,10 +20,10 @@ const getPaths = root => ({
   tmp: path.resolve(root, './tmp')
 });
 
+//TODO: dead code removal on server, after webpack bundled
 //TODO: baseurl
 //TODO: service worker
 //TODO: env vars
-//TODO: dead code removal on server, after webpack bundled
 //TODO: list assets in file for preload and fingerprinting // config.plugins.push(new AssetManifestPlugin());
 //TODO: eslint, stylelint
 //TODO: start and shutdown server when app is served
@@ -30,23 +31,6 @@ const getPaths = root => ({
 
 const getVendorEntry = paths => path.join(paths.src, 'vendor.js');
 const getVendorManifest = paths => path.join(paths.tmp, 'vendor.json');
-
-const uglify = config => {
-  config.plugins.push(new webpack.optimize.UglifyJsPlugin({
-    compress: {
-      screw_ie8: true,
-      warnings: false
-    },
-    mangle: {
-      screw_ie8: true
-    },
-    output: {
-      comments: false,
-      screw_ie8: true
-    },
-    sourceMap: false
-  }));
-};
 
 const getCommonConfig = options => {
   const paths = getPaths(options.root);
@@ -57,11 +41,13 @@ const getCommonConfig = options => {
 
     entry: {},
 
+    devtool: optimize ? 'source-map' : 'eval',
+
     output: {
       path: paths.dest,
       filename: optimize ? '[name].[chunkhash:8].js' : '[name].js',
       publicPath: '/',
-      pathinfo: true //true in dev only
+      pathinfo: !optimize //true in dev only
     },
 
     module: {
@@ -97,6 +83,10 @@ const getCommonConfig = options => {
       'process.env.NODE_ENV': JSON.stringify('production')
     }));
 
+    config.plugins.push(new BabiliPlugin({}, {
+      comments: false
+    }));
+
   }
 
   return config;
@@ -123,12 +113,6 @@ module.exports.getVendorConfig = options => {
       name: config.output.library
     }));
 
-    // === optimize the JS ===
-
-    if (optimize) {
-      uglify(config);
-    }
-
     return config;
   }
 
@@ -147,12 +131,6 @@ module.exports.getClientConfig = options => {
   config.output = Object.assign({}, config.output, {
     chunkFilename: optimize ? 'client.[id].[chunkhash:8].js' : 'client.[id].js',
   });
-
-  // === optimize the JS ===
-
-  if (optimize) {
-    uglify(config);
-  }
 
   // === load the CSS ===
 
@@ -236,6 +214,9 @@ module.exports.getServerConfig = options => {
   }));
 
   config.entry = {server: './server.js'};
+  config.output = Object.assign(config.output, {
+    filename: '[name].js'
+  });
 
   config.target = 'node';
 
