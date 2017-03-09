@@ -139,7 +139,6 @@ module.exports = options => {
       bundlers.client
         .once('completed', resolve)
         .once('error', reject)
-        .start()
       ;
 
     } else {
