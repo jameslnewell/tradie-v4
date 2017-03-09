@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 //TODO: paths, jsextensions
+//TODO: coverage
 
 module.exports = options => {
   const config = {
