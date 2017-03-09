@@ -18,7 +18,7 @@ class Server {
 
     //setup the server
    this.app
-      .use(serveStatic('./dist')) //FIXME: configure directory
+      // .use(serveStatic('./dist')) //FIXME: configure directory
       // .use(serveIndex('./dist')) //FIXME: configure directory
     ;
 

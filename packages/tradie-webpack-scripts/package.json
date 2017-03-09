@@ -20,7 +20,5 @@
   "peerDependencies": {
     "webpack": "^2.2.0"
   },
-  "devDependencies": {
-    "http-proxy-middleware": "^0.17.3"
-  }
+  "license": "MIT"
 }
