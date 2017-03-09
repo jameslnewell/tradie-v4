@@ -8,7 +8,7 @@ module.exports = options => {
     [require.resolve('babel-preset-env'), {
 
       //don't transpile ES2015 imports/exports, let Webpack do tree-shaking
-      modules: true,
+      modules: false,
 
       //only include necessary polyfills for the target
       useBuiltIns: true,
