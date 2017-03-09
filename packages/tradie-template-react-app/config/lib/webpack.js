@@ -28,6 +28,7 @@ const getPaths = root => ({
 //TODO: eslint, stylelint
 //TODO: start and shutdown server when app is served
 //TODO: support enzyme and sinon
+//TODO: add autoprefixer
 
 const getVendorEntry = paths => path.join(paths.src, 'vendor.js');
 const getVendorManifest = paths => path.join(paths.tmp, 'vendor.json');
@@ -143,6 +144,7 @@ module.exports.getClientConfig = options => {
         importLoaders: 1
       }
     },
+    //TODO: add autoprefixer
   ];
   if (optimize) {
 
