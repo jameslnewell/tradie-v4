@@ -7,8 +7,11 @@ const proxyMiddleware = require('http-proxy-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const Server = require('./util/Server');
+const Process = require('./util/Process');
 const Bundler = require('./util/Bundler');
 const BuildReporter = require('./util/BuildReporter');
+
+const APP_PORT = 4000;
 
 /**
  * Add a new entry to the Webpack config
@@ -46,13 +49,15 @@ const addPlugin = (webpackConfig, newPlugin) => {
  * @param {object}    [options.webpack.client]
  * @param {object}    [options.webpack.build]
  * @param {object}    [options.webpack.server]
+ * @param {string}    [options.serverPath]
  * @returns {Promise.<null>}
  */
 module.exports = options => {
   const bundlers = {};
-  let exiting = false;
+  let app;
   let hotMiddleware;
   let devMiddleware;
+  let exiting = false;
 
   //create the server
   const server = new Server();
@@ -87,6 +92,13 @@ module.exports = options => {
     bundlers.server = new Bundler(options.webpack.server, {
       watch: true
     });
+
+    //create the app
+    if (options.serverPath) {
+      app = new Process(options.serverPath, {
+        env: {PORT: APP_PORT}
+      });
+    }
 
   }
 
@@ -149,7 +161,12 @@ module.exports = options => {
   const startServerCompiler = () => new Promise((resolve, reject) => {
     if (bundlers.server) {
       bundlers.server
-        .once('completed', resolve)
+        .once('completed', () => {
+          if (app) {
+            app.start();
+          }
+          resolve();
+        })
         .once('error', reject)
         .start()
       ;
@@ -186,7 +203,7 @@ module.exports = options => {
     //proxy server
     if (bundlers.server) {
       server.use(proxyMiddleware({
-        target: 'http://localhost:4000', //TODO: make configurable
+        target: `http://localhost:${APP_PORT}`, //TODO: make configurable
         logLevel: 'warn'
       }));
     }
@@ -210,6 +227,7 @@ module.exports = options => {
     //stop the build and server from compiling
     if (bundlers.build) bundlers.build.stop();
     if (bundlers.server) bundlers.server.stop();
+    if (app) app.stop();
 
     //stop the server
     server.stop();
@@ -231,6 +249,7 @@ module.exports = options => {
         const arr = [server];
         if (bundlers.build) arr.push(bundlers.build);
         if (bundlers.server) arr.push(bundlers.server);
+        if (app) arr.push(app);
         wfe.waitForAll('stopped', arr, errors => { //TODO: wait for the client compiler too
           setImmediate(() => { //HACK: wait for build-reporter
             if (errors.length) {

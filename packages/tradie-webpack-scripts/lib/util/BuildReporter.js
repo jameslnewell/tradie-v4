@@ -17,9 +17,9 @@ class BuildReporter {
     this.observe(this.bundlers);
 
     if (this.server) {
-      this.server.on('started', (_, port) => {
+      this.server.on('started', (_, port) => setImmediate(() => { //HACK: to make it appear after compiling message which also uses setImmediate
         console.log(chalk.blue(`Server running at http://localhost:${port}`));
-      });
+      }));
     }
 
   }
