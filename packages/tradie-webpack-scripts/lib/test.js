@@ -13,6 +13,7 @@ const jest = require('jest');
  */
 module.exports = options => new Promise((resolve, reject) => {
   const watch = options.watch;
+  const coverage = options.coverage;
   const config = options.jest;
 
   if (!config) {
@@ -20,10 +21,19 @@ module.exports = options => new Promise((resolve, reject) => {
     return reject(1);
   }
 
-  jest.run([
-    watch ? '--watch' : '',
+  const args = [
     '--config',
     JSON.stringify(config)
-  ]);
+  ];
+
+  if (watch) {
+    args.push('--watch');
+  }
+
+  if (coverage) {
+    args.push('--coverage');
+  }
+
+  jest.run(args);
 
 });

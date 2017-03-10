@@ -65,6 +65,7 @@ commander
   .command('test [files...]')
   .description('test script files')
   .option('--watch', 're-test script files whenever they change', false)
+  .option('--coverage', 'show coverage', false)
   .action(createAction)
 ;
 
