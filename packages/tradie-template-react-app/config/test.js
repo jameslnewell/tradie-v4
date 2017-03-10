@@ -27,7 +27,9 @@ module.exports = options => {
       '\\.css$': require.resolve('./lib/jest/styleTransform'),
       '^.*\\.(?!(json|js|jsx|css)$)[^.]+$': require.resolve('./lib/jest/fileTransform'),
       // transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$'], //TODO: ignore node_modules outside src dir
-    }
+    },
+
+    collectCoverageFrom : ['**/*.{js,jsx}']
 
   };
 
@@ -38,6 +40,7 @@ module.exports = options => {
 
   return {
     watch: options.watch,
+    coverage: options.coverage,
     jest: config
   };
 };
