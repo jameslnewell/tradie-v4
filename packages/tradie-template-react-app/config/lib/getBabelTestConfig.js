@@ -1,7 +1,6 @@
 const getCommonConfig = require('./getBabelCommonConfig');
 
 module.exports = options => {
-  const optimize = options.optimize;
   const config = getCommonConfig(options);
 
   config.presets.push(
