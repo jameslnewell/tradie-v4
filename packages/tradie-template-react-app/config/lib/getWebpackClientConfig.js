@@ -36,7 +36,16 @@ module.exports = options => {
         importLoaders: 1
       }
     },
-    //TODO: add autoprefixer
+    {
+      loader: require.resolve('postcss-loader'),
+      options: {
+        plugins: () => {
+          return [
+            autoprefixer({browsers: 'last 2 versions, > 5%, ie >= 11'})
+          ];
+        }
+      }
+    }
   ];
   if (optimize) {
 

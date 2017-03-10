@@ -4,7 +4,7 @@
 //TODO: service worker
 //TODO: env vars
 //TODO: eslint, stylelint
-//TODO: add autoprefixer?
+//TODO: remove CSS loader?
 
 
 
