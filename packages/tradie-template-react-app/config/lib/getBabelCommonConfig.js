@@ -1,12 +1,14 @@
+'use strict'
 const path = require('path');
+const getPaths = require('./getPaths');
 
 module.exports = options => {
-  const tmp = options.tmp;
   const optimize = options.optimize;
-
+  const paths = getPaths(options.root);
+console.log(paths.tmp);
   const config = {
     babelrc: false,
-    cacheDirectory: path.join(tmp, 'babel'),
+    cacheDirectory: path.join(paths.tmp, 'babel'),
     presets: [
       require.resolve('babel-preset-react')
     ],
