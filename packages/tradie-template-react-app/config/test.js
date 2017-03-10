@@ -29,7 +29,8 @@ module.exports = options => {
       // transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$'], //TODO: ignore node_modules outside src dir
     },
 
-    collectCoverageFrom : ['**/*.{js,jsx}']
+    collectCoverageFrom : ['**/*.{js,jsx}'],
+    coverageDirectory: path.join(paths.tmp, 'coverage')
 
   };
 
