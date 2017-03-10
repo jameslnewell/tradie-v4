@@ -23,7 +23,7 @@ module.exports = options => {
     ],
 
     transform: {
-      '\\.(js|jsx)?$': require.resolve('./lib/jest/scriptTransform'),
+      '\\.(js|jsx)$': require.resolve('./lib/jest/scriptTransform'),
       '\\.css$': require.resolve('./lib/jest/styleTransform'),
       '^.*\\.(?!(json|js|jsx|css)$)[^.]+$': require.resolve('./lib/jest/fileTransform'),
       // transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$'], //TODO: ignore node_modules outside src dir

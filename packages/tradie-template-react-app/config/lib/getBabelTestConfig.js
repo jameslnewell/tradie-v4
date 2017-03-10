@@ -17,5 +17,9 @@ module.exports = options => {
     }]
   );
 
+  //need to transpile `import('./module)` for Jest
+  config.plugins.push(require.resolve('babel-plugin-dynamic-import-node'));
+  // config.plugins.unshift(require.resolve('babel-plugin-syntax-dynamic-import'));
+
   return config;
 };
