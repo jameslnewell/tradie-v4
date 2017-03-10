@@ -58,7 +58,7 @@ class Process {
       if (this.process) {
         return resolve();
       }
-console.log('env', Object.assign({}, process.env, this.options.env || {}));
+
       this.process = fork(this.path, {
         env: Object.assign({}, process.env, this.options.env || {})
       });
