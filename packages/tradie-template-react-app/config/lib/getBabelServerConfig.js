@@ -15,7 +15,7 @@ module.exports = options => {
 
       //transpile for the oldest supported NodeJS LTS - https://github.com/nodejs/LTS
       targets: {
-        node: 4,
+        node: 4
       }
 
     }]
