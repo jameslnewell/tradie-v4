@@ -2,14 +2,17 @@ process.env.NODE_ENV = 'test';
 
 const fs = require('fs');
 const path = require('path');
+const getPaths = require('./lib/getPaths');
 
-//TODO: paths, jsextensions
-//TODO: coverage
+//TODO: use paths, jsextensions
+//TODO: support coverage
 
 module.exports = options => {
+  const paths = getPaths(options.root);
+
   const config = {
 
-    cacheDirectory: path.resolve('./tmp/jest'), //TODO:
+    cacheDirectory: path.join(paths.tmp, 'jest'),
 
     rootDir: path.resolve('./src'),
     testRegex: '\\.test\\.(jsx?)$',

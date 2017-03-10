@@ -1,3 +1,4 @@
+const path = require('path');
 
 module.exports = options => {
   const tmp = options.tmp;
@@ -5,7 +6,7 @@ module.exports = options => {
 
   const config = {
     babelrc: false,
-    cacheDirectory: tmp,
+    cacheDirectory: path.join(tmp, 'babel'),
     presets: [
       require.resolve('babel-preset-react')
     ],
