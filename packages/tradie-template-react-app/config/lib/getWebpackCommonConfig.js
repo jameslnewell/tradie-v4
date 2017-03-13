@@ -30,6 +30,16 @@ module.exports = options => {
 
         // === load the JS ===
         {
+          enforce: 'pre',
+          test: extensionsToRegex(scriptExtensions),
+          include: paths.src,
+          loader: require.resolve('eslint-loader'),
+          options: {
+            baseConfig: options.eslint,
+            useEslintrc: false
+          }
+        },
+        {
           test: extensionsToRegex(scriptExtensions),
           include: paths.src,
           use: {
@@ -40,6 +50,7 @@ module.exports = options => {
 
       ]
     },
+
 
     plugins: [
 

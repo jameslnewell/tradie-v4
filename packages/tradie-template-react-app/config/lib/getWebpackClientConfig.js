@@ -8,6 +8,7 @@ const CachedDllReferencePlugin = require('tradie-webpack-utils/CachedDllReferenc
 const styleExtensions = require('./styleExtensions');
 const scriptExtensions = require('./scriptExtensions');
 const getPaths = require('./getPaths');
+const getEslintClientConfig = require('./getEslintClientConfig');
 const getBabelClientConfig = require('./getBabelClientConfig');
 const getWebpackCommonConfig = require('./getWebpackCommonConfig');
 
@@ -16,6 +17,7 @@ module.exports = options => {
   const optimize = options.optimize;
 
   const config = getWebpackCommonConfig(Object.assign({}, options, {
+    eslint: getEslintClientConfig(options),
     babel: getBabelClientConfig(options)
   }));
 
@@ -24,6 +26,11 @@ module.exports = options => {
   config.output = Object.assign({}, config.output, {
     chunkFilename: optimize ? 'client.[id].[chunkhash:8].js' : 'client.[id].js',
   });
+
+  config.plugins.push(new webpack.DefinePlugin({
+    '__CLIENT__': true,
+    '__SERVER__': false
+  }));
 
   // === load the CSS ===
 

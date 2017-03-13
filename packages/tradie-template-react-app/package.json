@@ -20,6 +20,8 @@
     "babel-preset-react": "^6.23.0",
     "babili-webpack-plugin": "0.0.11",
     "css-loader": "^0.26.2",
+    "eslint-config-jameslnewell": "^3.0.0-preview.1",
+    "eslint-loader": "^1.6.3",
     "ext-to-regex": "^0.1.0",
     "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^0.10.1",

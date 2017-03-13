@@ -2,6 +2,7 @@
 const fs = require('fs');
 const webpack = require('webpack');
 const getPaths = require('./getPaths');
+const getEslintClientConfig = require('./getEslintClientConfig');
 const getBabelClientConfig = require('./getBabelClientConfig');
 const getWebpackCommonConfig = require('./getWebpackCommonConfig');
 
@@ -12,10 +13,16 @@ module.exports = options => {
   if (fs.existsSync(paths.vendorEntryFile)) {
 
     const config = getWebpackCommonConfig(Object.assign({}, options, {
+      eslint: getEslintClientConfig(options),
       babel: getBabelClientConfig(options)
     }));
 
     config.entry = {vendor: [paths.vendorEntryFile]};
+
+    config.plugins.push(new webpack.DefinePlugin({
+      '__CLIENT__': true,
+      '__SERVER__': false
+    }));
 
     // === configure the DLL ===
 

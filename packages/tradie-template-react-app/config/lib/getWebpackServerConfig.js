@@ -5,6 +5,7 @@ const nodeExternals = require('webpack-node-externals');
 const styleExtensions = require('./styleExtensions');
 const scriptExtensions = require('./scriptExtensions');
 const getPaths = require('./getPaths');
+const getEslintServerConfig = require('./getEslintServerConfig');
 const getBabelServerConfig = require('./getBabelServerConfig');
 const getWebpackCommonConfig = require('./getWebpackCommonConfig');
 
@@ -13,6 +14,7 @@ module.exports = options => {
   const optimize = options.optimize;
 
   const config = getWebpackCommonConfig(Object.assign({}, options, {
+    eslint: getEslintServerConfig(options),
     babel: getBabelServerConfig(options)
   }));
 
@@ -20,6 +22,11 @@ module.exports = options => {
   config.output = Object.assign(config.output, {
     filename: '[name].js'
   });
+
+  config.plugins.push(new webpack.DefinePlugin({
+    '__CLIENT__': false,
+    '__SERVER__': true
+  }));
 
   config.target = 'node';
 
