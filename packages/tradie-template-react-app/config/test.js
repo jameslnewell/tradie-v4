@@ -40,6 +40,7 @@ module.exports = options => {
   }
 
   return {
+    debug: options.debug,
     watch: options.watch,
     coverage: options.coverage,
     jest: config

@@ -7,10 +7,12 @@ const getWebpackServerConfig = require('./lib/getWebpackServerConfig');
 
 module.exports = options => {
   const root = options.root;
+  const debug = options.debug;
   const optimize = false;
   const paths = getPaths(root);
 
   return {
+    debug,
 
     webpack: {
       vendor: getWebpackVendorConfig({root, optimize}),
