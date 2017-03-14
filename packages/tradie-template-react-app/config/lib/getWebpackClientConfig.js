@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const extensionsToRegex = require('ext-to-regex');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
+const RevManifestPlugin = require('tradie-webpack-utils/RevManifestPlugin');
 const CachedDllReferencePlugin = require('tradie-webpack-utils/CachedDllReferencePlugin');
 const styleExtensions = require('./styleExtensions');
 const scriptExtensions = require('./scriptExtensions');
@@ -110,6 +111,13 @@ module.exports = options => {
       manifest: paths.vendorManifestFile
     }));
   }
+
+  // === output a manifest ===
+
+  config.plugins.push(new RevManifestPlugin({
+    filename: 'rev-manifest.json',
+    cache: {vendor: 'vendor.js'}
+  }));
 
   return config;
 };

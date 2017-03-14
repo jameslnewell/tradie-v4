@@ -7,6 +7,9 @@ module.exports = options => {
     env: {
       browser: true
     },
+    globals: {
+      process: true
+    },
     rules: {
     },
     extends: [].concat(config.extends)
