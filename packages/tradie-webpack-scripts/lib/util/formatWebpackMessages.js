@@ -116,12 +116,21 @@ function formatMessage(message) {
   return message;
 }
 
-function formatWebpackMessages(json) {
-  var formattedErrors = json.errors.map(function(message) {
-    return 'Error in ' + formatMessage(message)
+function formatWebpackMessages(json, debug) {
+
+  //show all the detail in debug mode
+  if (debug) {
+    return {
+      errors: json.errors.map(error => error.stack || error),
+      warnings: json.warnings
+    };
+  }
+
+  var formattedErrors = json.errors.map(function(error) {
+    return 'Error in ' + formatMessage(error.message || error)
   });
   var formattedWarnings = json.warnings.map(function(message) {
-    return 'Warning in ' + formatMessage(message)
+    return 'Warning in ' + formatMessage(String(message))
   });
   var result = {
     errors: formattedErrors,

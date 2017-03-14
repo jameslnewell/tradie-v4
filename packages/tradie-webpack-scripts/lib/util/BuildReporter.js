@@ -93,7 +93,10 @@ class BuildReporter {
   collateStats(stats) {
 
     //note: linting and other errors may be duplicated when multiple bundles use the same source files - de-dupe them
-    const msgs = formatWebpackMessages(stats.toJson());
+    const msgs = formatWebpackMessages({
+      errors: stats.compilation.errors,
+      warnings: stats.compilation.warnings
+    }, this.debug);
     this.errors = uniq(this.errors.concat(msgs.errors));
     this.warnings = uniq(this.warnings.concat(msgs.warnings));
 
