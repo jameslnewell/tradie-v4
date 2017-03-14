@@ -6,10 +6,13 @@ const BabiliPlugin = require('babili-webpack-plugin');
 const WatchMissingNodeModulesPlugin = require('tradie-webpack-utils/WatchMissingNodeModulesPlugin');
 const scriptExtensions = require('./scriptExtensions');
 const getPaths = require('./getPaths');
+const trailingSlashIt = require('trailing-slash-it');
+
 
 module.exports = options => {
   const paths = getPaths(options.root);
   const optimize = options.optimize;
+  const BASE_URL = trailingSlashIt(process.env.BASE_URL || '/');
 
   const config = {
     context: paths.src,
@@ -21,7 +24,7 @@ module.exports = options => {
     output: {
       path: paths.dest,
       filename: optimize ? '[name].[chunkhash:8].js' : '[name].js',
-      publicPath: '/',
+      publicPath: BASE_URL,
       pathinfo: !optimize //true in dev only
     },
 
@@ -74,6 +77,11 @@ module.exports = options => {
     }));
 
   }
+
+  config.plugins.push(new webpack.DefinePlugin({
+    'process.env.BASE_URL': JSON.stringify(BASE_URL)
+  }));
+
 
   return config;
 };
