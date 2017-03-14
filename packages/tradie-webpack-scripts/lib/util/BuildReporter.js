@@ -92,11 +92,21 @@ class BuildReporter {
    */
   collateStats(stats) {
 
-    //note: linting and other errors may be duplicated when multiple bundles use the same source files - de-dupe them
-    const msgs = formatWebpackMessages({
-      errors: stats.compilation.errors,
-      warnings: stats.compilation.warnings
-    }, this.debug);
+    //FIXME: linting and other errors may be duplicated when multiple bundles use the same source files - de-dupe them
+    let msgs;
+    if (this.debug) {
+      //show full stack traces
+      msgs = {
+        errors: stats.compilation.errors.map(error => error.stack || error),
+        warnings: stats.compilation.warnings
+      };
+    } else {
+      //show formatted messages
+      msgs = formatWebpackMessages({
+        errors: stats.compilation.errors.map(error => error.message || error),
+        warnings: stats.compilation.warnings
+      });
+    }
     this.errors = uniq(this.errors.concat(msgs.errors));
     this.warnings = uniq(this.warnings.concat(msgs.warnings));
 
