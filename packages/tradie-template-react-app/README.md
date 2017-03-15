@@ -11,6 +11,12 @@ npm install --save-dev tradie@4 tradie-template-react-app
 
 ## Usage
 
+Create the following files:
+
+- `./src/vendor.js` - Optional. Import all packages you would like in the vendor bundle e.g. `react`, `react-dom`, `react-redux`, `redux`, `react-router` etc. This bundle can be cached forever and saves the user from downloading the bundle again when your app changes. 
+- `./src/client.js` - Required. Render your app on the client. Check out [`rechannel`](https://npmjs.com/package/rechannel).
+- `./src/server.js` - Required. Use `express` or similar to create a server that serves your app on the server. Check out [`rechannel`](https://npmjs.com/package/rechannel).
+
 See [`tradie`](https://www.npmjs.com/package/tradie) for a list of commands.
 
 
