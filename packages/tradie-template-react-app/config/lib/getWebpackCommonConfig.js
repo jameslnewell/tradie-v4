@@ -4,9 +4,9 @@ const extensionsToRegex = require('ext-to-regex');
 const webpack = require('webpack');
 const BabiliPlugin = require('babili-webpack-plugin');
 const WatchMissingNodeModulesPlugin = require('tradie-webpack-utils/WatchMissingNodeModulesPlugin');
+const trailingSlashIt = require('trailing-slash-it');
 const scriptExtensions = require('./scriptExtensions');
 const getPaths = require('./getPaths');
-const trailingSlashIt = require('trailing-slash-it');
 
 const BASE_URL = trailingSlashIt(process.env.BASE_URL || '/');
 
@@ -26,6 +26,10 @@ module.exports = options => {
       filename: optimize ? '[name].[chunkhash:8].js' : '[name].js',
       publicPath: BASE_URL,
       pathinfo: !optimize //true in dev only
+    },
+
+    resolve: {
+      extensions: [...scriptExtensions, '.json']
     },
 
     module: {
