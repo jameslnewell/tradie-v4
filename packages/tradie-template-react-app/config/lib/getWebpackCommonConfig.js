@@ -8,11 +8,11 @@ const scriptExtensions = require('./scriptExtensions');
 const getPaths = require('./getPaths');
 const trailingSlashIt = require('trailing-slash-it');
 
+const BASE_URL = trailingSlashIt(process.env.BASE_URL || '/');
 
 module.exports = options => {
   const paths = getPaths(options.root);
   const optimize = options.optimize;
-  const BASE_URL = trailingSlashIt(process.env.BASE_URL || '/');
 
   const config = {
     context: paths.src,
@@ -77,6 +77,8 @@ module.exports = options => {
     }));
 
   }
+
+  // === pass in the BASE_URL ===
 
   config.plugins.push(new webpack.DefinePlugin({
     'process.env.BASE_URL': JSON.stringify(BASE_URL)

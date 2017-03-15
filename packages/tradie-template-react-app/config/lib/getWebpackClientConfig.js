@@ -16,6 +16,7 @@ const getWebpackCommonConfig = require('./getWebpackCommonConfig');
 module.exports = options => {
   const paths = getPaths(options.root);
   const optimize = options.optimize;
+  const manifest = options.manifest;
 
   const config = getWebpackCommonConfig(Object.assign({}, options, {
     eslint: getEslintClientConfig(options),
@@ -116,7 +117,7 @@ module.exports = options => {
 
   config.plugins.push(new RevManifestPlugin({
     filename: 'rev-manifest.json',
-    cache: {vendor: 'vendor.js'}
+    cache: manifest
   }));
 
   return config;

@@ -8,13 +8,14 @@ module.exports = options => {
   const watch = options.watch;
   const debug = options.debug;
   const optimize = options.optimize;
+  const manifest = {};
 
   return {
     debug,
     watch,
     webpack: {
-      vendor: getWebpackVendorConfig({root, optimize}),
-      client: getWebpackClientConfig({root, optimize}),
+      vendor: getWebpackVendorConfig({root, optimize, manifest}),
+      client: getWebpackClientConfig({root, optimize, manifest}),
       server: getWebpackServerConfig({root, optimize})
     }
   };

@@ -9,14 +9,15 @@ module.exports = options => {
   const root = options.root;
   const debug = options.debug;
   const optimize = false;
+  const manifest = {};
   const paths = getPaths(root);
 
   return {
     debug,
 
     webpack: {
-      vendor: getWebpackVendorConfig({root, optimize}),
-      client: getWebpackClientConfig({root, optimize}),
+      vendor: getWebpackVendorConfig({root, optimize, manifest}),
+      client: getWebpackClientConfig({root, optimize, manifest}),
       server: getWebpackServerConfig({root, optimize})
     },
 
