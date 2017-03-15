@@ -29,7 +29,7 @@
     "null-loader": "^0.1.1",
     "postcss-loader": "^1.3.3",
     "style-loader": "^0.13.2",
-    "tradie-webpack-utils": "^2.0.0-preview.1",
+    "tradie-webpack-utils": "^4.0.0-preview.1",
     "trailing-slash-it": "^0.3.0",
     "webpack": "^2.2.1",
     "webpack-node-externals": "^1.5.4"
