@@ -10,10 +10,28 @@ A CLI for building projects with Webpack.
     
 ## Usage
 
-    tradie clean  # remove the generated artifacts
-    tradie build  # build the generated artifacts
-    tradie serve  # automatically build, re-build and serve generated artifacts
-    tradie test   # build and run tests
+### `tradie clean`
+
+Remove all compiled artifacts and temporary files.
+
+### `tradie serve`
+
+Bundle and serve compiled artifacts with HMR.
+
+### `tradie build`
+
+Bundle source assets into compiled artifacts.
+
+Arguments:
+- `--watch` - watch all source files and re-compile when they change
+- `--optimize` - create an optimized build
+
+### `tradie test`
+
+Arguments:
+- `--watch` - watch all test files and re-compile when they change
+- `--coverage` - collect and output test coverage
+
 
 ## Templates
 
