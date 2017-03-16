@@ -17,8 +17,49 @@ Create the following files:
 - `./src/client.js` - Required. Render your app on the client. Check out [`rechannel`](https://npmjs.com/package/rechannel).
 - `./src/server.js` - Required. Use `express` or similar to create a server that serves your app on the server. Check out [`rechannel`](https://npmjs.com/package/rechannel).
 
-See [`tradie`](https://www.npmjs.com/package/tradie) for a list of commands.
+Add a scripts section to your `package.json`:
+```json
+{
+  "scripts": {
+    "clean": "tradie clean",
+    "start": "tradie serve",
+    "build": "tradie build --optimize",
+    "test": "tradie test --watch"
+  }
+}
+```
 
+Run `npm start`.
+
+## Commands
+
+### `tradie clean`
+
+Remove `./tmp` and `./dist` directories containing temporary and generated files.
+
+### `tradie serve`
+
+Compile vendor, client and server bundles, serve the vendor and client bundles with HMR and run the server bundle.
+
+Transpiled with `babel-preset-env`.... blah blah blah
+
+### `tradie build`
+
+Compile vendor, client and server bundles.
+
+Arguments:
+
+- `--watch` - Watch the source files and re-compile whenever they change
+- `--optimize` - 
+
+### `tradie test`
+
+Run all `./src/**/*.test.js` files.
+
+Arguments:
+
+- `--watch` - Watch the test files and re-compile whenever they change
+- `--coverage` - Collect coverage information and output reports (see `./tmp/coverage`) 
 
 ## Configuration
 
