@@ -1,6 +1,6 @@
 {
   "name": "tradie-template-react-app",
-  "version": "1.0.0-preview.3",
+  "version": "1.0.0-preview.4",
   "description": "React app.",
   "repository": "jameslnewell/tradie-template-react-app",
   "dependencies": {
@@ -9,7 +9,7 @@
     "babel-jest": "^19.0.0",
     "babel-loader": "next",
     "babel-plugin-dynamic-import-node": "^1.0.0",
-    "babel-plugin-styled-components": "^1.0.0",
+    "babel-plugin-styled-components": "^1.0.1",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-plugin-transform-class-properties": "^6.23.0",
     "babel-plugin-transform-do-expressions": "^6.13.0",
