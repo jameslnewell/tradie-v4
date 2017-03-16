@@ -35,7 +35,7 @@ Arguments:
 
 ## Templates
 
-- [tradie-template-react-static-site](https://www.npmjs.com/package/tradie-template-react-static-site)
+- [tradie-template-react-app](https://www.npmjs.com/package/tradie-template-react-app)
 
 ## Debugging
 
