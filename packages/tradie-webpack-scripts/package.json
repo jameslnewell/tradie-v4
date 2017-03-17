@@ -10,6 +10,7 @@
     "http-proxy-middleware": "^0.17.4",
     "jest": "^19.0.2",
     "lodash.uniq": "^4.5.0",
+    "object.values": "^1.0.4",
     "promised-del": "^1.0.2",
     "serve-index": "^1.8.0",
     "serve-static": "^1.11.1",
