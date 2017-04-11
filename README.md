@@ -4,7 +4,7 @@ A framework for creating targeted build tools like `create-react-app`.
 
 ## Documentation
 
-[Read the documention](packages/tradie/README.md).
+[User documention](packages/tradie/README.md).
 
 ## Packages
 
