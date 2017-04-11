@@ -97,7 +97,7 @@ class BuildReporter {
     if (this.debug) {
       //show full stack traces
       msgs = {
-        errors: stats.compilation.errors.map(error => error.stack || error),
+        errors: stats.compilation.errors.map(error => (error.stack ? `${error.message}\n${error.stack}` : error)),
         warnings: stats.compilation.warnings
       };
     } else {

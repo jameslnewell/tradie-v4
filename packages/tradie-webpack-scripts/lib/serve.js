@@ -3,6 +3,7 @@
 const wfe = require('wait-for-event');
 const objectValues = require('object.values');
 const webpack = require('webpack');
+const serveStatic = require('serve-static');
 const proxyMiddleware = require('http-proxy-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const webpackDevMiddleware = require('webpack-dev-middleware');
@@ -73,7 +74,7 @@ module.exports = options => {
     //configure HMR
     addEntry(options.webpack.client, `${require.resolve('webpack-hot-middleware/client')}?reload=true&overlay=true`);
     addPlugin(options.webpack.client, new webpack.HotModuleReplacementPlugin());
-
+console.log(options.webpack.client);
     //create the compiler
     bundlers.client = new Bundler(options.webpack.client);
 
@@ -194,18 +195,24 @@ module.exports = options => {
 
     //serve client files
     if (bundlers.client) {
+      console.log('SETUP HMR')
       server
         .use(hotMiddleware)
         .use(devMiddleware)
       ;
     }
 
-    //proxy server
+    //proxy server TODO: move to template?
     if (bundlers.server) {
       server.use(proxyMiddleware({
         target: `http://localhost:${APP_PORT}`, //TODO: make configurable
         logLevel: 'warn'
       }));
+    }
+
+    //serve files assuming S3 TODO: move to template?
+    if (bundlers.build) {
+      server.use(serveStatic('./dist')) //FIXME: configure directory
     }
 
     //start the server
@@ -221,7 +228,7 @@ module.exports = options => {
 
     //stop the client from compiling
     if (devMiddleware) {
-      devMiddleware.close(); //TODO: wait for client close before resolving
+      devMiddleware.close();
     }
 
     //stop the build and server from compiling
@@ -247,6 +254,7 @@ module.exports = options => {
       //wait for all the compilers and server to close before resolving or rejecting
       return new Promise((resolve, reject) => {
         const arr = [server];
+        //TODO: add client
         if (bundlers.build) arr.push(bundlers.build);
         if (bundlers.server) arr.push(bundlers.server);
         if (app) arr.push(app);

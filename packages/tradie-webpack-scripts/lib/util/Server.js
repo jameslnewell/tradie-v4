@@ -3,8 +3,6 @@ const debug = require('debug');
 const connect = require('connect');
 const serverDestroy = require('server-destroy');
 const detectPort = require('detect-port');
-const serveIndex = require('serve-index');
-const serveStatic = require('serve-static');
 const EventEmitter = require('events').EventEmitter;
 
 class Server {
@@ -15,12 +13,6 @@ class Server {
     this.app = connect();
     this.server = null;
     this.emitter = new EventEmitter();
-
-    //setup the server
-   this.app
-      // .use(serveStatic('./dist')) //FIXME: configure directory
-      // .use(serveIndex('./dist')) //FIXME: configure directory
-    ;
 
     //debug information
     this.emitter

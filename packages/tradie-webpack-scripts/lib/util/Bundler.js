@@ -40,6 +40,8 @@ class Bundler {
       callback();
     });
 
+    //TODO: "watch-close" => "stopped"
+
     //listen for when Webpack finishes emitting the compiled files
     this.compiler.plugin('done', stats => {
       this.compiling = false;
