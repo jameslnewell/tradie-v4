@@ -1,50 +1,28 @@
-/* @flow weak */
 'use strict';
 const getSiteMetadata = require('./lib/getSiteMetadata');
-const createVendorConfig = require('./lib/createVendorConfig');
-const createClientConfig = require('./lib/createClientConfig');
-const createBuildConfig = require('./lib/createBuildConfig');
+const getWebpackVendorConfig = require('./lib/getWebpackVendorConfig');
+const getWebpackClientConfig = require('./lib/getWebpackClientConfig');
+const getWebpackBuildConfig = require('./lib/getWebpackBuildConfig');
 
-module.exports = cliOptions => {
-  const assetsByChunkNameCache = {};
+module.exports = options => {
+  const root = options.root;
+  const debug = options.debug;
+  const optimize = options.optimize;
+  const watch = options.watch;
+  const manifest = [];
 
-  return getSiteMetadata(cliOptions.root)
+  return getSiteMetadata(root)
     .then(metadata => {
 
-      return Promise.all([
-
-        createVendorConfig({
-          root: cliOptions.root,
-          optimize: cliOptions.optimize,
-          metadata,
-          assetsByChunkNameCache
-        }),
-
-        createClientConfig({
-          root: cliOptions.root,
-          optimize: cliOptions.optimize,
-          metadata,
-          assetsByChunkNameCache
-        }),
-
-        createBuildConfig({
-          root: cliOptions.root,
-          optimize: cliOptions.optimize,
-          metadata,
-          assetsByChunkNameCache
-        })
-
-      ])
-        .then(webpackConfigs => ({
-          debug: cliOptions.debug,
-          watch: cliOptions.watch,
-          webpack: {
-            vendor: webpackConfigs[0],
-            client: webpackConfigs[1],
-            build: webpackConfigs[2]
-          }
-        }))
-      ;
+      return {
+        debug,
+        watch,
+        webpack: {
+          vendor: getWebpackVendorConfig({root, optimize, manifest}),
+          client: getWebpackClientConfig({root, optimize, metadata, manifest}),
+          build: getWebpackBuildConfig({root, optimize, metadata, manifest})
+        }
+      };
 
     })
   ;

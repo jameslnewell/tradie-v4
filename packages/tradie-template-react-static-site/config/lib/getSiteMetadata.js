@@ -8,16 +8,16 @@ module.exports = root => {
   const src = getPaths(root).src;
 
   const getComponentPath = dir => {
-    if (fs.existsSync(path.join(src, dir, 'backend.jsx'))) {
-      return `./${path.join(dir, 'backend.jsx')}`;
+    if (fs.existsSync(path.join(src, dir, 'index.jsx'))) {
+      return `./${path.join(dir, 'index.jsx')}`;
     } else {
       return null;
     }
   };
 
   const getScriptPath = dir => {
-    if (fs.existsSync(path.join(src, dir, 'frontend.jsx'))) {
-      return `./${path.join(dir, 'frontend.jsx')}`;
+    if (fs.existsSync(path.join(src, dir, 'index.jsx'))) {
+      return `./${path.join(dir, 'index.jsx')}`;
     } else {
       return null;
     }
@@ -32,14 +32,14 @@ module.exports = root => {
   if (typeof site.layout === 'string') {
     layout = {
       chunkName: path.relative('.', site.layout),
-      component: getComponentPath(site.layout),
-      script: getScriptPath(site.layout)
+      buildPath: getComponentPath(site.layout),
+      clientPath: getScriptPath(site.layout)
     };
   } else {
     layout = {
       chunkName: 'layout',
-      component: require.resolve(),
-      script: null
+      buildPath: require.resolve(), //TODO:
+      clientPath: null
     };
   }
 
@@ -49,8 +49,8 @@ module.exports = root => {
   }
   const pages = site.pages.map(page => ({
     chunkName: path.relative('.', page),
-    component: getComponentPath(page),
-    script: getScriptPath(page)
+    buildPath: getComponentPath(page),
+    clientPath: getScriptPath(page)
   }));
 
   return Promise.resolve({

@@ -1,12 +1,21 @@
+'use strict';
 const path = require('path');
 
-/**
- * @param {string} root
- * @returns {{root: string, src: string, tmp: string, dest: string}}
- */
-module.exports = root => ({
-  root,
-  src: path.join(root, 'src'),
-  tmp: path.join(root, 'tmp'),
-  dest: path.join(root, 'dist')
-});
+module.exports = root => {
+
+  const src = path.resolve(root, './src');
+  const dest = path.resolve(root, './dist');
+  const tmp = path.resolve(root, './tmp');
+
+  return {
+
+    src,
+    dest,
+    tmp,
+
+    vendorEntryFile: path.join(src, 'vendor.js'),
+    vendorManifestFile: path.join(tmp, 'vendor.json')
+
+  };
+
+};
