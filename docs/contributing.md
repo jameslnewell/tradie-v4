@@ -1,6 +1,6 @@
 # Contributing
 
-This repo is [`monorepo`](https://github.com/babel/babel/blob/master/doc/design/monorepo.md) managed by [LernaJS](https://lernajs.io).
+This repo is a [`monorepo`](https://github.com/babel/babel/blob/master/doc/design/monorepo.md) managed by [LernaJS](https://lernajs.io).
 
 ## Packages
 
