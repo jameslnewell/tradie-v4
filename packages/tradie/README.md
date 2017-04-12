@@ -13,7 +13,7 @@ A CLI for building web apps. Like `create-react-app` but configurable via templa
 ## Usage
 
 #### `tradie clean` 
-Remove any generated artifacts and temporary files.
+Remove any generated artifacts and/or temporary files.
 
 #### `tradie build`
 Build any generated artifacts.
@@ -34,7 +34,7 @@ Run tests.
 
 Templates tell `tradie` how to build, serve and test your app. They contain configuration for Webpack and Jest.
 
-Choose from one of the existing templates below, or feel to [build your own](https://github.com/jameslnewell/tradie-v4/blob/master/packages/tradie/docs/templates.md).
+Choose from one of the existing templates below or [build your own](https://github.com/jameslnewell/tradie-v4/blob/master/packages/tradie/docs/templates.md).
 
 - [tradie-template-react-static-site](https://www.npmjs.com/package/tradie-template-react-static-site)
 - [tradie-template-react-app](https://www.npmjs.com/package/tradie-template-react-app)
