@@ -96,12 +96,10 @@ module.exports = options => {
     pages: metadata.pages.map(data => data.chunkName),
 
     getLayoutProps: (props, context) => {
-      console.log('manifest', manifest);
       return Object.assign({}, props, {
         
         root: config.output.publicPath,
         
-        //TODO: only fetch scripts matching the chunk name and vendor chunk
         scripts: {
           entry: [...manifest.entry['vendor'], ...manifest.entry[context.pageChunk.name]]
             .filter(filename => /\.js$/.test(filename))
@@ -113,10 +111,11 @@ module.exports = options => {
           ,
         },
 
-        //TODO: only fetch scripts matching the chunk name and vendor chunk
-        styles: [...manifest.entry['vendor'], ...manifest.entry[context.pageChunk.name]]
-          .filter(filename => /\.css$/.test(filename))
-          .map(filename => `${config.output.publicPath}${filename}`)
+        styles: {
+          entry: [...manifest.entry['vendor'], ...manifest.entry[context.pageChunk.name]]
+            .filter(filename => /\.css$/.test(filename))
+            .map(filename => `${config.output.publicPath}${filename}`)
+        }
         
         
       });
