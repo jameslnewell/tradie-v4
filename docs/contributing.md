@@ -1,6 +1,6 @@
 # Contributing
 
-This repo is [`monorepo`](https://github.com/babel/babel/blob/master/doc/design/monorepo.md) managed by [LernaJS](https://lernajs.io).
+This repo is a [`monorepo`](https://github.com/babel/babel/blob/master/doc/design/monorepo.md) managed by [LernaJS](https://lernajs.io).
 
 ## Packages
 
@@ -18,3 +18,17 @@ npm run bootstrap   # install the package specific tools and dependencies
 ```
 
 > Note: Requires Node.js v4 or greater
+
+## Branching
+
+### `master`
+
+The `master` branch will contain the most recent stable release and will have been published to `npm` using the `latest` dist-tag.
+
+### `next`
+
+The `next` branch will contain the most recent alpha release and will have been published to `npm` using the `next` dist-tag. When the next version becomes stable, this branch will be merged into master.
+
+### `add/<feature>` or `fix/<feature>`
+
+These branches will contain all Work In Progress and will be merged into the `master` or `next` branches as appropiate.
