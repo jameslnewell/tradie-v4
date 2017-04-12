@@ -5,7 +5,7 @@ A CLI for building web apps. Like `create-react-app` but configurable via templa
 ## Documentation
 
 - ### [User](packages/tradie)
-- ### [Contributor](contributing.md)
+- ### [Contributor](docs/contributing.md)
 
 ## License
 
