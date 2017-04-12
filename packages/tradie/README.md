@@ -4,27 +4,26 @@
 
 A CLI for building web apps. Like `create-react-app` but configurable via templates.
 
-## Installation
-
-    npm install --save-dev tradie tradie-template-*
-    
-  > Tradie requires a template in order to know how to build your app. Make sure you install a template too e.g. `tradie-template-react-static-site`
-    
 ## Usage
 
-#### `tradie clean` 
+`tradie` requires a template in order to know how to build, serve and test your app. 
+Choose a [`template`](https://github.com/jameslnewell/tradie-v4/blob/master/README.md#template) and follow the `template`'s documentation to set up up your project.
+
+## Commands
+
+##### `tradie clean` 
 Remove any generated artifacts and/or temporary files.
 
-#### `tradie build`
+##### `tradie build`
 Build any generated artifacts.
 
 - `--watch`
 - `--optimize`
 
-#### `tradie serve` 
+##### `tradie serve` 
 Build any generated artifacts.
 
-#### `tradie test`
+##### `tradie test`
 Run tests.
 
 - `--watch`
