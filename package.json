@@ -1,6 +1,10 @@
 {
   "devDependencies": {
-    "lerna": "2.0.0-beta.30",
+    "lerna": "^2.0.0-rc.1",
     "webpack": "^2.2.0"
+  },
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "check-deps": "lerna exec --concurrency 1 -- npm-check -u"
   }
 }

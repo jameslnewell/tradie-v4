@@ -45,7 +45,9 @@ class CollectFilesPlugin {
             }
 
             //add the file to the array of files for this entry chunk
-            this.manifest.entry[chunk.name].push(filename);
+            if (!this.manifest.entry[chunk.name].includes(filename)) {
+              this.manifest.entry[chunk.name].push(filename);
+            }
 
           });
         } else {
@@ -62,13 +64,15 @@ class CollectFilesPlugin {
             }
 
             //add the file to the array of files for this entry chunk
-            this.manifest.async[chunk.id].push(filename);
+            if (!this.manifest.async[chunk.id].includes(filename)) {
+              this.manifest.async[chunk.id].push(filename);
+            }
 
           });
         }
 
       });
-console.log('collectfiles', this.manifest);
+      
       callback();
     });
   }

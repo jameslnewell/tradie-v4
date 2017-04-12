@@ -2,7 +2,7 @@
   "name": "tradie-webpack-config",
   "version": "2.0.0-preview.28",
   "dependencies": {
-    "case-sensitive-paths-webpack-plugin": "^1.1.4",
+    "case-sensitive-paths-webpack-plugin": "^2.0.0",
     "ext-to-regex": "^0.1.0",
     "lodash.mergewith": "^4.6.0",
     "resolve": "^1.1.7"

@@ -73,7 +73,7 @@ module.exports = options => {
     //configure HMR
     addEntry(options.webpack.client, `${require.resolve('webpack-hot-middleware/client')}?reload=true&overlay=true`);
     addPlugin(options.webpack.client, new webpack.HotModuleReplacementPlugin());
-console.log(options.webpack.client);
+
     //create the compiler
     bundlers.client = new Bundler(options.webpack.client);
 
@@ -161,12 +161,7 @@ console.log(options.webpack.client);
   const startServerCompiler = () => new Promise((resolve, reject) => {
     if (bundlers.server) {
       bundlers.server
-        .once('completed', () => {
-          if (app) {
-            app.start();
-          }
-          resolve();
-        })
+        .once('completed', resolve)
         .once('error', reject)
         .start()
       ;
@@ -194,14 +189,13 @@ console.log(options.webpack.client);
 
     //serve client files
     if (bundlers.client) {
-      console.log('SETUP HMR')
       server
         .use(hotMiddleware)
         .use(devMiddleware)
       ;
     }
 
-    //proxy server TODO: move to template?
+    //proxy server TODO: move to the app template?
     if (bundlers.server) {
       server.use(proxyMiddleware({
         target: `http://localhost:${APP_PORT}`, //TODO: make configurable
@@ -209,7 +203,7 @@ console.log(options.webpack.client);
       }));
     }
 
-    //serve files assuming S3 TODO: move to template?
+    //serve files assuming S3 TODO: move to static-site template?
     if (bundlers.build) {
       server.use(serveStatic('./dist')) //FIXME: configure directory
     }
@@ -217,7 +211,8 @@ console.log(options.webpack.client);
     //start the server
     server.start();
 
-    //TODO: start server app node process if it isn't already running
+    //start the app
+    if (app) app.start();
 
   };
 
@@ -252,12 +247,8 @@ console.log(options.webpack.client);
 
       //wait for all the compilers and server to close before resolving or rejecting
       return new Promise((resolve, reject) => {
-        const arr = [server];
-        //TODO: add client
-        if (bundlers.build) arr.push(bundlers.build);
-        if (bundlers.server) arr.push(bundlers.server);
-        if (app) arr.push(app);
-        wfe.waitForAll('stopped', arr, errors => { //TODO: wait for the client compiler too
+        const stoppable = [].concat(objectValues(bundlers), server, app).filter(s => Boolean(s));
+        wfe.waitForAll('stopped', stoppable, errors => {
           setImmediate(() => { //HACK: wait for build-reporter
             if (errors.length) {
               reject(errors);
