@@ -1,4 +1,3 @@
-/* @flow weak */
 'use strict';
 const debug = require('debug');
 const MemoryFS = require('memory-fs');

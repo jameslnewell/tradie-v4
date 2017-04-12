@@ -1,4 +1,3 @@
-/* @flow weak */
 'use strict';
 const del = require('promised-del');
 
