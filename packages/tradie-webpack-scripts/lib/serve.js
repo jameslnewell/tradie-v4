@@ -1,4 +1,3 @@
-/* @flow weak */
 'use strict';
 const wfe = require('wait-for-event');
 const webpack = require('webpack');
