@@ -7,7 +7,7 @@ A CLI for building web apps. Like `create-react-app` but configurable via templa
 ## Usage
 
 `tradie` requires a template in order to know how to build, serve and test your app. 
-Choose a [`template`](https://github.com/jameslnewell/tradie-v4/blob/master/README.md#template) and follow the `template`'s documentation to set up up your project.
+Choose a [`template`](https://github.com/jameslnewell/tradie-v4/tree/master/packages/tradie#templates) and follow its documentation to set up up your project.
 
 ## Commands
 
