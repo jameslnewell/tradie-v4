@@ -1,11 +1,7 @@
 # tradie-webpack-scripts
 
-Scripts for compiling bundles with Webpack.
- 
-## Installation
+Scripts for building, serving and testing using Webpack and Jest.
 
-    npm install --save tradie-webpack-script
-    
 ## API
 
 ### clean(options)
@@ -25,6 +21,22 @@ A `Promise`. The promise is resolved when the temporary and generated files have
 > Yet-to-be-implemented.
 
 Start a dev-server, compile vendor, client, build and server bundles, whilst reporting errors and warnings to the user.
+
+**Parameters:**
+- `options : Object`
+    - `watch : boolean` - Whether to re-compile the vendor, client and build bundles when the source files change
+    - `webpack : Object`
+        - `vendor : Object` - Webpack configuration for the vendor bundle
+        - `client : Object` - Webpack configuration for the client bundle
+        - `build : Object` - Webpack configuration for the build bundle
+        - `server : Object` - Webpack configuration for the server bundle
+    - `onServerStart : Function` - Can call server.use(). Returns a promise.
+    - `onServerStop : Function` - Can call server.use(). Returns a promise.
+
+**Returns:**
+
+A `Promise`. The promise is resolved when the bundles have been successfully compiled. The promise is rejected when the compilation has failed with errors. In watch-mode 
+the promise is resolved when an interrupt signal is received.
 
 ### build(options)
 

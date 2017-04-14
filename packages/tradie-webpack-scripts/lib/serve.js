@@ -2,8 +2,6 @@
 const wfe = require('wait-for-event');
 const objectValues = require('object.values');
 const webpack = require('webpack');
-const serveStatic = require('serve-static');
-const proxyMiddleware = require('http-proxy-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const Server = require('./util/Server');
@@ -11,7 +9,7 @@ const Process = require('./util/Process');
 const Bundler = require('./util/Bundler');
 const BuildReporter = require('./util/BuildReporter');
 
-const APP_PORT = 4000;
+const noop = () => {/* do nothing*/};
 
 /**
  * Add a new entry to the Webpack config
@@ -49,15 +47,19 @@ const addPlugin = (webpackConfig, newPlugin) => {
  * @param {object}    [options.webpack.client]
  * @param {object}    [options.webpack.build]
  * @param {object}    [options.webpack.server]
- * @param {string}    [options.serverPath]
+ * @param {string}    [options.onServerStart]
+ * @param {string}    [options.onServerStop]
  * @returns {Promise.<null>}
  */
 module.exports = options => {
   const bundlers = {};
-  let app;
   let hotMiddleware;
   let devMiddleware;
   let exiting = false;
+  let isServerStopped = Promise.resolve();
+console.log(options)
+  const onServerStart = options.onServerStart || noop;
+  const onServerStop = options.onServerStop || noop;
 
   //create the server
   const server = new Server();
@@ -70,7 +72,7 @@ module.exports = options => {
   //create the client bundler
   if (options.webpack.client) {
 
-    //configure HMR
+    //configure HMR for the client bundle
     addEntry(options.webpack.client, `${require.resolve('webpack-hot-middleware/client')}?reload=true&overlay=true`);
     addPlugin(options.webpack.client, new webpack.HotModuleReplacementPlugin());
 
@@ -82,7 +84,7 @@ module.exports = options => {
   //create the server bundler
   if (options.webpack.server) {
 
-    //configure HMR
+    //configure HMR for the server bundle
     //"webpack/hot/signal" - https://github.com/webpack/webpack/issues/3558
     addEntry(options.webpack.server, `${require.resolve('webpack/hot/poll')}?1000`);
     addPlugin(options.webpack.server, new webpack.NamedModulesPlugin());
@@ -92,13 +94,6 @@ module.exports = options => {
     bundlers.server = new Bundler(options.webpack.server, {
       watch: true
     });
-
-    //create the app
-    if (options.serverPath) {
-      app = new Process(options.serverPath, {
-        env: {PORT: APP_PORT}
-      });
-    }
 
   }
 
@@ -117,69 +112,81 @@ module.exports = options => {
   });
 
   const startVendorCompiler = () => new Promise((resolve, reject) => {
-    if (bundlers.vendor) {
-      bundlers.vendor
-        .once('completed', () => {
-
-          //stop tracking the vendor bundler which has finished
-          delete bundlers.vendor;
-
-          resolve();
-
-        })
-        .once('error', reject)
-        .start()
-      ;
-    } else {
+    
+    if (!bundlers.vendor) {
       resolve();
     }
+
+    bundlers.vendor
+      .once('completed', () => {
+
+        //stop tracking the vendor bundler which has finished compiling
+        delete bundlers.vendor;
+
+        resolve();
+
+      })
+      .once('error', reject)
+      .start()
+    ;
+
   });
 
   const startClientCompiler = () => new Promise((resolve, reject) => {
-    if (bundlers.client) {
-
-      //create the middlewares (dev middleware starts watching)
-      hotMiddleware = webpackHotMiddleware(bundlers.client.compiler, {
-        log: false
-      });
-      devMiddleware = webpackDevMiddleware(bundlers.client.compiler, {
-        noInfo: true,
-        quiet: true,
-        serverSideRender: false
-      });
-
-      bundlers.client
-        .once('completed', resolve)
-        .once('error', reject)
-      ;
-
-    } else {
-      resolve();
+    
+    if (!bundlers.client) {
+      return resolve();
     }
+
+    //create the middlewares (dev middleware starts watching)
+    hotMiddleware = webpackHotMiddleware(bundlers.client.compiler, {
+      log: false
+    });
+    devMiddleware = webpackDevMiddleware(bundlers.client.compiler, {
+      noInfo: true,
+      quiet: true,
+      serverSideRender: false
+    });
+
+    //register HMR middlewares
+    server
+      .use(hotMiddleware)
+      .use(devMiddleware)
+    ;
+
+    bundlers.client
+      .once('completed', resolve)
+      .once('error', reject)
+    ;
+
   });
 
   const startServerCompiler = () => new Promise((resolve, reject) => {
-    if (bundlers.server) {
-      bundlers.server
-        .once('completed', resolve)
-        .once('error', reject)
-        .start()
-      ;
-    } else {
-      resolve();
+    
+    if (!bundlers.server) {
+      return resolve();
     }
+
+    bundlers.server
+      .once('completed', resolve)
+      .once('error', reject)
+      .start()
+    ;
+
   });
 
   const startBuildCompiler = () => new Promise((resolve, reject) => {
-    if (bundlers.build) {
-      bundlers.build
-        .once('completed', resolve)
-        .once('error', reject)
-        .start()
-      ;
-    } else {
-      resolve();
+    
+    if (!bundlers.build) {
+      return resolve();
     }
+
+    bundlers.build
+      .once('completed', resolve)
+      .once('error', reject)
+      .start()
+    ;
+
   });
 
   const startServer = () => {
@@ -187,32 +194,20 @@ module.exports = options => {
     //if the user has CTL-C'd then don't bother starting the server
     if (exiting) return;
 
-    //serve client files
-    if (bundlers.client) {
-      server
-        .use(hotMiddleware)
-        .use(devMiddleware)
-      ;
-    }
-
-    //proxy server TODO: move to the app template?
-    if (bundlers.server) {
-      server.use(proxyMiddleware({
-        target: `http://localhost:${APP_PORT}`, //TODO: make configurable
-        logLevel: 'warn'
-      }));
-    }
-
-    //serve files assuming S3 TODO: move to static-site template?
-    if (bundlers.build) {
-      server.use(serveStatic('./dist')) //FIXME: configure directory
-    }
+    //lets wait until the template has finished stopping stuff
+    isServerStopped = new Promise((resolve, reject) => {
+      server.on('stopped', () => {
+        Promise.resolve(onServerStop(server))
+          .then(resolve, reject)
+        ;
+      });
+    });
 
     //start the server
-    server.start();
-
-    //start the app
-    if (app) app.start();
+    server
+      .on('started', () => onServerStart(server))
+      .start()
+    ;
 
   };
 
@@ -220,17 +215,14 @@ module.exports = options => {
   process.on('SIGINT', () => {
     exiting = true;
 
-    //stop the client from compiling
-    if (devMiddleware) {
-      devMiddleware.close();
-    }
+    //stop the client bundle from compiling
+    if (devMiddleware) devMiddleware.close();
 
-    //stop the build and server from compiling
+    //stop the build and server bundles from compiling
     if (bundlers.build) bundlers.build.stop();
     if (bundlers.server) bundlers.server.stop();
-    if (app) app.stop();
 
-    //stop the server
+    //stop the server from running
     server.stop();
 
   });
@@ -245,19 +237,21 @@ module.exports = options => {
     .then(() => startServer())
     .then(() => {
 
-      //wait for all the compilers and server to close before resolving or rejecting
+      //wait for all the compilers and server to stop before resolving or rejecting the command
       return new Promise((resolve, reject) => {
-        const stoppable = [].concat(objectValues(bundlers), server, app).filter(s => Boolean(s));
-        wfe.waitForAll('stopped', stoppable, errors => {
-          setImmediate(() => { //HACK: wait for build-reporter
-            if (errors.length) {
-              reject(errors);
-            } else if (reporter.errors.length) {
-              reject();
-            } else {
-              resolve();
-            }
-          });
+        wfe.waitForAll('stopped', objectValues(bundlers), errors => {
+          isServerStopped.then(
+            () => setImmediate(() => { //HACK: wait for build-reporter
+              if (errors.length) {
+                reject(errors);
+              } else if (reporter.errors.length) {
+                reject();
+              } else {
+                resolve();
+              }
+            }),
+            reject
+          );
         });
       });
 
