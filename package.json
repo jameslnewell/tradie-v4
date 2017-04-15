@@ -5,13 +5,13 @@
     "lerna": "^2.0.0-rc.1",
     "lint-staged": "^3.4.0",
     "prettier": "^1.1.0",
-    "webpack": "^2.2.0"
+    "webpack": "^2.4.1"
   },
   "scripts": {
     "clean": "lerna clean",
     "bootstrap": "lerna bootstrap",
     "lint": "lerna exec -- eslint --ext .js -c eslint-config-jameslnewell/node .",
-    "check-deps": "lerna exec --concurrency 1 -- npm-check -u",
+    "dep-check": "lerna exec --concurrency 1 -- npm-check -u",
     "precommit": "lint-staged",
     "prepublish": "npm run lint"
   },
