@@ -2,7 +2,7 @@
   "name": "tradie-template-react-app",
   "version": "4.0.0-rc.0",
   "description": "React app.",
-  "repository": "jameslnewell/tradie-template-react-app",
+  "repository": "jameslnewell/tradie-v4",
   "dependencies": {
     "autoprefixer": "^6.7.6",
     "babel-core": "^6.23.1",
