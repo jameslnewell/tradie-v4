@@ -5,7 +5,6 @@ const webpack = require('webpack');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const Server = require('./util/Server');
-const Process = require('./util/Process');
 const Bundler = require('./util/Bundler');
 const BuildReporter = require('./util/BuildReporter');
 
@@ -57,7 +56,7 @@ module.exports = options => {
   let devMiddleware;
   let exiting = false;
   let isServerStopped = Promise.resolve();
-console.log(options)
+
   const onServerStart = options.onServerStart || noop;
   const onServerStop = options.onServerStop || noop;
 
