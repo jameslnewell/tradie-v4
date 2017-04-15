@@ -11,27 +11,25 @@ module.exports = options => {
   const paths = getPaths(options.root);
 
   const config = {
-
     cacheDirectory: path.join(paths.tmp, 'jest'),
 
     rootDir: path.resolve('./src'),
     testRegex: '\\.test\\.(jsx?)$',
     testPathIgnorePatterns: ['<rootDir>/_.test.js'],
 
-    moduleFileExtensions: [
-      'json', 'js', 'jsx'
-    ],
+    moduleFileExtensions: ['json', 'js', 'jsx'],
 
     transform: {
       '\\.(js|jsx)$': require.resolve('./lib/jest/scriptTransform'),
       '\\.css$': require.resolve('./lib/jest/styleTransform'),
-      '^.*\\.(?!(json|js|jsx|css)$)[^.]+$': require.resolve('./lib/jest/fileTransform'),
+      '^.*\\.(?!(json|js|jsx|css)$)[^.]+$': require.resolve(
+        './lib/jest/fileTransform'
+      )
       // transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$'], //TODO: ignore node_modules outside src dir
     },
 
-    collectCoverageFrom : ['**/*.{js,jsx}'],
+    collectCoverageFrom: ['**/*.{js,jsx}'],
     coverageDirectory: path.join(paths.tmp, 'coverage')
-
   };
 
   //add setup file if present

@@ -10,8 +10,7 @@ module.exports = options => {
     globals: {
       process: true
     },
-    rules: {
-    },
+    rules: {},
     extends: [].concat(config.extends)
   });
 };

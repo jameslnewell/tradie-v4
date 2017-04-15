@@ -19,5 +19,4 @@ module.exports = options => {
       server: getWebpackServerConfig({root, optimize})
     }
   };
-
 };

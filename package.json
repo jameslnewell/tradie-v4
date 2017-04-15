@@ -12,7 +12,8 @@
     "bootstrap": "lerna bootstrap",
     "lint": "lerna exec -- eslint --ext .js -c eslint-config-jameslnewell/node .",
     "check-deps": "lerna exec --concurrency 1 -- npm-check -u",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "prepublish": "npm run lint"
   },
   "lint-staged": {
     "*.js": [

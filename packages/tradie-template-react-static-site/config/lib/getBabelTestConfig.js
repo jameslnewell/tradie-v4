@@ -3,9 +3,9 @@ const getCommonConfig = require('./getBabelCommonConfig');
 module.exports = options => {
   const config = getCommonConfig(options);
 
-  config.presets.push(
-    [require.resolve('babel-preset-env'), {
-
+  config.presets.push([
+    require.resolve('babel-preset-env'),
+    {
       //only include necessary polyfills for the target
       useBuiltIns: true,
 
@@ -13,9 +13,8 @@ module.exports = options => {
       targets: {
         node: 'current'
       }
-
-    }]
-  );
+    }
+  ]);
 
   //we need to transpile `import('./module)` for Jest
   config.plugins.push(require.resolve('babel-plugin-dynamic-import-node'));

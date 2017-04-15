@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 const path = require('path');
 const getPaths = require('./getPaths');
 
@@ -9,18 +9,18 @@ module.exports = options => {
   const config = {
     babelrc: false,
     cacheDirectory: path.join(paths.tmp, 'babel'),
-    presets: [
-      require.resolve('babel-preset-react')
-    ],
+    presets: [require.resolve('babel-preset-react')],
     plugins: [
-
       //improve styled-components experience
-      [require.resolve('babel-plugin-styled-components'), {
-        displayName: !optimize,
-        ssr: true,
-        minify: optimize,
-        transpileTemplateLiterals: optimize
-      }],
+      [
+        require.resolve('babel-plugin-styled-components'),
+        {
+          displayName: !optimize,
+          ssr: true,
+          minify: optimize,
+          transpileTemplateLiterals: optimize
+        }
+      ],
 
       //makes classes easier
       require.resolve('babel-plugin-transform-class-properties'),
@@ -32,21 +32,18 @@ module.exports = options => {
       require.resolve('babel-plugin-syntax-dynamic-import'),
 
       //makes working with objects way more pleasant
-      require.resolve('babel-plugin-transform-object-rest-spread'),
+      require.resolve('babel-plugin-transform-object-rest-spread')
 
       //TODO: support flowtype? `transform-flow-strip-types`
-
     ]
   };
 
   if (!optimize) {
-
     //improve react debugging experience
     config.plugins = config.plugins.concat(
       require.resolve('babel-plugin-transform-react-jsx-source'),
       require.resolve('babel-plugin-transform-react-jsx-self')
     );
-
   }
 
   return config;
