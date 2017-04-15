@@ -13,19 +13,14 @@ module.exports = options => {
   const manifest = [];
 
   const paths = getPaths(root);
-  
-  return getSiteMetadata(root)
-    .then(metadata => {
-      return {
-        debug,
-        webpack: {
-          vendor: getWebpackVendorConfig({root, optimize, manifest}),
-          client: getWebpackClientConfig({root, optimize, metadata, manifest}),
-          build: getWebpackBuildConfig({root, optimize, metadata, manifest})
-        },
-        onServerStart: server => server.use(serveStatic(paths.dest))
-      };
-    })
-  ;
 
+  return getSiteMetadata(root).then(metadata => ({
+    debug,
+    webpack: {
+      vendor: getWebpackVendorConfig({root, optimize, manifest}),
+      client: getWebpackClientConfig({root, optimize, metadata, manifest}),
+      build: getWebpackBuildConfig({root, optimize, metadata, manifest})
+    },
+    onServerStart: server => server.use(serveStatic(paths.dest))
+  }));
 };

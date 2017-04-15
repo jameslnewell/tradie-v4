@@ -6,7 +6,6 @@ const webpack = require('webpack');
  * and don't let webpack watch it (which results in re-builds because the timestamp is so new)
  */
 class ReferenceDLLPlugin {
-
   constructor(options) {
     this.loaded = false;
     this.manifest = options.manifest;
@@ -15,16 +14,17 @@ class ReferenceDLLPlugin {
   apply(compiler) {
     compiler.plugin(['run', 'watch-run'], (compilerOrWatcher, callback) => {
       if (!this.loaded) {
-        compiler.apply(new webpack.DllReferencePlugin({
-          context: compiler.options.context,
-          manifest: require(this.manifest)
-        }));
+        compiler.apply(
+          new webpack.DllReferencePlugin({
+            context: compiler.options.context,
+            manifest: require(this.manifest) //eslint-disable-line global-require
+          })
+        );
       }
       this.loaded = true;
       callback();
     });
   }
-
 }
 
 module.exports = ReferenceDLLPlugin;

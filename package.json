@@ -1,11 +1,23 @@
 {
   "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-jameslnewell": "^3.0.0-preview.3",
     "lerna": "^2.0.0-rc.1",
+    "lint-staged": "^3.4.0",
+    "prettier": "^1.1.0",
     "webpack": "^2.2.0"
   },
   "scripts": {
     "clean": "lerna clean",
     "bootstrap": "lerna bootstrap",
-    "check-deps": "lerna exec --concurrency 1 -- npm-check -u"
+    "lint": "lerna exec -- eslint --ext .js -c eslint-config-jameslnewell/node .",
+    "check-deps": "lerna exec --concurrency 1 -- npm-check -u",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write --tab-width 2 --single-quote true --trailing-comma none --bracket-spacing false --jsx-bracket-same-line false --semi true",
+      "git add"
+    ]
   }
 }

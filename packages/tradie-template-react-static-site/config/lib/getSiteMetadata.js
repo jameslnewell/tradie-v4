@@ -25,7 +25,7 @@ module.exports = root => {
 
   //get the site metadata
   //TODO: handle errors
-  const site = require(`${src}/site.json`);
+  const site = require(`${src}/site.json`); //eslint-disable-line global-require
 
   //get the layout metadata
   let layout = null;
@@ -45,7 +45,9 @@ module.exports = root => {
 
   //get the page metadata
   if (!Array.isArray(site.pages)) {
-    return Promise.reject(Error('site.json: Page must be an array of strings.'));
+    return Promise.reject(
+      Error('site.json: Page must be an array of strings.')
+    );
   }
   const pages = site.pages.map(page => ({
     chunkName: path.relative('.', page),

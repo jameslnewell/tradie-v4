@@ -16,10 +16,9 @@ module.exports = options => {
   const manifest = {};
   const paths = getPaths(root);
 
-  let app = new Process(
-    path.join(paths.dest, 'server.js'), 
-    {env: {PORT: APP_PORT}}
-  );
+  const app = new Process(path.join(paths.dest, 'server.js'), {
+    env: {PORT: APP_PORT}
+  });
 
   return {
     debug,
@@ -31,20 +30,16 @@ module.exports = options => {
     },
 
     onServerStart: server => {
-      
       app.start();
 
-      server.use(proxyMiddleware({
-        target: `http://localhost:${APP_PORT}`, //TODO: make configurable
-        logLevel: 'warn'
-      }));
-    
+      server.use(
+        proxyMiddleware({
+          target: `http://localhost:${APP_PORT}`, //TODO: make configurable
+          logLevel: 'warn'
+        })
+      );
     },
 
-    onServerStop: () => {
-      return app.stop();
-    }
-
+    onServerStop: () => app.stop()
   };
-
 };

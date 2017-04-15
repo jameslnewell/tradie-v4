@@ -1,12 +1,10 @@
 'use strict';
-const debug = require('debug');
-const fork = require('child_process').fork;
 const EventEmitter = require('events').EventEmitter;
+const fork = require('child_process').fork;
+const debug = require('debug');
 
 class Process {
-
   constructor(path, options) {
-
     this.path = path;
     this.options = options || {};
 
@@ -16,7 +14,6 @@ class Process {
 
     this.onExit = this.onExit.bind(this);
     this.onError = this.onError.bind(this);
-
   }
 
   on(event, handler) {
@@ -54,19 +51,16 @@ class Process {
    */
   start() {
     return new Promise(resolve => {
-
       if (this.process) {
-        return resolve();
+        resolve();
+        return;
       }
 
       this.process = fork(this.path, {
         env: Object.assign({}, process.env, this.options.env || {})
       });
 
-      this.process
-        .on('exit', this.onExit)
-        .on('error', this.onError)
-      ;
+      this.process.on('exit', this.onExit).on('error', this.onError);
 
       resolve();
     });
@@ -83,7 +77,6 @@ class Process {
       resolve();
     });
   }
-
 }
 
 module.exports = Process;

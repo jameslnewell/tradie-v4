@@ -11,22 +11,26 @@ const getWebpackCommonConfig = require('./getWebpackCommonConfig');
 
 module.exports = options => {
   const paths = getPaths(options.root);
-  const optimize = options.optimize;
+  // const optimize = options.optimize;
 
-  const config = getWebpackCommonConfig(Object.assign({}, options, {
-    eslint: getEslintServerConfig(options),
-    babel: getBabelServerConfig(options)
-  }));
+  const config = getWebpackCommonConfig(
+    Object.assign({}, options, {
+      eslint: getEslintServerConfig(options),
+      babel: getBabelServerConfig(options)
+    })
+  );
 
   config.entry = {server: './server.js'};
   config.output = Object.assign(config.output, {
     filename: '[name].js'
   });
 
-  config.plugins.push(new webpack.DefinePlugin({
-    '__CLIENT__': false,
-    '__SERVER__': true
-  }));
+  config.plugins.push(
+    new webpack.DefinePlugin({
+      __CLIENT__: false,
+      __SERVER__: true
+    })
+  );
 
   config.target = 'node';
 
@@ -48,27 +52,29 @@ module.exports = options => {
   // === ignore the files ===
 
   config.module.rules.push({
-    exclude: extensionsToRegex([].concat(scriptExtensions, styleExtensions, '.json')),
+    exclude: extensionsToRegex(
+      [].concat(scriptExtensions, styleExtensions, '.json')
+    ),
     use: [
       {
         loader: require.resolve('file-loader'),
         options: {
-
           //always include the original file name for SEO benefits
           name: 'files/[name].[hash:8].[ext]',
 
           //already emitted on the client
           emitFile: false
-
         }
       }
     ]
   });
 
   //ignore code-splitting points on the server
-  config.plugins.push(new webpack.optimize.LimitChunkCountPlugin({
-    maxChunks: 1
-  }));
+  config.plugins.push(
+    new webpack.optimize.LimitChunkCountPlugin({
+      maxChunks: 1
+    })
+  );
 
   return config;
 };

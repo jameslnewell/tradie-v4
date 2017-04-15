@@ -18,21 +18,25 @@ module.exports = options => {
   const optimize = options.optimize;
   const manifest = options.manifest;
 
-  const config = getWebpackCommonConfig(Object.assign({}, options, {
-    eslint: getEslintClientConfig(options),
-    babel: getBabelClientConfig(options)
-  }));
+  const config = getWebpackCommonConfig(
+    Object.assign({}, options, {
+      eslint: getEslintClientConfig(options),
+      babel: getBabelClientConfig(options)
+    })
+  );
 
   config.entry = {client: './client.js'};
 
   config.output = Object.assign({}, config.output, {
-    chunkFilename: optimize ? 'client.[id].[chunkhash:8].js' : 'client.[id].js',
+    chunkFilename: optimize ? 'client.[id].[chunkhash:8].js' : 'client.[id].js'
   });
 
-  config.plugins.push(new webpack.DefinePlugin({
-    '__CLIENT__': true,
-    '__SERVER__': false
-  }));
+  config.plugins.push(
+    new webpack.DefinePlugin({
+      __CLIENT__: true,
+      __SERVER__: false
+    })
+  );
 
   // === load the CSS ===
 
@@ -48,16 +52,13 @@ module.exports = options => {
     {
       loader: require.resolve('postcss-loader'),
       options: {
-        plugins: () => {
-          return [
-            autoprefixer({browsers: 'last 2 versions, > 5%, ie >= 11'})
-          ];
-        }
+        plugins: () => [
+          autoprefixer({browsers: 'last 2 versions, > 5%, ie >= 11'})
+        ]
       }
     }
   ];
   if (optimize) {
-
     config.module.rules.push({
       test: extensionsToRegex(styleExtensions),
       include: paths.src,
@@ -67,39 +68,35 @@ module.exports = options => {
       })
     });
 
-    config.plugins.push(new ExtractTextPlugin({
-      filename: optimize ? '[name].[contenthash:8].css' : 'client.css',
-      allChunks: false
-    }))
-
+    config.plugins.push(
+      new ExtractTextPlugin({
+        filename: optimize ? '[name].[contenthash:8].css' : 'client.css',
+        allChunks: false
+      })
+    );
   } else {
-
     config.module.rules.push({
       test: extensionsToRegex(styleExtensions),
       include: paths.src,
-      use: [
-        require.resolve('style-loader'),
-        ...cssLoaders
-      ]
+      use: [require.resolve('style-loader'), ...cssLoaders]
     });
-
   }
 
   // === load the files ===
 
   config.module.rules.push({
-    exclude: extensionsToRegex([].concat(scriptExtensions, styleExtensions, '.json')),
+    exclude: extensionsToRegex(
+      [].concat(scriptExtensions, styleExtensions, '.json')
+    ),
     use: [
       {
         loader: require.resolve('file-loader'),
         options: {
-
           //always include the original file name for SEO benefits
           name: 'files/[name].[hash:8].[ext]',
 
           //emit files on the client
           emitFile: true
-
         }
       }
     ]
@@ -108,17 +105,21 @@ module.exports = options => {
   // === reference the DLL ===
 
   if (fs.existsSync(paths.vendorEntryFile)) {
-    config.plugins.push(new CachedDllReferencePlugin({
-      manifest: paths.vendorManifestFile
-    }));
+    config.plugins.push(
+      new CachedDllReferencePlugin({
+        manifest: paths.vendorManifestFile
+      })
+    );
   }
 
   // === output a manifest ===
 
-  config.plugins.push(new RevManifestPlugin({
-    filename: 'rev-manifest.json',
-    cache: manifest
-  }));
+  config.plugins.push(
+    new RevManifestPlugin({
+      filename: 'rev-manifest.json',
+      cache: manifest
+    })
+  );
 
   return config;
 };

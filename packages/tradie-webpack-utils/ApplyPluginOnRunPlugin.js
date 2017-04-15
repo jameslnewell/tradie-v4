@@ -1,10 +1,9 @@
 'use strict';
-const webpack = require('webpack');
 
 /**
+ * TODO: finish and use for applying DLL plugin with manifest required on first run
  */
 class ApplyPluginOnRunPlugin {
-
   constructor(options) {
     this.loaded = false;
     this.plugin = options.plugin;
@@ -19,7 +18,6 @@ class ApplyPluginOnRunPlugin {
       callback();
     });
   }
-
 }
 
 module.exports = ApplyPluginOnRunPlugin;

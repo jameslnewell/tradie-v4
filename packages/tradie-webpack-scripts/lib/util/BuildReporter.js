@@ -1,11 +1,10 @@
 'use strict';
-const clear = require('./clearScreen');
 const chalk = require('chalk');
 const uniq = require('lodash.uniq');
+const clear = require('./clearScreen');
 const formatWebpackMessages = require('./formatWebpackMessages');
 
 class BuildReporter {
-
   constructor(options) {
     this.compiling = false;
 
@@ -17,87 +16,90 @@ class BuildReporter {
     this.observe(this.bundlers);
 
     if (this.server) {
-      this.server.on('started', (_, port) => setImmediate(() => { //HACK: to make it appear after compiling message which also uses setImmediate
-        console.log(chalk.blue(`Server running at http://localhost:${port}`));
-      }));
+      this.server.on('started', (_, port) =>
+        setImmediate(() => {
+          //HACK: to make it appear after compiling message which also uses setImmediate
+          console.log(chalk.blue(`Server running at http://localhost:${port}`)); //eslint-disable-line no-console
+        })
+      );
     }
-
   }
 
   /**
    * @private
    */
   printStartedMessage() {
-
     if (!this.debug) {
       clear();
     }
 
+    /* eslint-disable no-console */
     console.log();
     console.log('Compiling...');
     console.log();
-
+    /* eslint-enable no-console */
   }
 
   /**
    * @private
    */
   printCompletedMessage() {
-
     if (!this.debug) {
       clear();
     }
 
     if (this.errors.length) {
-
+      /* eslint-disable no-console */
       console.log();
       console.log(chalk.red('Compiled with errors'));
       console.log();
       this.errors.forEach((msg, i) => {
-        console.error(`${chalk.underline.red(`Error #${i + 1}:`)} \n\n${msg}\n\n`);
+        console.error(
+          `${chalk.underline.red(`Error #${i + 1}:`)} \n\n${msg}\n\n`
+        );
       });
-
+      /* eslint-enable no-console */
     } else if (this.warnings.length) {
-
+      /* eslint-disable no-console */
       console.log();
       console.log(chalk.yellow('Compiled with warnings'));
       console.log();
       this.warnings.forEach((msg, i) => {
-        console.error(`${chalk.underline.yellow(`Warning #${i + 1}:`)} \n\n${msg}\n\n`);
+        console.error(
+          `${chalk.underline.yellow(`Warning #${i + 1}:`)} \n\n${msg}\n\n`
+        );
       });
-
+      /* eslint-enable no-console */
     } else {
-
+      /* eslint-disable no-console */
       console.log();
       console.log(chalk.green('Compiled successfully'));
       console.log();
-
+      /* eslint-enable no-console */
     }
-
   }
 
   /**
    * @private
    */
   clearStats() {
-
     //clear the errors
     this.errors = [];
     this.warnings = [];
-
   }
 
   /**
    * @private
    */
   collateStats(stats) {
-
     //FIXME: linting and other errors may be duplicated when multiple bundles use the same source files - de-dupe them
-    let msgs;
+    let msgs = null;
     if (this.debug) {
       //show full stack traces
       msgs = {
-        errors: stats.compilation.errors.map(error => (error.stack ? `${error.message}\n${error.stack}` : error)),
+        errors: stats.compilation.errors.map(
+          error => (error.stack ? `${error.message}\n${error.stack}` : error)
+        ),
         warnings: stats.compilation.warnings
       };
     } else {
@@ -109,7 +111,6 @@ class BuildReporter {
     }
     this.errors = uniq(this.errors.concat(msgs.errors));
     this.warnings = uniq(this.warnings.concat(msgs.warnings));
-
   }
 
   /**
@@ -117,12 +118,9 @@ class BuildReporter {
    * @param {Array.<object>} bundlers
    */
   observe(bundlers) {
-
     bundlers.forEach(bundler => {
-
       bundler
         .on('started', () => {
-
           //if this is the first bundler compiling, clear the screen and show the started message
           if (!this.compiling) {
             this.clearStats();
@@ -136,22 +134,15 @@ class BuildReporter {
 
           //wait to next tick to allow the next bundler to start compiling before we show the completed message
           setImmediate(() => {
-
             //if there are no bundlers compiling, clear the screen and show the completed message
-            if (this.bundlers.every(bundler => !bundler.isCompiling())) {
+            if (this.bundlers.every(b => !b.isCompiling())) {
               this.compiling = false;
               this.printCompletedMessage();
             }
-
           });
-
-        })
-      ;
-
+        });
     });
-
   }
-
 }
 
 module.exports = BuildReporter;

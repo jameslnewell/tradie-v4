@@ -11,29 +11,30 @@ const jest = require('jest');
  * @param {object}  options.jest
  * @returns {Promise.<null>}
  */
-module.exports = options => new Promise((resolve, reject) => {
-  const watch = options.watch;
-  const coverage = options.coverage;
-  const config = options.jest;
+module.exports = options =>
+  new Promise((resolve, reject) => {
+    const watch = options.watch;
+    const coverage = options.coverage;
+    const config = options.jest;
 
-  if (!config) {
-    console.error(chalk.red('Tradie template does not provide a test configuration.'));
-    return reject(1);
-  }
+    if (!config) {
+      console.error(
+        //eslint-disable-line no-console
+        chalk.red('Tradie template does not provide a test configuration.')
+      );
+      reject(1);
+      return;
+    }
 
-  const args = [
-    '--config',
-    JSON.stringify(config)
-  ];
+    const args = ['--config', JSON.stringify(config)];
 
-  if (watch) {
-    args.push('--watch');
-  }
+    if (watch) {
+      args.push('--watch');
+    }
 
-  if (coverage) {
-    args.push('--coverage');
-  }
+    if (coverage) {
+      args.push('--coverage');
+    }
 
-  jest.run(args);
-
-});
+    jest.run(args);
+  });

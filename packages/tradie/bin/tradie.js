@@ -7,14 +7,15 @@ const metadata = require('../package.json');
 
 const printErrorAndExit = error => {
   if (error) {
-    console.error(chalk.red(error));
+    console.error(chalk.red(error)); //eslint-disable-line no-console
     if (error instanceof Error) {
-      console.error(chalk.red(error.stack));
+      console.error(chalk.red(error.stack)); //eslint-disable-line no-console
     }
   }
   process.exit(1);
 };
 
+/* eslint-disable func-style, no-invalid-this, global-require */
 const createAction = function() {
   const cmdName = this.name();
   const cmdOptions = this.opts();
@@ -26,57 +27,55 @@ const createAction = function() {
   });
 
   try {
-    require(`../lib/${cmdName}`)(apiOptions)
-      .catch(printErrorAndExit)
-    ;
+    require(`../lib/${cmdName}`)(apiOptions).catch(printErrorAndExit);
   } catch (error) {
     printErrorAndExit(error);
   }
-
 };
+/* eslint-enable func-style, no-invalid-this, global-require */
 
 commander
   .version(metadata.version)
   .usage('[command] [options]')
-  .description(metadata.description)
-;
+  .description(metadata.description);
 
 commander
   .command('clean')
   .description('remove bundled script, style and asset files')
-  .action(createAction)
-;
+  .action(createAction);
 
 commander
   .command('serve')
   .description('bundle script, style and asset files as they change')
-  .action(createAction)
-;
+  .action(createAction);
 
 commander
   .command('build')
   .description('bundle script, style and asset files')
-  .option('--watch', 're-bundle script, style and asset files whenever they change', false)
-  .option('--optimize', 'optimize script, style and asset files, including minification, dead-code removal, file hashing etc', false)
-  .action(createAction)
-;
+  .option(
+    '--watch',
+    're-bundle script, style and asset files whenever they change',
+    false
+  )
+  .option(
+    '--optimize',
+    'optimize script, style and asset files, including minification, dead-code removal, file hashing etc',
+    false
+  )
+  .action(createAction);
 
 commander
   .command('test [files...]')
   .description('test script files')
   .option('--watch', 're-test script files whenever they change', false)
   .option('--coverage', 'show coverage', false)
-  .action(createAction)
-;
+  .action(createAction);
 
 //show help if an unknown command is provided
-commander
-  .command('*', '', {noHelp: true})
-  .action(() => {
-    commander.outputHelp();
-    process.exit(1);
-  })
-;
+commander.command('*', '', {noHelp: true}).action(() => {
+  commander.outputHelp();
+  process.exit(1);
+});
 
 commander.parse(process.argv);
 
@@ -85,4 +84,3 @@ if (!process.argv.slice(2).length) {
   commander.outputHelp();
   process.exit(1);
 }
-

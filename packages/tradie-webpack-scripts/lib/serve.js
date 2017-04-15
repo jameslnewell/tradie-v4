@@ -8,7 +8,9 @@ const Server = require('./util/Server');
 const Bundler = require('./util/Bundler');
 const BuildReporter = require('./util/BuildReporter');
 
-const noop = () => {/* do nothing*/};
+const noop = () => {
+  /* do nothing*/
+};
 
 /**
  * Add a new entry to the Webpack config
@@ -20,7 +22,10 @@ const addEntry = (webpackConfig, newEntry) => {
     webpackConfig.entry.push(newEntry);
   } else if (typeof webpackConfig.entry === 'object') {
     Object.keys(webpackConfig.entry).forEach(entry => {
-      webpackConfig.entry[entry] = [].concat(webpackConfig.entry[entry], newEntry);
+      webpackConfig.entry[entry] = [].concat(
+        webpackConfig.entry[entry],
+        newEntry
+      );
     });
   } else {
     webpackConfig.entry = [webpackConfig.entry, newEntry];
@@ -52,8 +57,8 @@ const addPlugin = (webpackConfig, newPlugin) => {
  */
 module.exports = options => {
   const bundlers = {};
-  let hotMiddleware;
-  let devMiddleware;
+  let hotMiddleware = null;
+  let devMiddleware = null;
   let exiting = false;
   let isServerStopped = Promise.resolve();
 
@@ -70,22 +75,25 @@ module.exports = options => {
 
   //create the client bundler
   if (options.webpack.client) {
-
     //configure HMR for the client bundle
-    addEntry(options.webpack.client, `${require.resolve('webpack-hot-middleware/client')}?reload=true&overlay=true`);
+    addEntry(
+      options.webpack.client,
+      `${require.resolve('webpack-hot-middleware/client')}?reload=true&overlay=true`
+    );
     addPlugin(options.webpack.client, new webpack.HotModuleReplacementPlugin());
 
     //create the compiler
     bundlers.client = new Bundler(options.webpack.client);
-
   }
 
   //create the server bundler
   if (options.webpack.server) {
-
     //configure HMR for the server bundle
     //"webpack/hot/signal" - https://github.com/webpack/webpack/issues/3558
-    addEntry(options.webpack.server, `${require.resolve('webpack/hot/poll')}?1000`);
+    addEntry(
+      options.webpack.server,
+      `${require.resolve('webpack/hot/poll')}?1000`
+    );
     addPlugin(options.webpack.server, new webpack.NamedModulesPlugin());
     addPlugin(options.webpack.server, new webpack.HotModuleReplacementPlugin());
 
@@ -93,7 +101,6 @@ module.exports = options => {
     bundlers.server = new Bundler(options.webpack.server, {
       watch: true
     });
-
   }
 
   //create the build bundler
@@ -110,104 +117,80 @@ module.exports = options => {
     bundlers: objectValues(bundlers)
   });
 
-  const startVendorCompiler = () => new Promise((resolve, reject) => {
-    
-    if (!bundlers.vendor) {
-      resolve();
-    }
-
-    bundlers.vendor
-      .once('completed', () => {
-
-        //stop tracking the vendor bundler which has finished compiling
-        delete bundlers.vendor;
-
+  const startVendorCompiler = () =>
+    new Promise((resolve, reject) => {
+      if (!bundlers.vendor) {
         resolve();
+        return;
+      }
 
-      })
-      .once('error', reject)
-      .start()
-    ;
+      bundlers.vendor
+        .once('completed', () => {
+          //stop tracking the vendor bundler which has finished compiling
+          delete bundlers.vendor;
 
-  });
-
-  const startClientCompiler = () => new Promise((resolve, reject) => {
-    
-    if (!bundlers.client) {
-      return resolve();
-    }
-
-    //create the middlewares (dev middleware starts watching)
-    hotMiddleware = webpackHotMiddleware(bundlers.client.compiler, {
-      log: false
-    });
-    devMiddleware = webpackDevMiddleware(bundlers.client.compiler, {
-      noInfo: true,
-      quiet: true,
-      serverSideRender: false
+          resolve();
+        })
+        .once('error', reject)
+        .start();
     });
 
-    //register HMR middlewares
-    server
-      .use(hotMiddleware)
-      .use(devMiddleware)
-    ;
+  const startClientCompiler = () =>
+    new Promise((resolve, reject) => {
+      if (!bundlers.client) {
+        resolve();
+        return;
+      }
 
-    bundlers.client
-      .once('completed', resolve)
-      .once('error', reject)
-    ;
+      //create the middlewares (dev middleware starts watching)
+      hotMiddleware = webpackHotMiddleware(bundlers.client.compiler, {
+        log: false
+      });
+      devMiddleware = webpackDevMiddleware(bundlers.client.compiler, {
+        noInfo: true,
+        quiet: true,
+        serverSideRender: false
+      });
 
-  });
+      //register HMR middlewares
+      server.use(hotMiddleware).use(devMiddleware);
 
-  const startServerCompiler = () => new Promise((resolve, reject) => {
-    
-    if (!bundlers.server) {
-      return resolve();
-    }
+      bundlers.client.once('completed', resolve).once('error', reject);
+    });
 
-    bundlers.server
-      .once('completed', resolve)
-      .once('error', reject)
-      .start()
-    ;
+  const startServerCompiler = () =>
+    new Promise((resolve, reject) => {
+      if (!bundlers.server) {
+        resolve();
+        return;
+      }
 
-  });
+      bundlers.server.once('completed', resolve).once('error', reject).start();
+    });
 
-  const startBuildCompiler = () => new Promise((resolve, reject) => {
-    
-    if (!bundlers.build) {
-      return resolve();
-    }
+  const startBuildCompiler = () =>
+    new Promise((resolve, reject) => {
+      if (!bundlers.build) {
+        resolve();
+        return;
+      }
 
-    bundlers.build
-      .once('completed', resolve)
-      .once('error', reject)
-      .start()
-    ;
-
-  });
+      bundlers.build.once('completed', resolve).once('error', reject).start();
+    });
 
   const startServer = () => {
-
     //if the user has CTL-C'd then don't bother starting the server
     if (exiting) return;
 
     //lets wait until the template has finished stopping stuff
     isServerStopped = new Promise((resolve, reject) => {
       server.on('stopped', () => {
-        Promise.resolve(onServerStop(server))
-          .then(resolve, reject)
-        ;
+        Promise.resolve(onServerStop(server)).then(resolve, reject);
       });
     });
 
     //start the server
-    server
-      .on('started', () => onServerStart(server))
-      .start()
-    ;
-
+    server.on('started', () => onServerStart(server)).start();
   };
 
   //stop all the things when the user wants to exit
@@ -223,38 +206,33 @@ module.exports = options => {
 
     //stop the server from running
     server.stop();
-
   });
 
+  //wait for all the compilers and server to stop before resolving or rejecting the command
   return Promise.resolve()
     .then(() => startVendorCompiler())
     .then(() => startClientCompiler())
-    .then(() => Promise.all([
-      startServerCompiler(),
-      startBuildCompiler()
-    ]))
+    .then(() => Promise.all([startServerCompiler(), startBuildCompiler()]))
     .then(() => startServer())
-    .then(() => {
-
-      //wait for all the compilers and server to stop before resolving or rejecting the command
-      return new Promise((resolve, reject) => {
-        wfe.waitForAll('stopped', objectValues(bundlers), errors => {
-          isServerStopped.then(
-            () => setImmediate(() => { //HACK: wait for build-reporter
-              if (errors.length) {
-                reject(errors);
-              } else if (reporter.errors.length) {
-                reject();
-              } else {
-                resolve();
-              }
-            }),
-            reject
-          );
-        });
-      });
-
-    })
-  ;
-
+    .then(
+      () =>
+        new Promise((resolve, reject) => {
+          wfe.waitForAll('stopped', objectValues(bundlers), errors => {
+            isServerStopped.then(
+              () =>
+                setImmediate(() => {
+                  //HACK: wait for build-reporter
+                  if (errors.length) {
+                    reject(errors);
+                  } else if (reporter.errors.length) {
+                    reject();
+                  } else {
+                    resolve();
+                  }
+                }),
+              reject
+            );
+          });
+        })
+    );
 };

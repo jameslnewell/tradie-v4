@@ -1,3 +1,4 @@
+/* eslint-disable */
 /*
   Copied from: https://github.com/facebookincubator/create-react-app/blob/9cce0fb59f5e4a47c043c26c41e281c812e57ff4/packages/react-dev-utils/formatWebpackMessages.js
 
@@ -51,18 +52,15 @@ function formatMessage(message) {
     lines = [
       lines[0],
       // Clean up message because "Module not found: " is descriptive enough.
-      lines[1].replace(
-        'Cannot resolve \'file\' or \'directory\' ', ''
-      ).replace(
-        'Cannot resolve module ', ''
-      ).replace(
-        'Error: ', ''
-      ),
+      lines[1]
+        .replace("Cannot resolve 'file' or 'directory' ", '')
+        .replace('Cannot resolve module ', '')
+        .replace('Error: ', ''),
       // Skip all irrelevant lines.
       // (For some reason they only appear on the client in browser.)
       '',
       lines[lines.length - 1] // error location is the last line
-    ]
+    ];
   }
 
   // Cleans up syntax error messages.
@@ -79,10 +77,10 @@ function formatMessage(message) {
     lines.forEach(function(line, index) {
       if (
         // First time it occurs is fine.
-      index !== 1 &&
-      // line.endsWith(errorText)
-      line.length >= errorText.length &&
-      line.indexOf(errorText) === line.length - errorText.length
+        index !== 1 &&
+        // line.endsWith(errorText)
+        line.length >= errorText.length &&
+        line.indexOf(errorText) === line.length - errorText.length
       ) {
         // We see the same error message for the second time!
         // Filter out repeated error message and everything after it.
@@ -110,19 +108,19 @@ function formatMessage(message) {
   message = lines.join('\n');
   // Internal stacks are generally useless so we strip them
   message = message.replace(
-    /^\s*at\s((?!webpack:).)*:\d+:\d+[\s\)]*(\n|$)/gm, '' //https://github.com/facebookincubator/create-react-app/pull/1050
+    /^\s*at\s((?!webpack:).)*:\d+:\d+[\s\)]*(\n|$)/gm,
+    '' //https://github.com/facebookincubator/create-react-app/pull/1050
   ); // at ... ...:x:y
 
   return message;
 }
 
 function formatWebpackMessages(json) {
-
   var formattedErrors = json.errors.map(function(message) {
-    return 'Error in ' + formatMessage(message)
+    return 'Error in ' + formatMessage(message);
   });
   var formattedWarnings = json.warnings.map(function(message) {
-    return 'Warning in ' + formatMessage(String(message))
+    return 'Warning in ' + formatMessage(String(message));
   });
   var result = {
     errors: formattedErrors,

@@ -11,20 +11,13 @@ module.exports = options => {
   const watch = options.watch;
   const manifest = [];
 
-  return getSiteMetadata(root)
-    .then(metadata => {
-
-      return {
-        debug,
-        watch,
-        webpack: {
-          vendor: getWebpackVendorConfig({root, optimize, manifest}),
-          client: getWebpackClientConfig({root, optimize, metadata, manifest}),
-          build: getWebpackBuildConfig({root, optimize, metadata, manifest})
-        }
-      };
-
-    })
-  ;
-
+  return getSiteMetadata(root).then(metadata => ({
+    debug,
+    watch,
+    webpack: {
+      vendor: getWebpackVendorConfig({root, optimize, manifest}),
+      client: getWebpackClientConfig({root, optimize, metadata, manifest}),
+      build: getWebpackBuildConfig({root, optimize, metadata, manifest})
+    }
+  }));
 };

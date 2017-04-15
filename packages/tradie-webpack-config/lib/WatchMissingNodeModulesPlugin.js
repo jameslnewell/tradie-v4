@@ -1,3 +1,4 @@
+/* eslint-disable */
 /*
  Copied from: https://github.com/facebookincubator/create-react-app/blob/e5bf5af2969532e4c92ee3b53fdbb4fc1b8ae3c0/packages/react-dev-utils/WatchMissingNodeModulesPlugin.js
 

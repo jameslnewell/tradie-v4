@@ -1,3 +1,4 @@
+/* eslint-disable */
 'use strict';
 const fs = require('fs');
 const path = require('path');
@@ -9,7 +10,6 @@ const ensureTrailingSlash = require('./lib/addTrailingSlash');
 const WatchMissingNodeModulesPlugin = require('./lib/WatchMissingNodeModulesPlugin');
 
 class WebpackConfigBuilder {
-
   /**
    * @param   {object}  options
    * @param   {string}  options.root
@@ -28,7 +28,6 @@ class WebpackConfigBuilder {
     this.optimize = options.optimize || false;
 
     this.webpackConfig = {
-
       devtool: this.optimize ? false : 'eval',
 
       context: this.sourceDirectory,
@@ -40,8 +39,12 @@ class WebpackConfigBuilder {
         path: this.outputDirectory,
 
         //use name vs https://github.com/webpack/webpack-dev-server/issues/377#issuecomment-241258405
-        filename: this.optimize ? 'scripts/[chunkhash:8].js' : 'scripts/[name].js',
-        chunkFilename: this.optimize ? 'scripts/[chunkhash:8]-[id].js' : 'scripts/[name].js',
+        filename: this.optimize
+          ? 'scripts/[chunkhash:8].js'
+          : 'scripts/[name].js',
+        chunkFilename: this.optimize
+          ? 'scripts/[chunkhash:8]-[id].js'
+          : 'scripts/[name].js'
       },
 
       resolve: {
@@ -54,28 +57,28 @@ class WebpackConfigBuilder {
       },
 
       plugins: [
-
         //enforce case sensitive paths to avoid issues between file systems
         new CaseSensitivePathsPlugin(),
-        new WatchMissingNodeModulesPlugin(path.join(this.rootDirectory, 'node_modules')), //TODO: only do when watching for slight perf increase?
+        new WatchMissingNodeModulesPlugin(
+          path.join(this.rootDirectory, 'node_modules')
+        ), //TODO: only do when watching for slight perf increase?
 
         new webpack.LoaderOptionsPlugin({
           minimize: this.optimize,
           debug: !this.optimize
         })
       ]
-
     };
   }
 
   merge(config) {
-   return mergeWith(this.webpackConfig, config, (prev, next) => {
-     if (Array.isArray(prev)) {
-       return prev.concat(next);
-     } else {
-       return;
-     }
-   });
+    return mergeWith(this.webpackConfig, config, (prev, next) => {
+      if (Array.isArray(prev)) {
+        return prev.concat(next);
+      } else {
+        return;
+      }
+    });
   }
 
   /**
@@ -85,17 +88,16 @@ class WebpackConfigBuilder {
    * @param {Array.<string>}  options.extensions
    */
   configureEslint(options) {
-
     this.webpackConfig.module.loaders.push({
       enforce: 'pre',
       test: extensionsToRegex(options.extensions),
       include: this.sourceDirectory,
-      loader: 'eslint-loader?'+JSON.stringify({
-        baseConfig: options.eslint,
-        useEslintrc: false
-      })
+      loader: 'eslint-loader?' +
+        JSON.stringify({
+          baseConfig: options.eslint,
+          useEslintrc: false
+        })
     });
-
   }
 
   /**
@@ -105,7 +107,6 @@ class WebpackConfigBuilder {
    * @param {Array.<string>}  options.extensions
    */
   configureBabel(options) {
-
     this.webpackConfig.module.loaders.push({
       test: extensionsToRegex(options.extensions),
       include: this.sourceDirectory,
@@ -123,8 +124,9 @@ class WebpackConfigBuilder {
    * Configure scripts
    */
   configureScripts(options) {
-
-    this.webpackConfig.resolve.extensions = this.webpackConfig.resolve.extensions.concat(options.extensions);
+    this.webpackConfig.resolve.extensions = this.webpackConfig.resolve.extensions.concat(
+      options.extensions
+    );
 
     if (Object.keys(options.eslint).length) {
       this.configureEslint({
@@ -141,27 +143,29 @@ class WebpackConfigBuilder {
     }
 
     if (this.optimize) {
+      this.webpackConfig.plugins.push(
+        new webpack.DefinePlugin({
+          'process.env.NODE_ENV': JSON.stringify('production')
+        })
+      );
 
-      this.webpackConfig.plugins.push(new webpack.DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify('production')
-      }));
-
-      this.webpackConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({
-        compress: {
-          screw_ie8: true,
-          warnings: false
-        },
-        mangle: {
-          screw_ie8: true
-        },
-        output: {
-          comments: false,
-          screw_ie8: true
-        },
-        sourceMap: false
-      }));
+      this.webpackConfig.plugins.push(
+        new webpack.optimize.UglifyJsPlugin({
+          compress: {
+            screw_ie8: true,
+            warnings: false
+          },
+          mangle: {
+            screw_ie8: true
+          },
+          output: {
+            comments: false,
+            screw_ie8: true
+          },
+          sourceMap: false
+        })
+      );
     }
-
   }
 
   // ===================================================================================================================
@@ -174,13 +178,11 @@ class WebpackConfigBuilder {
    * @param {Array.<string>}  options.extensions
    */
   ignoreStyles(options) {
-
     this.webpackConfig.module.loaders.push({
       test: extensionsToRegex(options.extensions),
       include: this.sourceDirectory,
       loader: 'null-loader'
     });
-
   }
 
   /**
@@ -190,7 +192,6 @@ class WebpackConfigBuilder {
    * @param {Array.<string>}  options.extensions
    */
   configureStyles(options) {
-
     const resolve = require('resolve');
     const autoprefixer = require('autoprefixer');
 
@@ -198,7 +199,6 @@ class WebpackConfigBuilder {
       new webpack.LoaderOptionsPlugin({
         test: extensionsToRegex(options.extensions),
         options: {
-
           //webpack props required by loaders https://github.com/bholloway/resolve-url-loader/issues/33#issuecomment-249522569
           context: this.sourceDirectory,
           output: {
@@ -206,46 +206,51 @@ class WebpackConfigBuilder {
           },
 
           postcss: [
-            autoprefixer({browsers: ['> 4%', 'last 4 versions', 'Firefox ESR', 'not ie < 9']})
+            autoprefixer({
+              browsers: ['> 4%', 'last 4 versions', 'Firefox ESR', 'not ie < 9']
+            })
             //NOTE: css-loader looks for NODE_ENV=production and performs minification so we don't need cssnano
           ],
           sassLoader: {
             importer: (url, prev, done) => {
-
               const basedir = path.dirname(prev);
 
-              resolve(url, {
+              resolve(
+                url,
+                {
+                  basedir,
 
-                basedir,
+                  //look for SASS and CSS files
+                  extensions: options.extensions,
 
-                //look for SASS and CSS files
-                extensions: options.extensions,
-
-                //allow packages to define a SASS entry file using the "main.scss", "main.sass" or "main.css" keys
-                packageFilter(pkg) {
-                  pkg.main = pkg['main.scss'] || pkg['main.sass'] || pkg['main.css'] || pkg['style'];
-                  return pkg;
-                }
-
-              }, (resolveError, file) => {
-                if (resolveError) {
-                  return done({file: url}); //if we can't resolve it then let webpack resolve it
-                } else {
-
-                  if (path.extname(file) === '.css') {
-                    fs.readFile(file, (readError, data) => {
-                      if (readError) {
-                        return done(readError);
-                      } else {
-                        return done({file, contents: data.toString()});
-                      }
-                    });
-                  } else {
-                    return done({file});
+                  //allow packages to define a SASS entry file using the "main.scss", "main.sass" or "main.css" keys
+                  packageFilter(pkg) {
+                    pkg.main =
+                      pkg['main.scss'] ||
+                      pkg['main.sass'] ||
+                      pkg['main.css'] ||
+                      pkg['style'];
+                    return pkg;
                   }
-
+                },
+                (resolveError, file) => {
+                  if (resolveError) {
+                    return done({file: url}); //if we can't resolve it then let webpack resolve it
+                  } else {
+                    if (path.extname(file) === '.css') {
+                      fs.readFile(file, (readError, data) => {
+                        if (readError) {
+                          return done(readError);
+                        } else {
+                          return done({file, contents: data.toString()});
+                        }
+                      });
+                    } else {
+                      return done({file});
+                    }
+                  }
                 }
-              });
+              );
             }
           }
         }
@@ -260,7 +265,6 @@ class WebpackConfigBuilder {
     ];
 
     if (options.extract) {
-
       const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
       this.webpackConfig.module.loaders.push({
@@ -271,33 +275,32 @@ class WebpackConfigBuilder {
         })
       });
 
-      this.webpackConfig.plugins.push(new ExtractTextPlugin({
-        //other chunks should have styles in the JS and load the styles automatically onto the page (that way styles make use of code splitting) e.g. https://github.com/facebookincubator/create-react-app/issues/408
-        allChunks: false,
-        filename: this.optimize ? 'styles/[contenthash:8].css' : 'styles/[name].css'
-      }));
-
+      this.webpackConfig.plugins.push(
+        new ExtractTextPlugin({
+          //other chunks should have styles in the JS and load the styles automatically onto the page (that way styles make use of code splitting) e.g. https://github.com/facebookincubator/create-react-app/issues/408
+          allChunks: false,
+          filename: this.optimize
+            ? 'styles/[contenthash:8].css'
+            : 'styles/[name].css'
+        })
+      );
     } else {
-
       this.webpackConfig.module.loaders.push({
         test: extensionsToRegex(options.extensions),
         loaders: ['style-loader'].concat(loaders)
       });
-
     }
 
     // const CheckVersionConflictPlugin = require('./CheckVersionConflictPlugin');
     // new CheckVersionConflictPlugin({
     //   include: extensionsToRegex(tradieConfig.style.extensions)
     // })
-
   }
 
   /**
    * Configure JSON
    */
   configureJSON() {
-
     this.webpackConfig.resolve.extensions.push('.json');
 
     this.webpackConfig.module.loaders.push({
@@ -314,7 +317,6 @@ class WebpackConfigBuilder {
    * @param {Array.<string>}  options.excludeExtensions
    */
   configureFiles(options) {
-
     const loader = {
       loader: 'file-loader',
       query: {
@@ -339,7 +341,6 @@ class WebpackConfigBuilder {
    * Configure DLL
    */
   configureVendorDLL() {
-
     const name = this.optimize ? '[name]' : '[name]_[chunkhash]';
 
     this.webpackConfig.output.library = name;
@@ -368,7 +369,6 @@ class WebpackConfigBuilder {
   }
 
   configureCommonBundle() {
-
     this.webpackConfig.plugins.push(
       new webpack.optimize.CommonsChunkPlugin({
         name: 'common',
@@ -376,7 +376,7 @@ class WebpackConfigBuilder {
         chunks: clientBundles, //exclude modules from the vendor chunk
         minChunks: clientBundles.length //modules must be used across all the chunks to be included
       })
-    );//TODO: what about for a single page app where require.ensure is used - I want a common stuff for all chunks in the main entry point
+    ); //TODO: what about for a single page app where require.ensure is used - I want a common stuff for all chunks in the main entry point
 
     return this;
   }
@@ -389,8 +389,6 @@ class WebpackConfigBuilder {
   toObject() {
     return this.webpackConfig;
   }
-
 }
-
 
 module.exports = WebpackConfigBuilder;

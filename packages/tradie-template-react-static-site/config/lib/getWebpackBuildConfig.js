@@ -9,18 +9,19 @@ const getPaths = require('./getPaths');
 const getEslintServerConfig = require('./getEslintServerConfig');
 const getBabelServerConfig = require('./getBabelServerConfig');
 const getWebpackCommonConfig = require('./getWebpackCommonConfig');
-const getInitialChunkFiles = require('./getInitialChunkFiles');
 
 module.exports = options => {
   const paths = getPaths(options.root);
-  const optimize = options.optimize;
+  // const optimize = options.optimize;
   const manifest = options.manifest;
   const metadata = options.metadata;
 
-  const config = getWebpackCommonConfig(Object.assign({}, options, {
-    eslint: getEslintServerConfig(options),
-    babel: getBabelServerConfig(options)
-  }));
+  const config = getWebpackCommonConfig(
+    Object.assign({}, options, {
+      eslint: getEslintServerConfig(options),
+      babel: getBabelServerConfig(options)
+    })
+  );
 
   config.entry = {
     layout: metadata.layout.buildPath
@@ -28,16 +29,18 @@ module.exports = options => {
   metadata.pages.forEach(pageMeta => {
     config.entry[pageMeta.chunkName] = pageMeta.buildPath;
   });
-  
+
   config.output = Object.assign(config.output, {
     filename: '[name].js',
     libraryTarget: 'commonjs'
   });
 
-  config.plugins.push(new webpack.DefinePlugin({
-    '__CLIENT__': false,
-    '__SERVER__': true
-  }));
+  config.plugins.push(
+    new webpack.DefinePlugin({
+      __CLIENT__: false,
+      __SERVER__: true
+    })
+  );
 
   config.devtool = 'cheap-inline-source-map';
 
@@ -66,68 +69,68 @@ module.exports = options => {
   // === ignore the files ===
 
   config.module.rules.push({
-    exclude: extensionsToRegex([].concat(scriptExtensions, styleExtensions, '.json')),
+    exclude: extensionsToRegex(
+      [].concat(scriptExtensions, styleExtensions, '.json')
+    ),
     use: [
       {
         loader: require.resolve('file-loader'),
         options: {
-
           //always include the original file name for SEO benefits
           name: 'files/[name].[hash:8].[ext]',
 
           //already emitted on the client
           emitFile: false
-
         }
       }
     ]
   });
 
   //ignore code-splitting points on the server
-  config.plugins.push(new webpack.optimize.LimitChunkCountPlugin({
-    maxChunks: 1
-  }));
+  config.plugins.push(
+    new webpack.optimize.LimitChunkCountPlugin({
+      maxChunks: 1
+    })
+  );
 
   // === render to static HTML ====
 
-  config.plugins.push(new StaticReactRenderPlugin({
+  config.plugins.push(
+    new StaticReactRenderPlugin({
+      layout: metadata.layout.chunkName,
+      pages: metadata.pages.map(data => data.chunkName),
 
-    layout: metadata.layout.chunkName,
-    pages: metadata.pages.map(data => data.chunkName),
+      getLayoutProps: (props, context) =>
+        Object.assign({}, props, {
+          root: config.output.publicPath,
 
-    getLayoutProps: (props, context) => {
-      return Object.assign({}, props, {
-        
-        root: config.output.publicPath,
-        
-        scripts: {
-          entry: [...manifest.entry['vendor'], ...manifest.entry[context.pageChunk.name]]
-            .filter(filename => /\.js$/.test(filename))
-            .map(filename => `${config.output.publicPath}${filename}`)
-          ,
-          async: Object.values(manifest.async)
-            .filter(filename => /\.js$/.test(filename))
-            .map(filename => `${config.output.publicPath}${filename}`)
-          ,
-        },
+          scripts: {
+            entry: [
+              ...manifest.entry.vendor,
+              ...manifest.entry[context.pageChunk.name]
+            ]
+              .filter(filename => /\.js$/.test(filename))
+              .map(filename => `${config.output.publicPath}${filename}`),
+            async: Object.values(manifest.async)
+              .filter(filename => /\.js$/.test(filename))
+              .map(filename => `${config.output.publicPath}${filename}`)
+          },
 
-        styles: {
-          entry: [...manifest.entry['vendor'], ...manifest.entry[context.pageChunk.name]]
-            .filter(filename => /\.css$/.test(filename))
-            .map(filename => `${config.output.publicPath}${filename}`)
-        }
-        
-        
-      });
-    },
-
-    getPageProps: (props, context) => {
-      return Object.assign({}, props, {
-        root: config.output.publicPath,
-      });
-    },
-
-  }))
+          styles: {
+            entry: [
+              ...manifest.entry.vendor,
+              ...manifest.entry[context.pageChunk.name]
+            ]
+              .filter(filename => /\.css$/.test(filename))
+              .map(filename => `${config.output.publicPath}${filename}`)
+          }
+        }),
+      getPageProps: props =>
+        Object.assign({}, props, {
+          root: config.output.publicPath
+        })
+    })
+  );
 
   return config;
 };

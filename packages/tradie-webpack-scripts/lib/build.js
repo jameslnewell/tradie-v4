@@ -16,14 +16,12 @@ const BuildReporter = require('./util/BuildReporter');
  * @returns {Promise.<null>}
  */
 module.exports = options => {
-  let
-    bundlers = [],
-    vendorBundler,
-    clientBundler,
-    buildBundler,
-    serverBundler,
-    exiting
-  ;
+  const bundlers = [];
+  let vendorBundler = null,
+    clientBundler = null,
+    buildBundler = null,
+    serverBundler = null,
+    exiting = false;
 
   //create the vendor bundler
   if (options.webpack.vendor) {
@@ -67,9 +65,7 @@ module.exports = options => {
   });
 
   const runClientAndBuildBundles = () => {
-
     if (clientBundler && buildBundler) {
-
       //start the build bundler after the client bundler has run for the first time,
       // and re-build the build bundler whenever the client bundler finishes
       clientBundler.once('completed', () => {
@@ -80,24 +76,17 @@ module.exports = options => {
 
         //re-run the build bundler
         clientBundler.on('completed', () => buildBundler.invalidate());
-
       });
 
       //run the client bundler
       clientBundler.start();
-
     } else if (clientBundler) {
-
       //run the client bundler
       clientBundler.start();
-
     } else if (buildBundler) {
-
       //run the build bundler
       buildBundler.start();
-
     }
-
   };
 
   //run the vendor, client and build bundlers
@@ -111,15 +100,11 @@ module.exports = options => {
 
         //run the client and build bundlers
         runClientAndBuildBundles();
-
       })
-      .start()
-    ;
+      .start();
   } else {
-
     //run the client and build bundlers
     runClientAndBuildBundles();
-
   }
 
   //run the server bundler
@@ -136,7 +121,8 @@ module.exports = options => {
   //wait for all the bundlers to close before resolving or rejecting
   return new Promise((resolve, reject) => {
     wfe.waitForAll('stopped', bundlers, errors => {
-      setImmediate(() => { //HACK: wait for build-reporter
+      setImmediate(() => {
+        //HACK: wait for build-reporter
         if (errors.length) {
           reject(errors);
         } else if (reporter.errors.length) {
@@ -147,5 +133,4 @@ module.exports = options => {
       });
     });
   });
-
 };

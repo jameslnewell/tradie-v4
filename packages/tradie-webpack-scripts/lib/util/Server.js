@@ -1,14 +1,12 @@
 'use strict';
+const EventEmitter = require('events').EventEmitter;
 const debug = require('debug');
 const connect = require('connect');
 const serverDestroy = require('server-destroy');
 const detectPort = require('detect-port');
-const EventEmitter = require('events').EventEmitter;
 
 class Server {
-
   constructor() {
-
     this.debug = debug(`tradie-webpack-scripts:server`);
     this.app = connect();
     this.server = null;
@@ -17,9 +15,7 @@ class Server {
     //debug information
     this.emitter
       .on('started', () => this.debug(`started`))
-      .on('stopped', () => this.debug(`stopped`))
-    ;
-
+      .on('stopped', () => this.debug(`stopped`));
   }
 
   on(event, handler) {
@@ -63,8 +59,7 @@ class Server {
         .catch(error => {
           this.emitter.emit('error', error);
           reject(error);
-        })
-      ;
+        });
     });
   }
 
@@ -90,7 +85,6 @@ class Server {
       }
     });
   }
-
 }
 
 module.exports = Server;

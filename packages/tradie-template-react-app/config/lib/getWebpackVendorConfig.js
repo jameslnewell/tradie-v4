@@ -12,36 +12,44 @@ module.exports = options => {
   const optimize = options.optimize;
   const manifest = options.manifest;
 
-  if (fs.existsSync(paths.vendorEntryFile)) {
-
-    const config = getWebpackCommonConfig(Object.assign({}, options, {
-      eslint: getEslintClientConfig(options),
-      babel: getBabelClientConfig(options)
-    }));
-
-    config.entry = {vendor: [paths.vendorEntryFile]};
-
-    config.plugins.push(new webpack.DefinePlugin({
-      '__CLIENT__': true,
-      '__SERVER__': false
-    }));
-
-    // === configure the DLL ===
-
-    config.output.library = optimize ? '[name]_[chunkhash:8]' : '[name]';
-    config.plugins.push(new webpack.DllPlugin({
-      path: paths.vendorManifestFile,
-      name: config.output.library
-    }));
-
-    // === output a manifest ===
-
-    config.plugins.push(new RevManifestPlugin({
-      filename: 'rev-manifest.json',
-      cache: manifest
-    }));
-
-    return config;
+  if (!fs.existsSync(paths.vendorEntryFile)) {
+    return null;
   }
 
+  const config = getWebpackCommonConfig(
+    Object.assign({}, options, {
+      eslint: getEslintClientConfig(options),
+      babel: getBabelClientConfig(options)
+    })
+  );
+
+  config.entry = {vendor: [paths.vendorEntryFile]};
+
+  config.plugins.push(
+    new webpack.DefinePlugin({
+      __CLIENT__: true,
+      __SERVER__: false
+    })
+  );
+
+  // === configure the DLL ===
+
+  config.output.library = optimize ? '[name]_[chunkhash:8]' : '[name]';
+  config.plugins.push(
+    new webpack.DllPlugin({
+      path: paths.vendorManifestFile,
+      name: config.output.library
+    })
+  );
+
+  // === output a manifest ===
+
+  config.plugins.push(
+    new RevManifestPlugin({
+      filename: 'rev-manifest.json',
+      cache: manifest
+    })
+  );
+
+  return config;
 };

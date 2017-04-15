@@ -20,6 +20,7 @@
     "babel-preset-react": "^6.23.0",
     "babili-webpack-plugin": "0.0.11",
     "css-loader": "^0.27.2",
+    "debug": "^2.6.3",
     "eslint": "^3.17.1",
     "eslint-config-jameslnewell": "^3.0.0-preview.2",
     "eslint-loader": "^1.6.3",

@@ -1,8 +1,7 @@
 'use strict';
-const debug = require('debug');
-const MemoryFS = require('memory-fs');
-const webpack = require('webpack');
 const EventEmitter = require('events').EventEmitter;
+const debug = require('debug');
+const webpack = require('webpack');
 
 /**
  * Creates a wrapper around Webpack's run/watch method
@@ -15,10 +14,8 @@ const EventEmitter = require('events').EventEmitter;
  * @param {object}  config
  * @param {object}  options
  * @param {boolean} [options.watch]
- * @param {boolean} [options.virtual]
  */
 class Bundler {
-
   constructor(config, options) {
     this.watch = options && options.watch;
     this.emitter = new EventEmitter();
@@ -27,17 +24,15 @@ class Bundler {
     this.compiling = false;
     this.debug = debug(`tradie-webpack-scripts:bundler`);
 
-    //use a virtual file system
-    if (options && options.virtual) {
-      this.compiler.outputFileSystem = new MemoryFS();
-    }
-
     //listen for when Webpack starts compiling
-    this.compiler.plugin(['run', 'watch-run'], (compilerOrWatcher, callback) => {
-      this.compiling = true;
-      this.emitter.emit('started');
-      callback();
-    });
+    this.compiler.plugin(
+      ['run', 'watch-run'],
+      (compilerOrWatcher, callback) => {
+        this.compiling = true;
+        this.emitter.emit('started');
+        callback();
+      }
+    );
 
     //listen for when Webpack stops watching
     this.compiler.plugin('watch-close', () => {
@@ -51,23 +46,21 @@ class Bundler {
     });
 
     //listen for when Webpack encounters an error and can't recover
-    this.compiler.plugin('failed', stats => {
+    this.compiler.plugin('failed', () => {
       this.compiling = false;
       // this.emitter.emit('error', error);
     });
 
     //listen for when a file is changed
     this.compiler.plugin('invalid', (file, time) => {
-      this.debug(`modified: ${file}`);
+      this.debug(`modified: ${file} at ${time}`);
     });
 
     //debug information
     this.emitter
       .on('started', () => this.debug(`started`))
       .on('completed', () => this.debug(`completed`))
-      .on('stopped', () => this.debug(`stopped`))
-    ;
-
+      .on('stopped', () => this.debug(`stopped`));
   }
 
   isCompiling() {
@@ -97,18 +90,14 @@ class Bundler {
   }
 
   start() {
-
     if (this.watch) {
-
       //compile in watch mode
       this.watcher = this.compiler.watch({}, error => {
         if (error) {
           this.emitter.emit('error', error);
         }
       });
-
     } else {
-
       //compile in run mode
       this.compiler.run(error => {
         if (error) {
@@ -117,7 +106,6 @@ class Bundler {
           this.emitter.emit('stopped');
         }
       });
-
     }
 
     return this;
@@ -131,7 +119,6 @@ class Bundler {
     }
     return this;
   }
-
 }
 
 module.exports = Bundler;
