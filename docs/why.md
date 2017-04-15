@@ -6,7 +6,7 @@ experimentation and learning.
 
 Creating a new project by copying from an existing project is much faster than setting up a new project from scratch. 
 However, when an improvement is made or a bug is fixed in the existing project, manual effort is required to add the 
-improvement or bug fix to the new project. Copying the changes to the new project is tedious - you need to know what 
+improvement or bug fix to each new project. Copying the changes to each new project is tedious - you need to know what 
 has changed in the existing project and be careful you don't get rid of anything that has intentionally changed in the 
 new project.
  
