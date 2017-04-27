@@ -23,6 +23,10 @@ module.exports = options => {
     })
   );
 
+  if (!metadata.layout.buildPath) {
+    throw new Error('Layout not found in "site.json"');
+  }
+
   config.entry = {
     layout: metadata.layout.buildPath
   };
@@ -100,31 +104,46 @@ module.exports = options => {
       layout: metadata.layout.chunkName,
       pages: metadata.pages.map(data => data.chunkName),
 
-      getLayoutProps: (props, context) =>
-        Object.assign({}, props, {
+      getLayoutProps: (props, context) => {
+        
+        const entries = [];
+        const entryStyles = [];
+
+        //add vendor entries
+        if (manifest.entry.vendor) {
+          entries.push(...manifest.entry.vendor);
+        }
+
+        //add page entries
+        if (manifest.entry[context.pageChunk.name]) {
+          entries.push(...manifest.entry[context.pageChunk.name]);
+        }
+        
+        const layoutProps = Object.assign({}, props, {
           root: config.output.publicPath,
 
           scripts: {
-            entry: [
-              ...manifest.entry.vendor,
-              ...manifest.entry[context.pageChunk.name]
-            ]
+
+            entry: entries
               .filter(filename => /\.js$/.test(filename))
               .map(filename => `${config.output.publicPath}${filename}`),
+
             async: Object.values(manifest.async)
               .filter(filename => /\.js$/.test(filename))
               .map(filename => `${config.output.publicPath}${filename}`)
+
           },
 
           styles: {
-            entry: [
-              ...manifest.entry.vendor,
-              ...manifest.entry[context.pageChunk.name]
-            ]
+            
+            entry: entries
               .filter(filename => /\.css$/.test(filename))
               .map(filename => `${config.output.publicPath}${filename}`)
+
           }
-        }),
+        });
+        return layoutProps;
+      },
       getPageProps: props =>
         Object.assign({}, props, {
           root: config.output.publicPath
