@@ -1,6 +1,6 @@
 {
   "name": "tradie",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "A CLI for building web apps. Like create-react-app but configurable via templates.",
   "keywords": [
     "webpack",
@@ -17,7 +17,7 @@
     "chalk": "^1.1.3",
     "commander": "^2.9.0",
     "find-and-read-package-json": "^1.0.0",
-    "tradie-webpack-scripts": "^4.0.0"
+    "tradie-webpack-scripts": "^4.0.2"
   },
   "bin": {
     "tradie": "./bin/tradie.js"
