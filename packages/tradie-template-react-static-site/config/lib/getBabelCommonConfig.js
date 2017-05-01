@@ -5,7 +5,7 @@ const getPaths = require('./getPaths');
 module.exports = options => {
   const optimize = options.optimize;
   const paths = getPaths(options.root);
-
+  
   const config = {
     babelrc: false,
     cacheDirectory: path.join(paths.tmp, 'babel'),

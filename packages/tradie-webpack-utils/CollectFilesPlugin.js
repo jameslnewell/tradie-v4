@@ -10,6 +10,7 @@ class CollectFilesPlugin {
     //TODO: remove previous files
 
     compiler.plugin('emit', (compilation, callback) => {
+      
       //create a dictionary to store the the entry files
       if (!this.manifest.entry) {
         this.manifest.entry = {};
