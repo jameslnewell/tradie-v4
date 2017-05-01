@@ -23,7 +23,7 @@ module.exports = options => {
       build: getWebpackBuildConfig({root, optimize, metadata, manifest})
     },
     onServerStart: server => server
-      .use(serveIndex(paths.dest))
       .use(serveStatic(paths.dest))
+      .use(serveIndex(paths.dest))
   }));
 };
