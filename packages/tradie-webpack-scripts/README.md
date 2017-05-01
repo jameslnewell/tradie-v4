@@ -18,7 +18,7 @@ A `Promise`. The promise is resolved when the temporary and generated files have
 
 ### serve(options)
 
-> Yet-to-be-implemented.
+> Yet-to-be-documented.
 
 Start a dev-server, compile vendor, client, build and server bundles, whilst reporting errors and warnings to the user.
 
