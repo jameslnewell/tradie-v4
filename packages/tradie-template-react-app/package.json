@@ -3,6 +3,10 @@
   "version": "4.0.0-rc.5",
   "description": "React app.",
   "repository": "jameslnewell/tradie-v4",
+  "peerDependencies": {
+    "react": "^15.5",
+    "react-dom": "^15.5"
+  },
   "dependencies": {
     "autoprefixer": "^6.7.6",
     "babel-core": "^6.23.1",
@@ -30,6 +34,7 @@
     "http-proxy-middleware": "^0.17.4",
     "null-loader": "^0.1.1",
     "postcss-loader": "^1.3.3",
+    "react-test-renderer": "^15.5.4",
     "style-loader": "^0.17.0",
     "tradie-webpack-utils": "^4.0.0-rc.4",
     "trailing-slash-it": "^0.3.0",

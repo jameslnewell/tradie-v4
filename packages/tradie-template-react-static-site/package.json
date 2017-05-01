@@ -4,8 +4,8 @@
   "description": "Tradie template for building static sites with React.",
   "repository": "jameslnewell/tradie-v4",
   "peerDependencies": {
-    "react": "^0.14 || ^15",
-    "react-dom": "^0.14 || ^15"
+    "react": "^15.5",
+    "react-dom": "^15.5"
   },
   "dependencies": {
     "autoprefixer": "^6.7.6",
