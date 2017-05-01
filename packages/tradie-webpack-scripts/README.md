@@ -62,7 +62,7 @@ Compile a test bundle in memory, whilst reporting errors and warnings to the use
 
 - `options : Object`
     - `watch : boolean` - Whether to re-compile the test bundle when the source files change
-    - `webpack : Object` - Webpack configuration for the test bundle
+    - `jest : Object` - Jest configuration
 
 
 **Returns:**
