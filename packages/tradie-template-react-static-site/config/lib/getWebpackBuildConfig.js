@@ -105,40 +105,46 @@ module.exports = options => {
       pages: metadata.pages.map(data => data.chunkName),
 
       getLayoutProps: (props, context) => {
-        
-        const entries = [];
-        const entryStyles = [];
 
-        //add vendor entries
+        let entryAssets = [];
+        let asyncAssets = [];
+
+        //get entry assets for the layout and this page
         if (manifest.entry.vendor) {
-          entries.push(...manifest.entry.vendor);
+          entryAssets.push(...manifest.entry.vendor);
         }
-
-        //add page entries
         if (manifest.entry[context.pageChunk.name]) {
-          entries.push(...manifest.entry[context.pageChunk.name]);
+          entryAssets.push(...manifest.entry[context.pageChunk.name]);
         }
-        
+        entryAssets = entryAssets.map(filename => `${config.output.publicPath}${filename}`);
+
+        //get async assets for the layout and this page
+        if (manifest.async.vendor) {
+          asyncAssets.push(...manifest.entry.vendor);
+        }
+        if (manifest.async[context.pageChunk.name]) {
+          asyncAssets.push(...manifest.async[context.pageChunk.name]);
+        }
+        asyncAssets = asyncAssets.map(filename => `${config.output.publicPath}${filename}`);
+
         const layoutProps = Object.assign({}, props, {
           root: config.output.publicPath,
 
           scripts: {
 
-            entry: entries
-              .filter(filename => /\.js$/.test(filename))
-              .map(filename => `${config.output.publicPath}${filename}`),
+            entry: entryAssets
+              .filter(filename => /\.js$/.test(filename)),
 
-            async: Object.values(manifest.async)
-              .filter(filename => /\.js$/.test(filename))
-              .map(filename => `${config.output.publicPath}${filename}`)
+
+            async: entryAssets
+              .filter(filename => /\.js$/.test(filename)),
 
           },
 
           styles: {
             
-            entry: entries
+            entry: entryAssets
               .filter(filename => /\.css$/.test(filename))
-              .map(filename => `${config.output.publicPath}${filename}`)
 
           }
         });
