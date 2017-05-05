@@ -68,9 +68,19 @@ module.exports = options => {
     ]
   };
 
+  // === pass in the BASE_URL ===
+
+  config.plugins.push(
+    new webpack.DefinePlugin({
+      'process.env.BASE_URL': JSON.stringify(BASE_URL)
+    })
+  );
+
   // === optimize the JS ===
+  //this performs dead-code removal etc which is necessary to parse the JS as webpack leaves untranspiled import()s
 
   if (optimize) {
+
     config.plugins.push(
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify('production')
@@ -85,15 +95,8 @@ module.exports = options => {
         }
       )
     );
+
   }
-
-  // === pass in the BASE_URL ===
-
-  config.plugins.push(
-    new webpack.DefinePlugin({
-      'process.env.BASE_URL': JSON.stringify(BASE_URL)
-    })
-  );
 
   return config;
 };

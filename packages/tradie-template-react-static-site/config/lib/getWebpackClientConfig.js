@@ -66,6 +66,7 @@ module.exports = options => {
     }
   ];
   if (optimize) {
+
     config.module.rules.push({
       test: extensionsToRegex(styleExtensions),
       include: paths.src,
@@ -83,6 +84,7 @@ module.exports = options => {
         allChunks: false
       })
     );
+
   } else {
     config.module.rules.push({
       test: extensionsToRegex(styleExtensions),
@@ -128,6 +130,23 @@ module.exports = options => {
       cache: manifest
     })
   );
+
+  // === uglify ===
+
+  if (optimize) {
+
+    //babili + uglify gives better results and uglify is the only way to get react-devtools to be quiet about the bundle not being minified
+    config.plugins.push(new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false,
+      },
+      output: {
+        comments: false,
+      },
+      sourceMap: true,
+    }));
+
+  }
 
   return config;
 };
