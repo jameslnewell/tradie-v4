@@ -69,7 +69,6 @@ module.exports = options => {
 
     config.module.rules.push({
       test: extensionsToRegex(styleExtensions),
-      include: paths.src,
       use: ExtractTextPlugin.extract({
         fallback: require.resolve('style-loader'),
         use: cssLoaders
@@ -88,7 +87,6 @@ module.exports = options => {
   } else {
     config.module.rules.push({
       test: extensionsToRegex(styleExtensions),
-      include: paths.src,
       use: [require.resolve('style-loader'), ...cssLoaders]
     });
   }

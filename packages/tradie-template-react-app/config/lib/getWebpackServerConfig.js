@@ -39,13 +39,15 @@ module.exports = options => {
     __dirname: false
   };
 
-  config.externals = [nodeExternals()];
+  config.externals = [nodeExternals({
+    //we need to let webpack process other files, otherwise NodeJS crashes due to syntax errors parsing non-JS files
+    whitelist: [new RegExp(`(\\.|\\\/)(?!${scriptExtensions.join('|')}).*$`)]
+  })];
 
   // === ignore the CSS ===
 
   config.module.rules.push({
     test: extensionsToRegex(styleExtensions),
-    include: paths.src,
     use: [require.resolve('null-loader')]
   });
 
