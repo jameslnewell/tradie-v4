@@ -1,6 +1,6 @@
 {
   "name": "tradie-template-react-app",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "description": "React app.",
   "repository": "jameslnewell/tradie-v4",
   "peerDependencies": {
