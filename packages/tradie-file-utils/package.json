@@ -1,0 +1,8 @@
+{
+  "name": "tradie-file-utils",
+  "version": "1.0.0",
+  "dependencies": {
+    "chokidar": "^1.7.0",
+    "finder-on-steroids": "^0.4.0"
+  }
+}

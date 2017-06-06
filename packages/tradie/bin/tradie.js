@@ -1,86 +1,48 @@
 #!/usr/bin/env node
-'use strict';
 const path = require('path');
 const chalk = require('chalk');
-const commander = require('commander');
+const yargs = require('yargs');
 const metadata = require('../package.json');
+const Template = require('../lib/Template');
 
-const printErrorAndExit = error => {
-  if (error) {
-    console.error(chalk.red(error)); //eslint-disable-line no-console
-    if (error instanceof Error) {
-      console.error(chalk.red(error.stack)); //eslint-disable-line no-console
+Template.find()
+  .then(template =>
+    template.getScripts().then(scripts => {
+      return scripts.describe(yargs).then(() => {
+        //configure the arguments
+        yargs
+          .help()
+          .exitProcess()
+          .strict()
+          .usage('Usage: tradie <command> [options]')
+          .demandCommand(
+            1,
+            "run 'tradie help' for a list of available commands"
+          );
+
+        //parse the arguments
+        const args = yargs.argv;
+
+        //get the options
+        const scriptName = args._[0];
+        const scriptOptions = Object.assign({}, args, {
+          root: path.resolve(process.cwd()),
+          debug: Boolean(process.env.DEBUG)
+        });
+
+        //run the relevant script
+        return template
+          .getConfig(scriptName, scriptOptions)
+          .then(config => scripts.run(scriptName, config));
+      });
+    })
+  )
+  .catch(error => {
+    if (error) {
+      console.error(chalk.red(error)); //eslint-disable-line no-console
+      if (error instanceof Error) {
+        console.error(chalk.red(error.stack)); //eslint-disable-line no-console
+      }
     }
-  }
-  process.exit(1);
-};
-
-/* eslint-disable func-style, no-invalid-this, global-require */
-const createAction = function() {
-  const cmdName = this.name();
-  const cmdOptions = this.opts();
-
-  const apiOptions = Object.assign({}, cmdOptions, {
-    cmd: cmdName,
-    root: path.resolve(process.cwd()),
-    debug: Boolean(process.env.DEBUG)
+    process.exit(1);
   });
-
-  try {
-    require(`../lib/${cmdName}`)(apiOptions).catch(printErrorAndExit);
-  } catch (error) {
-    printErrorAndExit(error);
-  }
-};
-/* eslint-enable func-style, no-invalid-this, global-require */
-
-commander
-  .version(metadata.version)
-  .usage('[command] [options]')
-  .description(metadata.description);
-
-commander
-  .command('clean')
-  .description('remove bundled script, style and asset files')
-  .action(createAction);
-
-commander
-  .command('serve')
-  .description('bundle script, style and asset files as they change')
-  .action(createAction);
-
-commander
-  .command('build')
-  .description('bundle script, style and asset files')
-  .option(
-    '--watch',
-    're-bundle script, style and asset files whenever they change',
-    false
-  )
-  .option(
-    '--optimize',
-    'optimize script, style and asset files, including minification, dead-code removal, file hashing etc',
-    false
-  )
-  .action(createAction);
-
-commander
-  .command('test [files...]')
-  .description('test script files')
-  .option('--watch', 're-test script files whenever they change', false)
-  .option('--coverage', 'show coverage', false)
-  .action(createAction);
-
-//show help if an unknown command is provided
-commander.command('*', '', {noHelp: true}).action(() => {
-  commander.outputHelp();
-  process.exit(1);
-});
-
-commander.parse(process.argv);
-
-//show help if no command is provided
-if (!process.argv.slice(2).length) {
-  commander.outputHelp();
-  process.exit(1);
-}

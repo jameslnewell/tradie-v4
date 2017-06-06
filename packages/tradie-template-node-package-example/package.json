@@ -1,0 +1,15 @@
+{
+  "name": "tradie-template-node-package-example",
+  "version": "1.0.0",
+  "devDependencies": {
+    "tradie": "^4.0.0",
+    "tradie-template-node-package": "^1.0.0"
+  },
+  "scripts": {
+    "help": "tradie --help",
+    "clean": "tradie clean",
+    "build": "tradie build",
+    "watch": "tradie build --watch",
+    "test": "tradie test"
+  }
+}

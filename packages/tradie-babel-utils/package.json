@@ -1,0 +1,8 @@
+{
+  "name": "tradie-babel-utils",
+  "version": "1.0.0",
+  "dependencies": {
+    "babel-core": "^6.24.1",
+    "mkdirp": "^0.5.1"
+  }
+}

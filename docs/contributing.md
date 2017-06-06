@@ -19,11 +19,20 @@ This repo is a [`monorepo`](https://github.com/babel/babel/blob/master/doc/desig
 ## Setup
 
 ```bash
-npm install         # install the common tools and dependencies
-npm run bootstrap   # install the package specific tools and dependencies
+yarn install         # install the common tools and dependencies
+yarn run bootstrap   # install the package specific tools and dependencies
 ```
 
 > Note: Requires Node.js v4 or greater
+
+## Committing
+
+This repo automatically determines version numbers using [conventional-commits](https://conventionalcommits.org/). For this to work, commit messages must adhere to the spec. [commitizen](https://github.com/commitizen/cz-cli) is setup for convenience.
+
+```bash
+git add .
+yarn run commit
+```
 
 ## Branching
 
@@ -38,14 +47,4 @@ The `next` branch will contain the most recent alpha release and will have been 
 ### `add/<feature>` or `fix/<feature>`
 
 These branches will contain all Work In Progress and will be merged into the `master` or `next` branches as appropiate.
-
-## Committing
-
-This repo automatically determines version numbers using [conventional-commits](https://conventionalcommits.org/) when publishing. Commit messages must adhere to the spec. [commitizen](https://github.com/commitizen/cz-cli) is setup for convenience.
-
-```bash
-git add .
-npm run commit
-```
-
 
