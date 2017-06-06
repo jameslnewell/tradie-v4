@@ -5,13 +5,11 @@ const nodeExternals = require('webpack-node-externals');
 const StaticReactRenderPlugin = require('static-react-render-webpack-plugin');
 const styleExtensions = require('./styleExtensions');
 const scriptExtensions = require('./scriptExtensions');
-const getPaths = require('./getPaths');
 const getEslintServerConfig = require('./getEslintServerConfig');
 const getBabelServerConfig = require('./getBabelServerConfig');
 const getWebpackCommonConfig = require('./getWebpackCommonConfig');
 
 module.exports = options => {
-  const paths = getPaths(options.root);
   // const optimize = options.optimize;
   const manifest = options.manifest;
   const metadata = options.metadata;
@@ -60,11 +58,12 @@ module.exports = options => {
     setImmediate: false
   };
 
-  config.externals = [nodeExternals({
-    //we need to let webpack process other files, otherwise NodeJS crashes due to syntax errors parsing non-JS files
-    whitelist: [new RegExp(`(\\.|\\\/)(?!${scriptExtensions.join('|')}).*$`)]
-  })];
-
+  config.externals = [
+    nodeExternals({
+      //we need to let webpack process other files, otherwise NodeJS crashes due to syntax errors parsing non-JS files
+      whitelist: [new RegExp(`(\\.|\\\/)(?!${scriptExtensions.join('|')}).*$`)]
+    })
+  ];
 
   // === ignore the CSS ===
 
@@ -108,7 +107,6 @@ module.exports = options => {
       pages: metadata.pages.map(data => data.chunkName),
 
       getLayoutProps: (props, context) => {
-
         let entryAssets = [];
         let asyncAssets = [];
 
@@ -119,7 +117,9 @@ module.exports = options => {
         if (manifest.entry[context.pageChunk.name]) {
           entryAssets.push(...manifest.entry[context.pageChunk.name]);
         }
-        entryAssets = entryAssets.map(filename => `${config.output.publicPath}${filename}`);
+        entryAssets = entryAssets.map(
+          filename => `${config.output.publicPath}${filename}`
+        );
 
         //get async assets for the layout and this page
         if (manifest.async.vendor) {
@@ -128,27 +128,21 @@ module.exports = options => {
         if (manifest.async[context.pageChunk.name]) {
           asyncAssets.push(...manifest.async[context.pageChunk.name]);
         }
-        asyncAssets = asyncAssets.map(filename => `${config.output.publicPath}${filename}`);
+        asyncAssets = asyncAssets.map(
+          filename => `${config.output.publicPath}${filename}`
+        );
 
         const layoutProps = Object.assign({}, props, {
           root: config.output.publicPath,
 
           scripts: {
+            entry: entryAssets.filter(filename => /\.js$/.test(filename)),
 
-            entry: entryAssets
-              .filter(filename => /\.js$/.test(filename)),
-
-
-            async: entryAssets
-              .filter(filename => /\.js$/.test(filename)),
-
+            async: entryAssets.filter(filename => /\.js$/.test(filename))
           },
 
           styles: {
-            
-            entry: entryAssets
-              .filter(filename => /\.css$/.test(filename))
-
+            entry: entryAssets.filter(filename => /\.css$/.test(filename))
           }
         });
         return layoutProps;

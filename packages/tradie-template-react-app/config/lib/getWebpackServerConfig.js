@@ -4,13 +4,11 @@ const extensionsToRegex = require('ext-to-regex');
 const nodeExternals = require('webpack-node-externals');
 const styleExtensions = require('./styleExtensions');
 const scriptExtensions = require('./scriptExtensions');
-const getPaths = require('./getPaths');
 const getEslintServerConfig = require('./getEslintServerConfig');
 const getBabelServerConfig = require('./getBabelServerConfig');
 const getWebpackCommonConfig = require('./getWebpackCommonConfig');
 
 module.exports = options => {
-  const paths = getPaths(options.root);
   // const optimize = options.optimize;
 
   const config = getWebpackCommonConfig(
@@ -39,10 +37,12 @@ module.exports = options => {
     __dirname: false
   };
 
-  config.externals = [nodeExternals({
-    //we need to let webpack process other files, otherwise NodeJS crashes due to syntax errors parsing non-JS files
-    whitelist: [new RegExp(`(\\.|\\\/)(?!${scriptExtensions.join('|')}).*$`)]
-  })];
+  config.externals = [
+    nodeExternals({
+      //we need to let webpack process other files, otherwise NodeJS crashes due to syntax errors parsing non-JS files
+      whitelist: [new RegExp(`(\\.|\\\/)(?!${scriptExtensions.join('|')}).*$`)]
+    })
+  ];
 
   // === ignore the CSS ===
 
