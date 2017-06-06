@@ -1,6 +1,6 @@
 {
   "name": "tradie",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "description": "A CLI for building web apps. Like create-react-app but configurable via templates.",
   "keywords": [
     "webpack",

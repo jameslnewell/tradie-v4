@@ -1,6 +1,6 @@
 {
   "name": "tradie-template-react-static-site",
-  "version": "4.0.4",
+  "version": "4.1.0",
   "description": "Tradie template for building static sites with React.",
   "repository": "jameslnewell/tradie-v4",
   "peerDependencies": {
