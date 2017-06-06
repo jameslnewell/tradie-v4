@@ -1,10 +1,13 @@
 {
   "devDependencies": {
+    "commitizen": "^2.9.6",
     "eslint": "^3.19.0",
     "eslint-config-jameslnewell": "^3.0.0-preview.3",
-    "lerna": "^2.0.0-rc.1",
+    "husky": "^0.13.4",
+    "lerna": "^2.0.0-rc.4",
     "lint-staged": "^3.4.0",
     "prettier": "^1.1.0",
+    "validate-commit-msg": "^2.12.1",
     "webpack": "^2.4.1"
   },
   "scripts": {
@@ -12,8 +15,11 @@
     "bootstrap": "lerna bootstrap",
     "lint": "lerna exec -- eslint --ext .js -c eslint-config-jameslnewell/node .",
     "dep-check": "lerna exec --concurrency 1 -- npm-check -u",
+    "commit": "git-cz",
+    "commit-msg": "validate-commit-msg",
+    "publish": "lerna publish --conventional-commits -m 'chore: publish'",
     "precommit": "lint-staged",
-    "prepublish": "npm run lint"
+    "xprepublish": "npm run lint"
   },
   "lint-staged": {
     "*.js": [

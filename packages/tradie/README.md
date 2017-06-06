@@ -1,6 +1,7 @@
 # <a href="https://github.com/jameslnewell/tradie"><img alt="tradie" src="https://raw.githubusercontent.com/jameslnewell/tradie-v4/master/logo.png" height="60px" /></a>
 
 [![npm](https://img.shields.io/npm/v/tradie.svg)]()
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 A CLI for building web apps. Like `create-react-app` but configurable via templates.
 

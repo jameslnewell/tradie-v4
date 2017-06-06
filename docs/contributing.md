@@ -1,5 +1,7 @@
 # Contributing
 
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+
 This repo is a [`monorepo`](https://github.com/babel/babel/blob/master/doc/design/monorepo.md) managed by [LernaJS](https://lernajs.io).
 
 ## Packages
@@ -36,3 +38,14 @@ The `next` branch will contain the most recent alpha release and will have been 
 ### `add/<feature>` or `fix/<feature>`
 
 These branches will contain all Work In Progress and will be merged into the `master` or `next` branches as appropiate.
+
+## Committing
+
+This repo automatically determines version numbers using [conventional-commits](https://conventionalcommits.org/) when publishing. Commit messages must adhere to the spec. [commitizen](https://github.com/commitizen/cz-cli) is setup for convenience.
+
+```bash
+git add .
+npm run commit
+```
+
+
