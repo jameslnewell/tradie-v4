@@ -16,8 +16,8 @@
     "lint": "lerna exec -- eslint --ext .js -c eslint-config-jameslnewell/node .",
     "dep-check": "lerna exec --concurrency 1 -- npm-check -u",
     "commit": "git-cz",
-    "commit-msg": "validate-commit-msg",
     "publish": "lerna publish --conventional-commits -m 'chore: publish'",
+    "commitmsg": "validate-commit-msg",
     "precommit": "lint-staged",
     "xprepublish": "npm run lint"
   },
@@ -26,5 +26,10 @@
       "prettier --write --tab-width 2 --single-quote true --trailing-comma none --bracket-spacing false --jsx-bracket-same-line false --semi true",
       "git add"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
   }
 }
