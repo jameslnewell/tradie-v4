@@ -34,10 +34,10 @@ class Scripts {
   }
 
   describe(yargs) {
-    return this.require(`./describe`).then(
+    return this.require(`./cli`).then(
       module => {
         if (typeof module !== 'function') {
-          throw new Error(`tradie: "${this.name}/describe" is not a function`);
+          throw new Error(`tradie: "${this.name}/cli" is not a function`);
         }
 
         module(yargs);

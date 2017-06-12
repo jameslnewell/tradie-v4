@@ -5,10 +5,10 @@
     "lodash.debounce": "^4.0.8",
     "lodash.padstart": "^4.6.1",
     "lodash.trim": "^4.5.1",
-    "tradie-cli-utils": "^1.0.0",
-    "tradie-jest-utils": "^1.0.0",
-    "tradie-file-utils": "^1.0.0",
-    "tradie-flow-utils": "^1.0.0",
-    "tradie-babel-utils": "^1.0.0"
+    "tradie-cli-utils": "^0.1.0",
+    "tradie-jest-utils": "^0.1.0",
+    "tradie-file-utils": "^0.1.0",
+    "tradie-flow-utils": "^0.1.0",
+    "tradie-babel-utils": "^0.1.0"
   }
 }

@@ -1,6 +1,23 @@
+# Scripts
+
+Scripts tell `tradie` how to build, serve and test your files.
+
+Scipts `MUST` be named like:
+
+    tradie-scripts-<name>
+    
+OR
+
+    @<org>/tradie-scripts-<name>
+
+Scripts `MUST` expose:
+
+- A `./cli.js` module exporting a function. The function will be passed an instance of `yargs` and should configure the necessary commands and arguments.
+- A `./scripts` directory cotaining a module for each configured command. The script modules should export a function returning a promise when the command is complete. The script will be passed a configuration object, configured as desired by a template.
+
 # Templates
 
-Templates tell `tradie` what and how to build, serve and test your files.
+Templates allow you to configure
 
 Templates `MUST` be named like:
 
@@ -10,10 +27,8 @@ OR
 
     @<org>/tradie-template-<name>
 
-Templates may contain:
+Templates must have a scripts package listed in their dependencies.
 
-- `package.json` - Required.
-- `config/clean.js` - Optional. Returns configuration for the [clean command](https://github.com/jameslnewell/tradie-v2/blob/master/packages/tradie-webpack-scripts/README.md#cleanoptions).
-- `config/serve.js` - Optional. Returns configuration for the [serve command](https://github.com/jameslnewell/tradie-v2/blob/master/packages/tradie-webpack-scripts/README.md#serveoptions).
-- `config/build.js` - Optional. Returns configuration for the [build command](https://github.com/jameslnewell/tradie-v2/blob/master/packages/tradie-webpack-scripts/README.md#buildoptions).
-- `config/test.js` - Optional. Returns configuration for the [test command](https://github.com/jameslnewell/tradie-v2/blob/master/packages/tradie-webpack-scripts/README.md#testdoptions).
+Scripts `MUST` expose:
+
+- A `./config` directory containing a module for each configured command.

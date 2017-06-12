@@ -1,3 +1,3 @@
 // @flow
 
-export default (msg: strings): void => console.log(msg);
+export default (msg: string): void => console.log(msg);
