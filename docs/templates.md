@@ -13,7 +13,7 @@ OR
 Scripts `MUST` expose:
 
 - A `./cli.js` module exporting a function. The function will be passed an instance of `yargs` and should configure the necessary commands and arguments.
-- A `./scripts` directory cotaining a module for each configured command. The script modules should export a function returning a promise when the command is complete. The script will be passed a configuration object, configured as desired by a template.
+- A `./scripts` directory cotaining a module for each configured command. Each script module should export a function that returns a promise when the command is complete. The script will be passed a configuration object, configured as desired by a template.
 
 # Templates
 
@@ -27,8 +27,8 @@ OR
 
     @<org>/tradie-template-<name>
 
-Templates must have a scripts package listed in their dependencies.
+Templates must have `tradie` and a `tradie-scripts-*` package listed in their dependencies.
 
-Scripts `MUST` expose:
+Templeates `MUST` expose:
 
-- A `./config` directory containing a module for each configured command.
+- A `./config` directory containing a module for each script.

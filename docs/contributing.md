@@ -9,11 +9,38 @@ This repo is a [`monorepo`](https://github.com/babel/babel/blob/master/doc/desig
 | Package | Version | Description |
 |---------|---------|-------------|
 | [tradie](../packages/tradie) | [![npm](https://img.shields.io/npm/v/tradie.svg)]() | The CLI for running tradie in your project. |
-| [tradie-webpack-scripts](../packages/tradie-webpack-scripts) | [![npm](https://img.shields.io/npm/v/tradie-webpack-scripts.svg)]() | Scripts for performing build tasks. Used by the tradie CLI. |
-| [tradie-webpack-config](../packages/tradie-webpack-config) | [![npm](https://img.shields.io/npm/v/tradie-webpack-config.svg)]() DEPRECATED | Utilities for creating Webpack configuration. Used by the tradie templates. |
-| [tradie-webpack-utils](../packages/tradie-webpack-utils) | [![npm](https://img.shields.io/npm/v/tradie-webpack-utils.svg)]() | Utilities for creating Webpack configuration. Used by the tradie templates. |
+
+## Templates
+
+| Package | Version | Description |
+|---------|---------|-------------|
+| [tradie-template-node-package](../packages/tradie-template-node-package) | [![npm](https://img.shields.io/npm/v/tradie-template-node-package.svg)]() | Template for creating a NodeJS package. |
 | [tradie-template-react-static-site](../packages/tradie-template-react-static-site) | [![npm](https://img.shields.io/npm/v/tradie-template-react-static-site.svg)]() | Template for creating static sites rendered at build-time with React. |
 | [tradie-template-react-app](../packages/tradie-template-react-app) | [![npm](https://img.shields.io/npm/v/tradie-template-react-app.svg)]() | Template for creating a universaljs app rendered at run-time with React. |
+
+## Scripts
+
+| Package | Version | Description |
+|---------|---------|-------------|
+| [tradie-template-node-package](../packages/tradie-template-template-node-package) | [![npm](https://img.shields.io/npm/v/tradie-template-template-nodejs-package.svg)]() | Scripts for creating a NodeJS package. |
+
+## Utilities
+
+| Package | Version | Description |
+|---------|---------|-------------|
+| [tradie-babel-utils](../packages/tradie-babel-utils) | [![npm](https://img.shields.io/npm/v/tradie-babel-utils.svg)]() | Utilities for transforming code with `babel`. |
+| [tradie-cli-utils](../packages/tradie-cli-utils) | [![npm](https://img.shields.io/npm/v/tradie-cli-utils.svg)]() | Utilities for working with the CLI. |
+| [tradie-file-utils](../packages/tradie-file-utils) | [![npm](https://img.shields.io/npm/v/tradie-file-utils.svg)]() | Utilities for working with the file system. |
+| [tradie-flow-utils](../packages/tradie-flow-utils) | [![npm](https://img.shields.io/npm/v/tradie-flow-utils.svg)]() | Utilities for checking code with `flowtype`. |
+| [tradie-jest-utils](../packages/tradie-jest-utils) | [![npm](https://img.shields.io/npm/v/tradie-jest-utils.svg)]() | Utilities for running tests with `jest`. |
+| [tradie-webpack-utils](../packages/tradie-webpack-utils) | [![npm](https://img.shields.io/npm/v/tradie-webpack-utils.svg)]() | Utilities for creating Webpack configuration. |
+
+## Deprecated
+
+| Package | Version | Description |
+|---------|---------|-------------|
+| [tradie-webpack-config](../packages/tradie-webpack-config) | [![npm](https://img.shields.io/npm/v/tradie-webpack-config.svg)]() | Utilities for creating Webpack configuration. |
+| [tradie-webpack-scripts](../packages/tradie-webpack-scripts) | [![npm](https://img.shields.io/npm/v/tradie-webpack-scripts.svg)]() | Scripts for performing frontendy build tasks. |
 
 
 ## Setup
@@ -30,6 +57,7 @@ yarn run bootstrap   # install the package specific tools and dependencies
 This repo automatically determines version numbers using [conventional-commits](https://conventionalcommits.org/). For this to work, commit messages must adhere to the spec. [commitizen](https://github.com/commitizen/cz-cli) is setup for convenience.
 
 ```bash
+//make a change, then
 git add .
 yarn run commit
 ```
