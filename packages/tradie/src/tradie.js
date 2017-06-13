@@ -3,7 +3,7 @@ const path = require('path');
 const chalk = require('chalk');
 const yargs = require('yargs');
 const metadata = require('../package.json');
-const Template = require('../lib/Template');
+const Template = require('./Template');
 
 Template.find()
   .then(template =>
