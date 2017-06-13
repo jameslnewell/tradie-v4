@@ -1,5 +1,5 @@
 const path = require('path');
-const jestUtils = require('tradie-jest-utils');
+const jestUtils = require('tradie-utils-jest');
 
 module.exports = function(options = {}) {
   return {
@@ -7,6 +7,7 @@ module.exports = function(options = {}) {
       watch: options.watch,
       coverage: options.coverage,
       config: {
+        testEnvironment: 'node',
         rootDir: path.resolve('./src'),
         transform: {
           '.jsx?$': require.resolve('../lib/jest/babelTransform')
