@@ -1,4 +1,7 @@
 module.exports = function(yargs) {
+
+  yargs.command('clean', 'clean build files');
+
   yargs.command('build', 'transpile source files').option('watch', {
     default: false,
     boolean: true,

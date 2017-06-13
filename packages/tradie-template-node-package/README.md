@@ -1,6 +1,6 @@
 # tradie-template-node-package
 
-A [`tradie`](https://www.npmjs.com/package/tradie) template for creating packages for NodeJS.
+A [`tradie`](https://www.npmjs.com/package/tradie) template for creating NodeJS packages.
 
 Featuring:
 

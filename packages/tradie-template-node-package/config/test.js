@@ -9,7 +9,7 @@ module.exports = function(options = {}) {
       config: {
         rootDir: path.resolve('./src'),
         transform: {
-          '.jsx?$': require.resolve('./jest/babelTransform')
+          '.jsx?$': require.resolve('../lib/jest/babelTransform')
         }
       }
     }

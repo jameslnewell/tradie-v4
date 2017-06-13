@@ -9,7 +9,6 @@ module.exports = function(options) {
   const exclude = options.exclude;
   const babel = options.babel;
   const watch = options.watch;
-  debugger;
   const builder = new Builder({
     root,
     src,

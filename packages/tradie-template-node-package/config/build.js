@@ -1,5 +1,5 @@
 const path = require('path');
-const getBabelConfig = require('./lib/getBabelConfig');
+const getBabelConfig = require('../lib/getBabelConfig');
 
 module.exports = function(options) {
   return {
