@@ -45,12 +45,18 @@ class Builder {
   }
 
   start() {
+    //create a promise we can resolve later
+    this.promise = new Promise((resolve, reject) => {
+      this.resolve = resolve;
+      this.reject = reject;
+    });
+
     //run the initial build
     this.started('*');
     this.files
       .list()
       .then(list => Promise.all(list.map(file => this.transpile(file))))
-      .then(() => this.stopped('*'));
+      .then(() => this.stopped('*'), error => this.fatalError(error));
 
     if (this.watch) {
       this.files.on('add', file => {
@@ -68,12 +74,6 @@ class Builder {
         this.delete(file).then(() => this.stopped(file));
       });
     }
-
-    //create a promise we can resolve later
-    this.promise = new Promise((resolve, reject) => {
-      this.resolve = resolve;
-      this.reject = reject;
-    });
 
     return this;
   }
@@ -131,7 +131,7 @@ class Builder {
           this.fileError(file, flatErrorsByFile[file].join('\n'));
         });
       })
-      .catch(this.fatalError);
+      .catch(error => this.fatalError(error));
   }
 
   printBuiltMessage() {
@@ -212,7 +212,7 @@ class Builder {
 
   /** @private */
   fatalError(error) {
-    console.error('FATAL', error);
+    this.reject(error);
   }
 }
 

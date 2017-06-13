@@ -1,6 +1,6 @@
 {
   "name": "tradie-template-node-package",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "dependencies": {
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-env": "^1.5.1",

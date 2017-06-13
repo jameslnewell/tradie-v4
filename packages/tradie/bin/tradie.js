@@ -39,9 +39,10 @@ Template.find()
   )
   .catch(error => {
     if (error) {
-      console.error(chalk.red(error)); //eslint-disable-line no-console
       if (error instanceof Error) {
         console.error(chalk.red(error.stack)); //eslint-disable-line no-console
+      } else {
+        console.error(chalk.red(error)); //eslint-disable-line no-console
       }
     }
     process.exit(1);

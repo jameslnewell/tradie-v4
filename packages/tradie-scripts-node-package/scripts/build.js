@@ -25,5 +25,4 @@ module.exports = function(options) {
   });
 
   return builder.start().wait();
-  // .then(() => console.log('wait resolve'), err => console.log('wait rejected', err))
 };
