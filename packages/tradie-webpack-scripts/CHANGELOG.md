@@ -4,19 +4,11 @@ All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 <a name="5.0.0"></a>
-# [5.0.0](https://github.com/jameslnewell/tradie-v4/compare/tradie@4.0.3...tradie@5.0.0) (2017-06-13)
-
-
-### Bug Fixes
-
-* fix documentation after changes ([b3a29f1](https://github.com/jameslnewell/tradie-v4/commit/b3a29f1))
-* fix error handling in tradie-scripts-node-package and tradie ([87c253b](https://github.com/jameslnewell/tradie-v4/commit/87c253b))
-* fix formatting of docs ([83713e7](https://github.com/jameslnewell/tradie-v4/commit/83713e7))
+# 5.0.0 (2017-06-13)
 
 
 ### Features
 
-* downgrade versions and change structure ([54a0dc8](https://github.com/jameslnewell/tradie-v4/commit/54a0dc8))
 * major refactor to support multiple types of scripts ([3ecd07c](https://github.com/jameslnewell/tradie-v4/commit/3ecd07c))
 
 
@@ -26,19 +18,8 @@ See [standard-version](https://github.com/conventional-changelog/standard-versio
 
 
 
-
-<a name="4.0.3"></a>
-## 4.0.3 (2017-06-06)
-
-
-
 <a name="4.0.2"></a>
 ## 4.0.2 (2017-05-01)
-
-
-
-<a name="4.0.1"></a>
-## 4.0.1 (2017-05-01)
 
 
 
@@ -54,11 +35,6 @@ See [standard-version](https://github.com/conventional-changelog/standard-versio
 
 <a name="4.0.0-rc.4"></a>
 # 4.0.0-rc.4 (2017-05-01)
-
-
-
-<a name="4.0.0-rc.1"></a>
-# 4.0.0-rc.1 (2017-04-15)
 
 
 
@@ -107,8 +83,8 @@ See [standard-version](https://github.com/conventional-changelog/standard-versio
 
 
 
-<a name="2.0.0-preview.20"></a>
-# 2.0.0-preview.20 (2017-01-05)
+<a name="2.0.0-preview.19"></a>
+# 2.0.0-preview.19 (2017-01-05)
 
 
 
@@ -117,13 +93,13 @@ See [standard-version](https://github.com/conventional-changelog/standard-versio
 
 
 
-<a name="2.0.0-preview.16"></a>
-# 2.0.0-preview.16 (2016-12-20)
+<a name="2.0.0-preview.12"></a>
+# 2.0.0-preview.12 (2016-11-22)
 
 
 
-<a name="2.0.0-preview.14"></a>
-# 2.0.0-preview.14 (2016-11-22)
+<a name="2.0.0-preview.9"></a>
+# 2.0.0-preview.9 (2016-11-22)
 
 
 

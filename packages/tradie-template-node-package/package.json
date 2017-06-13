@@ -1,12 +1,12 @@
 {
   "name": "tradie-template-node-package",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "dependencies": {
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-env": "^1.5.1",
     "babel-preset-flow": "^6.23.0",
-    "tradie": "^4.0.0",
-    "tradie-scripts-node-package": "^1.0.0",
-    "tradie-jest-utils": "0.1.0"
+    "tradie": "^5.0.0",
+    "tradie-jest-utils": "^1.0.0",
+    "tradie-scripts-node-package": "^1.0.0"
   }
 }
