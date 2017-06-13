@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.1"></a>
+## [1.0.1](https://github.com/jameslnewell/tradie-v4/compare/tradie-template-node-package@1.0.0...tradie-template-node-package@1.0.1) (2017-06-13)
+
+
+### Bug Fixes
+
+* changed the name of all the unpublished utils packages ([097b032](https://github.com/jameslnewell/tradie-v4/commit/097b032))
+
+
+
+
 <a name="1.0.0"></a>
 # 1.0.0 (2017-06-13)
 

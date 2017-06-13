@@ -1,14 +1,14 @@
 {
   "name": "tradie-scripts-node-package",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "dependencies": {
     "lodash.debounce": "^4.0.8",
     "lodash.padstart": "^4.6.1",
     "lodash.trim": "^4.5.1",
-    "tradie-utils-babel": "^1.0.0",
-    "tradie-utils-cli": "^1.0.0",
-    "tradie-utils-file": "^1.0.0",
-    "tradie-utils-flow": "^1.0.0",
-    "tradie-utils-jest": "^1.0.0"
+    "tradie-utils-babel": "^1.0.1",
+    "tradie-utils-cli": "^1.0.1",
+    "tradie-utils-file": "^1.0.1",
+    "tradie-utils-flow": "^1.0.1",
+    "tradie-utils-jest": "^1.0.1"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "tradie-utils-flow",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "dependencies": {
     "lodash.padstart": "^4.6.1"
   },
