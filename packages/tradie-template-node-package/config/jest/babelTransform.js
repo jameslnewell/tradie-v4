@@ -1,4 +1,4 @@
-const jestUtils = require('tradie-jest-utils');
+const jestUtils = require('tradie-utils-jest');
 const getBabelConfig = require('../lib/getBabelConfig');
 
 module.exports = jestUtils.createBabelTransform(

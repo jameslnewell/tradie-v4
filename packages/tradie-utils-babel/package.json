@@ -1,10 +1,8 @@
 {
-  "name": "tradie-jest-utils",
+  "name": "tradie-utils-babel",
   "version": "1.0.0",
   "dependencies": {
     "babel-core": "^6.24.1",
-    "glob": "^7.1.2",
-    "jest": "^20.0.4",
     "mkdirp": "^0.5.1"
   }
 }

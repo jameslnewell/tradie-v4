@@ -1,5 +1,5 @@
 {
-  "name": "tradie-file-utils",
+  "name": "tradie-utils-file",
   "version": "1.0.0",
   "dependencies": {
     "chokidar": "^1.7.0",

@@ -2,10 +2,10 @@ const chalk = require('chalk');
 const debounce = require('lodash.debounce');
 const padStart = require('lodash.padstart');
 const trim = require('lodash.trim');
-const clear = require('tradie-cli-utils').clear;
-const Files = require('tradie-file-utils');
-const Transpiler = require('tradie-babel-utils');
-const TypeChecker = require('tradie-flow-utils');
+const clear = require('tradie-utils-cli').clear;
+const Files = require('tradie-utils-file');
+const Transpiler = require('tradie-utils-babel');
+const TypeChecker = require('tradie-utils-flow');
 
 class Builder {
   /**

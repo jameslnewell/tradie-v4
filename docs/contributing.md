@@ -28,11 +28,11 @@ This repo is a [`monorepo`](https://github.com/babel/babel/blob/master/doc/desig
 
 | Package | Version | Description |
 |---------|---------|-------------|
-| [tradie-babel-utils](../packages/tradie-babel-utils) | [![npm](https://img.shields.io/npm/v/tradie-babel-utils.svg)]() | Utilities for transforming code with `babel`. |
-| [tradie-cli-utils](../packages/tradie-cli-utils) | [![npm](https://img.shields.io/npm/v/tradie-cli-utils.svg)]() | Utilities for working with the CLI. |
-| [tradie-file-utils](../packages/tradie-file-utils) | [![npm](https://img.shields.io/npm/v/tradie-file-utils.svg)]() | Utilities for working with the file system. |
-| [tradie-flow-utils](../packages/tradie-flow-utils) | [![npm](https://img.shields.io/npm/v/tradie-flow-utils.svg)]() | Utilities for checking code with `flowtype`. |
-| [tradie-jest-utils](../packages/tradie-jest-utils) | [![npm](https://img.shields.io/npm/v/tradie-jest-utils.svg)]() | Utilities for running tests with `jest`. |
+| [tradie-utils-babel](../packages/tradie-utils-babel) | [![npm](https://img.shields.io/npm/v/tradie-utils-babel.svg)]() | Utilities for transforming code with `babel`. |
+| [tradie-utils-cli](../packages/tradie-utils-cli) | [![npm](https://img.shields.io/npm/v/tradie-utils-cli.svg)]() | Utilities for working with the CLI. |
+| [tradie-utils-file](../packages/tradie-utils-file) | [![npm](https://img.shields.io/npm/v/tradie-utils-file.svg)]() | Utilities for working with the file system. |
+| [tradie-utils-flow](../packages/tradie-utils-flow) | [![npm](https://img.shields.io/npm/v/tradie-utils-flow.svg)]() | Utilities for checking code with `flowtype`. |
+| [tradie-utils-jest](../packages/tradie-utils-jest) | [![npm](https://img.shields.io/npm/v/tradie-utils-jest.svg)]() | Utilities for running tests with `jest`. |
 | [tradie-webpack-utils](../packages/tradie-webpack-utils) | [![npm](https://img.shields.io/npm/v/tradie-webpack-utils.svg)]() | Utilities for creating Webpack configuration. |
 
 ## Deprecated
