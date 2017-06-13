@@ -145,7 +145,7 @@ class Builder {
         //indent each line of the error
         console.log(
           `${trim(
-            String(this.errors[file])
+            String(this.errors[file] instanceof Error ? this.errors[file].stack : this.errors[file])
               .split('\n')
               .map(line => `${padStart('', 4)}${line}`)
               .join('\n'),
