@@ -2,7 +2,7 @@
   "name": "tradie-utils-cli",
   "version": "1.0.1",
   "main": "lib/index.js",
-  "files": "lib",
+  "files": ["lib"],
   "devDependencies": {
     "tradie-template-node-package": "^1.0.1"
   },
