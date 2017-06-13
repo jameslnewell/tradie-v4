@@ -3,76 +3,26 @@
 [![npm](https://img.shields.io/npm/v/tradie.svg)]()
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
-A CLI for building web apps. Like `create-react-app` but configurable via templates.
+> The documentation for `tradie` is still a little rough. Please [ask questions and raise bugs on Github](https://github.com/jameslnewell/tradie-v4/issues). PRs are welcome!
 
-> The documentation for Tradie is still a little rough. Please [ask questions](https://github.com/jameslnewell/tradie-v4/issues) on Github and raise PRs to fix any bugs or missing documentation!
+A framework for building build tools like `create-react-app` tailored to your projects and tech stack.
+
+#### Why?
+
+Maintaining build tooling across similar projects is tedious and error prone! Moving the build tooling into a centralised package installable via `npm` makes it much easier to maintain, improve and upgrade across each of your projects.
+
+Keeping the build tooling consistent across similar projects makes your team more efficent and allows them to onboard new members more easily.
 
 ## Usage
 
 `tradie` requires a template in order to know how to build, serve and test your app. 
 Choose a [`template`](https://github.com/jameslnewell/tradie-v4/tree/master/packages/tradie#templates) and follow its documentation to set up up your project.
 
-## Commands
-
-##### `tradie clean` 
-
-Remove all compiled artifacts and temporary files.
-
-##### `tradie build`
-
-Bundle source assets into compiled artifacts.
-
-- `--watch` - watch all source files and re-compile when they change
-- `--optimize` - create an optimized build
-
-##### `tradie serve` 
-
-Bundle and serve compiled artifacts with HMR.
-
-##### `tradie test`
-
-Run tests.
-
-- `--watch` - watch all test files and re-compile when they change
-- `--coverage` - collect and output test coverage
-
-## Debugging
-
-`tradie` clears the screen on compilation and attempts to make Webpack messages more readable. In some instances this can 
-make debugging more difficult. You can turn off this functionality by setting a value for the `DEBUG` environment variable.
-
-> For example:
-```
-#*nix
-export DEBUG=1
-tradie serve
-
-#win
-set DEBUG=1
-tradie serve
-```
-
-Many of `tradie`'s dependencies use the [debug](https://www.npmjs.com/package/debug) package. You can vary the value of 
-the `DEBUG` environment variable to show 
-more or less information. 
-
-> For example:
-```
-#*nix
-export DEBUG="tradie*"
-tradie serve
-
-#win
-set DEBUG="tradie*"
-tradie serve
-```
-
-## Templates
-
-Templates tell `tradie` how to build, serve and test your app. They contain configuration for Webpack and Jest.
+### Templates
 
 Choose from one of the existing templates below or [build your own](https://github.com/jameslnewell/tradie-v4/blob/master/docs/templates.md).
 
-- [tradie-template-react-static-site](https://www.npmjs.com/package/tradie-template-react-static-site)
+- [tradie-template-node-package](https://www.npmjs.com/package/tradie-template-node-package)
+- [tradie-template-react-site](https://www.npmjs.com/package/tradie-template-react-site)
 - [tradie-template-react-app](https://www.npmjs.com/package/tradie-template-react-app)
 

@@ -1,34 +1,40 @@
-# Scripts
+# Build your own...
 
-Scripts tell `tradie` how to build, serve and test your files.
+## Templates
 
-Scipts `MUST` be named like:
+Templates encapsulate the configuration of the tools (e.g. `flow`, `babel`, `webpack`, `jest` and `express`).
 
-    tradie-scripts-<name>
-    
-OR
+`tradie` comes with a number of pre-built templates. Each of these templates come with Zero Configuration (but your templates don't have to). Build or fork your own when you require custom configuration (e.g. you want to use the `sass-loader` with `tradie-template-react-site`).
 
-    @<org>/tradie-scripts-<name>
-
-Scripts `MUST` expose:
-
-- A `./cli.js` module exporting a function. The function will be passed an instance of `yargs` and should configure the necessary commands and arguments.
-- A `./scripts` directory cotaining a module for each configured command. Each script module should export a function that returns a promise when the command is complete. The script will be passed a configuration object, configured as desired by a template.
-
-# Templates
-
-Templates allow you to configure
-
-Templates `MUST` be named like:
+A template `MUST` be named like:
 
     tradie-template-<name>
     
 OR
 
-    @<org>/tradie-template-<name>
+    @<your-org>/tradie-template-<name>
 
-Templates must have `tradie` and a `tradie-scripts-*` package listed in their dependencies.
+A template must have the `tradie` package and a `tradie-scripts-*` package listed in their dependencies.
 
-Templeates `MUST` expose:
+A template `MUST` expose:
 
-- A `./config` directory containing a module for each script.
+- A `./config` directory containing a module for each script exposed by the chosen `tradie-scripts-*` pacakge.
+
+## Scripts
+
+Scripts encapsulate the running of the tools (e.g. `flow`, `babel`, `webpack`, `jest` and `express`).
+
+`tradie` comes with a number of pre-built scripts. Each of these are built for a particular type of project. Build or fork your own when you're building a new type of project.
+
+A scipt `MUST` be named like:
+
+    tradie-scripts-<name>
+    
+OR
+
+    @<your-org>/tradie-scripts-<name>
+
+A script `MUST` expose:
+
+- A `./cli.js` module that exports a function. The function will be passed an instance of `yargs` and should configure the necessary commands and arguments it requires.
+- A `./scripts` directory cotaining a module for each configured command. Each script module should export a function that returns a promise when the command is complete. The script will be passed a configuration object, configured as desired by a template.

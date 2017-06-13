@@ -15,7 +15,7 @@ This repo is a [`monorepo`](https://github.com/babel/babel/blob/master/doc/desig
 | Package | Version | Description |
 |---------|---------|-------------|
 | [tradie-template-node-package](../packages/tradie-template-node-package) | [![npm](https://img.shields.io/npm/v/tradie-template-node-package.svg)]() | Template for creating a NodeJS package. |
-| [tradie-template-react-static-site](../packages/tradie-template-react-static-site) | [![npm](https://img.shields.io/npm/v/tradie-template-react-static-site.svg)]() | Template for creating static sites rendered at build-time with React. |
+| [tradie-template-react--site](../packages/tradie-template-react-site) | [![npm](https://img.shields.io/npm/v/tradie-template-react-site.svg)]() | Template for creating static sites rendered at build-time with React. |
 | [tradie-template-react-app](../packages/tradie-template-react-app) | [![npm](https://img.shields.io/npm/v/tradie-template-react-app.svg)]() | Template for creating a universaljs app rendered at run-time with React. |
 
 ## Scripts
@@ -39,6 +39,7 @@ This repo is a [`monorepo`](https://github.com/babel/babel/blob/master/doc/desig
 
 | Package | Version | Description |
 |---------|---------|-------------|
+| [tradie-template-react--site](../packages/tradie-template-react-static-site) | [![npm](https://img.shields.io/npm/v/tradie-template-react-static-site.svg)]() | Template for creating static sites rendered at build-time with React. |
 | [tradie-webpack-config](../packages/tradie-webpack-config) | [![npm](https://img.shields.io/npm/v/tradie-webpack-config.svg)]() | Utilities for creating Webpack configuration. |
 | [tradie-webpack-scripts](../packages/tradie-webpack-scripts) | [![npm](https://img.shields.io/npm/v/tradie-webpack-scripts.svg)]() | Scripts for performing frontendy build tasks. |
 
