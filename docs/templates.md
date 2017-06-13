@@ -6,7 +6,7 @@ Templates encapsulate the configuration of the tools (e.g. `flow`, `babel`, `web
 
 `tradie` comes with a number of pre-built templates. Each of these templates come with Zero Configuration (but your templates don't have to). Build or fork your own when you require custom configuration (e.g. you want to use the `sass-loader` with `tradie-template-react-site`).
 
-A template `MUST` be named like:
+A template **MUST** be named like:
 
     tradie-template-<name>
     
@@ -14,9 +14,9 @@ OR
 
     @<your-org>/tradie-template-<name>
 
-A template must have the `tradie` package and a `tradie-scripts-*` package listed in their dependencies.
+A template **MUST** have the `tradie` package and a `tradie-scripts-*` package listed in their dependencies.
 
-A template `MUST` expose:
+A template **MUST** expose:
 
 - A `./config` directory containing a module for each script exposed by the chosen `tradie-scripts-*` pacakge.
 
@@ -26,7 +26,7 @@ Scripts encapsulate the running of the tools (e.g. `flow`, `babel`, `webpack`, `
 
 `tradie` comes with a number of pre-built scripts. Each of these are built for a particular type of project. Build or fork your own when you're building a new type of project.
 
-A scipt `MUST` be named like:
+A scipt **MUST** be named like:
 
     tradie-scripts-<name>
     
@@ -34,7 +34,7 @@ OR
 
     @<your-org>/tradie-scripts-<name>
 
-A script `MUST` expose:
+A script **MUST** expose:
 
 - A `./cli.js` module that exports a function. The function will be passed an instance of `yargs` and should configure the necessary commands and arguments it requires.
 - A `./scripts` directory cotaining a module for each configured command. Each script module should export a function that returns a promise when the command is complete. The script will be passed a configuration object, configured as desired by a template.

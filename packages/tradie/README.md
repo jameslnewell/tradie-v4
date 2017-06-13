@@ -11,7 +11,7 @@ A framework for building build tools like `create-react-app` tailored to your pr
 
 Maintaining build tooling across similar projects is tedious and error prone! Moving the build tooling into a centralised package installable via `npm` makes it much easier to maintain, improve and upgrade across each of your projects.
 
-Keeping the build tooling consistent across similar projects makes your team more efficent and allows them to onboard new members more easily.
+Keeping the build tooling consistent across similar projects makes your team more efficent and allows them to onboard new team members more easily.
 
 ## Usage
 
