@@ -13,8 +13,9 @@
     "crap"
   ],
   "repository": "jameslnewell/tradie-v4",
+  "files": ["lib"],
   "bin": {
-    "tradie": "./lib/tradie.js"
+    "tradie": "lib/tradie.js"
   },
   "dependencies": {
     "chalk": "^1.1.3",
