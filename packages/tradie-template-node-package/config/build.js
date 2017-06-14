@@ -13,7 +13,7 @@ module.exports = function(options) {
       extends: ['jameslnewell/es'],
       env: {node: true},
       rules: {
-        'no-console': 0
+        'no-console': 1
       }
     },
     watch: options.watch
