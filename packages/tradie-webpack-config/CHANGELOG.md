@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="5.0.2"></a>
+## [5.0.2](https://github.com/jameslnewell/tradie-v4/compare/tradie-webpack-config@5.0.1...tradie-webpack-config@5.0.2) (2017-06-14)
+
+
+
+
 <a name="5.0.1"></a>
 ## [5.0.1](https://github.com/jameslnewell/tradie-v4/compare/tradie-webpack-config@5.0.0...tradie-webpack-config@5.0.1) (2017-06-13)
 

@@ -1,6 +1,6 @@
 {
   "name": "tradie-template-react-static-site",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Tradie template for building static sites with React.",
   "repository": "jameslnewell/tradie-v4",
   "peerDependencies": {
@@ -37,7 +37,7 @@
     "serve-static": "^1.12.1",
     "static-react-render-webpack-plugin": "^0.6.0",
     "style-loader": "^0.17.0",
-    "tradie-webpack-utils": "^5.0.0",
+    "tradie-webpack-utils": "^5.0.1",
     "trailing-slash-it": "^0.3.0",
     "webpack": "^2.3.2",
     "webpack-node-externals": "^1.5.4"
