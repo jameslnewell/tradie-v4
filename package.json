@@ -1,25 +1,22 @@
 {
   "devDependencies": {
     "commitizen": "^2.9.6",
-    "eslint": "^3.19.0",
-    "eslint-config-jameslnewell": "^3.0.0-preview.3",
     "husky": "^0.13.4",
     "lerna": "2.0.0-rc.5",
     "lint-staged": "^3.4.0",
     "prettier": "^1.1.0",
-    "validate-commit-msg": "^2.12.1",
-    "webpack": "^2.4.1"
+    "validate-commit-msg": "^2.12.1"
   },
   "scripts": {
     "clean": "lerna clean",
     "bootstrap": "lerna bootstrap --npm-client=yarn",
-    "lint": "lerna exec -- eslint --ext .js -c eslint-config-jameslnewell/node .",
     "dep-check": "lerna exec --concurrency 1 -- npm-check -u",
     "commit": "git-cz",
-    "publish": "lerna publish --conventional-commits -m 'chore: publish' --npm-tag=next --canary",
+    "build": "lerna run build",
+    "test": "lerna run test",
+    "publish": "npm run build && npm run test && lerna publish --conventional-commits -m 'chore: publish' --npm-tag=next --canary",
     "commitmsg": "validate-commit-msg",
-    "xprecommit": "lint-staged",
-    "xprepublish": "npm run lint"
+    "precommit": "lint-staged"
   },
   "lint-staged": {
     "*.js": [
