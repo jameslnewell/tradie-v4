@@ -1,8 +1,19 @@
 {
   "name": "tradie-utils-babel",
   "version": "1.0.1",
+  "main": "lib/index.js",
+  "files": ["lib"],
   "dependencies": {
     "babel-core": "^6.24.1",
     "mkdirp": "^0.5.1"
+  },
+  "devDependencies": {
+    "tradie-template-node-package": "1.0.1"
+  },
+  "scripts": {
+    "clean": "tradie clean",
+    "build": "tradie build",
+    "watch": "tradie build --watch",
+    "test": "tradie test"
   }
 }
