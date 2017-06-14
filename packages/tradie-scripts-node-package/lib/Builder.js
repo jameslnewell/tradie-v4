@@ -4,6 +4,7 @@ const padStart = require('lodash.padstart');
 const trim = require('lodash.trim');
 const clear = require('tradie-utils-cli').clear;
 const Files = require('tradie-utils-file');
+const Linter = require('tradie-utils-eslint').Linter;
 const Transpiler = require('tradie-utils-babel');
 const TypeChecker = require('tradie-utils-flow');
 
@@ -16,6 +17,7 @@ class Builder {
    * @param {RegExp} options.include
    * @param {RegExp} options.exclude
    * @param {object} options.babel
+   * @param {object} options.eslint
    * @param {boolean} options.watch
    */
   constructor(options) {
@@ -24,6 +26,7 @@ class Builder {
     const dest = options.dest;
     const include = options.include;
     const exclude = options.exclude;
+    const eslint = options.eslint;
     const babel = options.babel;
 
     this.watch = options.watch;
@@ -34,7 +37,7 @@ class Builder {
       exclude: exclude
     });
 
-    //TODO: linting
+    this.linter = new Linter(src, eslint);
     this.transpiler = new Transpiler(src, dest, babel);
     this.typechecker = new TypeChecker(root, src);
 
@@ -55,23 +58,23 @@ class Builder {
     this.started('*');
     this.files
       .list()
-      .then(list => Promise.all(list.map(file => this.transpile(file))))
+      .then(list => Promise.all(list.map(file => this.buildFile(file))))
       .then(() => this.stopped('*'), error => this.fatalError(error));
 
     if (this.watch) {
       this.files.on('add', file => {
         this.started(file);
-        this.transpile(file).then(() => this.stopped(file));
+        this.buildFile(file).then(() => this.stopped(file));
       });
 
       this.files.on('change', file => {
         this.started(file);
-        this.transpile(file).then(() => this.stopped(file));
+        this.buildFile(file).then(() => this.stopped(file));
       });
 
       this.files.on('unlink', file => {
         this.started(file);
-        this.delete(file).then(() => this.stopped(file));
+        this.deleteFile(file).then(() => this.stopped(file));
       });
     }
 
@@ -96,24 +99,31 @@ class Builder {
     return this.promise;
   }
 
-  onchange(file) {}
-
   /** @private */
-  transpile(file) {
-    return this.transpiler
-      .transpile(file)
-      .catch(error => this.fileError(file, error));
+  buildFile(file) {
+    return Promise.all([
+      this.linter.lint(file).then(result => {
+        if (result.error) {
+          this.fileError(file, result.error); //TODO: prioritise less than transpiler error
+        }
+        //TODO: warnings
+      }),
+
+      this.transpiler
+        .transpile(file)
+        .catch(error => this.fileError(file, error))
+    ]);
   }
 
   /** @private */
-  delete(file) {
+  deleteFile(file) {
     return del(this.transpiler.destFile(file)).catch(error =>
       this.fileError(file, error)
     );
   }
 
   /** @private */
-  check() {
+  checkAllFiles() {
     return this.typechecker
       .check()
       .then(errors => {
@@ -145,7 +155,11 @@ class Builder {
         //indent each line of the error
         console.log(
           `${trim(
-            String(this.errors[file] instanceof Error ? this.errors[file].stack : this.errors[file])
+            String(
+              this.errors[file] instanceof Error
+                ? this.errors[file].stack
+                : this.errors[file]
+            )
               .split('\n')
               .map(line => `${padStart('', 4)}${line}`)
               .join('\n'),
@@ -154,11 +168,7 @@ class Builder {
         );
       });
       console.log();
-      console.log(
-        chalk.red(
-          chalk.bold(`  😫  Built with ${chalk.bold(errorCount)} errors`)
-        )
-      );
+      console.log(chalk.red(chalk.bold(`  😫  Built with errors`)));
     } else {
       console.log(chalk.green('  🎉  Built successfully.'));
     }
@@ -194,7 +204,7 @@ class Builder {
     if (Object.keys(this.errors).length) {
       finishStopped();
     } else {
-      this.check()
+      this.checkAllFiles()
         .then(() => finishStopped())
         .catch(error => this.fatalError(error));
     }

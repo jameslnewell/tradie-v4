@@ -11,7 +11,8 @@
     "tradie-utils-cli": "^1.0.1",
     "tradie-utils-file": "^1.0.1",
     "tradie-utils-flow": "^1.0.1",
-    "tradie-utils-jest": "^1.0.1"
+    "tradie-utils-jest": "^1.0.1",
+    "tradie-utils-eslint": "^1.0.0"
   },
   "license": "MIT"
 }

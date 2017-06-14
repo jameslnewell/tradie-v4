@@ -8,6 +8,7 @@ module.exports = function(options) {
   const include = options.include;
   const exclude = options.exclude;
   const babel = options.babel;
+  const eslint = options.eslint;
   const watch = options.watch;
   const builder = new Builder({
     root,
@@ -16,6 +17,7 @@ module.exports = function(options) {
     include,
     exclude,
     babel,
+    eslint,
     watch
   });
 
