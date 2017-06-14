@@ -1,0 +1,21 @@
+{
+  "name": "tradie-utils-eslint",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "devDependencies": {
+    "tradie-template-node-package": "^1.0.1"
+  },
+  "scripts": {
+    "clean": "tradie clean",
+    "build": "tradie build",
+    "watch": "tradie build --watch",
+    "test": "tradie test"
+  },
+  "dependencies": {
+    "eslint": "^4.0.0",
+    "text-table": "^0.2.0"
+  }
+}
