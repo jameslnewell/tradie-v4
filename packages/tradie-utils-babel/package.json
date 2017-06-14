@@ -1,14 +1,16 @@
 {
   "name": "tradie-utils-babel",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "main": "lib/index.js",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "dependencies": {
     "babel-core": "^6.24.1",
     "mkdirp": "^0.5.1"
   },
   "devDependencies": {
-    "tradie-template-node-package": "^1.0.1"
+    "tradie-template-node-package": "^1.1.0"
   },
   "scripts": {
     "clean": "tradie clean",

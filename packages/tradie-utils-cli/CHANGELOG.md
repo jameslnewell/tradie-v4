@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/jameslnewell/tradie-v4/compare/tradie-utils-cli@1.0.1...tradie-utils-cli@1.1.0) (2017-06-14)
+
+
+### Bug Fixes
+
+* fix files included in package ([37313e5](https://github.com/jameslnewell/tradie-v4/commit/37313e5))
+* fix linting and use es imports which breaks a few things ([03c16f8](https://github.com/jameslnewell/tradie-v4/commit/03c16f8))
+* fix naming in docs after renamed all the utils ([4a04308](https://github.com/jameslnewell/tradie-v4/commit/4a04308))
+
+
+### Features
+
+* transpiled to es6+ ([fd26536](https://github.com/jameslnewell/tradie-v4/commit/fd26536))
+
+
+
+
 <a name="1.0.1"></a>
 ## 1.0.1 (2017-06-13)
 

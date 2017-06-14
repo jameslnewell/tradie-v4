@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/jameslnewell/tradie-v4/compare/tradie-template-node-package@1.0.2...tradie-template-node-package@1.1.0) (2017-06-14)
+
+
+### Bug Fixes
+
+* add missing babel plugin (class properties) and fix nodejs linting package ([8475b3a](https://github.com/jameslnewell/tradie-v4/commit/8475b3a))
+* bump version of eslint-config-jameslnewell ([d843ff6](https://github.com/jameslnewell/tradie-v4/commit/d843ff6))
+* fix require statements after moving files around (oops) ([a294119](https://github.com/jameslnewell/tradie-v4/commit/a294119))
+* warn on console.logs ([ca4766a](https://github.com/jameslnewell/tradie-v4/commit/ca4766a))
+
+
+### Features
+
+* added a clean command ([a49733d](https://github.com/jameslnewell/tradie-v4/commit/a49733d))
+* added linting to the scripts/template ([34048a1](https://github.com/jameslnewell/tradie-v4/commit/34048a1))
+
+
+
+
 <a name="1.0.2"></a>
 ## [1.0.2](https://github.com/jameslnewell/tradie-v4/compare/tradie-template-node-package@1.0.1...tradie-template-node-package@1.0.2) (2017-06-13)
 
