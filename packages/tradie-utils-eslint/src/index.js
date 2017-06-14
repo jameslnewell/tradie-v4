@@ -13,7 +13,7 @@ export function getMessages(report, filter) {
         .filter(filter)
         .map(message => [
           chalk.bold(`${message.line}:${message.column}`),
-          message.ruleId || '',
+          chalk.grey(message.ruleId || ''),
           message.message
         ]),
       {align: ['r', 'l', 'l']}
