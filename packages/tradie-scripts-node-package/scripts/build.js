@@ -3,7 +3,7 @@ const path = require('path');
 const chalk = require('chalk');
 const Files = require('tradie-utils-file');
 const Linter = require('tradie-utils-eslint').Linter;
-const Transpiler = require('tradie-utils-babel');
+const Transpiler = require('tradie-utils-babel').default;
 const TypeChecker = require('tradie-utils-flow');
 const Reporter = require('tradie-utils-reporter').default;
 

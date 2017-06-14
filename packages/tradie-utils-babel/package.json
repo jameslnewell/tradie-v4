@@ -8,7 +8,7 @@
     "mkdirp": "^0.5.1"
   },
   "devDependencies": {
-    "tradie-template-node-package": "1.0.1"
+    "tradie-template-node-package": "^1.0.1"
   },
   "scripts": {
     "clean": "tradie clean",

@@ -1,8 +1,8 @@
-const fs = require('fs');
-const path = require('path');
-const chalk = require('chalk');
-const table = require('text-table');
-const CLIEngine = require('eslint').CLIEngine;
+import fs from 'fs';
+import path from 'path';
+import chalk from 'chalk';
+import table from 'text-table';
+import {CLIEngine} from 'eslint';
 
 export function getMessages(report, filter) {
   const errors = {};
@@ -18,7 +18,7 @@ export function getMessages(report, filter) {
         ]),
       {align: ['r', 'l', 'l']}
     );
-    errors[result.filePath] = text;
+    errors[file] = text;
   });
   return errors;
 }

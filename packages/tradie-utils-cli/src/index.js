@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 export function clear() {
   //don't output on CI
   if (process.env.CI) {

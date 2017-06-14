@@ -1,9 +1,9 @@
-const fs = require('fs');
-const path = require('path');
-const mkdirp = require('mkdirp');
-const babel = require('babel-core');
+import fs from 'fs';
+import path from 'path';
+import mkdirp from 'mkdirp';
+import {transformFile} from 'babel-core';
 
-class Transpiler {
+export default class Transpiler {
   constructor(src, dest, options) {
     this.src = src;
     this.dest = dest;
@@ -24,13 +24,22 @@ class Transpiler {
     return new Promise((resolve, reject) => {
       const srcFile = this.srcFile(file);
       const destFile = this.destFile(file);
-      babel.transformFile(srcFile, this.options || {}, (babelError, result) => {
-        if (babelError) return reject(babelError);
+      transformFile(srcFile, this.options || {}, (babelError, result) => {
+        if (babelError) {
+          reject(babelError);
+          return;
+        }
         mkdirp(path.dirname(destFile), mkdirError => {
-          if (mkdirError) return reject(mkdirError);
+          if (mkdirError) {
+            reject(mkdirError);
+            return;
+          }
           fs.writeFile(destFile, result.code, writeError => {
-            if (writeError) return reject(writeError);
-            return resolve();
+            if (writeError) {
+              reject(writeError);
+              return;
+            }
+            resolve();
           });
           // fs.writeFileSync(`${path.join(opts.dest, file)}.map`, result.map);
         });
@@ -38,5 +47,3 @@ class Transpiler {
     });
   }
 }
-
-module.exports = Transpiler;
