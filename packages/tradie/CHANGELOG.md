@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="5.3.0"></a>
+# [5.3.0](https://github.com/jameslnewell/tradie-v4/compare/tradie@5.0.0...tradie@5.3.0) (2017-06-14)
+
+
+### Bug Fixes
+
+* remove generated files, ignore generated files and fixed which files are included in package ([bca63f3](https://github.com/jameslnewell/tradie-v4/commit/bca63f3))
+* use bin provided by pinned version of tradie ([03fe91f](https://github.com/jameslnewell/tradie-v4/commit/03fe91f))
+
+
+### Features
+
+* dog food tradie - use tradie-template-node-package to transpile tradie ([b932f54](https://github.com/jameslnewell/tradie-v4/commit/b932f54))
+
+
+
+
 <a name="5.2.0"></a>
 # [5.2.0](https://github.com/jameslnewell/tradie-v4/compare/tradie@5.0.0...tradie@5.2.0) (2017-06-14)
 

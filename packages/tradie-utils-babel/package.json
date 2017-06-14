@@ -1,6 +1,6 @@
 {
   "name": "tradie-utils-babel",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "main": "lib/index.js",
   "files": [
     "lib"
@@ -10,7 +10,7 @@
     "mkdirp": "^0.5.1"
   },
   "devDependencies": {
-    "tradie-template-node-package": "^1.1.1"
+    "tradie-template-node-package": "^1.1.2"
   },
   "scripts": {
     "clean": "tradie clean",
