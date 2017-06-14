@@ -1,4 +1,3 @@
-const path = require('path');
 const jest = require('jest');
 const babel = require('babel-core');
 
@@ -11,7 +10,7 @@ const babel = require('babel-core');
  * @returns {Promise.<null>}
  */
 module.exports = function(options) {
-  new Promise((resolve, reject) => {
+  return new Promise(() => {
     if (typeof options.config !== 'object') {
       //TODO: remove when typing all the things
       throw new Error('tradie-utils-jest: No config provided');
