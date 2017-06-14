@@ -134,7 +134,7 @@ export default class Reporter {
     if (Object.keys(this.errorsByFile).length) {
       this.printMessages('error', this.errorsByFile);
       console.log(chalk.red(chalk.bold(`  ❌  Built with errors`)));
-    } else if (Object.keys(this.errorsByFile).length) {
+    } else if (Object.keys(this.warningsByFile).length) {
       this.printMessages('warn', this.warningsByFile);
       console.log(chalk.red(chalk.bold(`  ⚠️  Built with warnings`)));
     } else {
