@@ -1,5 +1,5 @@
-const builder = require('tradie-scripts-component');
+// const builder = require('tradie-scripts-component');
 
-module.exports = {
-  builder,
-};
+// module.exports = {
+//   builder,
+// };
