@@ -33,8 +33,9 @@ module.exports = function(options) {
       linter.lint(file).then(result => {
         if (result.error) {
           reporter.error(file, result.error); //TODO: prioritise less than transpiler error
+        } else if (result.warning) {
+          reporter.warning(file, result.warning); //TODO: prioritise less than transpiler error
         }
-        //TODO: warnings
       }),
 
       transpiler.transpile(file).catch(error => reporter.error(file, error))
