@@ -5,6 +5,10 @@
   "files": [
     "lib"
   ],
+  "dependencies": {
+    "eslint": "^4.0.0",
+    "text-table": "^0.2.0"
+  },
   "devDependencies": {
     "tradie-template-node-package": "^1.0.1"
   },
@@ -13,9 +17,5 @@
     "build": "tradie build",
     "watch": "tradie build --watch",
     "test": "tradie test"
-  },
-  "dependencies": {
-    "eslint": "^4.0.0",
-    "text-table": "^0.2.0"
   }
 }
