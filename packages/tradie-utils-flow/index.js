@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
+const execFile = require('child_process').execFile;
 const chalk = require('chalk');
 const padStart = require('lodash.padstart');
-const execFile = require('child_process').execFile;
 const flow = require('flow-bin');
 
 class TypeChecker {
@@ -42,9 +42,9 @@ class TypeChecker {
     });
 
     return {
-      file: file,
-      line: line,
-      column: column,
+      file,
+      line,
+      column,
       message: lines.join('')
     };
   }
@@ -53,7 +53,8 @@ class TypeChecker {
     return new Promise((resolve, reject) => {
       //check flow is setup before running the check
       if (!this.enabled()) {
-        return resolve([]);
+        resolve([]);
+        return;
       }
 
       execFile(

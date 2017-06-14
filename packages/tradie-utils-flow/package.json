@@ -2,7 +2,8 @@
   "name": "tradie-utils-flow",
   "version": "1.0.1",
   "dependencies": {
-    "lodash.padstart": "^4.6.1",
-    "flow-bin": "^0.48.0"
+    "chalk": "^1.1.3",
+    "flow-bin": "^0.48.0",
+    "lodash.padstart": "^4.6.1"
   }
 }
