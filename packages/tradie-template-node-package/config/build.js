@@ -9,7 +9,7 @@ module.exports = function(options) {
     include: /\.jsx?$/,
     exclude: /\.test\.jsx?$/,
     babel: getBabelConfig(options),
-    eslint: {extends: ['jameslnewell/react']},
+    eslint: {extends: ['jameslnewell/es6']},
     watch: options.watch
   };
 };

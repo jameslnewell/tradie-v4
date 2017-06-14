@@ -6,7 +6,10 @@ module.exports = function({root}) {
   const babelOptions = {
     babelrc: false,
     presets: [[require.resolve('babel-preset-env'), {targets: {node: 4}}]],
-    plugins: [require.resolve('babel-plugin-transform-object-rest-spread')]
+    plugins: [
+      require.resolve('babel-plugin-transform-object-rest-spread'),
+      require.resolve('babel-plugin-transform-class-properties')
+    ]
   };
 
   //add flow if its configured
