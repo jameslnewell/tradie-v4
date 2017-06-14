@@ -26,10 +26,10 @@
     "tradie-template-node-package": "1.0.1"
   },
   "scripts": {
-    "clean": "node ./lib/tradie.js clean",
-    "build": "node ./lib/tradie.js build",
-    "watch": "node ./lib/tradie.js build --watch",
-    "test": "node ./lib/tradie.js test"
+    "clean": "tradies clean",
+    "build": "tradie build",
+    "watch": "tradie build --watch",
+    "test": "tradie test"
   },
   "license": "MIT"
 }
