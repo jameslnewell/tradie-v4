@@ -1,4 +1,4 @@
-# tradie-cli-utils
+# tradie-utils-cli
 
 CLI utilities for `tradie-scripts-*`.
 

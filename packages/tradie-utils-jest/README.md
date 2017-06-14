@@ -1,4 +1,4 @@
-# tradie-jest-utils
+# tradie-utils-jest
 
 Jest utilities for `tradie-scripts-*`.
 

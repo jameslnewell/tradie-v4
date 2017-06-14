@@ -1,4 +1,4 @@
-# tradie-file-utils
+# tradie-utils-file
 
 File utilities for `tradie-scripts-*`.
 

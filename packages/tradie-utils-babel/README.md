@@ -1,4 +1,4 @@
-# tradie-babel-utils
+# tradie-utils-babel
 
 Babel utilities for `tradie-scripts-*`.
 

@@ -14,7 +14,7 @@ module.exports = function(options) {
   new Promise((resolve, reject) => {
     if (typeof options.config !== 'object') {
       //TODO: remove when typing all the things
-      throw new Error('tradie-jest-utils: No config provided');
+      throw new Error('tradie-utils-jest: No config provided');
     }
 
     const args = ['--config', JSON.stringify(options.config)];

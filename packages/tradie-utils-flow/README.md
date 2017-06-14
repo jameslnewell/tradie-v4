@@ -1,4 +1,4 @@
-# tradie-flow-utils
+# tradie-utils-flow
 
 Flow utilities for `tradie-scripts-*`.
 
