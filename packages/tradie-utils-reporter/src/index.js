@@ -1,5 +1,5 @@
+/* eslint-disable no-console */
 import chalk from 'chalk';
-import debounce from 'lodash.debounce';
 import padStart from 'lodash.padstart';
 import trim from 'lodash.trim';
 import {clear} from 'tradie-utils-cli';
@@ -96,7 +96,7 @@ export default class Reporter {
     Object.keys(messages).forEach(file => {
       //TODO: filter so only top priority errors are shown e.g. show babel errors over eslint
 
-      let bgColor;
+      let bgColor = 'bgBlack';
       switch (type) {
         case 'error':
           bgColor = 'bgRed';
@@ -105,7 +105,6 @@ export default class Reporter {
           bgColor = 'bgYellow';
           break;
         default:
-          bgColor = 'bgBlack';
           break;
       }
 
@@ -182,7 +181,12 @@ export default class Reporter {
           return;
         }
 
+        //print the report
         this.printEndOfReport();
+
+        //clear errors and warnings
+        this.errorsByFile = {};
+        this.warningsByFile = {};
 
         //if all the compilations have finished, then resolve, if we are watching, only resolve if we're manually stopping
         if (this.watching) {
