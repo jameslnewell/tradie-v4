@@ -9,7 +9,13 @@ module.exports = function(options) {
     include: /\.jsx?$/,
     exclude: /\.test\.jsx?$/,
     babel: getBabelConfig(options),
-    eslint: {extends: ['jameslnewell/es6']},
+    eslint: {
+      extends: ['jameslnewell/es'],
+      env: {node: true},
+      rules: {
+        'no-console': 0
+      }
+    },
     watch: options.watch
   };
 };
