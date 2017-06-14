@@ -1,5 +1,6 @@
 {
   "name": "tradie-template-react-component",
+  "private": true,
   "dependencies": {
     "babel-core": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",

@@ -14,7 +14,7 @@
     "commit": "git-cz",
     "build": "lerna run build",
     "test": "lerna run test",
-    "publish": "npm run build && npm run test && lerna publish --conventional-commits -m 'chore: publish' --npm-tag=next --canary",
+    "publish": "npm run build && lerna publish --conventional-commits -m 'chore: publish' --npm-tag=next",
     "commitmsg": "validate-commit-msg",
     "precommit": "lint-staged"
   },
