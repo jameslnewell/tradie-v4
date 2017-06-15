@@ -4,13 +4,17 @@
 
 This repo is a [`monorepo`](https://github.com/babel/babel/blob/master/doc/design/monorepo.md) managed by [LernaJS](https://lernajs.io).
 
+`tradie` is [dog-fooding](https://en.wikipedia.org/wiki/Eating_your_own_dog_food). That means `tradie` is built using a previously published version of [`tradie-template-node-package`](./packages/tradie-template-node-package/README.md).
+
+`tradie` requires Node.js v4 or greater and the [Yarn](https://yarnpkg.com/en/) package manager.
+
 ## Packages
 
 | Package | Version | Description |
 |---------|---------|-------------|
 | [tradie](../packages/tradie) | [![npm](https://img.shields.io/npm/v/tradie.svg)]() | The CLI for running tradie in your project. |
 
-## Templates
+### Templates
 
 | Package | Version | Description |
 |---------|---------|-------------|
@@ -18,13 +22,13 @@ This repo is a [`monorepo`](https://github.com/babel/babel/blob/master/doc/desig
 | [tradie-template-react--site](../packages/tradie-template-react-site) | [![npm](https://img.shields.io/npm/v/tradie-template-react-site.svg)]() | Template for creating static sites rendered at build-time with React. |
 | [tradie-template-react-app](../packages/tradie-template-react-app) | [![npm](https://img.shields.io/npm/v/tradie-template-react-app.svg)]() | Template for creating a universaljs app rendered at run-time with React. |
 
-## Scripts
+### Scripts
 
 | Package | Version | Description |
 |---------|---------|-------------|
 | [tradie-template-node-package](../packages/tradie-template-template-node-package) | [![npm](https://img.shields.io/npm/v/tradie-template-template-nodejs-package.svg)]() | Scripts for creating a NodeJS package. |
 
-## Utilities
+### Utilities
 
 | Package | Version | Description |
 |---------|---------|-------------|
@@ -35,7 +39,7 @@ This repo is a [`monorepo`](https://github.com/babel/babel/blob/master/doc/desig
 | [tradie-utils-jest](../packages/tradie-utils-jest) | [![npm](https://img.shields.io/npm/v/tradie-utils-jest.svg)]() | Utilities for running tests with `jest`. |
 | [tradie-webpack-utils](../packages/tradie-webpack-utils) | [![npm](https://img.shields.io/npm/v/tradie-webpack-utils.svg)]() | Utilities for creating Webpack configuration. |
 
-## Deprecated
+### Deprecated
 
 | Package | Version | Description |
 |---------|---------|-------------|
@@ -47,11 +51,22 @@ This repo is a [`monorepo`](https://github.com/babel/babel/blob/master/doc/desig
 ## Setup
 
 ```bash
-yarn install         # install the common tools and dependencies
-yarn run bootstrap   # install the package specific tools and dependencies
+yarn                 # install shared dependencies
+yarn run bootstrap   # install package specific dependencies
+yarn run build       # build all the packages
+yarn run test        # test all the packages
 ```
 
-> Note: Requires Node.js v4 or greater
+## Developing
+
+### Within a single package
+
+The package is built using an already published version of [`tradie-template-node-package`](./packages/tradie-template-node-package/README.md).
+
+```bash
+yarn run watch       # build the package and watch for changes
+yarn run test        # test the package
+```
 
 ## Committing
 

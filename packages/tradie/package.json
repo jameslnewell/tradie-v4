@@ -25,11 +25,11 @@
     "yargs": "^8.0.1"
   },
   "devDependencies": {
-    "tradie-template-node-package": "1.0.1"
+    "tradie-template-node-package": "*"
   },
   "scripts": {
-    "clean": "tradies clean",
-    "build": "tradie build",
+    "clean": "tradie clean",
+    "build": "tradie build && chmod 0755 ./lib/tradie.js",
     "watch": "tradie build --watch",
     "test": "tradie test"
   },

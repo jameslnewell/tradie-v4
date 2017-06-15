@@ -49,40 +49,16 @@ export default class Reporter {
     });
   }
 
-  /**
-   * Raise an error message for a specific file
-   * @param {*} file 
-   * @param {*} error 
-   * @param {*} priority 
-   */
-  error(file, error, priority = 0) {
-    if (!this.errorsByFile[file]) {
-      this.errorsByFile[file] = [];
+  /** @private */
+  resolveOrReject() {
+    if (Object.keys(this.errorsByFile).length) {
+      this.reject();
+    } else {
+      this.resolve();
     }
-
-    this.errorsByFile[file] = {
-      priority,
-      message: error
-    };
   }
 
-  /**
-   * Raise a warning message for a specific file
-   * @param {*} file 
-   * @param {*} error 
-   * @param {*} priority 
-   */
-  warning(file, warning, priority = 0) {
-    if (!this.warningsByFile[file]) {
-      this.warningsByFile[file] = [];
-    }
-
-    this.warningsByFile[file] = {
-      priority,
-      message: warning
-    };
-  }
-
+  /** @private */
   printStartOfReport() {
     clear();
     console.log();
@@ -92,6 +68,7 @@ export default class Reporter {
     return this;
   }
 
+  /** @private */
   printMessages(type, messages) {
     Object.keys(messages).forEach(file => {
       //TODO: filter so only top priority errors are shown e.g. show babel errors over eslint
@@ -127,6 +104,7 @@ export default class Reporter {
     });
   }
 
+  /** @private */
   printEndOfReport() {
     clear();
     console.log();
@@ -145,6 +123,40 @@ export default class Reporter {
   }
 
   /**
+   * Raise an error message for a specific file
+   * @param {*} file 
+   * @param {*} error 
+   * @param {*} priority 
+   */
+  error(file, error, priority = 0) {
+    if (!this.errorsByFile[file]) {
+      this.errorsByFile[file] = [];
+    }
+
+    this.errorsByFile[file] = {
+      priority,
+      message: error
+    };
+  }
+
+  /**
+   * Raise a warning message for a specific file
+   * @param {*} file 
+   * @param {*} error 
+   * @param {*} priority 
+   */
+  warning(file, warning, priority = 0) {
+    if (!this.warningsByFile[file]) {
+      this.warningsByFile[file] = [];
+    }
+
+    this.warningsByFile[file] = {
+      priority,
+      message: warning
+    };
+  }
+
+  /**
    * Notify the reporter that a compilation has started
    */
   started() {
@@ -153,6 +165,11 @@ export default class Reporter {
     //if this is the only compilation running, and we're not waiting for other compilations to start,
     // then print the start of the report
     if (this.running === 1 && !this.runningTimeout) {
+      //clear errors and warnings
+      this.errorsByFile = {};
+      this.warningsByFile = {};
+
+      //print the start of the report
       this.printStartOfReport();
     }
 
@@ -184,17 +201,13 @@ export default class Reporter {
         //print the report
         this.printEndOfReport();
 
-        //clear errors and warnings
-        this.errorsByFile = {};
-        this.warningsByFile = {};
-
         //if all the compilations have finished, then resolve, if we are watching, only resolve if we're manually stopping
         if (this.watching) {
           if (this.stopping) {
-            this.resolve();
+            this.resolveOrReject();
           }
         } else {
-          this.resolve();
+          this.resolveOrReject();
         }
       }, 100);
     }
@@ -208,7 +221,7 @@ export default class Reporter {
   stop() {
     //if there are no compilations running now, then resolve, otherwise resolve after the current compilations finish
     if (this.running === 0 && !this.runningTimeout) {
-      this.resolve();
+      this.resolveOrReject();
     } else {
       this.stopping = true;
     }
@@ -219,7 +232,7 @@ export default class Reporter {
   wait() {
     //if there are no compilations running now, then resolve, otherwise wait until compilations finish
     if (!this.watching && this.running === 0 && !this.runningTimeout) {
-      this.resolve();
+      this.resolveOrReject();
     }
 
     return this.promise;
