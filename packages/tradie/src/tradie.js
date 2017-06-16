@@ -1,14 +1,13 @@
 #!/usr/bin/env node
-const path = require('path');
-const chalk = require('chalk');
-const yargs = require('yargs');
-const metadata = require('../package.json');
-const Template = require('./Template');
+import path from 'path';
+import chalk from 'chalk';
+import yargs from 'yargs';
+import Template from './Template';
 
 Template.find()
   .then(template =>
-    template.getScripts().then(scripts => {
-      return scripts.describe(yargs).then(() => {
+    template.getScripts().then(scripts =>
+      scripts.describe(yargs).then(() => {
         //configure the arguments
         yargs
           .help()
@@ -34,8 +33,8 @@ Template.find()
         return template
           .getConfig(scriptName, scriptOptions)
           .then(config => scripts.run(scriptName, config));
-      });
-    })
+      })
+    )
   )
   .catch(error => {
     if (error) {

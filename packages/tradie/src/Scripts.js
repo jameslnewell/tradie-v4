@@ -1,9 +1,9 @@
-const path = require('path');
-const resolveModule = require('resolve');
+import path from 'path';
+import resolveModule from 'resolve';
 
 const REGEXP = /^(@[a-zA-Z0-9.-]+\/)?tradie-scripts-[a-zA-Z0-9.-]+$/;
 
-class Scripts {
+export default class Scripts {
   constructor(name, directory) {
     this._name = name;
     this._directory = directory;
@@ -19,18 +19,18 @@ class Scripts {
 
   resolve(module) {
     return new Promise((resolve, reject) => {
-      resolveModule(module, {basedir: this.directory}, (error, path) => {
+      resolveModule(module, {basedir: this.directory}, (error, file) => {
         if (error) {
           reject(error);
         } else {
-          resolve(path);
+          resolve(file);
         }
       });
     });
   }
 
   require(module) {
-    return this.resolve(module).then(path => require(path)); //TODO: handle transpiled modules
+    return this.resolve(module).then(file => require(file)); //TODO: handle transpiled modules
   }
 
   describe(yargs) {
@@ -42,7 +42,7 @@ class Scripts {
 
         module(yargs);
       },
-      error => {}
+      () => {}
     );
   }
 
@@ -56,23 +56,29 @@ Scripts.find = function(template) {
     template
       .require('./package.json')
       .then(packageMetadata => {
-        const packageDependencies = Object.keys(packageMetadata.dependencies || {});
-        const scriptPackages = packageDependencies.filter(name => REGEXP.test(name));
+        const packageDependencies = Object.keys(
+          packageMetadata.dependencies || {}
+        );
+        const scriptPackages = packageDependencies.filter(name =>
+          REGEXP.test(name)
+        );
 
         if (scriptPackages.length === 0) {
-          return reject(
+          reject(
             new Error(
-              `tradie: No scripts found in \`dependencies\` in \`${templatePackagePath}\`. Please ask the maintainer to install scripts e.g. \`npm install --save tradie-scripts-default\`.`
+              `tradie: No scripts found in \`dependencies\` in \`${template}\`. Please ask the maintainer to install scripts e.g. \`npm install --save tradie-scripts-default\`.`
             )
           );
+          return;
         }
 
         if (scriptPackages.length > 1) {
-          return reject(
+          reject(
             new Error(
-              `tradie: More than one scripts found in \`dependencies\` in \`${templatePackagePath}\`. Please ask the maintainer to uninstall extraneous scripts e.g. \`npm uninstall tradie-scripts-default\`.`
+              `tradie: More than one scripts found in \`dependencies\` in \`${template}\`. Please ask the maintainer to uninstall extraneous scripts e.g. \`npm uninstall tradie-scripts-default\`.`
             )
           );
+          return;
         }
 
         const name = scriptPackages[0];
@@ -93,5 +99,3 @@ Scripts.find = function(template) {
       .catch(reject);
   });
 };
-
-module.exports = Scripts;
