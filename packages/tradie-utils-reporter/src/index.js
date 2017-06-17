@@ -137,6 +137,8 @@ export default class Reporter {
       priority,
       message: error
     };
+
+    return this;
   }
 
   /**
@@ -154,6 +156,8 @@ export default class Reporter {
       priority,
       message: warning
     };
+
+    return this;
   }
 
   /**

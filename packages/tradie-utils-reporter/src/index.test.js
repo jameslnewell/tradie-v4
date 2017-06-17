@@ -101,23 +101,64 @@ describe('Reporter', () => {
     });
   });
 
-  it('should resolve immediately when there are no compilations running', () => {
-    const reporter = new Reporter();
-    return reporter.wait();
-  });
+  describe('.wait()', () => {
+    describe('resolve', () => {
+      it('should resolve when we are not watching and there are 0 compilations running', () => {
+        const reporter = new Reporter();
+        return expect(reporter.wait()).resolves.toBeUndefined();
+      });
 
-  it('should resolve when finished when there is already a compilation running', () => {
-    const reporter = new Reporter();
-    return reporter.started().finished().wait();
-  });
+      it('should resolve when we are not watching and 1 compilation has finished running', () => {
+        const reporter = new Reporter();
+        reporter.started().finished();
+        return expect(reporter.wait()).resolves.toBeUndefined();
+      });
 
-  it('should resolve immediately when stopped while watching', () => {
-    const reporter = new Reporter({watching: true});
-    return reporter.stop().wait();
-  });
+      it('should resolve when we are watching and .stop() is called', () => {
+        const reporter = new Reporter({watching: true});
+        reporter.stop();
+        expect(reporter.wait()).resolves.toBeUndefined();
+      });
 
-  it('should resolve when compilations finish while watching and there is already a compilation running', () => {
-    const reporter = new Reporter({watching: true});
-    return reporter.started().finished().stop().wait();
+      it('should resolve when we are watching and .stop() is called after 1 compilations have finished running', () => {
+        const reporter = new Reporter({watching: true});
+        reporter.started().finished().stop();
+        expect(reporter.wait()).resolves.toBeUndefined();
+      });
+    });
+
+    describe('reject', () => {
+      it('should reject when we are not watching, an error is reported and 1 compilation has finished', () => {
+        const reporter = new Reporter();
+
+        reporter.started().error('my-file.js', 'an error message').finished();
+
+        return expect(reporter.wait()).rejects.toBeUndefined();
+      });
+
+      it('should reject when we are watching, an error is reported and .stop() is called before compilation has finished', () => {
+        const reporter = new Reporter({watching: true});
+
+        reporter
+          .started()
+          .error('my-file.js', 'an error message')
+          .stop()
+          .finished();
+
+        return expect(reporter.wait()).rejects.toBeUndefined();
+      });
+
+      it('should reject when we are watching, an error is reported and .stop() is called after compilation has finished', () => {
+        const reporter = new Reporter({watching: true});
+
+        reporter
+          .started()
+          .error('my-file.js', 'an error message')
+          .finished()
+          .stop();
+
+        return expect(reporter.wait()).rejects.toBeUndefined();
+      });
+    });
   });
 });
