@@ -18,9 +18,10 @@ npm install --save-dev tradie-template-node-package
 
 1. Create the following files:
 ```
-package.json
-src/index.js
-src/index.test.js
+mkdir <prj-name> && cd <prj-name>
+vim package.json
+vim src/index.js
+vim src/index.test.js
 ```
 
 2. Run build

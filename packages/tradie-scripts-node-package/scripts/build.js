@@ -48,7 +48,7 @@ module.exports = function(options) {
     );
   };
 
-  const checkAllFiles = () => {
+  const checkFiles = () => {
     return typechecker
       .check()
       .then(errors => {
@@ -74,17 +74,18 @@ module.exports = function(options) {
   files
     .list()
     .then(list => Promise.all(list.map(file => buildFile(file))))
+    .then(() => checkFiles())
     .then(() => reporter.finished(), error => reporter.fatalError(error));
 
   if (watch) {
     files.on('add', file => {
       reporter.started();
-      buildFile(file).then(() => reporter.finished());
+      buildFile(file).then(() => checkFiles()).then(() => reporter.finished());
     });
 
     files.on('change', file => {
       reporter.started();
-      buildFile(file).then(() => reporter.finished());
+      buildFile(file).then(() => checkFiles()).then(() => reporter.finished());
     });
 
     files.on('unlink', file => {
