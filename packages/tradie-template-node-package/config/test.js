@@ -12,6 +12,8 @@ module.exports = function(options = {}) {
         transform: {
           '.jsx?$': require.resolve('../lib/jest/babelTransform')
         }
+        //TODO: setup coverage info
+        //TODO: setup setup file
       }
     }
   };
