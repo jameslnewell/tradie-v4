@@ -2,7 +2,7 @@ import path from 'path';
 import resolveModule from 'resolve';
 import Scripts from './Scripts';
 
-const REGEXP = /^(@[a-zA-Z0-9.-]+\/)?tradie-template-[a-zA-Z0-9.-]+$/;
+const TEMPLATE_NAME_REGEXP = /^(@[a-zA-Z0-9.-]+\/)?tradie-template-[a-zA-Z0-9.-]+$/;
 
 export default class Template {
   constructor(name, directory) {
@@ -18,7 +18,7 @@ export default class Template {
     return this._directory;
   }
 
-  resolve(module) {
+  resolveModule(module) {
     return new Promise((resolve, reject) => {
       resolveModule(module, {basedir: this.directory}, (error, file) => {
         if (error) {
@@ -30,12 +30,12 @@ export default class Template {
     });
   }
 
-  require(module) {
-    return this.resolve(module).then(file => require(file)); //TODO: handle transpiled modules from templates
+  requireModule(module) {
+    return this.resolveModule(module).then(file => import(file)); //TODO: handle transpiled modules from templates
   }
 
   getConfig(script, args) {
-    return this.require(`./config/${script}`).then(module => {
+    return this.requireModule(`./config/${script}`).then(module => {
       if (typeof module === 'function') {
         return module(args);
       }
@@ -57,47 +57,47 @@ export default class Template {
 }
 
 Template.find = function() {
-  return new Promise((resolve, reject) => {
-    const rootPath = process.cwd();
-    const packageMetadata = require(path.join(rootPath, 'package.json'));
-    const packageDependencies = Object.keys(
-      packageMetadata.devDependencies || {}
+  const projectDirectory = process.cwd();
+  return import(
+    path.join(projectDirectory, 'package.json')
+  ).then(projectMetadata => {
+    const projectDependencies = Object.keys(
+      projectMetadata.devDependencies || {}
     );
-    const templatePackages = packageDependencies.filter(name =>
-      REGEXP.test(name)
+    const templateNames = projectDependencies.filter(name =>
+      TEMPLATE_NAME_REGEXP.test(name)
     );
 
-    if (templatePackages.length === 0) {
-      reject(
-        new Error(
-          `tradie: No template found in \`devDependencies\` in \`package.json\`. Please install a template e.g. \`npm install --save tradie-template-default\`.`
-        )
+    if (templateNames.length === 0) {
+      return Promise.reject(
+        // new Error( //FIXME: https://github.com/facebook/jest/issues/3699
+        `tradie: No template found in \`devDependencies\` in \`package.json\`. Please install a template e.g. \`npm install --save tradie-template-default\`.`
+        // )
       );
-      return;
     }
 
-    if (templatePackages.length > 1) {
-      reject(
-        new Error(
-          `tradie: More than one template found in \`devDependencies\` in \`package.json\`. Please uninstall extraneous templates e.g. \`npm uninstall tradie-template-default\`.`
-        )
+    if (templateNames.length > 1) {
+      return Promise.reject(
+        // new Error( //FIXME: https://github.com/facebook/jest/issues/3699
+        `tradie: More than one template found in \`devDependencies\` in \`package.json\`. Please uninstall extraneous templates e.g. \`npm uninstall tradie-template-default\`.`
+        // )
       );
-      return;
     }
 
-    const name = templatePackages[0];
-
-    resolveModule(
-      `${name}/package.json`,
-      {basedir: rootPath},
-      (error, file) => {
-        if (error) {
-          reject(error);
-        } else {
-          const directory = path.dirname(file);
-          resolve(new Template(name, directory));
+    const templateName = templateNames[0];
+    return new Promise((resolve, reject) => {
+      resolveModule(
+        `${templateName}/package.json`,
+        {basedir: projectDirectory},
+        (resolveError, file) => {
+          if (resolveError) {
+            reject(resolveError);
+          } else {
+            const templateDirectory = path.dirname(file);
+            resolve(new Template(templateName, templateDirectory));
+          }
         }
-      }
-    );
+      );
+    });
   });
 };

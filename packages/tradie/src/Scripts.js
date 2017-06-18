@@ -1,7 +1,7 @@
 import path from 'path';
 import resolveModule from 'resolve';
 
-const REGEXP = /^(@[a-zA-Z0-9.-]+\/)?tradie-scripts-[a-zA-Z0-9.-]+$/;
+const SCRIPT_NAME_REGEXP = /^(@[a-zA-Z0-9.-]+\/)?tradie-scripts-[a-zA-Z0-9.-]+$/;
 
 export default class Scripts {
   constructor(name, directory) {
@@ -17,7 +17,7 @@ export default class Scripts {
     return this._directory;
   }
 
-  resolve(module) {
+  resolveModule(module) {
     return new Promise((resolve, reject) => {
       resolveModule(module, {basedir: this.directory}, (error, file) => {
         if (error) {
@@ -29,12 +29,12 @@ export default class Scripts {
     });
   }
 
-  require(module) {
-    return this.resolve(module).then(file => require(file)); //TODO: handle transpiled modules
+  requireModule(module) {
+    return this.resolveModule(module).then(file => import(file)); //TODO: handle transpiled modules
   }
 
   describe(yargs) {
-    return this.require(`./cli`).then(
+    return this.requireModule(`./cli`).then(
       module => {
         if (typeof module !== 'function') {
           throw new Error(`tradie: "${this.name}/cli" is not a function`);
@@ -47,20 +47,22 @@ export default class Scripts {
   }
 
   run(script, config) {
-    return this.require(`./scripts/${script}`).then(module => module(config));
+    return this.requireModule(`./scripts/${script}`).then(module =>
+      module(config)
+    );
   }
 }
 
 Scripts.find = function(template) {
   return new Promise((resolve, reject) => {
     template
-      .require('./package.json')
+      .requireModule('./package.json')
       .then(packageMetadata => {
         const packageDependencies = Object.keys(
           packageMetadata.dependencies || {}
         );
         const scriptPackages = packageDependencies.filter(name =>
-          REGEXP.test(name)
+          SCRIPT_NAME_REGEXP.test(name)
         );
 
         if (scriptPackages.length === 0) {
