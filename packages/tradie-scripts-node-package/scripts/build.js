@@ -61,6 +61,8 @@ module.exports = function(options) {
           flatErrorsByFile[error.file].push(`${error.message}`);
         });
 
+        //FIXME: filter files using `files.include(file)` e.g exclude test files
+
         //add the errors
         Object.keys(flatErrorsByFile).forEach(file =>
           reporter.error(file, flatErrorsByFile[file].join('\n'))
