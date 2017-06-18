@@ -66,17 +66,37 @@ class Files {
   }
 
   on(event, listener) {
-    if (this.watcher) this.watcher.on(event, listener.bind(this));
+    if (!this.watcher) {
+      return this;
+    }
+
+    this.watcher.on(event, (file, ...args) => {
+      if (this.include(file)) {
+        listener(file, ...args);
+      }
+    });
+
     return this;
   }
 
   once(event, listener) {
-    if (this.watcher) this.watcher.once(event, listener.bind(this));
+    if (!this.watcher) {
+      return this;
+    }
+
+    this.watcher.once(event, (file, ...args) => {
+      if (this.include(file)) {
+        listener(file, ...args);
+      }
+    });
+
     return this;
   }
 
   close() {
-    if (this.watcher) this.watcher.close();
+    if (this.watcher) {
+      this.watcher.close();
+    }
     return this;
   }
 }
