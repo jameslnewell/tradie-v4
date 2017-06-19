@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.3.0"></a>
+# [1.3.0](https://github.com/jameslnewell/tradie-v4/compare/tradie-template-node-package@1.1.3...tradie-template-node-package@1.3.0) (2017-06-19)
+
+
+### Bug Fixes
+
+* added flow type checking back ([efe7434](https://github.com/jameslnewell/tradie-v4/commit/efe7434))
+* ignore mock files, support test coverage and setup files ([b8387b7](https://github.com/jameslnewell/tradie-v4/commit/b8387b7))
+
+
+### Features
+
+* transpile import() statements ([ca46c55](https://github.com/jameslnewell/tradie-v4/commit/ca46c55))
+
+
+
+
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/jameslnewell/tradie-v4/compare/tradie-template-node-package@1.1.3...tradie-template-node-package@1.2.0) (2017-06-19)
 

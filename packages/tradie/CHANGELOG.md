@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="5.3.3"></a>
+## [5.3.3](https://github.com/jameslnewell/tradie-v4/compare/tradie@5.3.1...tradie@5.3.3) (2017-06-19)
+
+
+### Bug Fixes
+
+* added tests and fixed linting ([c1d8703](https://github.com/jameslnewell/tradie-v4/commit/c1d8703))
+* build packages using the old version of tradie-template-node-package ([2c2d0da](https://github.com/jameslnewell/tradie-v4/commit/2c2d0da))
+* fix linting errors ([ea88f37](https://github.com/jameslnewell/tradie-v4/commit/ea88f37))
+
+
+
+
 <a name="5.3.2"></a>
 ## [5.3.2](https://github.com/jameslnewell/tradie-v4/compare/tradie@5.3.1...tradie@5.3.2) (2017-06-19)
 

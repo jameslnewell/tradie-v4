@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.2.4"></a>
+## [1.2.4](https://github.com/jameslnewell/tradie-v4/compare/tradie-utils-babel@1.2.2...tradie-utils-babel@1.2.4) (2017-06-19)
+
+
+### Bug Fixes
+
+* build packages using the old version of tradie-template-node-package ([2c2d0da](https://github.com/jameslnewell/tradie-v4/commit/2c2d0da))
+
+
+
+
 <a name="1.2.3"></a>
 ## [1.2.3](https://github.com/jameslnewell/tradie-v4/compare/tradie-utils-babel@1.2.2...tradie-utils-babel@1.2.3) (2017-06-19)
 

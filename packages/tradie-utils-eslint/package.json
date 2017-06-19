@@ -1,6 +1,6 @@
 {
   "name": "tradie-utils-eslint",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "main": "lib/index.js",
   "files": [
     "lib"
@@ -11,7 +11,7 @@
     "text-table": "^0.2.0"
   },
   "devDependencies": {
-    "tradie-template-node-package": "^1.2.0"
+    "tradie-template-node-package": "^1.3.0"
   },
   "scripts": {
     "clean": "tradie clean",
