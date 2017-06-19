@@ -1,6 +1,6 @@
 {
   "name": "tradie-webpack-scripts",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "description": "Scripts for building, serving and testing using Webpack and Jest.",
   "dependencies": {
     "chalk": "^1.1.3",
