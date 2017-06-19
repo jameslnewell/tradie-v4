@@ -39,11 +39,11 @@ Remove transpiled files.
 
 ### `tradie build [--watch]`
 
-Transpile source files, with the option to re-transpile source files when the source files change.
+Transpile source files, with the option to re-transpile source files when the files change.
 
 ### `tradie test [--watch] [--coverage]`
 
-Test source files, with the option to re-test source files when the source files change.
+Run test files, with the option to re-run test files when the files change.
 
 ## TODO
 
