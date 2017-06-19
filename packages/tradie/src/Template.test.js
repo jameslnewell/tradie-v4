@@ -1,6 +1,6 @@
 jest.mock('resolve');
 import path from 'path';
-import resolve from 'resolve';
+import mockResolve from 'resolve';
 import Template from './Template';
 
 const mockRequire = (() => {
@@ -70,7 +70,7 @@ describe('Template', () => {
           'tradie-template-foo': '^1.2.3' //TODO: test `@user` prefix too
         }
       });
-      resolve.mock("Cannot find module 'tradie-template-foo/package.json'");
+      mockResolve.throws();
       return expect(Template.find()).rejects.toMatch(
         "Cannot find module 'tradie-template-foo/package.json'"
       );
@@ -83,7 +83,7 @@ describe('Template', () => {
           'tradie-template-foo': '^1.2.3' //TODO: test `@user` prefix too
         }
       });
-      resolve.mock(null, '/foo/bar/tradie-template-foo/package.json');
+      mockResolve.returns('/foo/bar/tradie-template-foo/package.json');
       return Template.find().then(template => {
         expect(template).toEqual(expect.any(Template));
         expect(template.name).toEqual('tradie-template-foo');
@@ -91,4 +91,32 @@ describe('Template', () => {
       });
     });
   });
+
+  describe('.resolveModule()', () => {
+    it('should resolve', () => {
+      const template = new Template(
+        'tradie-template-foo',
+        '/foo/bar/tradie-template-foo'
+      );
+      mockResolve.returns('/foo/bar/tradie-template-foo/foo/bar.js');
+      return expect(template.resolveModule('./foo/bar.js')).resolves.toEqual(
+        '/foo/bar/tradie-template-foo/foo/bar.js'
+      );
+    });
+
+    it('should reject', () => {
+      const template = new Template(
+        'tradie-template-foo',
+        '/foo/bar/tradie-template-foo'
+      );
+      mockResolve.throws();
+      return expect(template.resolveModule('./foo/bar.js')).rejects.toMatch(
+        'Cannot find module'
+      );
+    });
+  });
+
+  describe('.requireModule()', () => {});
+
+  describe('.getConfig()', () => {});
 });
