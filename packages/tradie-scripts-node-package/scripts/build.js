@@ -49,6 +49,12 @@ module.exports = function(options) {
   };
 
   const checkFiles = () => {
+    //if we already have errors to display to the user, then show them, don't make them wait any longer!
+    //  - they'll need to fix them first anyway
+    if (reporter.hasErrors()) {
+      return Promise.resolve();
+    }
+
     return typechecker
       .check()
       .then(errors => {
@@ -61,12 +67,12 @@ module.exports = function(options) {
           flatErrorsByFile[error.file].push(`${error.message}`);
         });
 
-        //FIXME: filter files using `files.include(file)` e.g exclude test files
-
         //add the errors
-        Object.keys(flatErrorsByFile).forEach(file =>
-          reporter.error(file, flatErrorsByFile[file].join('\n'))
-        );
+        Object.keys(flatErrorsByFile)
+          .filter(file => files.include(file)) //exclude test files
+          .forEach(file =>
+            reporter.error(file, flatErrorsByFile[file].join('\n'))
+          );
       })
       .catch(error => reporter.fatalError(error));
   };
