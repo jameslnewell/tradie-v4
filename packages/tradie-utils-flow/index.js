@@ -33,7 +33,7 @@ class TypeChecker {
         lines.push(`${msg.context.substr(msg.end)}`);
         lines.push(`\n`);
         lines.push(`     ${padStart('', msg.start - 1)}^^^^^^^^^ ${msg.descr}`);
-        file = path.relative(this.src, msg.path); //TODO needs to be relative to src
+        file = path.relative(this.src, msg.path); //TODO: needs to be relative to src
         line = msg.line;
         column = msg.start;
       } else {
