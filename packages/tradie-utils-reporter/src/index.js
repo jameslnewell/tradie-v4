@@ -51,7 +51,7 @@ export default class Reporter {
 
   /** @private */
   resolveOrReject() {
-    if (Object.keys(this.errorsByFile).length) {
+    if (this.hasErrors()) {
       this.reject();
     } else {
       this.resolve();
@@ -73,7 +73,7 @@ export default class Reporter {
     Object.keys(messages).forEach(file => {
       //TODO: filter so only top priority errors are shown e.g. show babel errors over eslint
 
-      let bgColor = 'bgBlack';
+      let bgColor;
       switch (type) {
         case 'error':
           bgColor = 'bgRed';
@@ -82,6 +82,7 @@ export default class Reporter {
           bgColor = 'bgYellow';
           break;
         default:
+          bgColor = 'bgBlack';
           break;
       }
 
@@ -108,10 +109,10 @@ export default class Reporter {
   printEndOfReport() {
     clear();
     console.log();
-    if (Object.keys(this.errorsByFile).length) {
+    if (this.hasErrors()) {
       this.printMessages('error', this.errorsByFile);
       console.log(chalk.red(chalk.bold(`  ❌  Built with errors`)));
-    } else if (Object.keys(this.warningsByFile).length) {
+    } else if (this.hasWarnings()) {
       this.printMessages('warn', this.warningsByFile);
       console.log(chalk.red(chalk.bold(`  ⚠️  Built with warnings`)));
     } else {
@@ -120,6 +121,10 @@ export default class Reporter {
     console.log();
 
     return this;
+  }
+
+  hasErrors() {
+    return Object.keys(this.errorsByFile).length;
   }
 
   /**
@@ -139,6 +144,10 @@ export default class Reporter {
     };
 
     return this;
+  }
+
+  hasWarnings() {
+    return Object.keys(this.warningsByFile).length;
   }
 
   /**
