@@ -103,6 +103,7 @@ module.exports = function(options) {
   }
 
   process.on('SIGINT', () => {
+    files.close();
     reporter.stop();
   });
 
