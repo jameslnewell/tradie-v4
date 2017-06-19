@@ -1,6 +1,6 @@
 {
   "name": "tradie-utils-jest",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "lib/index.js",
   "files": [
     "lib"
@@ -12,7 +12,7 @@
     "mkdirp": "^0.5.1"
   },
   "devDependencies": {
-    "tradie-template-node-package": "*"
+    "tradie-template-node-package": "^1.2.0"
   },
   "scripts": {
     "clean": "tradie clean",

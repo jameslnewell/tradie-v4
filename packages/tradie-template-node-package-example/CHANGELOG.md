@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.7"></a>
+## [1.0.7](https://github.com/jameslnewell/tradie-v4/compare/tradie-template-node-package-example@1.0.6...tradie-template-node-package-example@1.0.7) (2017-06-19)
+
+
+### Bug Fixes
+
+* added flow type checking back ([efe7434](https://github.com/jameslnewell/tradie-v4/commit/efe7434))
+* build packages using the old version of tradie-template-node-package ([2c2d0da](https://github.com/jameslnewell/tradie-v4/commit/2c2d0da))
+* close file watcher when exiting the app ([59a922b](https://github.com/jameslnewell/tradie-v4/commit/59a922b))
+* ignore mock files, support test coverage and setup files ([b8387b7](https://github.com/jameslnewell/tradie-v4/commit/b8387b7))
+
+
+
+
 <a name="1.0.6"></a>
 ## [1.0.6](https://github.com/jameslnewell/tradie-v4/compare/tradie-template-node-package-example@1.0.5...tradie-template-node-package-example@1.0.6) (2017-06-14)
 
