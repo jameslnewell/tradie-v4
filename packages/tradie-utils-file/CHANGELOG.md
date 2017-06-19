@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.4"></a>
+## [1.0.4](https://github.com/jameslnewell/tradie-v4/compare/tradie-utils-file@1.0.3...tradie-utils-file@1.0.4) (2017-06-19)
+
+
+### Bug Fixes
+
+* filter which files are emitted so only files which are included are emitted ([a77de8e](https://github.com/jameslnewell/tradie-v4/commit/a77de8e))
+
+
+
+
 <a name="1.0.3"></a>
 ## [1.0.3](https://github.com/jameslnewell/tradie-v4/compare/tradie-utils-file@1.0.1...tradie-utils-file@1.0.3) (2017-06-14)
 

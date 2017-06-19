@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.1.4"></a>
+## [1.1.4](https://github.com/jameslnewell/tradie-v4/compare/tradie-scripts-node-package@1.1.3...tradie-scripts-node-package@1.1.4) (2017-06-19)
+
+
+### Bug Fixes
+
+* added flow type checking back ([efe7434](https://github.com/jameslnewell/tradie-v4/commit/efe7434))
+* close file watcher when exiting the app ([59a922b](https://github.com/jameslnewell/tradie-v4/commit/59a922b))
+* make build faster by not running flow when we already have a transpilation error ([962d604](https://github.com/jameslnewell/tradie-v4/commit/962d604))
+
+
+
+
 <a name="1.1.3"></a>
 ## [1.1.3](https://github.com/jameslnewell/tradie-v4/compare/tradie-scripts-node-package@1.1.2...tradie-scripts-node-package@1.1.3) (2017-06-14)
 

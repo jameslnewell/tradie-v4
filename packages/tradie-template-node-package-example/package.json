@@ -1,10 +1,10 @@
 {
   "name": "tradie-template-node-package-example",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "private": true,
   "devDependencies": {
-    "tradie": "*",
-    "tradie-template-node-package": "*"
+    "tradie": "^5.3.2",
+    "tradie-template-node-package": "^1.2.0"
   },
   "scripts": {
     "help": "tradie --help",
