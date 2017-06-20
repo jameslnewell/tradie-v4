@@ -37,7 +37,7 @@ export default class Scripts {
     return this.requireModule(`./cli`).then(
       module => {
         if (module.__esModule) {
-          module = module.default;
+          module = module.default; //eslint-disable-line no-param-reassign
         }
 
         if (typeof module !== 'function') {
@@ -53,7 +53,7 @@ export default class Scripts {
   run(script, config) {
     return this.requireModule(`./lib/${script}`).then(module => {
       if (module.__esModule) {
-        module = module.default;
+        module = module.default; //eslint-disable-line no-param-reassign
       }
 
       if (typeof module !== 'function') {
