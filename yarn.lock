@@ -383,6 +383,14 @@ babel-plugin-check-es2015-constants@^6.22.0:
   dependencies:
     babel-runtime "^6.22.0"
 
+babel-plugin-dynamic-import-node@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/babel-plugin-dynamic-import-node/-/babel-plugin-dynamic-import-node-1.0.2.tgz#adb5bc8f48a89311540395ae9f0cc3ed4b10bb2e"
+  dependencies:
+    babel-plugin-syntax-dynamic-import "^6.18.0"
+    babel-template "^6.24.1"
+    babel-types "^6.24.1"
+
 babel-plugin-istanbul@^4.0.0:
   version "4.1.4"
   resolved "https://registry.yarnpkg.com/babel-plugin-istanbul/-/babel-plugin-istanbul-4.1.4.tgz#18dde84bf3ce329fddf3f4103fae921456d8e587"
@@ -402,6 +410,10 @@ babel-plugin-syntax-async-functions@^6.8.0:
 babel-plugin-syntax-class-properties@^6.8.0:
   version "6.13.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-class-properties/-/babel-plugin-syntax-class-properties-6.13.0.tgz#d7eb23b79a317f8543962c505b827c7d6cac27de"
+
+babel-plugin-syntax-dynamic-import@^6.18.0:
+  version "6.18.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-syntax-dynamic-import/-/babel-plugin-syntax-dynamic-import-6.18.0.tgz#8d6a26229c83745a9982a441051572caa179b1da"
 
 babel-plugin-syntax-exponentiation-operator@^6.8.0:
   version "6.13.0"
@@ -4218,87 +4230,88 @@ tr46@~0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
 
-tradie-scripts-node-package@^1.1.3:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/tradie-scripts-node-package/-/tradie-scripts-node-package-1.1.3.tgz#0415cf3f3bcede8a38dadd9ccc74c6dae598e5f7"
+tradie-scripts-node-package@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/tradie-scripts-node-package/-/tradie-scripts-node-package-1.1.5.tgz#acea0c0b0a192c796c2da0861cf466f5a82f042f"
   dependencies:
     del "^3.0.0"
-    tradie-utils-babel "^1.2.2"
-    tradie-utils-eslint "^1.2.2"
-    tradie-utils-file "^1.0.3"
-    tradie-utils-flow "^1.2.0"
-    tradie-utils-jest "^1.0.3"
-    tradie-utils-reporter "^1.2.2"
+    tradie-utils-babel "^1.2.4"
+    tradie-utils-eslint "^1.2.4"
+    tradie-utils-file "^1.0.5"
+    tradie-utils-flow "^1.2.2"
+    tradie-utils-jest "^1.0.5"
+    tradie-utils-reporter "^1.4.0"
 
-tradie-template-node-package@^1.1.3:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/tradie-template-node-package/-/tradie-template-node-package-1.1.3.tgz#fbe57ff8125d6fe8cd6528ea86a5664fc181b499"
+tradie-template-node-package@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/tradie-template-node-package/-/tradie-template-node-package-1.3.0.tgz#e117a39363edb8e663c844b7e4598b27eb5e513a"
   dependencies:
+    babel-plugin-dynamic-import-node "^1.0.2"
     babel-plugin-transform-class-properties "^6.24.1"
     babel-plugin-transform-object-rest-spread "^6.23.0"
     babel-preset-env "^1.5.1"
     babel-preset-flow "^6.23.0"
     eslint-config-jameslnewell "^3.0.0-preview.4"
-    tradie "^5.3.1"
-    tradie-scripts-node-package "^1.1.3"
-    tradie-utils-jest "^1.0.3"
+    tradie "^5.3.3"
+    tradie-scripts-node-package "^1.1.5"
+    tradie-utils-jest "^1.0.5"
 
-tradie-utils-babel@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/tradie-utils-babel/-/tradie-utils-babel-1.2.2.tgz#f77944b31cc1c0f73bd6c6792529b613ce33bebe"
+tradie-utils-babel@^1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/tradie-utils-babel/-/tradie-utils-babel-1.2.4.tgz#719f9e0f3a551600622cf435dcbbc924240f53c5"
   dependencies:
     babel-core "^6.24.1"
     mkdirp "^0.5.1"
 
-tradie-utils-cli@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/tradie-utils-cli/-/tradie-utils-cli-1.2.2.tgz#c5f1de87b964f037018161472067e06c1aa5ae95"
+tradie-utils-cli@^1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/tradie-utils-cli/-/tradie-utils-cli-1.2.4.tgz#f41d88934f86dd388b92dab641ea8db92e31ac4c"
 
-tradie-utils-eslint@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/tradie-utils-eslint/-/tradie-utils-eslint-1.2.2.tgz#7ed27424d490fc23df6912aaf342ddd81870a780"
+tradie-utils-eslint@^1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/tradie-utils-eslint/-/tradie-utils-eslint-1.2.4.tgz#a30a2347053165327556b189bf70814cd796fe71"
   dependencies:
     chalk "^1.1.3"
     eslint "^4.0.0"
     text-table "^0.2.0"
 
-tradie-utils-file@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/tradie-utils-file/-/tradie-utils-file-1.0.3.tgz#0065909cf521b66012c3ecd372bf43c119c21e73"
+tradie-utils-file@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/tradie-utils-file/-/tradie-utils-file-1.0.5.tgz#143ae48a0a3c395e7d749c6a259986d96341f0a1"
   dependencies:
     chokidar "^1.7.0"
     finder-on-steroids "^0.4.0"
 
-tradie-utils-flow@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/tradie-utils-flow/-/tradie-utils-flow-1.2.0.tgz#cf6a04d601104e484d9c5e7ef1c08ec743f7496a"
+tradie-utils-flow@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/tradie-utils-flow/-/tradie-utils-flow-1.2.2.tgz#6db86b94714a6cc53d942d53e1688f7116e35fd9"
   dependencies:
     chalk "^1.1.3"
     flow-bin "^0.48.0"
     lodash.padstart "^4.6.1"
 
-tradie-utils-jest@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/tradie-utils-jest/-/tradie-utils-jest-1.0.3.tgz#f7e7819fbbd567a4056c6c21806a22ba8d54342a"
+tradie-utils-jest@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/tradie-utils-jest/-/tradie-utils-jest-1.0.5.tgz#a9cc5a2afa4885a34ea692cd6d8902adc5eb2618"
   dependencies:
     babel-core "^6.24.1"
     glob "^7.1.2"
     jest "^20.0.4"
     mkdirp "^0.5.1"
 
-tradie-utils-reporter@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/tradie-utils-reporter/-/tradie-utils-reporter-1.2.2.tgz#6f7c8b02964e0f38ce55f3b3d787028b56da74af"
+tradie-utils-reporter@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/tradie-utils-reporter/-/tradie-utils-reporter-1.4.0.tgz#c4e1856715babf33ea7dd5ed1a71d2df0c1c86cc"
   dependencies:
     chalk "^1.1.3"
     eslint "^4.0.0"
     lodash.padstart "^4.6.1"
     lodash.trim "^4.5.1"
-    tradie-utils-cli "^1.2.2"
+    tradie-utils-cli "^1.2.4"
 
-tradie@^5.3.1:
-  version "5.3.1"
-  resolved "https://registry.yarnpkg.com/tradie/-/tradie-5.3.1.tgz#f21dfb34c90e6b93626c9758c58b282191ccfbe0"
+tradie@^5.3.3:
+  version "5.3.3"
+  resolved "https://registry.yarnpkg.com/tradie/-/tradie-5.3.3.tgz#daa785850d1d6881bb85e281fbd4186a3ac880e4"
   dependencies:
     chalk "^1.1.3"
     resolve "^1.3.3"

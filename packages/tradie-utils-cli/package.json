@@ -5,9 +5,7 @@
   "files": [
     "lib"
   ],
-  "devDependencies": {
-    "tradie-template-node-package": "^1.3.0"
-  },
+  "tradie-template": "tradie-template-node-package",
   "scripts": {
     "clean": "tradie clean",
     "build": "tradie build",

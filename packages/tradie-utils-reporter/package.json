@@ -12,9 +12,7 @@
     "lodash.trim": "^4.5.1",
     "tradie-utils-cli": "^1.2.4"
   },
-  "devDependencies": {
-    "tradie-template-node-package": "^1.3.0"
-  },
+  "tradie-template": "tradie-template-node-package",
   "scripts": {
     "clean": "tradie clean",
     "build": "tradie build",

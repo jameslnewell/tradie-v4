@@ -35,15 +35,54 @@ function listPackageJSONFiles() {
     .files()
     .depth(3)
     .path('packages/*/package.json')
-    .filter(path => !/-example\//.test(path))
     .filter(path => {
       const packageMetadata = require(path);
       return (
-        packageMetadata.devDependencies &&
-        packageMetadata.devDependencies[TEMPLATE_NAME]
+        packageMetadata['tradie-template'] === TEMPLATE_NAME ||
+        (packageMetadata.devDependencies &&
+          packageMetadata.devDependencies[TEMPLATE_NAME])
       );
     })
     .find();
+}
+
+function symlinkBinary(fromDir, toDir) {
+  const cwd = process.cwd();
+  const pkg = path.basename(toDir);
+
+  const fromBin = path.join(
+    fromDir,
+    'node_modules',
+    'tradie',
+    'lib',
+    'tradie.js'
+  );
+  const toBin = path.join(toDir, 'node_modules', '.bin', 'tradie');
+
+  const fromBinRel = path.relative(cwd, fromBin);
+  const toBinRel = path.relative(cwd, toBin);
+
+  console.log(`  ${pkg}: \n    ./${fromBinRel} => ./${toBinRel}\n`);
+
+  return fs
+    .ensureDir(path.dirname(toBin))
+    .then(() => fs.remove(toBin))
+    .then(() => fs.ensureSymlink(fromBin, toBin))
+    .catch(err => {
+      console.log(pkg, err);
+      console.log(fromBin, fs.existsSync(fromBin));
+      console.log(toBin, fs.existsSync(toBin));
+    });
+}
+
+function symlinkInstalledBinary(pkgDir) {
+  const rootDir = path.join(__dirname, '..');
+  return symlinkBinary(rootDir, pkgDir);
+}
+
+function symlinkCurrentBinary(pkgDir) {
+  const tplDir = path.join(__dirname, '..', 'packages', TEMPLATE_NAME);
+  return symlinkBinary(tplDir, pkgDir);
 }
 
 const version = getInstalledVersion();
@@ -55,26 +94,13 @@ listPackageJSONFiles()
   .then(files =>
     Promise.all(
       files.map(file => {
-        //symlink the tradie bin
-        const name = path.basename(path.dirname(file));
-        const cwd = process.cwd();
-        const src = path.resolve(__dirname, '../node_modules/.bin/tradie');
-        const dest = `${path.dirname(file)}/node_modules/.bin/tradie`;
-        console.log(
-          `  ${name}: \n    ./${path.relative(cwd, src)} => ./${path.relative(
-            cwd,
-            dest
-          )}\n`
-        );
+        const pkgname = require(file).name;
 
-        try {
-          return fs
-            .ensureDir(path.dirname(dest))
-            .then(() => fs.remove(dest))
-            .then(() => fs.ensureSymlink(src, dest));
-        } catch (error) {
-          console.error(error);
+        if (pkgname.endsWith('-example')) {
+          return symlinkCurrentBinary(path.dirname(file));
         }
+
+        return symlinkInstalledBinary(path.dirname(file));
       })
     )
   )
