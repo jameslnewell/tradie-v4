@@ -19,8 +19,7 @@
     "commit": "git-cz",
     "build": "lerna run build",
     "test": "lerna run test",
-    "publish": "lerna publish",
-    "prepublish": "yarn run build && yarn run test",
+    "publish": "yarn run build && lerna publish",
     "commitmsg": "validate-commit-msg",
     "precommit": "lint-staged"
   },
