@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.1.6"></a>
+## [1.1.6](https://github.com/jameslnewell/tradie-v4/compare/tradie-scripts-node-package@1.1.5...tradie-scripts-node-package@1.1.6) (2017-06-20)
+
+
+### Bug Fixes
+
+* change to be built by tradie, use reporter for cleaning, fix linting ([4055d37](https://github.com/jameslnewell/tradie-v4/commit/4055d37))
+
+
+
+
 <a name="1.1.5"></a>
 ## [1.1.5](https://github.com/jameslnewell/tradie-v4/compare/tradie-scripts-node-package@1.1.3...tradie-scripts-node-package@1.1.5) (2017-06-19)
 

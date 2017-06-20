@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.9"></a>
+## [1.0.9](https://github.com/jameslnewell/tradie-v4/compare/tradie-template-node-package-example@1.0.8...tradie-template-node-package-example@1.0.9) (2017-06-20)
+
+
+### Bug Fixes
+
+* fix dogfooding ([6121d40](https://github.com/jameslnewell/tradie-v4/commit/6121d40))
+* remove unnecessary dep ([b0695eb](https://github.com/jameslnewell/tradie-v4/commit/b0695eb))
+
+
+
+
 <a name="1.0.8"></a>
 ## [1.0.8](https://github.com/jameslnewell/tradie-v4/compare/tradie-template-node-package-example@1.0.6...tradie-template-node-package-example@1.0.8) (2017-06-19)
 

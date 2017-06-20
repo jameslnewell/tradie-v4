@@ -1,7 +1,7 @@
 {
   "name": "tradie-scripts-node-package",
   "description": "A tradie template for creating NodeJS packages.",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "repository": "jameslnewell/tradie-v4",
   "files": [
     "lib"
@@ -9,12 +9,12 @@
   "tradie-template": "tradie-template-node-package",
   "dependencies": {
     "del": "^3.0.0",
-    "tradie-utils-babel": "^1.2.4",
-    "tradie-utils-eslint": "^1.2.4",
+    "tradie-utils-babel": "^1.2.5",
+    "tradie-utils-eslint": "^1.2.5",
     "tradie-utils-file": "^1.0.5",
     "tradie-utils-flow": "^1.2.2",
-    "tradie-utils-jest": "^1.0.5",
-    "tradie-utils-reporter": "^1.4.0"
+    "tradie-utils-jest": "^1.0.6",
+    "tradie-utils-reporter": "^1.4.1"
   },
   "scripts": {
     "clean": "tradie clean",

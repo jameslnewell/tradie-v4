@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="5.3.4"></a>
+## [5.3.4](https://github.com/jameslnewell/tradie-v4/compare/tradie@5.3.3...tradie@5.3.4) (2017-06-20)
+
+
+### Bug Fixes
+
+* change to be built with tradie, added a package.json prop for setting the template (for dogfood ([1e7fd1e](https://github.com/jameslnewell/tradie-v4/commit/1e7fd1e))
+* fix linting ([244e25b](https://github.com/jameslnewell/tradie-v4/commit/244e25b))
+
+
+
+
 <a name="5.3.3"></a>
 ## [5.3.3](https://github.com/jameslnewell/tradie-v4/compare/tradie@5.3.1...tradie@5.3.3) (2017-06-19)
 
