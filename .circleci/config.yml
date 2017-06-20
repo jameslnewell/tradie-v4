@@ -3,12 +3,12 @@ jobs:
   build:
     working_directory: ~/project
     docker:
-      - image: node:6
+      - image: circleci/node:6
     steps:
       - checkout
       - run:
           name: install-yarn
-          command: sudo npm install -g yarn@latest
+          command: npm install -g yarn@latest
       - restore_cache:
           key: yarn-cache-{{ checksum "yarn.lock" }}
       - run:
