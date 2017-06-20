@@ -1,7 +1,7 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
-module.exports = function({root}) {
+export default function({root}) {
   const flowConfigFile = path.resolve(root, '.flowconfig');
   return fs.existsSync(flowConfigFile);
-};
+}

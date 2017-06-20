@@ -1,7 +1,7 @@
-const path = require('path');
-const getBabelConfig = require('../lib/getBabelConfig');
+import path from 'path';
+import getBabelConfig from './util/getBabelConfig';
 
-module.exports = function(options) {
+export default function(options) {
   return {
     root: options.root,
     src: path.resolve(options.root, './src'),
@@ -18,4 +18,4 @@ module.exports = function(options) {
     },
     watch: options.watch
   };
-};
+}

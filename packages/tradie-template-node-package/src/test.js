@@ -1,8 +1,7 @@
-const fs = require('fs');
-const path = require('path');
-const jestUtils = require('tradie-utils-jest');
+import fs from 'fs';
+import path from 'path';
 
-module.exports = function(options = {}) {
+export default function(options = {}) {
   const root = options.root;
   const src = path.resolve(root, 'src'); //TODO: reuse paths
   const setupFile = path.join(src, '_.test.js');
@@ -27,4 +26,4 @@ module.exports = function(options = {}) {
       }
     }
   };
-};
+}

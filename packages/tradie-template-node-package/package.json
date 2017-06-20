@@ -1,7 +1,11 @@
 {
   "name": "tradie-template-node-package",
   "version": "1.3.0",
-  "registry": "jameslnewell/tradie-v4",
+  "repository": "jameslnewell/tradie-v4",
+  "files": [
+    "lib"
+  ],
+  "tradie-template": "tradie-template-node-package",
   "dependencies": {
     "babel-plugin-dynamic-import-node": "^1.0.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
@@ -12,5 +16,11 @@
     "tradie": "^5.3.3",
     "tradie-scripts-node-package": "^1.1.5",
     "tradie-utils-jest": "^1.0.5"
+  },
+  "scripts": {
+    "clean": "tradie clean",
+    "build": "tradie build",
+    "watch": "tradie build --watch",
+    "test": "tradie test"
   }
 }

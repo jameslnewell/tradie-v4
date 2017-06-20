@@ -1,8 +1,6 @@
-const fs = require('fs');
-const path = require('path');
-const isUsingFlow = require('./isUsingFlow');
+import isUsingFlow from './isUsingFlow';
 
-module.exports = function({root}) {
+export default function({root}) {
   const babelOptions = {
     babelrc: false,
     presets: [[require.resolve('babel-preset-env'), {targets: {node: 4}}]],
@@ -19,4 +17,4 @@ module.exports = function({root}) {
   }
 
   return babelOptions;
-};
+}
