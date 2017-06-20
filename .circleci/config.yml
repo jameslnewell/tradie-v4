@@ -1,0 +1,40 @@
+version: 2
+
+jobs:
+
+  build:
+
+    node: 
+      version: 6
+
+    steps:
+      
+      - checkout
+
+      - run:
+        name: install-yarn
+        command: sudo npm install -g yarn@latest
+
+      - restore_cache:
+        key: yarn-cache-{{ checksum "package.json" }}
+
+      - run:
+        name: install-dependencies
+        command: yarn
+
+      - run:
+        name: bootstrap-dependencies
+        command: yarn run bootstrap
+
+      - save_cache:
+        key: yarn-cache-{{ checksum "package.json" }}
+        paths:
+          - ~/.cache/yarn
+
+      - run:
+        name: build
+        command: yarn run build
+
+      - run:
+        name: test
+        command: yarn run test
