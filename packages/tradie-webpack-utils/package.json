@@ -1,6 +1,6 @@
 {
   "name": "tradie-webpack-utils",
-  "version": "5.0.1",
+  "version": "6.0.0",
   "peerDependencies": {
     "webpack": "^2.2.0"
   },

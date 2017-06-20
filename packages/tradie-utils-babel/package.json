@@ -1,6 +1,6 @@
 {
   "name": "tradie-utils-babel",
-  "version": "1.2.5",
+  "version": "2.0.0",
   "main": "lib/index.js",
   "files": [
     "lib"

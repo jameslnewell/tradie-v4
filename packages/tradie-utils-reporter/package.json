@@ -1,6 +1,6 @@
 {
   "name": "tradie-utils-reporter",
-  "version": "1.4.1",
+  "version": "2.0.0",
   "main": "lib/index.js",
   "files": [
     "lib"

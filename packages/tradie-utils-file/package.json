@@ -1,6 +1,6 @@
 {
   "name": "tradie-utils-file",
-  "version": "1.0.5",
+  "version": "2.0.0",
   "dependencies": {
     "chokidar": "^1.7.0",
     "finder-on-steroids": "^0.4.0"
