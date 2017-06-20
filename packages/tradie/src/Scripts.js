@@ -36,6 +36,10 @@ export default class Scripts {
   describe(yargs) {
     return this.requireModule(`./cli`).then(
       module => {
+        if (module.__esModule) {
+          module = module.default;
+        }
+
         if (typeof module !== 'function') {
           throw new Error(`tradie: "${this.name}/cli" is not a function`);
         }
@@ -47,9 +51,20 @@ export default class Scripts {
   }
 
   run(script, config) {
-    return this.requireModule(`./scripts/${script}`).then(module =>
-      module(config)
-    );
+    return this.requireModule(`./lib/${script}`).then(module => {
+      if (module.__esModule) {
+        module = module.default;
+      }
+
+      if (typeof module !== 'function') {
+        throw new Error(
+          `tradie: Script "${this
+            .name}/lib/${script}" did not return a function for running the command.`
+        );
+      }
+
+      return module(config);
+    });
   }
 }
 
@@ -68,7 +83,7 @@ Scripts.find = function(template) {
         if (scriptPackages.length === 0) {
           reject(
             new Error(
-              `tradie: No scripts found in \`dependencies\` in \`${template}\`. Please ask the maintainer to install scripts e.g. \`npm install --save tradie-scripts-default\`.`
+              `tradie: No scripts found in \`dependencies\` in \`${template.name}\`. Please ask the maintainer to install scripts e.g. \`npm install --save tradie-scripts-default\`.`
             )
           );
           return;
@@ -77,7 +92,7 @@ Scripts.find = function(template) {
         if (scriptPackages.length > 1) {
           reject(
             new Error(
-              `tradie: More than one scripts found in \`dependencies\` in \`${template}\`. Please ask the maintainer to uninstall extraneous scripts e.g. \`npm uninstall tradie-scripts-default\`.`
+              `tradie: More than one scripts found in \`dependencies\` in \`${template.name}\`. Please ask the maintainer to uninstall extraneous scripts e.g. \`npm uninstall tradie-scripts-default\`.`
             )
           );
           return;
