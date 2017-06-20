@@ -1,6 +1,6 @@
 {
   "engines": {
-    "yarn": "~1.0.20"
+    "yarn": "^0.25.4"
   },
   "devDependencies": {
     "commitizen": "^2.9.6",
