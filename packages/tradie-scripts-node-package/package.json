@@ -9,12 +9,12 @@
   "tradie-template": "tradie-template-node-package",
   "dependencies": {
     "del": "^3.0.0",
-    "tradie-utils-babel": "^1.2.5",
-    "tradie-utils-eslint": "^1.2.5",
-    "tradie-utils-file": "^1.0.5",
-    "tradie-utils-flow": "^1.2.2",
-    "tradie-utils-jest": "^1.0.6",
-    "tradie-utils-reporter": "^1.4.1"
+    "tradie-utils-babel": "^2.0.0",
+    "tradie-utils-eslint": "^2.0.0",
+    "tradie-utils-file": "^2.0.0",
+    "tradie-utils-flow": "^2.0.0",
+    "tradie-utils-jest": "^2.0.0",
+    "tradie-utils-reporter": "^2.0.0"
   },
   "scripts": {
     "clean": "tradie clean",

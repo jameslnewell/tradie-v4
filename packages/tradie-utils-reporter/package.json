@@ -10,7 +10,7 @@
     "eslint": "^4.0.0",
     "lodash.padstart": "^4.6.1",
     "lodash.trim": "^4.5.1",
-    "tradie-utils-cli": "^1.2.5"
+    "tradie-utils-cli": "^2.0.0"
   },
   "tradie-template": "tradie-template-node-package",
   "scripts": {

@@ -13,9 +13,9 @@
     "babel-preset-env": "^1.5.1",
     "babel-preset-flow": "^6.23.0",
     "eslint-config-jameslnewell": "^3.0.0-preview.4",
-    "tradie": "^5.3.4",
-    "tradie-scripts-node-package": "^1.1.6",
-    "tradie-utils-jest": "^1.0.6"
+    "tradie": "^6.0.0",
+    "tradie-scripts-node-package": "^2.0.0",
+    "tradie-utils-jest": "^2.0.0"
   },
   "scripts": {
     "clean": "tradie clean",
