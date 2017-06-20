@@ -1,35 +1,26 @@
-const path = require('path');
+import del from 'del';
+import Files from 'tradie-utils-file';
+import Linter from 'tradie-utils-eslint';
+import Transpiler from 'tradie-utils-babel';
+import TypeChecker from 'tradie-utils-flow';
+import Reporter from 'tradie-utils-reporter';
 
-const chalk = require('chalk');
-const Files = require('tradie-utils-file');
-const Linter = require('tradie-utils-eslint').Linter;
-const Transpiler = require('tradie-utils-babel').default;
-const TypeChecker = require('tradie-utils-flow');
-const Reporter = require('tradie-utils-reporter').default;
+export default function(options) {
+  const {root, src, dest, include, exclude, babel, eslint, watch} = options;
 
-module.exports = function(options) {
-  const root = options.root;
-  const src = options.src;
-  const dest = options.dest;
-  const include = options.include;
-  const exclude = options.exclude;
-  const babel = options.babel;
-  const eslint = options.eslint;
-  const watch = options.watch;
-
-  files = new Files(src, {
-    watch: watch,
-    include: include,
-    exclude: exclude
+  const files = new Files(src, {
+    watch,
+    include,
+    exclude
   });
 
-  linter = new Linter(src, eslint);
-  transpiler = new Transpiler(src, dest, babel);
-  typechecker = new TypeChecker(root, src);
-  reporter = new Reporter({watching: watch});
+  const linter = new Linter(src, eslint);
+  const transpiler = new Transpiler(src, dest, babel);
+  const typechecker = new TypeChecker(root, src);
+  const reporter = new Reporter({watching: watch});
 
-  const buildFile = file => {
-    return Promise.all([
+  const buildFile = file =>
+    Promise.all([
       linter.lint(file).then(result => {
         if (result.error) {
           reporter.error(file, result.error); //TODO: prioritise less than transpiler error
@@ -40,13 +31,9 @@ module.exports = function(options) {
 
       transpiler.transpile(file).catch(error => reporter.error(file, error))
     ]);
-  };
 
-  const deleteFile = file => {
-    return del(transpiler.destFile(file)).catch(error =>
-      reporter.error(file, error)
-    );
-  };
+  const deleteFile = file =>
+    del(transpiler.destFile(file)).catch(error => reporter.error(file, error));
 
   const checkFiles = () => {
     //if we already have errors to display to the user, then show them, don't make them wait any longer!
@@ -74,7 +61,7 @@ module.exports = function(options) {
             reporter.error(file, flatErrorsByFile[file].join('\n'))
           );
       })
-      .catch(error => reporter.fatalError(error));
+      .catch(error => reporter.errored(error));
   };
 
   //run the initial build
@@ -83,7 +70,7 @@ module.exports = function(options) {
     .list()
     .then(list => Promise.all(list.map(file => buildFile(file))))
     .then(() => checkFiles())
-    .then(() => reporter.finished(), error => reporter.fatalError(error));
+    .then(() => reporter.finished(), error => reporter.errored(error));
 
   if (watch) {
     files.on('add', file => {
@@ -108,4 +95,4 @@ module.exports = function(options) {
   });
 
   return reporter.wait();
-};
+}
