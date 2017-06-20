@@ -6,24 +6,13 @@ jobs:
       - image: circleci/node:6
     steps:
       - checkout
-      - run:
-          name: install-yarn
-          command: npm install -g yarn@latest
       - restore_cache:
           key: yarn-cache-{{ checksum "yarn.lock" }}
-      - run:
-          name: install-dependencies
-          command: yarn
-      - run:
-          name: bootstrap-dependencies
-          command: yarn run bootstrap
+      - run: yarn
+      - run: yarn run bootstrap
       - save_cache:
           key: yarn-cache-{{ checksum "yarn.lock" }}
           paths:
             - ./node_modules
-      - run:
-          name: build
-          command: yarn run build
-      - run:
-          name: test
-          command: yarn run test
+      - run: yarn run build
+      - run: yarn run test
