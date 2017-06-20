@@ -31,7 +31,7 @@ export function getWarnings(report) {
   return getMessages(report, message => message.severity === 1);
 }
 
-export class Linter {
+export default class Linter {
   constructor(src, config = {}) {
     this.src = src;
     this.engine = new CLIEngine({
