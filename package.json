@@ -14,12 +14,12 @@
   },
   "scripts": {
     "clean": "lerna run clean && lerna clean",
-    "bootstrap": "lerna bootstrap --npm-client=yarn && node scripts/symlink-tradie.js",
+    "bootstrap": "lerna bootstrap && node scripts/symlink-tradie.js",
     "dep-check": "lerna exec --concurrency 1 -- npm-check -u",
     "commit": "git-cz",
     "build": "lerna run build",
     "test": "lerna run test",
-    "publish": "lerna publish --conventional-commits --canary -m 'chore: publish' --npm-tag=next",
+    "publish": "lerna publish",
     "prepublish": "yarn run build && yarn run test",
     "commitmsg": "validate-commit-msg",
     "precommit": "lint-staged"

@@ -3,5 +3,16 @@
   "version": "independent",
   "packages": [
     "packages/*"
-  ]
+  ],
+  "command": {
+    "bootstrap": {
+      "npmClient": "yarn"
+    },
+    "publish": {
+      "npmTag": "next",
+      "message": "chore: publish",
+      "canary": true,
+      "conventionalCommits": true
+    }
+  }
 }
