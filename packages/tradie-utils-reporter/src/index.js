@@ -43,6 +43,8 @@ export default class Reporter {
 
   constructor(options = {watching: false}) {
     this.watching = options.watching;
+    this.startedText = options.startedText || 'Building';
+    this.finishedText = options.finishedText || 'Built';
     this.promise = new Promise((resolve, reject) => {
       this.resolve = resolve;
       this.reject = reject;
@@ -62,7 +64,7 @@ export default class Reporter {
   printStartOfReport() {
     clear();
     console.log();
-    console.log('  Building...');
+    console.log(`  ${this.startedText}...`);
     console.log();
 
     return this;
@@ -73,7 +75,7 @@ export default class Reporter {
     Object.keys(messages).forEach(file => {
       //TODO: filter so only top priority errors are shown e.g. show babel errors over eslint
 
-      let bgColor;
+      let bgColor = null;
       switch (type) {
         case 'error':
           bgColor = 'bgRed';
@@ -111,12 +113,16 @@ export default class Reporter {
     console.log();
     if (this.hasErrors()) {
       this.printMessages('error', this.errorsByFile);
-      console.log(chalk.red(chalk.bold(`  ❌  Built with errors`)));
+      console.log(
+        chalk.red(chalk.bold(`  ❌  ${this.finishedText} with errors`))
+      );
     } else if (this.hasWarnings()) {
       this.printMessages('warn', this.warningsByFile);
-      console.log(chalk.red(chalk.bold(`  ⚠️  Built with warnings`)));
+      console.log(
+        chalk.red(chalk.bold(`  ⚠️  ${this.finishedText} with warnings`))
+      );
     } else {
-      console.log(chalk.green('  ✅  Built successfully.'));
+      console.log(chalk.green(`  ✅  ${this.finishedText} successfully.`));
     }
     console.log();
 
@@ -225,6 +231,15 @@ export default class Reporter {
       }, 100);
     }
 
+    return this;
+  }
+
+  /**
+   * A fatal error occurred. Stop immedietly.
+   * @param {Error} error 
+   */
+  errored(error) {
+    this.reject(error);
     return this;
   }
 
