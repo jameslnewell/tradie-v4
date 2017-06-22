@@ -1,6 +1,7 @@
 # <a href="https://github.com/jameslnewell/tradie"><img alt="tradie" src="https://raw.githubusercontent.com/jameslnewell/tradie-v4/master/logo.png" height="60px" /></a>
 
 [![npm](https://img.shields.io/npm/v/tradie.svg)]()
+[![Travis](https://img.shields.io/travis/jameslnewell/tradie-v4.svg)]()
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 > The documentation for `tradie` is still a little rough. Please [ask questions and raise bugs on Github](https://github.com/jameslnewell/tradie-v4/issues). PRs are welcome!

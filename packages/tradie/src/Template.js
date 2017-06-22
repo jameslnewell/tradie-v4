@@ -35,7 +35,7 @@ export default class Template {
   }
 
   getConfig(script, args) {
-    return this.requireModule(`./lib/${script}`).then(module => {
+    return this.requireModule(`./lib/configs/${script}`).then(module => {
       if (module.__esModule) {
         module = module.default; //eslint-disable-line no-param-reassign
       }

@@ -34,7 +34,7 @@ export default class Scripts {
   }
 
   describe(yargs) {
-    return this.requireModule(`./cli`).then(
+    return this.requireModule(`./lib/cli`).then(
       module => {
         if (module.__esModule) {
           module = module.default; //eslint-disable-line no-param-reassign
@@ -51,7 +51,7 @@ export default class Scripts {
   }
 
   run(script, config) {
-    return this.requireModule(`./lib/${script}`).then(module => {
+    return this.requireModule(`./lib/scripts/${script}`).then(module => {
       if (module.__esModule) {
         module = module.default; //eslint-disable-line no-param-reassign
       }
