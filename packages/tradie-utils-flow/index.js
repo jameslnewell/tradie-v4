@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('fs-extra');
 const path = require('path');
 const execFile = require('child_process').execFile;
 const chalk = require('chalk');
@@ -6,9 +6,10 @@ const padStart = require('lodash.padstart');
 const flow = require('flow-bin');
 
 class TypeChecker {
-  constructor(directory, src) {
+  constructor(directory, src, dest) {
     this.directory = directory;
     this.src = src; //FIXME: in order to get relative paths
+    this.dest = dest; //FIXME: in order to get relative paths
   }
 
   enabled() {
@@ -42,11 +43,21 @@ class TypeChecker {
     });
 
     return {
-      file,
+      file, //FIXME: this seems wrong in some occasions
       line,
       column,
       message: lines.join('')
     };
+  }
+  /**
+   * Export the typings for a file
+   * @param {string} file 
+   */
+  typings(file) {
+    const srcFilePath = path.resolve(this.src, file);
+    const destFilePath = `${path.resolve(this.src, file)}.flow`;
+    console.log(srcFilePath, destFilePath);
+    return fs.copy(srcFilePath, destFilePath);
   }
 
   check() {
@@ -63,11 +74,13 @@ class TypeChecker {
         {cwd: this.directory},
         (execError, stdout) => {
           try {
-            resolve(
-              JSON.parse(stdout)
-                .errors.filter(error => error.level === 'error')
-                .map(error => this.format(error))
-            );
+            const json = JSON.parse(stdout);
+            resolve({
+              errors: json.errors
+                .filter(error => error.level === 'error')
+                .map(error => this.format(error)),
+              warnings: []
+            });
           } catch (parseError) {
             reject(execError);
           }
