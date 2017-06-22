@@ -4,9 +4,21 @@ import padStart from 'lodash.padstart';
 import trim from 'lodash.trim';
 import {clear} from 'tradie-utils-cli';
 
+const noop = () => {
+  /* do nothing */
+};
+
+const defaultOptions = {
+  watching: false,
+  startedText: 'Starting',
+  finishedText: 'Finished',
+  beforeFinished: noop,
+  afterFinished: noop
+};
+
 export default class Reporter {
   /** 
-   * The number of compilations currently running
+   * The number of compilations currently in progress
    * @private
    */
   running = 0;
@@ -16,12 +28,6 @@ export default class Reporter {
    * @private 
    */
   runningTimeout = null;
-
-  /** 
-   * Whether the compilation is being stopped
-   * @private
-   */
-  stopping = false;
 
   /** @private */
   errorsByFile = {};
@@ -41,10 +47,19 @@ export default class Reporter {
   /** @private */
   watching = false;
 
-  constructor(options = {watching: false}) {
-    this.watching = options.watching;
-    this.startedText = options.startedText || 'Building';
-    this.finishedText = options.finishedText || 'Built';
+  constructor(options = {}) {
+    const {
+      watching,
+      startedText,
+      finishedText,
+      beforeFinished,
+      afterFinished
+    } = {...defaultOptions, ...options};
+    this.watching = watching;
+    this.startedText = startedText;
+    this.finishedText = finishedText;
+    this.beforeFinished = beforeFinished;
+    this.afterFinished = afterFinished;
     this.promise = new Promise((resolve, reject) => {
       this.resolve = resolve;
       this.reject = reject;
@@ -66,8 +81,6 @@ export default class Reporter {
     console.log();
     console.log(`  ${this.startedText}...`);
     console.log();
-
-    return this;
   }
 
   /** @private */
@@ -136,17 +149,17 @@ export default class Reporter {
   /**
    * Raise an error message for a specific file
    * @param {*} file 
-   * @param {*} error 
+   * @param {*} message 
    * @param {*} priority 
    */
-  error(file, error, priority = 0) {
+  error(file, message, priority = 0) {
     if (!this.errorsByFile[file]) {
       this.errorsByFile[file] = [];
     }
 
     this.errorsByFile[file] = {
       priority,
-      message: error
+      message
     };
 
     return this;
@@ -159,17 +172,17 @@ export default class Reporter {
   /**
    * Raise a warning message for a specific file
    * @param {*} file 
-   * @param {*} error 
+   * @param {*} message 
    * @param {*} priority 
    */
-  warning(file, warning, priority = 0) {
+  warning(file, message, priority = 0) {
     if (!this.warningsByFile[file]) {
       this.warningsByFile[file] = [];
     }
 
     this.warningsByFile[file] = {
       priority,
-      message: warning
+      message
     };
 
     return this;
@@ -181,8 +194,7 @@ export default class Reporter {
   started() {
     ++this.running;
 
-    //if this is the only compilation running, and we're not waiting for other compilations to start,
-    // then print the start of the report
+    //if this is the first compilation running, and we're not waiting for other compilations to start then
     if (this.running === 1 && !this.runningTimeout) {
       //clear errors and warnings
       this.errorsByFile = {};
@@ -205,29 +217,40 @@ export default class Reporter {
   finished() {
     --this.running;
 
-    //if this is the only compilation running, then wait to see if another compilation starts soon
+    //if this is the only compilation running, then we'll wait to see if another compilation starts soon so we don't print
+    // a million success messages
     if (this.running === 0) {
       this.runningTimeout = setTimeout(() => {
         //clear the running timeout
         clearTimeout(this.runningTimeout);
         this.runningTimeout = null;
 
-        //wait for the other running compilation to finish
-        if (this.running > 0) {
+        //wait for any running compilations to finish
+        if (this.running || this.runningTimeout) {
           return;
         }
 
-        //print the report
-        this.printEndOfReport();
+        //let the caller do stuff before the report is printed
+        Promise.resolve(this.beforeFinished).then(
+          () => {
+            //wait for any running compilations to finish
+            if (this.running || this.runningTimeout) {
+              return Promise.resolve();
+            }
 
-        //if all the compilations have finished, then resolve, if we are watching, only resolve if we're manually stopping
-        if (this.watching) {
-          if (this.stopping) {
-            this.resolveOrReject();
-          }
-        } else {
-          this.resolveOrReject();
-        }
+            //print the end of the report
+            this.printEndOfReport();
+
+            //let the caller do stuff after the report is printed
+            return Promise.resolve(this.afterFinished()).then(() => {
+              //if we're not watching and all the compilations have finished, then resolve or reject
+              if (!this.watching && !this.running && !this.runningTimeout) {
+                this.resolveOrReject();
+              }
+            });
+          },
+          error => this.errored(error)
+        );
       }, 100);
     }
 
@@ -246,23 +269,24 @@ export default class Reporter {
   /**
    * Notify the reporter that the compilation is stopping now, or at the end of the current compilation
    */
-  stop() {
-    //if there are no compilations running now, then resolve, otherwise resolve after the current compilations finish
-    if (this.running === 0 && !this.runningTimeout) {
+  stopping() {
+    //if there are no running compilations, then resolve or reject now (watching has already stopped)
+    if (!this.running && !this.runningTimeout) {
       this.resolveOrReject();
     } else {
-      this.stopping = true;
+      this.watching = false;
     }
-
     return this;
   }
 
+  /**
+   * Wait until all the running compilations have stopped and we're no longer watching
+   */
   wait() {
-    //if there are no compilations running now, then resolve, otherwise wait until compilations finish
-    if (!this.watching && this.running === 0 && !this.runningTimeout) {
+    //if we're not watching and there are no running compilations, then resolve or reject now
+    if (!this.watching && !this.running && !this.runningTimeout) {
       this.resolveOrReject();
     }
-
     return this.promise;
   }
 }
