@@ -13,7 +13,7 @@ export default function(options) {
 
   const linter = new Linter(src, eslint);
   const transpiler = new Transpiler(src, dest, babel);
-  const typechecker = new TypeChecker(root, src);
+  const typechecker = new TypeChecker(root, src, dest);
 
   const processFile = (file, report) =>
     Promise.all([
