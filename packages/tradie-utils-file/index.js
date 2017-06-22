@@ -16,11 +16,11 @@ function createIncludeFilter(filter) {
 
 function createExcludeFilter(filter) {
   if (typeof filter === 'undefined') {
-    return () => true;
+    return () => false;
   }
 
   if (filter instanceof RegExp) {
-    return file => !filter.test(file);
+    return file => filter.test(file);
   }
 
   return filter;
@@ -47,7 +47,9 @@ class Files {
    * @returns {boolean}
    */
   include(file) {
-    return this.includeFilter(file) && this.excludeFilter(file);
+    const fullFilePath = path.resolve(this.directory, file);
+    const relFilePath = path.relative(this.directory, fullFilePath);
+    return this.includeFilter(relFilePath) && !this.excludeFilter(relFilePath);
   }
 
   /**
