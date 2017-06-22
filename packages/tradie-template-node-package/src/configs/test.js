@@ -15,7 +15,7 @@ export default function(options = {}) {
         testMatch: ['**/*.test.{js,jsx}'], //TODO: support integration tests in ./test??
         moduleFileExtensions: ['js', 'jsx'],
         transform: {
-          '^.+\\.jsx?$': require.resolve('../lib/jest/babelTransform')
+          '^.+\\.jsx?$': require.resolve('../jestBabelTransform')
         },
         collectCoverageFrom: [
           '**/*.{js,jsx}',
