@@ -56,7 +56,6 @@ class TypeChecker {
   typings(file) {
     const srcFilePath = path.resolve(this.src, file);
     const destFilePath = `${path.resolve(this.dest, file)}.flow`;
-    console.log(srcFilePath, destFilePath);
     return fs.copy(srcFilePath, destFilePath);
   }
 
