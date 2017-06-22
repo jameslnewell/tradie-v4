@@ -4,10 +4,8 @@
   "packages": [
     "packages/*"
   ],
+  "npmClient": "yarn",
   "command": {
-    "bootstrap": {
-      "npmClient": "yarn"
-    },
     "publish": {
       "npmTag": "next",
       "message": "chore: publish",

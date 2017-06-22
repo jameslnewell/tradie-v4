@@ -26,7 +26,7 @@ export default class Transpiler {
       const destFile = this.destFile(file);
       transformFile(srcFile, this.options || {}, (babelError, result) => {
         if (babelError) {
-          reject(babelError);
+          reject(babelError); //TODO: strip stack trace
           return;
         }
         mkdirp(path.dirname(destFile), mkdirError => {

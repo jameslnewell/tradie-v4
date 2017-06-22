@@ -15,7 +15,7 @@
   "scripts": {
     "clean": "lerna run clean && lerna clean",
     "bootstrap": "lerna bootstrap && node scripts/symlink-tradie.js",
-    "dep-check": "lerna exec --concurrency 1 -- npm-check -u",
+    "upgrade": "lerna exec --concurrency 1 -- npm-check -u",
     "commit": "git-cz",
     "build": "lerna run build",
     "test": "lerna run test",

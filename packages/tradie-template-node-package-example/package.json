@@ -3,11 +3,11 @@
   "version": "2.0.0",
   "private": true,
   "devDependencies": {
-    "tradie-template-node-package": "^1.3.1"
+    "tradie-template-node-package": "*"
   },
   "scripts": {
-    "help": "tradie --help",
     "clean": "tradie clean",
+    "lint": "tradie lint",
     "build": "tradie build",
     "watch": "tradie build --watch",
     "test": "tradie test"
