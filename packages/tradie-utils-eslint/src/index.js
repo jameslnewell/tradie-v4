@@ -32,29 +32,50 @@ export function getWarnings(report) {
 }
 
 export default class Linter {
-  constructor(src, config = {}) {
-    this.src = src;
-    this.engine = new CLIEngine({
-      cwd: this.src,
-      ignore: false,
-      useEslintrc: false,
-      baseConfig: config
-    });
+  constructor(directory, groups = []) {
+    this.directory = directory;
+    this.groups = groups.map(group => ({
+      include: group.include,
+      exclude: group.exclude,
+      engine: new CLIEngine({
+        cwd: this.directory,
+        ignore: false,
+        useEslintrc: false,
+        baseConfig: group.config
+      })
+    }));
   }
 
   lint(file) {
-    const filePath = path.join(this.src, file);
+    const fullFilePath = path.join(this.directory, file);
+
+    const groupForFile = this.groups.find(group => {
+      if (group.include && !group.include.test(file)) {
+        return false;
+      }
+
+      if (group.exclude && group.exclude.test(file)) {
+        return false;
+      }
+
+      return true;
+    });
+
+    if (!groupForFile) {
+      return Promise.resolve({error: null, warning: null});
+    }
+
     return new Promise((resolve, reject) => {
-      fs.readFile(filePath, (readError, text) => {
+      fs.readFile(fullFilePath, (readError, text) => {
         if (readError) {
           reject(readError);
           return;
         }
 
-        const report = this.engine.executeOnText(text.toString(), file);
+        const report = groupForFile.engine.executeOnText(text.toString(), file);
         resolve({
-          error: getErrors(report)[filePath],
-          warning: getWarnings(report)[filePath]
+          error: getErrors(report)[fullFilePath],
+          warning: getWarnings(report)[fullFilePath]
         });
       });
     });
