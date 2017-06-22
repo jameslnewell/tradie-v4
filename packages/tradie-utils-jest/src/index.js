@@ -1,6 +1,6 @@
 // @flow
 import jest from 'jest';
-import babel from 'babel-core';
+import {transform} from 'babel-core';
 
 type Options = {
   config: {},
@@ -32,8 +32,7 @@ export default function(options: Options): Promise<void> {
 export function createBabelTransform(babelOptions: {}) {
   return {
     process(src: string, file: string) {
-      return babel.transform(src, Object.assign({filename: file}, babelOptions))
-        .code;
+      return transform(src, Object.assign({filename: file}, babelOptions)).code;
     }
   };
 }
