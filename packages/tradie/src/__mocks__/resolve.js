@@ -3,9 +3,10 @@ let f = null;
 
 export default function resolve(module, options, callback) {
   if (e) {
-    throw `Cannot find module '${module}'.`;
+    callback(new Error(`Cannot find module '${module}'.`), null);
+  } else {
+    callback(null, f);
   }
-  callback(e, f);
 }
 
 resolve.throws = function() {
