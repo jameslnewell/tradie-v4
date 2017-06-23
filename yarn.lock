@@ -1473,7 +1473,7 @@ escodegen@^1.6.1:
   optionalDependencies:
     source-map "~0.2.0"
 
-eslint-config-jameslnewell@^3.0.0-preview.4:
+eslint-config-jameslnewell@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/eslint-config-jameslnewell/-/eslint-config-jameslnewell-3.0.0.tgz#dfb913f0d13a129cd9674b2721563fcb5805f8a6"
   dependencies:
@@ -4212,7 +4212,7 @@ tr46@~0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
 
-tradie-scripts-node-package@^2.0.0-alpha.e63c20ec:
+tradie-scripts-node-package@^2.0.0-alpha.2f5c99d4:
   version "2.0.0-alpha.e63c20ec"
   resolved "https://registry.yarnpkg.com/tradie-scripts-node-package/-/tradie-scripts-node-package-2.0.0-alpha.e63c20ec.tgz#b4703110273a341ea5fe5f97a16ac15a081cc34b"
   dependencies:
@@ -4225,18 +4225,18 @@ tradie-scripts-node-package@^2.0.0-alpha.e63c20ec:
     tradie-utils-reporter "^2.0.0-alpha.e63c20ec"
 
 tradie-template-node-package@next:
-  version "2.0.0-alpha.e63c20ec"
-  resolved "https://registry.yarnpkg.com/tradie-template-node-package/-/tradie-template-node-package-2.0.0-alpha.e63c20ec.tgz#1872550be4c205ddc433408e425e0be0892190f9"
+  version "2.0.0-alpha.2f5c99d4"
+  resolved "https://registry.yarnpkg.com/tradie-template-node-package/-/tradie-template-node-package-2.0.0-alpha.2f5c99d4.tgz#665edb8dd79048c81d155ccad088d6aa7b45e587"
   dependencies:
     babel-plugin-dynamic-import-node "^1.0.2"
     babel-plugin-transform-class-properties "^6.24.1"
     babel-plugin-transform-object-rest-spread "^6.23.0"
     babel-preset-env "^1.5.1"
     babel-preset-flow "^6.23.0"
-    eslint-config-jameslnewell "^3.0.0-preview.4"
-    tradie "^6.0.0-alpha.e63c20ec"
-    tradie-scripts-node-package "^2.0.0-alpha.e63c20ec"
-    tradie-utils-jest "^2.0.0-alpha.e63c20ec"
+    eslint-config-jameslnewell "^3.0.0"
+    tradie "^6.0.0-alpha.2f5c99d4"
+    tradie-scripts-node-package "^2.0.0-alpha.2f5c99d4"
+    tradie-utils-jest "^2.0.0-alpha.2f5c99d4"
 
 tradie-utils-babel@^2.0.0-alpha.e63c20ec:
   version "2.0.0-alpha.e63c20ec"
@@ -4273,7 +4273,7 @@ tradie-utils-flow@^2.0.0-alpha.e63c20ec:
     fs-extra "^3.0.1"
     lodash.padstart "^4.6.1"
 
-tradie-utils-jest@^2.0.0-alpha.e63c20ec:
+tradie-utils-jest@^2.0.0-alpha.2f5c99d4, tradie-utils-jest@^2.0.0-alpha.e63c20ec:
   version "2.0.0-alpha.e63c20ec"
   resolved "https://registry.yarnpkg.com/tradie-utils-jest/-/tradie-utils-jest-2.0.0-alpha.e63c20ec.tgz#ef2ac8911718e75d8b2b29ea4ba9176b3e82d439"
   dependencies:
@@ -4299,7 +4299,7 @@ tradie-utils-reporter@^2.0.0-alpha.e63c20ec:
     lodash.trim "^4.5.1"
     tradie-utils-cli "^2.0.0-alpha.e63c20ec"
 
-tradie@^6.0.0-alpha.e63c20ec:
+tradie@^6.0.0-alpha.2f5c99d4:
   version "6.0.0-alpha.e63c20ec"
   resolved "https://registry.yarnpkg.com/tradie/-/tradie-6.0.0-alpha.e63c20ec.tgz#844c060e5f3c0843e9fdcc276aba517a4a1613b0"
   dependencies:

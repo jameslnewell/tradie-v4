@@ -19,7 +19,7 @@
     "commit": "git-cz",
     "build": "lerna run build",
     "test": "lerna run test",
-    "publish": "yarn run build && lerna publish -- --canary",
+    "publish": "yarn run build && lerna publish --canary",
     "commitmsg": "validate-commit-msg",
     "precommit": "lint-staged"
   },
