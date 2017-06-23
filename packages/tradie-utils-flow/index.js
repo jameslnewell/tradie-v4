@@ -63,7 +63,7 @@ class TypeChecker {
     return new Promise((resolve, reject) => {
       //check flow is setup before running the check
       if (!this.enabled()) {
-        resolve([]);
+        resolve({errors: [], warnings: []});
         return;
       }
 
