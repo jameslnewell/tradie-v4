@@ -13,6 +13,7 @@
     "tradie-utils-eslint": "^2.0.0",
     "tradie-utils-flow": "^2.0.0",
     "tradie-utils-jest": "^2.0.0",
+    "tradie-utils-reporter": "^2.0.0",
     "tradie-utils-processor": "^2.0.0"
   },
   "scripts": {
