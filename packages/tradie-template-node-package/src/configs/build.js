@@ -14,7 +14,7 @@ export default function(options) {
     eslint: [
       {
         include: REGEX_FILES,
-        include: REGEX_TEST_FILES,
+        exclude: REGEX_TEST_FILES,
         config: getESLintConfig()
       }
     ],
