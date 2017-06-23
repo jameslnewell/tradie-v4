@@ -11,9 +11,7 @@ export default class Processor {
 
   /** @private */
   reportMethods = {
-    hasErrors: () => {
-      return this.reporter.hasErrors();
-    },
+    hasErrors: () => this.reporter.hasErrors(),
 
     error: (file, ...args) => {
       if (this.files.include(file)) {
@@ -21,9 +19,7 @@ export default class Processor {
       }
     },
 
-    hasWarnings: () => {
-      return this.reporter.hasWarnings();
-    },
+    hasWarnings: () => this.reporter.hasWarnings(),
 
     warning: (file, ...args) => {
       if (this.files.include(file)) {
@@ -70,7 +66,7 @@ export default class Processor {
   }
 
   /** @private */
-  processFile(file) {
+  processFile = file => {
     if (!this.files.include(file)) {
       return Promise.resolve();
     }
@@ -81,15 +77,15 @@ export default class Processor {
         () => this.reporter.finished(),
         error => this.reporter.errored(error)
       );
-  }
+  };
 
   run() {
     this.processFiles();
 
     if (this.options.watch) {
-      this.files.on('add', this.processFile(this.options.onAddFile));
-      this.files.on('change', this.processFile(this.options.onChangeFile));
-      this.files.on('unlink', this.processFile(this.options.onUnlinkFile));
+      this.files.on('add', this.processFile);
+      this.files.on('change', this.processFile);
+      this.files.on('unlink', this.processFile);
     }
 
     return this.reporter.wait();
