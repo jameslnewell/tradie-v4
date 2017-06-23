@@ -9,7 +9,13 @@ import checkFiles from '../utils/checkFiles';
 export default function(options) {
   const {root, src, dest, include, exclude, babel, eslint, watch} = options;
 
-  const linter = new ESLint(src, eslint);
+  const linter = new ESLint(src, [
+    {
+      include,
+      exclude,
+      config: eslint
+    }
+  ]);
   const transpiler = new Babel(src, dest, babel);
   const typechecker = new Flow(root, src, dest);
 
