@@ -8,9 +8,7 @@
   "command": {
     "publish": {
       "npmTag": "next",
-      "message": "chore: publish",
-      "canary": true,
-      "conventionalCommits": true
+      "message": "chore: publish"
     }
   }
 }
