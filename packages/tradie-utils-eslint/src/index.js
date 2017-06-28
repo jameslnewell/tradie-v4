@@ -1,5 +1,4 @@
 import fs from 'fs';
-import path from 'path';
 import chalk from 'chalk';
 import table from 'text-table';
 import {CLIEngine} from 'eslint';
@@ -32,50 +31,29 @@ export function getWarnings(report) {
 }
 
 export default class Linter {
-  constructor(directory, groups = []) {
-    this.directory = directory;
-    this.groups = groups.map(group => ({
-      include: group.include,
-      exclude: group.exclude,
-      engine: new CLIEngine({
-        cwd: this.directory,
-        ignore: false,
-        useEslintrc: false,
-        baseConfig: group.config
-      })
-    }));
+  constructor(config) {
+    this.engine = new CLIEngine({
+      ignore: false,
+      useEslintrc: false,
+      baseConfig: config
+    });
   }
 
+  /**
+   * Perform linting on a single file
+   * @param {string} file The full path to a file
+   */
   lint(file) {
-    const fullFilePath = path.join(this.directory, file);
-
-    const groupForFile = this.groups.find(group => {
-      if (group.include && !group.include.test(file)) {
-        return false;
-      }
-
-      if (group.exclude && group.exclude.test(file)) {
-        return false;
-      }
-
-      return true;
-    });
-
-    if (!groupForFile) {
-      return Promise.resolve({error: null, warning: null});
-    }
-
     return new Promise((resolve, reject) => {
-      fs.readFile(fullFilePath, (readError, text) => {
+      fs.readFile(file, (readError, text) => {
         if (readError) {
           reject(readError);
           return;
         }
-
-        const report = groupForFile.engine.executeOnText(text.toString(), file);
+        const report = this.engine.executeOnText(text.toString(), file);
         resolve({
-          error: getErrors(report)[fullFilePath],
-          warning: getWarnings(report)[fullFilePath]
+          error: getErrors(report)[file],
+          warning: getWarnings(report)[file]
         });
       });
     });
