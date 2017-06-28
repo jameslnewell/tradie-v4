@@ -10,19 +10,16 @@ export default class Transpiler {
     this.options = options;
   }
 
-  srcFile(file) {
-    return path.resolve(this.src, file);
-  }
-
   destFile(file) {
-    const pathinfo = path.parse(file);
+    const relFilePath = path.relative(this.src, file);
+    const pathinfo = path.parse(relFilePath);
     pathinfo.ext = '.js';
-    return path.resolve(this.dest, path.format(pathinfo));
+    return path.join(this.dest, path.format(pathinfo));
   }
 
   transpile(file) {
     return new Promise((resolve, reject) => {
-      const srcFile = this.srcFile(file);
+      const srcFile = file;
       const destFile = this.destFile(file);
       transformFile(srcFile, this.options || {}, (babelError, result) => {
         if (babelError) {
