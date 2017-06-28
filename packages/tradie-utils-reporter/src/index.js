@@ -1,19 +1,26 @@
+// @flow
 /* eslint-disable no-console */
+import path from 'path';
 import chalk from 'chalk';
-import padStart from 'lodash.padstart';
-import trim from 'lodash.trim';
 import {clear} from 'tradie-utils-cli';
+import printMessages from './printMessages';
+
+type Message = {
+  content: Error | string,
+  priority: number
+};
 
 const noop = () => {
   /* do nothing */
 };
 
-const defaultOptions = {
-  watching: false,
-  startedText: 'Starting',
-  finishedText: 'Finished',
-  beforeFinished: noop,
-  afterFinished: noop
+export type Options = {
+  watch?: boolean,
+  directory?: string,
+  startedText?: string,
+  finishedText?: string,
+  beforeFinished?: () => any,
+  afterFinished?: () => any
 };
 
 export default class Reporter {
@@ -28,6 +35,9 @@ export default class Reporter {
    * @private 
    */
   runningTimeout = null;
+
+  /** @private */
+  directory: ?string;
 
   /** @private */
   errorsByFile = {};
@@ -45,17 +55,44 @@ export default class Reporter {
   reject = null;
 
   /** @private */
-  watching = false;
+  watch = false;
 
-  constructor(options = {}) {
+  /**
+   * The text printed when compilation has started
+   * @private
+   */
+  startedText: string;
+
+  /**
+   * The text printed when compilation has finished
+   * @private
+   */
+  finishedText: string;
+
+  /**
+   * A function executed before the compilation has finished and the messages have been printed
+   * @private
+   */
+  beforeFinished: () => any;
+
+  /**
+   * A function executed after the compilation has finished and the messages have been printed
+   * @private
+   */
+  afterFinished: () => any;
+
+  constructor(options: Options = {}) {
     const {
-      watching,
-      startedText,
-      finishedText,
-      beforeFinished,
-      afterFinished
-    } = {...defaultOptions, ...options};
-    this.watching = watching;
+      watch = false,
+      directory,
+      startedText = 'Starting',
+      finishedText = 'Finished',
+      beforeFinished = noop,
+      afterFinished = noop
+    } = options;
+
+    this.directory = directory;
+    this.watch = watch;
     this.startedText = startedText;
     this.finishedText = finishedText;
     this.beforeFinished = beforeFinished;
@@ -68,9 +105,9 @@ export default class Reporter {
 
   /** @private */
   resolveOrReject() {
-    if (this.hasErrors()) {
+    if (this.hasErrors() && this.reject) {
       this.reject();
-    } else {
+    } else if (!this.hasErrors() && this.resolve) {
       this.resolve();
     }
   }
@@ -84,39 +121,15 @@ export default class Reporter {
   }
 
   /** @private */
-  printMessages(type, messages) {
+  printMessages(type: string, messages: {[file: string]: Array<Message>}) {
     Object.keys(messages).forEach(file => {
-      //TODO: filter so only top priority errors are shown e.g. show babel errors over eslint
-
-      let bgColor = null;
-      switch (type) {
-        case 'error':
-          bgColor = 'bgRed';
-          break;
-        case 'warn':
-          bgColor = 'bgYellow';
-          break;
-        default:
-          bgColor = 'bgBlack';
-          break;
+      //make the path relative to the directory
+      let filename = file;
+      if (this.directory) {
+        filename = path.relative(this.directory, file); //eslint-disable-line no-param-reassign
       }
 
-      console.log(chalk[bgColor](chalk.white(` in ${chalk.bold(file)}: `)));
-      console.log();
-      console.log(
-        `${trim(
-          String(
-            messages[file].message instanceof Error
-              ? messages[file].message.stack
-              : messages[file].message
-          )
-            .split('\n')
-            .map(line => `${padStart('', 4)}${line}`)
-            .join('\n'),
-          '\n'
-        )}`
-      );
-      console.log();
+      printMessages(type, filename, messages[file]);
     });
   }
 
@@ -148,19 +161,19 @@ export default class Reporter {
 
   /**
    * Raise an error message for a specific file
-   * @param {*} file 
-   * @param {*} message 
-   * @param {*} priority 
+   * @param {string} file 
+   * @param {Error|string} message 
+   * @param {number} priority 
    */
-  error(file, message, priority = 0) {
+  error(file: string, message: Error | string, priority: number = 0) {
     if (!this.errorsByFile[file]) {
       this.errorsByFile[file] = [];
     }
 
-    this.errorsByFile[file] = {
+    this.errorsByFile[file].push({
       priority,
-      message
-    };
+      content: message
+    });
 
     return this;
   }
@@ -171,19 +184,19 @@ export default class Reporter {
 
   /**
    * Raise a warning message for a specific file
-   * @param {*} file 
-   * @param {*} message 
-   * @param {*} priority 
+   * @param {string} file 
+   * @param {Error|string} message 
+   * @param {number} priority 
    */
-  warning(file, message, priority = 0) {
+  warning(file: string, message: Error | string, priority: number = 0) {
     if (!this.warningsByFile[file]) {
       this.warningsByFile[file] = [];
     }
 
-    this.warningsByFile[file] = {
+    this.warningsByFile[file].push({
       priority,
-      message
-    };
+      content: message
+    });
 
     return this;
   }
@@ -231,7 +244,7 @@ export default class Reporter {
         }
 
         //let the caller do stuff before the report is printed
-        Promise.resolve(this.beforeFinished).then(
+        Promise.resolve(this.beforeFinished()).then(
           () => {
             //wait for any running compilations to finish
             if (this.running || this.runningTimeout) {
@@ -244,7 +257,7 @@ export default class Reporter {
             //let the caller do stuff after the report is printed
             return Promise.resolve(this.afterFinished()).then(() => {
               //if we're not watching and all the compilations have finished, then resolve or reject
-              if (!this.watching && !this.running && !this.runningTimeout) {
+              if (!this.watch && !this.running && !this.runningTimeout) {
                 this.resolveOrReject();
               }
             });
@@ -261,8 +274,8 @@ export default class Reporter {
    * A fatal error occurred. Stop immedietly.
    * @param {Error} error 
    */
-  errored(error) {
-    this.reject(error);
+  errored(error: any) {
+    if (this.reject) this.reject(error);
     return this;
   }
 
@@ -274,7 +287,7 @@ export default class Reporter {
     if (!this.running && !this.runningTimeout) {
       this.resolveOrReject();
     } else {
-      this.watching = false;
+      this.watch = false;
     }
     return this;
   }
@@ -284,7 +297,7 @@ export default class Reporter {
    */
   wait() {
     //if we're not watching and there are no running compilations, then resolve or reject now
-    if (!this.watching && !this.running && !this.runningTimeout) {
+    if (!this.watch && !this.running && !this.runningTimeout) {
       this.resolveOrReject();
     }
     return this.promise;
