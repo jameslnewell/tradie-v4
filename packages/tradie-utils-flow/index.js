@@ -17,6 +17,7 @@ class TypeChecker {
   }
 
   format(error) {
+    //TODO: format like eslint
     let file = null;
     let line = null;
     let column = null;
@@ -24,7 +25,7 @@ class TypeChecker {
     const lines = [];
     error.message.forEach(msg => {
       if (msg.type === 'Blame') {
-        lines.push(`${padStart(msg.line, 3)}: `);
+        lines.push(`${chalk.bold(padStart(msg.line, 3))}: `);
         lines.push(`${msg.context.substr(0, msg.start - 1)}`);
         lines.push(
           `${chalk.red(
@@ -33,8 +34,14 @@ class TypeChecker {
         );
         lines.push(`${msg.context.substr(msg.end)}`);
         lines.push(`\n`);
-        lines.push(`     ${padStart('', msg.start - 1)}^^^^^^^^^ ${msg.descr}`);
-        file = path.relative(this.src, msg.path); //TODO: needs to be relative to src
+        lines.push(
+          `     ${padStart('', msg.start - 1)}${'^'.repeat(
+            msg.end - msg.start + 1
+          )}`
+        );
+        lines.push(`     ${msg.descr}`);
+        lines.push(`\n`);
+        file = msg.path; //TODO: needs to be relative to src
         line = msg.line;
         column = msg.start;
       } else {
