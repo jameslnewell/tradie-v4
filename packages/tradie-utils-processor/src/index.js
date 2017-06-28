@@ -1,19 +1,35 @@
-/* eslint-disable no-invalid-this */
-import Files from 'tradie-utils-file';
+// @flow
+import Files, {type Filter} from 'tradie-utils-file';
 import Reporter from 'tradie-utils-reporter';
+
+export type Options = {
+  watch?: boolean,
+  include?: Filter,
+  exclude?: Filter,
+
+  process?: (file: string, report: any) => Promise<any>,
+  unlink?: (file: string, report: any) => Promise<any>,
+  postProcessing?: (report: any) => Promise<any>,
+
+  startedText: string,
+  finishedText: string
+};
 
 export default class Processor {
   /** @private */
-  files = null;
+  files: Files;
 
   /** @private */
-  reporter = null;
+  reporter: Reporter;
+
+  /** @private */
+  options: Options;
 
   /** @private */
   reportMethods = {
     hasErrors: () => this.reporter.hasErrors(),
 
-    error: (file, ...args) => {
+    error: (file: string, ...args: any) => {
       if (this.files.include(file)) {
         this.reporter.error(file, ...args);
       }
@@ -21,19 +37,16 @@ export default class Processor {
 
     hasWarnings: () => this.reporter.hasWarnings(),
 
-    warning: (file, ...args) => {
+    warning: (file: string, ...args: any) => {
       if (this.files.include(file)) {
         this.reporter.warning(file, ...args);
       }
     }
   };
 
-  options = null;
-
-  constructor(options) {
+  constructor(directory: string, options: Options) {
     const {
-      directory,
-      watch,
+      watch = false,
       include,
       exclude,
       startedText,
@@ -45,20 +58,30 @@ export default class Processor {
       include,
       exclude
     });
+
     this.reporter = new Reporter({
-      watching: watch,
+      watch,
+      directory,
       startedText,
-      finishedText
+      finishedText,
+      beforeFinished: this.postProcessing.bind(this)
     });
+
     this.options = options;
   }
 
   /** @private */
   processFiles() {
+    const fn = this.options.process;
+    if (!fn) {
+      return;
+    }
     this.reporter.started();
-    return this.files
+    this.files
       .list()
-      .then(files => this.options.processFiles(files, this.reportMethods))
+      .then(files =>
+        Promise.all(files.map(file => fn(file, this.reportMethods)))
+      )
       .then(
         () => this.reporter.finished(),
         error => this.reporter.errored(error)
@@ -66,26 +89,51 @@ export default class Processor {
   }
 
   /** @private */
-  processFile = file => {
-    if (!this.files.include(file)) {
-      return Promise.resolve();
+  processFile(file: string) {
+    const fn = this.options.process;
+    if (!fn) {
+      return;
     }
     this.reporter.started();
-    return Promise.resolve()
-      .then(() => this.options.processFile(file, this.reportMethods))
+    Promise.resolve()
+      .then(() => fn(file, this.reportMethods))
       .then(
         () => this.reporter.finished(),
         error => this.reporter.errored(error)
       );
-  };
+  }
+
+  /** @private */
+  unlinkFile(file: string) {
+    const fn = this.options.unlink;
+    if (!fn) {
+      return;
+    }
+    this.reporter.started();
+    Promise.resolve()
+      .then(() => fn(file, this.reportMethods))
+      .then(
+        () => this.reporter.finished(),
+        error => this.reporter.errored(error)
+      );
+  }
+
+  /** @private */
+  postProcessing() {
+    const fn = this.options.postProcessing;
+    if (!fn) {
+      return Promise.resolve();
+    }
+    return Promise.resolve().then(() => fn(this.reportMethods));
+  }
 
   run() {
     this.processFiles();
 
     if (this.options.watch) {
-      this.files.on('add', this.processFile);
-      this.files.on('change', this.processFile);
-      this.files.on('unlink', this.processFile);
+      this.files.on('add', this.processFile.bind(this));
+      this.files.on('change', this.processFile.bind(this));
+      this.files.on('unlink', this.unlinkFile.bind(this));
     }
 
     return this.reporter.wait();
