@@ -1,6 +1,6 @@
 /* eslint-disable import/no-commonjs */
 import {createBabelTransform} from 'tradie-utils-jest';
-import getBabelConfig from './getBabelConfig';
+import {getBabelConfig} from './babel';
 
 //jest doesn't work with es module exports
 module.exports = createBabelTransform(

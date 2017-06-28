@@ -1,13 +1,16 @@
 import fs from 'fs';
 import path from 'path';
+import getPaths from '../paths';
+
+//TODO: reuse globs
 
 export default function(options = {}) {
-  const root = options.root;
-  const src = path.resolve(root, 'src'); //TODO: reuse paths
+  const {root, watch} = options;
+  const {src} = getPaths(root);
   const setupFile = path.join(src, '_.test.js');
   return {
     jest: {
-      watch: options.watch,
+      watch,
       coverage: options.coverage,
       config: {
         testEnvironment: 'node',

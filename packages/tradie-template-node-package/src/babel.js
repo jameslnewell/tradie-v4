@@ -1,6 +1,7 @@
+/* eslint-disable import/prefer-default-export */
 import isUsingFlow from './isUsingFlow';
 
-export default function({root}) {
+export function getBabelConfig({root}) {
   const babelOptions = {
     babelrc: false,
     presets: [[require.resolve('babel-preset-env'), {targets: {node: 4}}]],

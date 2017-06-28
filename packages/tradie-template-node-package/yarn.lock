@@ -564,11 +564,12 @@ escape-string-regexp@^1.0.2:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
 
-eslint-config-jameslnewell@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-jameslnewell/-/eslint-config-jameslnewell-3.0.0.tgz#dfb913f0d13a129cd9674b2721563fcb5805f8a6"
+eslint-config-jameslnewell@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/eslint-config-jameslnewell/-/eslint-config-jameslnewell-3.0.2.tgz#8d5341b87741c4e9f8dba0b87440e61b7b6501a1"
   dependencies:
     babel-eslint "^7.1.1"
+    eslint-plugin-babel "^4.1.1"
     eslint-plugin-import "^2.6.0"
     eslint-plugin-mocha "^4.11.0"
     eslint-plugin-react "^7.1.0"
@@ -587,6 +588,10 @@ eslint-module-utils@^2.0.0:
   dependencies:
     debug "2.2.0"
     pkg-dir "^1.0.0"
+
+eslint-plugin-babel@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-babel/-/eslint-plugin-babel-4.1.1.tgz#ef285c87039b67beb3bbd227f5b0eed4fb376b87"
 
 eslint-plugin-import@^2.6.0:
   version "2.6.0"

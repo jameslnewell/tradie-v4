@@ -1,7 +1,8 @@
 import path from 'path';
+import getPaths from '../paths';
 
 export default function({root}) {
   return {
-    paths: [path.resolve(root, './lib'), path.resolve(root, './coverage')]
+    paths: [getPaths(root).dest, path.resolve(root, './coverage')]
   };
 }
