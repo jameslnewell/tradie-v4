@@ -1482,6 +1482,16 @@ eslint-config-jameslnewell@^3.0.0:
     eslint-plugin-mocha "^4.11.0"
     eslint-plugin-react "^7.1.0"
 
+eslint-config-jameslnewell@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/eslint-config-jameslnewell/-/eslint-config-jameslnewell-3.0.2.tgz#8d5341b87741c4e9f8dba0b87440e61b7b6501a1"
+  dependencies:
+    babel-eslint "^7.1.1"
+    eslint-plugin-babel "^4.1.1"
+    eslint-plugin-import "^2.6.0"
+    eslint-plugin-mocha "^4.11.0"
+    eslint-plugin-react "^7.1.0"
+
 eslint-import-resolver-node@^0.2.0:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/eslint-import-resolver-node/-/eslint-import-resolver-node-0.2.3.tgz#5add8106e8c928db2cba232bcd9efa846e3da16c"
@@ -1496,6 +1506,10 @@ eslint-module-utils@^2.0.0:
   dependencies:
     debug "^2.6.8"
     pkg-dir "^1.0.0"
+
+eslint-plugin-babel@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-babel/-/eslint-plugin-babel-4.1.1.tgz#ef285c87039b67beb3bbd227f5b0eed4fb376b87"
 
 eslint-plugin-import@^2.6.0:
   version "2.6.0"

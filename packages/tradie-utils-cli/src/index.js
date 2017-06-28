@@ -12,6 +12,7 @@ export function clear() {
 
   //Jest uses this which clears the entire buffer better
   // stream.write('\x1b[999D\x1b[K');
+  //process.platform === "win32" ? "\x1Bc" : "\x1B[2J\x1B[3J\x1B[H"
 
   //clear the screen
   process.stdout.write('\x1B[2J');

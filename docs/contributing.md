@@ -92,3 +92,15 @@ The `next` branch will contain the most recent alpha release and will have been 
 
 These branches will contain all Work In Progress and will be merged into the `master` or `next` branches as appropiate.
 
+## Releasing
+
+## latest
+
+Use `yarn run publish -- --conventional-commits`.
+
+## next
+
+Use `yarn run publish -- --canary --exact`.
+
+- `--canary` adds a unique string on the end of the version without bumping the version
+- `--exact` - because the `canary` versions aren't ordered, we need to use `exact` versions
