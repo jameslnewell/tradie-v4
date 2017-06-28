@@ -1,61 +1,48 @@
 import Linter from 'tradie-utils-eslint';
 import TypeChecker from 'tradie-utils-flow';
 import Processor from 'tradie-utils-processor';
+import matcher from 'tradie-utils-match';
+import lint from '../utils/lint';
+import check from '../utils/check';
 
 export default function(options) {
-  const {root, src, dest, include, exclude, eslint, watch} = options;
+  const {watch, root, src, dest, sourceOptions, testOptions} = options;
 
-  const linter = new Linter(src, eslint);
+  const files = {
+    source: {
+      match: matcher({
+        root,
+        include: sourceOptions.include,
+        exclude: sourceOptions.exclude
+      }),
+      linter: new Linter(sourceOptions.eslint)
+    },
+    test: {
+      match: matcher({
+        root,
+        include: testOptions.include,
+        exclude: testOptions.exclude
+      }),
+      linter: new Linter(testOptions.eslint)
+    }
+  };
+
   const typechecker = new TypeChecker(root, src, dest);
 
-  const processFile = (file, report) =>
-    linter
-      .lint(file)
-      .then(result => {
-        if (result.error) report.error(file, result.error);
-        if (result.warning) report.warning(file, result.warning);
-      })
-      .then(() => {
-        if (report.hasErrors()) {
-          return Promise.resolve();
-        }
-
-        return typechecker.check().then(result => {
-          result.errors
-            .filter(error => error.file === file)
-            .forEach(error => report.error(file, error.message));
-          result.warnings
-            .filter(warning => warning.file === file)
-            .forEach(warning => report.error(file, warning.message));
-        });
-      });
-
-  const processFiles = (files, report) =>
-    Promise.all(
-      files.map(file =>
-        linter.lint(file).then(result => {
-          if (result.error) report.error(file, result.error);
-          if (result.warning) report.warning(file, result.warning);
-        })
-      )
-    )
-      .then(() => typechecker.check())
-      .then(result => {
-        result.errors.forEach(error => report.error(error.file, error.message));
-        result.warnings.forEach(warning =>
-          report.warning(warning.file, warning.warning)
-        );
-      });
-
-  const processor = new Processor({
-    directory: src,
-
+  const processor = new Processor(root, {
     watch,
-    include,
-    exclude,
+    include: value => files.source.match(value) || files.test.match(value),
 
-    processFile,
-    processFiles,
+    process: (file, report) => {
+      if (files.source.match(file)) {
+        return lint(files.source.linter)(file, report);
+      }
+      if (files.test.match(file)) {
+        return lint(files.test.linter)(file, report);
+      }
+      return Promise.resolve();
+    },
+    postProcessing: report => check(typechecker)(report),
 
     startedText: 'Linting',
     finishedText: 'Linted'

@@ -1,55 +1,31 @@
 import del from 'del';
-import ESLint from 'tradie-utils-eslint';
-import Babel from 'tradie-utils-babel';
-import Flow from 'tradie-utils-flow';
+import Linter from 'tradie-utils-eslint';
+import Transpiler from 'tradie-utils-babel';
+import TypeChecker from 'tradie-utils-flow';
 import Processor from 'tradie-utils-processor';
-import lintFile from '../utils/lintFile';
-import checkFiles from '../utils/checkFiles';
+import lint from '../utils/lint';
+import check from '../utils/check';
 
 export default function(options) {
   const {root, src, dest, include, exclude, babel, eslint, watch} = options;
 
-  const linter = new ESLint(src, [
-    {
-      include,
-      exclude,
-      config: eslint
-    }
-  ]);
-  const transpiler = new Babel(src, dest, babel);
-  const typechecker = new Flow(root, src, dest);
+  const linter = new Linter(eslint);
+  const transpiler = new Transpiler(src, dest, babel);
+  const typechecker = new TypeChecker(root, src, dest);
 
-  const processFile = (file, report) =>
-    Promise.all([
-      lintFile(linter, file, report),
-      transpiler.transpile(file),
-      typechecker.typings(file)
-    ]).then(() => checkFiles(typechecker, [file], report));
-
-  const processFiles = (files, report) =>
-    Promise.all(
-      files.map(file =>
-        Promise.all([
-          lintFile(linter, file, report),
-          transpiler.transpile(file),
-          typechecker.typings(file)
-        ])
-      )
-    ).then(() => checkFiles(typechecker, files, report));
-
-  const unlinkFile = file =>
-    del([babel.destFile(file), typechecker.destFile(file)]);
-
-  const processor = new Processor({
-    directory: src,
-
+  const processor = new Processor(root, {
     watch,
     include,
     exclude,
 
-    unlinkFile,
-    processFile,
-    processFiles,
+    unlink: file => del([babel.destFile(file), typechecker.destFile(file)]),
+    process: (file, report) =>
+      Promise.all([
+        lint(linter)(file, report),
+        transpiler.transpile(file).catch(error => report.error(file, error, 1)),
+        typechecker.typings(file)
+      ]),
+    postProcessing: report => check(typechecker)(report),
 
     startedText: 'Building',
     finishedText: 'Built'
