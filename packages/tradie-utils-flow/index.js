@@ -51,12 +51,12 @@ class TypeChecker {
   }
   /**
    * Export the typings for a file
-   * @param {string} file 
+   * @param {string} file The full path to the file
    */
   typings(file) {
-    const srcFilePath = path.resolve(this.src, file);
-    const destFilePath = `${path.resolve(this.dest, file)}.flow`;
-    return fs.copy(srcFilePath, destFilePath);
+    const relFilePath = path.relative(this.src, file);
+    const destFilePath = `${path.join(this.dest, relFilePath)}.flow`;
+    return fs.copy(file, destFilePath);
   }
 
   check() {
