@@ -96,7 +96,7 @@ listPackageJSONFiles()
       files.map(file => {
         const pkgname = require(file).name;
 
-        if (pkgname.endsWith('-example')) {
+        if (/example/.test(pkgname)) {
           return symlinkCurrentBinary(path.dirname(file));
         }
 
