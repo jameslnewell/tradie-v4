@@ -18,7 +18,7 @@ export default function(options) {
     include,
     exclude,
 
-    unlink: file => del([babel.destFile(file), typechecker.destFile(file)]),
+    unlink: file => del([babel.destFile(file), typechecker.destFile(file)]), //FIXME:
     process: (file, report) =>
       Promise.all([
         lint(linter)(file, report),

@@ -17,6 +17,7 @@
     "bootstrap": "lerna bootstrap && node scripts/symlink-tradie.js",
     "upgrade": "lerna exec --concurrency 1 -- npm-check -u",
     "commit": "git-cz",
+    "lint": "lerna run lint",
     "build": "lerna run build",
     "test": "lerna run test",
     "publish": "yarn run build && lerna publish --canary --exact",

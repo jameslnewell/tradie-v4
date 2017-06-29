@@ -4,6 +4,8 @@ import chokidar from 'chokidar';
 import finder from 'finder-on-steroids';
 import match, {type Filter, type FilterFunction} from 'tradie-utils-match';
 
+//FIXME: seems to be leaving a child process around
+
 export type Options = {
   watch?: boolean,
   include?: Filter, //filter based on the path relative from `directory`
