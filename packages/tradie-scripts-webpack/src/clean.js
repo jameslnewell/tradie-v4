@@ -1,4 +1,3 @@
-'use strict';
 import del from 'promised-del';
 
 /**
