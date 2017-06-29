@@ -1,32 +1,52 @@
 import fs from 'fs';
 import path from 'path';
 import getPaths from '../paths';
-
-//TODO: reuse globs
+import {SOURCE_FILES, FIXTURE_FILES, MOCK_FILES, TEST_FILES} from '../globs';
 
 export default function(options = {}) {
-  const {root, watch} = options;
+  const {root, watch, coverage} = options;
   const {src} = getPaths(root);
-  const setupFile = path.join(src, '_.test.js');
+
+  const setupFiles = [];
+  if (fs.existsSync(path.join(src, '_.test.js'))) {
+    setupFiles.push('<rootDir>/src/_.test.js');
+  }
+  if (fs.existsSync(path.join(root, 'test/_.test.js'))) {
+    setupFiles.push('<rootDir>/test/_.test.js');
+  }
+
   return {
     jest: {
       watch,
-      coverage: options.coverage,
+      coverage,
       config: {
         testEnvironment: 'node',
-        rootDir: src, //TODO: change to root
-        testPathIgnorePatterns: ['/node_modules/', 'src/_\\.test\\.js$'], //don't run the test setup file
-        testMatch: ['**/*.test.{js,jsx}'], //TODO: support integration tests in ./test??
+
+        rootDir: root,
+
+        testMatch: [`**/${TEST_FILES}`],
+
+        testPathIgnorePatterns: [
+          '<rootDir>/node_modules/',
+          '<rootDir>/src/_\\.test\\.js$', //ignore the test setup file
+          '<rootDir>/test/_\\.test\\.js$' //ignore the test setup file
+        ],
+
         moduleFileExtensions: ['js', 'jsx'],
+
         transform: {
           '^.+\\.jsx?$': require.resolve('../jestBabelTransform')
         },
+
+        mapCoverage: coverage,
         collectCoverageFrom: [
-          '**/*.{js,jsx}',
-          '!**/*.test.{js,jsx}',
-          '!**/__mocks__/**'
+          `**/${SOURCE_FILES}`,
+          `!**/${FIXTURE_FILES}`,
+          `!**/${MOCK_FILES}`,
+          `!**/${TEST_FILES}`
         ],
-        setupFiles: fs.existsSync(setupFile) ? [setupFile] : []
+
+        setupFiles
       }
     }
   };

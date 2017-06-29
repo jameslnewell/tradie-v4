@@ -2,14 +2,6 @@
 import {createBabelTransform} from 'tradie-utils-jest';
 import {getBabelConfig} from './babel';
 
-//TODO: switch to babel-jest
-
-//jest doesn't work with es module exports
-module.exports = createBabelTransform(
-  Object.assign({}, getBabelConfig({root: process.cwd()}), {
-    //FIXME: use root variable from command config
-    //FIXME: source maps don't seem to be working
-    retainLines: true,
-    sourceMaps: 'inline'
-  })
-);
+//NOTE: Jest doesn't work with es module exports
+//FIXME: use root variable from command config
+module.exports = createBabelTransform(getBabelConfig({root: process.cwd()}));
