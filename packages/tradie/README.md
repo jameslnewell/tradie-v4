@@ -24,7 +24,7 @@ Choose a [`template`](https://github.com/jameslnewell/tradie-v4/tree/master/pack
 Choose from one of the existing templates below or [build your own](https://github.com/jameslnewell/tradie-v4/blob/master/docs/templates.md).
 
 - [tradie-template-node-package](https://www.npmjs.com/package/tradie-template-node-package)
-- [tradie-template-react-component](https://www.npmjs.com/package/tradie-template-react-component)
+<!--- [tradie-template-react-component](https://www.npmjs.com/package/tradie-template-react-component)-->
 - [tradie-template-react-site](https://www.npmjs.com/package/tradie-template-react-site)
 - [tradie-template-react-app](https://www.npmjs.com/package/tradie-template-react-app)
 

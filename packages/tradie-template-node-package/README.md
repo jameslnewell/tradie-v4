@@ -1,5 +1,9 @@
 # tradie-template-node-package
 
+[![npm](https://img.shields.io/npm/v/tradie-template-node-package.svg)]()
+[![Travis](https://img.shields.io/travis/jameslnewell/tradie-v4.svg)]()
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+
 A [`tradie`](https://www.npmjs.com/package/tradie) template for creating NodeJS packages.
 
 Featuring:
@@ -21,53 +25,53 @@ npm install --save-dev tradie-template-node-package
 
 1. Create some files:
 
-  - `package.json`
-```json
-{
-  "name": "my-node-package",
-  "main": "lib/index.js",
-  "files": ["lib"],
-  "devDependencies": {
-    "tradie-template-node-package": "^1.0.0"
-  },
-  "scripts": {
-    "lint": "tradie lint",
-    "build": "tradie build",
-    "watch": "tradie build --watch",
-    "test": "tradie test",
-    "prepublish": "npm run lint && npm run build && npm run test"
-  }
-}
-```
-  - `src/index.js`
-```js
+    - `package.json`
+    ```json
+    {
+      "name": "my-node-package",
+      "main": "lib/index.js",
+      "files": ["lib"],
+      "devDependencies": {
+        "tradie-template-node-package": "^2.0.0"
+      },
+      "scripts": {
+        "lint": "tradie lint",
+        "build": "tradie build",
+        "watch": "tradie build --watch",
+        "test": "tradie test",
+        "prepublish": "npm run lint && npm run build && npm run test"
+      }
+    }
+    ```
+    - `src/index.js`
+    ```js
 
-export default function() {
-  return true;
-}
+    export default function() {
+      return true;
+    }
 
-```
-  - `src/index.test.js`
-```js
-import isEverythingAwesome from '.';
+    ```
+    - `src/index.test.js`
+    ```js
+    import isEverythingAwesome from '.';
 
-describe('isEverythingAwesome()', () => {
-  it('should return true', () => {
-    expect(isEverythingAwesome()).toBeTruthy();
-  });
-});
+    describe('isEverythingAwesome()', () => {
+      it('should return true', () => {
+        expect(isEverythingAwesome()).toBeTruthy();
+      });
+    });
 
-```
+    ```
 
-2. Build the files
+2. Build the files:
   
     `yarn run build`
 
-3. Run the tests
+3. Run the tests:
 
     `yarn run test`
 
-4. Publish the package
+4. Publish the package:
 
     `yarn publish`
 
@@ -99,10 +103,73 @@ Will run test files matching `{src,test}/**/*.test.{js,jsx}`.
 
 ## How To
 
-### Setting up Flow
-- Create `.flowconfig`
-- `flowtyped install jest --flowVersion 0.48.0`
+### Set up Flow
+
+1. Create the config file:
+
+    - `.flowconfig`
+    ```
+    [ignore]
+
+    # ignore transpiled code
+    <PROJECT_ROOT>/lib
+
+    ```
+
+    > You can learn more about configuring Flow [here](https://flow.org/en/docs/config/).
+
+2. Install the types for `jest`:
+
+    `flow-typed install jest@^20 --flowVersion 0.48.0`
+
+    > You can learn more about installing types [here](https://github.com/flowtype/flow-typed#readme).
+
+3. Annotate your files:
+
+    - `src/index.js`
+    ```js
+    // @flow
+    ...
+    ```
+    
+    - `src/index.test.js`
+    ```js
+    // @flow
+    ...
+    ```
+
+    > You can learn more about writing Flow code [here](https://flow.org/en/docs/usage/#toc-write-flow-code).
 
 ### Writing tests
-- see `jest` documentation for assertions and mocks
-- setup file
+
+1. Create a test file and write some assertions
+  
+    - `src/index.test.js`
+    ```js
+  
+    describe('lame example()', () => {
+      it('should pass', () => {
+        expect(true).toBeTruthy();
+      });
+    });
+
+    ```
+
+    > You can learn more about writing assertions with Jest [here](https://facebook.github.io/jest/docs/expect.html#content). 
+    
+    > Jest also provides [mock functions](https://facebook.github.io/jest/docs/mock-function-api.html#content) and [manual mock functions](https://facebook.github.io/jest/docs/manual-mocks.html) which are very useful.
+
+#### Setting up the test environment
+
+*Occasionally* you'll need to run some code to setup your test environment before running your tests. Jest will try running `src/_.test.js` and `test/_.test.js` before running your tests. You can place any necessary test setup in here.
+
+e.g.
+
+```js
+import {shallow} from 'enzyme';
+
+//allow global access to `shallow()` in test files
+// to avoid `import`ing it in every file
+global.shallow = shallow;
+
+```
