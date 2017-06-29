@@ -25,6 +25,7 @@ export default class TypeChecker {
    * @param {string} file The full path to the file
    */
   typings(file: string) {
+    //FIXME: check the file has the `@flow` annotation //from CRAP: /^\s*\/\/.*@flow/.test(contents) || /^\s*\/\*.*@flow/.test(contents)
     const relFilePath = path.relative(this.src, file);
     const destFilePath = `${path.join(this.dest, relFilePath)}.flow`;
     return fs.copy(file, destFilePath);
