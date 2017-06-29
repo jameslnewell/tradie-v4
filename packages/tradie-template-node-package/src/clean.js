@@ -1,5 +1,5 @@
 import path from 'path';
-import getPaths from '../paths';
+import getPaths from './utils/paths';
 
 export default function({root}) {
   return {
