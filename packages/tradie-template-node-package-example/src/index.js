@@ -1,4 +1,4 @@
 //@flow
-import debug from './debug';
+import sum from './sum';
 
-debug('hello world!');
+console.log(sum(1, 1)); //eslint-disable-line no-console
