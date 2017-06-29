@@ -1,6 +1,6 @@
-const getPaths = require('./lib/getPaths');
+import getPaths from './utils/getPaths';
 
-module.exports = options => {
+export default options => {
   const paths = getPaths(options.root);
   return {
     globs: [paths.dest, paths.tmp]

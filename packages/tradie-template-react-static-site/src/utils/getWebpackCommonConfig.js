@@ -80,7 +80,6 @@ module.exports = options => {
   //this performs dead-code removal etc which is necessary to parse the JS as webpack leaves untranspiled import()s
 
   if (optimize) {
-
     config.plugins.push(
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify('production')
@@ -95,7 +94,6 @@ module.exports = options => {
         }
       )
     );
-
   }
 
   return config;

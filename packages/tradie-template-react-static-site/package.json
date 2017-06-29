@@ -3,6 +3,7 @@
   "version": "6.0.0",
   "description": "Tradie template for building static sites with React.",
   "repository": "jameslnewell/tradie-v4",
+  "files": ["lib"],
   "peerDependencies": {
     "react": "^15.5",
     "react-dom": "^15.5"
@@ -37,10 +38,20 @@
     "serve-static": "^1.12.1",
     "static-react-render-webpack-plugin": "^0.6.0",
     "style-loader": "^0.17.0",
+    "tradie": "^6.0.0",
+    "tradie-scripts-webpack": "^2.0.0",
     "tradie-webpack-utils": "^6.0.0",
     "trailing-slash-it": "^0.3.0",
     "webpack": "^2.3.2",
     "webpack-node-externals": "^1.5.4"
   },
+  "scripts": {
+    "clean": "tradie clean",
+    "lint": "tradie lint",
+    "build": "tradie build",
+    "watch": "tradie build --watch",
+    "test": "tradie test"
+  },
+  "tradie-template": "tradie-template-node-package",
   "license": "MIT"
 }

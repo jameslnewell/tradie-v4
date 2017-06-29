@@ -1,6 +1,4 @@
-# tradie-webpack-scripts
-
-> DEPRECATED
+# tradie-scripts-webpack
 
 Scripts for building, serving and testing using Webpack and Jest.
 

@@ -1,7 +1,6 @@
-'use strict';
-const EventEmitter = require('events').EventEmitter;
-const debug = require('debug');
-const webpack = require('webpack');
+import {EventEmitter} from 'events';
+import debug from 'debug';
+import webpack from 'webpack';
 
 /**
  * Creates a wrapper around Webpack's run/watch method
@@ -121,4 +120,4 @@ class Bundler {
   }
 }
 
-module.exports = Bundler;
+export default Bundler;

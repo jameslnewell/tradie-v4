@@ -1,10 +1,9 @@
-'use strict';
-const getSiteMetadata = require('./lib/getSiteMetadata');
-const getWebpackVendorConfig = require('./lib/getWebpackVendorConfig');
-const getWebpackClientConfig = require('./lib/getWebpackClientConfig');
-const getWebpackBuildConfig = require('./lib/getWebpackBuildConfig');
+import getSiteMetadata from './utils/getSiteMetadata';
+import getWebpackVendorConfig from './utils/getWebpackVendorConfig';
+import getWebpackClientConfig from './utils/getWebpackClientConfig';
+import getWebpackBuildConfig from './utils/getWebpackBuildConfig';
 
-module.exports = options => {
+export default options => {
   const root = options.root;
   const debug = options.debug;
   const optimize = options.optimize;

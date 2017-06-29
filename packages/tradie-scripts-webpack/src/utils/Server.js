@@ -1,9 +1,8 @@
-'use strict';
-const EventEmitter = require('events').EventEmitter;
-const debug = require('debug');
-const connect = require('connect');
-const serverDestroy = require('server-destroy');
-const detectPort = require('detect-port');
+import {EventEmitter} from 'events';
+import debug from 'debug';
+import connect from 'connect';
+import serverDestroy from 'server-destroy';
+import detectPort from 'detect-port';
 
 class Server {
   constructor() {
@@ -87,4 +86,4 @@ class Server {
   }
 }
 
-module.exports = Server;
+export default Server;

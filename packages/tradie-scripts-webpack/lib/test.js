@@ -1,6 +1,20 @@
 'use strict';
-const chalk = require('chalk');
-const jest = require('jest');
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _chalk = require('chalk');
+
+var _chalk2 = _interopRequireDefault(_chalk);
+
+var _jest = require('jest');
+
+var _jest2 = _interopRequireDefault(_jest);
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {default: obj};
+}
 
 /**
  * Run webpack on multiple bundles and display the results
@@ -11,22 +25,24 @@ const jest = require('jest');
  * @param {object}  options.jest
  * @returns {Promise.<null>}
  */
-module.exports = options =>
-  new Promise((resolve, reject) => {
-    const watch = options.watch;
-    const coverage = options.coverage;
-    const config = options.jest;
+exports.default = function(options) {
+  return new Promise(function(resolve, reject) {
+    var watch = options.watch;
+    var coverage = options.coverage;
+    var config = options.jest;
 
     if (!config) {
       console.error(
         //eslint-disable-line no-console
-        chalk.red('Tradie template does not provide a test configuration.')
+        _chalk2.default.red(
+          'Tradie template does not provide a test configuration.'
+        )
       );
       reject(1);
       return;
     }
 
-    const args = ['--config', JSON.stringify(config)];
+    var args = ['--config', JSON.stringify(config)];
 
     if (watch) {
       args.push('--watch');
@@ -36,5 +52,6 @@ module.exports = options =>
       args.push('--coverage');
     }
 
-    jest.run(args);
+    _jest2.default.run(args);
   });
+};

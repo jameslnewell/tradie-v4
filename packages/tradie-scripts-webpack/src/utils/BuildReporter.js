@@ -1,8 +1,7 @@
-'use strict';
-const chalk = require('chalk');
-const uniq = require('lodash.uniq');
-const clear = require('./clearScreen');
-const formatWebpackMessages = require('./formatWebpackMessages');
+import chalk from 'chalk';
+import uniq from 'lodash.uniq';
+import clear from './clearScreen';
+import formatWebpackMessages from './formatWebpackMessages';
 
 class BuildReporter {
   constructor(options) {
@@ -145,4 +144,4 @@ class BuildReporter {
   }
 }
 
-module.exports = BuildReporter;
+export default BuildReporter;

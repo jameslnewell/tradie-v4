@@ -1,13 +1,11 @@
-process.env.NODE_ENV = 'test';
-
-const fs = require('fs');
-const path = require('path');
-const getPaths = require('./lib/getPaths');
+import fs from 'fs';
+import path from 'path';
+import getPaths from './utils/getPaths';
 
 //TODO: use paths, jsextensions
 //TODO: support coverage
 
-module.exports = options => {
+export default options => {
   const paths = getPaths(options.root);
 
   const config = {

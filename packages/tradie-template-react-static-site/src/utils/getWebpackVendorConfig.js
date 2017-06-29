@@ -53,18 +53,18 @@ module.exports = options => {
   // === uglify ===
 
   if (optimize) {
-
     //babili + uglify gives better results and uglify is the only way to get react-devtools to be quiet about the bundle not being minified
-    config.plugins.push(new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
-      },
-      output: {
-        comments: false,
-      },
-      sourceMap: true,
-    }));
-
+    config.plugins.push(
+      new webpack.optimize.UglifyJsPlugin({
+        compress: {
+          warnings: false
+        },
+        output: {
+          comments: false
+        },
+        sourceMap: true
+      })
+    );
   }
 
   return config;

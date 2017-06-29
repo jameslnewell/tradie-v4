@@ -1,12 +1,22 @@
-'use strict';
+import wfe from 'wait-for-event';
+import Bundler from './utils/Bundler';
+import BuildReporter from './utils/BuildReporter';
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-exports.default = function(options) {
-  var bundlers = [];
-  var vendorBundler = null,
+/**
+ * Run webpack on multiple bundles and display the results
+ * @param {object} options
+ * @param {boolean} [options.debug=false]
+ * @param {boolean} [options.watch=false]
+ * @param {object}  options.webpack
+ * @param {object}  [options.webpack.vendor]
+ * @param {object}  [options.webpack.client]
+ * @param {object}  [options.webpack.build]
+ * @param {object}  [options.webpack.server]
+ * @returns {Promise.<null>}
+ */
+export default function(options) {
+  const bundlers = [];
+  let vendorBundler = null,
     clientBundler = null,
     buildBundler = null,
     serverBundler = null,
@@ -14,7 +24,7 @@ exports.default = function(options) {
 
   //create the vendor bundler
   if (options.webpack.vendor) {
-    vendorBundler = new _Bundler2.default(options.webpack.vendor, {
+    vendorBundler = new Bundler(options.webpack.vendor, {
       name: 'vendor'
     });
     bundlers.push(vendorBundler);
@@ -22,7 +32,7 @@ exports.default = function(options) {
 
   //create the client bundler
   if (options.webpack.client) {
-    clientBundler = new _Bundler2.default(options.webpack.client, {
+    clientBundler = new Bundler(options.webpack.client, {
       name: 'client',
       watch: options.watch
     });
@@ -31,7 +41,7 @@ exports.default = function(options) {
 
   //create the build bundler
   if (options.webpack.build) {
-    buildBundler = new _Bundler2.default(options.webpack.build, {
+    buildBundler = new Bundler(options.webpack.build, {
       name: 'build',
       watch: options.watch
     });
@@ -40,7 +50,7 @@ exports.default = function(options) {
 
   //create the server bundler
   if (options.webpack.server) {
-    serverBundler = new _Bundler2.default(options.webpack.server, {
+    serverBundler = new Bundler(options.webpack.server, {
       name: 'server',
       watch: options.watch
     });
@@ -48,25 +58,23 @@ exports.default = function(options) {
   }
 
   //create the reporter
-  var reporter = new _BuildReporter2.default({
+  const reporter = new BuildReporter({
     debug: options.debug,
     bundlers
   });
 
-  var runClientAndBuildBundles = function runClientAndBuildBundles() {
+  const runClientAndBuildBundles = () => {
     if (clientBundler && buildBundler) {
       //start the build bundler after the client bundler has run for the first time,
       // and re-build the build bundler whenever the client bundler finishes
-      clientBundler.once('completed', function() {
+      clientBundler.once('completed', () => {
         if (exiting) return;
 
         //run the build bundler
         buildBundler.start();
 
         //re-run the build bundler
-        clientBundler.on('completed', function() {
-          return buildBundler.invalidate();
-        });
+        clientBundler.on('completed', () => buildBundler.invalidate());
       });
 
       //run the client bundler
@@ -83,7 +91,7 @@ exports.default = function(options) {
   //run the vendor, client and build bundlers
   if (vendorBundler) {
     vendorBundler
-      .once('completed', function() {
+      .once('completed', () => {
         if (exiting) return;
 
         //remove the completed bundler
@@ -104,17 +112,15 @@ exports.default = function(options) {
   }
 
   //stop all the things when the user wants to exit
-  process.on('SIGINT', function() {
+  process.on('SIGINT', () => {
     exiting = true;
-    bundlers.forEach(function(bundler) {
-      return bundler.stop();
-    });
+    bundlers.forEach(bundler => bundler.stop());
   });
 
   //wait for all the bundlers to close before resolving or rejecting
-  return new Promise(function(resolve, reject) {
-    _waitForEvent2.default.waitForAll('stopped', bundlers, function(errors) {
-      setImmediate(function() {
+  return new Promise((resolve, reject) => {
+    wfe.waitForAll('stopped', bundlers, errors => {
+      setImmediate(() => {
         //HACK: wait for build-reporter
         if (errors.length) {
           reject(errors);
@@ -126,33 +132,4 @@ exports.default = function(options) {
       });
     });
   });
-};
-
-var _waitForEvent = require('wait-for-event');
-
-var _waitForEvent2 = _interopRequireDefault(_waitForEvent);
-
-var _Bundler = require('./utils/Bundler');
-
-var _Bundler2 = _interopRequireDefault(_Bundler);
-
-var _BuildReporter = require('./utils/BuildReporter');
-
-var _BuildReporter2 = _interopRequireDefault(_BuildReporter);
-
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
 }
-
-/**
- * Run webpack on multiple bundles and display the results
- * @param {object} options
- * @param {boolean} [options.debug=false]
- * @param {boolean} [options.watch=false]
- * @param {object}  options.webpack
- * @param {object}  [options.webpack.vendor]
- * @param {object}  [options.webpack.client]
- * @param {object}  [options.webpack.build]
- * @param {object}  [options.webpack.server]
- * @returns {Promise.<null>}
- */

@@ -1,4 +1,4 @@
-module.exports = () => {
+export default () => {
   //don't output on CI
   if (process.env.CI) {
     return;

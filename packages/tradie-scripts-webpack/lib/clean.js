@@ -1,9 +1,17 @@
 'use strict';
-const del = require('promised-del');
 
-/**
- * @param {object}          options
- * @param {Array.<string>}  options.globs
- * @returns {Promise.<null>}
- */
-module.exports = options => del(options.globs);
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+exports.default = function(options) {
+  return (0, _promisedDel2.default)(options.globs);
+};
+
+var _promisedDel = require('promised-del');
+
+var _promisedDel2 = _interopRequireDefault(_promisedDel);
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {default: obj};
+}
