@@ -18,7 +18,8 @@ module.exports = options =>
     const config = options.jest;
 
     if (!config) {
-      console.error( //eslint-disable-line no-console
+      console.error(
+        //eslint-disable-line no-console
         chalk.red('Tradie template does not provide a test configuration.')
       );
       reject(1);

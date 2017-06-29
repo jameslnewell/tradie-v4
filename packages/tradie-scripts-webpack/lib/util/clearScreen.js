@@ -1,6 +1,4 @@
-
 module.exports = () => {
-
   //don't output on CI
   if (process.env.CI) {
     return;
@@ -16,5 +14,4 @@ module.exports = () => {
 
   //move the cursor to 1:1
   process.stdout.write('\x1B[1;1H');
-
 };

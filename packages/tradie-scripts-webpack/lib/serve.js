@@ -78,7 +78,9 @@ module.exports = options => {
     //configure HMR for the client bundle
     addEntry(
       options.webpack.client,
-      `${require.resolve('webpack-hot-middleware/client')}?reload=true&overlay=true`
+      `${require.resolve(
+        'webpack-hot-middleware/client'
+      )}?reload=true&overlay=true`
     );
     addPlugin(options.webpack.client, new webpack.HotModuleReplacementPlugin());
 
