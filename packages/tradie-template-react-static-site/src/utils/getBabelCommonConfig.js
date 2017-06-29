@@ -1,8 +1,7 @@
-'use strict';
-const path = require('path');
-const getPaths = require('./getPaths');
+import path from 'path';
+import getPaths from './getPaths';
 
-module.exports = options => {
+export default options => {
   const optimize = options.optimize;
   const paths = getPaths(options.root);
 

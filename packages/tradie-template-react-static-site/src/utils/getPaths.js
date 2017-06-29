@@ -1,7 +1,6 @@
-'use strict';
-const path = require('path');
+import path from 'path';
 
-module.exports = root => {
+export default root => {
   const src = path.resolve(root, './src');
   const dest = path.resolve(root, './dist');
   const tmp = path.resolve(root, './tmp');

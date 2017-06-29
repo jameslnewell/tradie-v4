@@ -1,4 +1,4 @@
-module.exports = () => ({
+export default () => ({
   globals: {
     __CLIENT__: false,
     __SERVER__: false

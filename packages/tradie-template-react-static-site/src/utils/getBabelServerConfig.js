@@ -1,6 +1,6 @@
-const getCommonConfig = require('./getBabelCommonConfig');
+import getCommonConfig from './getBabelCommonConfig';
 
-module.exports = options => {
+export default options => {
   // const optimize = options.optimize;
   const config = getCommonConfig(options);
 

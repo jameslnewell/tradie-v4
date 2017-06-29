@@ -1,15 +1,14 @@
-'use strict';
-const webpack = require('webpack');
-const extensionsToRegex = require('ext-to-regex');
-const nodeExternals = require('webpack-node-externals');
-const StaticReactRenderPlugin = require('static-react-render-webpack-plugin');
-const styleExtensions = require('./styleExtensions');
-const scriptExtensions = require('./scriptExtensions');
-const getEslintServerConfig = require('./getEslintServerConfig');
-const getBabelServerConfig = require('./getBabelServerConfig');
-const getWebpackCommonConfig = require('./getWebpackCommonConfig');
+import webpack from 'webpack';
+import extensionsToRegex from 'ext-to-regex';
+import nodeExternals from 'webpack-node-externals';
+import StaticReactRenderPlugin from 'static-react-render-webpack-plugin';
+import styleExtensions from './styleExtensions';
+import scriptExtensions from './scriptExtensions';
+import getEslintServerConfig from './getEslintServerConfig';
+import getBabelServerConfig from './getBabelServerConfig';
+import getWebpackCommonConfig from './getWebpackCommonConfig';
 
-module.exports = options => {
+export default options => {
   // const optimize = options.optimize;
   const manifest = options.manifest;
   const metadata = options.metadata;
@@ -61,7 +60,7 @@ module.exports = options => {
   config.externals = [
     nodeExternals({
       //we need to let webpack process other files, otherwise NodeJS crashes due to syntax errors parsing non-JS files
-      whitelist: [new RegExp(`(\\.|\\\/)(?!${scriptExtensions.join('|')}).*$`)]
+      whitelist: [new RegExp(`(\\.|\\/)(?!${scriptExtensions.join('|')}).*$`)]
     })
   ];
 

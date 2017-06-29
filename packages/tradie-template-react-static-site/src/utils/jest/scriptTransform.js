@@ -1,9 +1,8 @@
-'use strict';
-const path = require('path');
-const babelJest = require('babel-jest');
-const getTestConfig = require('../getBabelTestConfig');
+import path from 'path';
+import babelJest from 'babel-jest';
+import getTestConfig from '../getBabelTestConfig';
 
-module.exports = babelJest.createTransformer(
+export default babelJest.createTransformer(
   getTestConfig({
     optimize: false,
     root: path.resolve('.') //TODO: fixme

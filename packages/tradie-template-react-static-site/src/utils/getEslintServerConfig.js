@@ -1,7 +1,6 @@
-'use strict';
-const getEslintCommonConfig = require('./getEslintCommonConfig');
+import getEslintCommonConfig from './getEslintCommonConfig';
 
-module.exports = options => {
+export default options => {
   const config = getEslintCommonConfig(options);
   return Object.assign({}, config, {
     env: {

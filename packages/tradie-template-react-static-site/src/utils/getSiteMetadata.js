@@ -1,10 +1,10 @@
 /* @flow weak */
-'use strict';
-const fs = require('fs');
-const path = require('path');
-const getPaths = require('./getPaths');
+import fs from 'fs';
 
-module.exports = root => {
+import path from 'path';
+import getPaths from './getPaths';
+
+export default root => {
   const src = getPaths(root).src;
 
   const getComponentPath = dir => {
@@ -25,6 +25,7 @@ module.exports = root => {
 
   //get the site metadata
   //TODO: handle errors
+  // $FlowFixMe
   const site = require(`${src}/site.json`); //eslint-disable-line global-require
 
   //get the layout metadata
@@ -38,7 +39,7 @@ module.exports = root => {
   } else {
     layout = {
       chunkName: 'layout',
-      buildPath: require.resolve(), //TODO:
+      buildPath: require.resolve(''), //TODO:
       clientPath: null
     };
   }

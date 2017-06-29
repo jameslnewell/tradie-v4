@@ -1,19 +1,18 @@
-'use strict';
-const fs = require('fs');
-const webpack = require('webpack');
-const extensionsToRegex = require('ext-to-regex');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const autoprefixer = require('autoprefixer');
-const CollectFilesPlugin = require('tradie-webpack-utils/CollectFilesPlugin');
-const CachedDllReferencePlugin = require('tradie-webpack-utils/CachedDllReferencePlugin');
-const styleExtensions = require('./styleExtensions');
-const scriptExtensions = require('./scriptExtensions');
-const getPaths = require('./getPaths');
-const getEslintClientConfig = require('./getEslintClientConfig');
-const getBabelClientConfig = require('./getBabelClientConfig');
-const getWebpackCommonConfig = require('./getWebpackCommonConfig');
+import fs from 'fs';
+import webpack from 'webpack';
+import extensionsToRegex from 'ext-to-regex';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import autoprefixer from 'autoprefixer';
+import CollectFilesPlugin from 'tradie-webpack-utils/CollectFilesPlugin';
+import CachedDllReferencePlugin from 'tradie-webpack-utils/CachedDllReferencePlugin';
+import styleExtensions from './styleExtensions';
+import scriptExtensions from './scriptExtensions';
+import getPaths from './getPaths';
+import getEslintClientConfig from './getEslintClientConfig';
+import getBabelClientConfig from './getBabelClientConfig';
+import getWebpackCommonConfig from './getWebpackCommonConfig';
 
-module.exports = options => {
+export default options => {
   const paths = getPaths(options.root);
   const optimize = options.optimize;
   const manifest = options.manifest;

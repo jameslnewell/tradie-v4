@@ -1,16 +1,15 @@
-'use strict';
-const path = require('path');
-const extensionsToRegex = require('ext-to-regex');
-const webpack = require('webpack');
-const BabiliPlugin = require('babili-webpack-plugin');
-const WatchMissingNodeModulesPlugin = require('tradie-webpack-utils/WatchMissingNodeModulesPlugin');
-const trailingSlashIt = require('trailing-slash-it');
-const scriptExtensions = require('./scriptExtensions');
-const getPaths = require('./getPaths');
+import path from 'path';
+import extensionsToRegex from 'ext-to-regex';
+import webpack from 'webpack';
+import BabiliPlugin from 'babili-webpack-plugin';
+import WatchMissingNodeModulesPlugin from 'tradie-webpack-utils/WatchMissingNodeModulesPlugin';
+import trailingSlashIt from 'trailing-slash-it';
+import scriptExtensions from './scriptExtensions';
+import getPaths from './getPaths';
 
 const BASE_URL = trailingSlashIt(process.env.BASE_URL || '/');
 
-module.exports = options => {
+export default options => {
   const paths = getPaths(options.root);
   const optimize = options.optimize;
 

@@ -1,1 +1,1 @@
-module.exports = ['.js', '.jsx'];
+export default ['.js', '.jsx'];

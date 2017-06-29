@@ -1,13 +1,12 @@
-'use strict';
-const fs = require('fs');
-const webpack = require('webpack');
-const CollectFilesPlugin = require('tradie-webpack-utils/CollectFilesPlugin');
-const getPaths = require('./getPaths');
-const getEslintClientConfig = require('./getEslintClientConfig');
-const getBabelClientConfig = require('./getBabelClientConfig');
-const getWebpackCommonConfig = require('./getWebpackCommonConfig');
+import fs from 'fs';
+import webpack from 'webpack';
+import CollectFilesPlugin from 'tradie-webpack-utils/CollectFilesPlugin';
+import getPaths from './getPaths';
+import getEslintClientConfig from './getEslintClientConfig';
+import getBabelClientConfig from './getBabelClientConfig';
+import getWebpackCommonConfig from './getWebpackCommonConfig';
 
-module.exports = options => {
+export default options => {
   const paths = getPaths(options.root);
   const optimize = options.optimize;
   const manifest = options.manifest;

@@ -1,1 +1,1 @@
-module.exports = ['.css'];
+export default ['.css'];
