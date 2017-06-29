@@ -31,8 +31,17 @@ export default function(options: Options): Promise<void> {
 
 export function createBabelTransform(babelOptions: {}) {
   return {
-    process(src: string, file: string) {
-      return transform(src, Object.assign({filename: file}, babelOptions)).code;
+    process(sourceText: string, sourcePath: string, config: any) {
+      const {code, map} = transform(
+        sourceText,
+        Object.assign({}, babelOptions, {
+          filename: sourcePath,
+          sourceRoot: config.rootDir,
+          retainLines: true, //FIXME: column numbers aren't working and soure maps don't work without this
+          sourceMaps: true
+        })
+      );
+      return {code, map};
     }
   };
 }
