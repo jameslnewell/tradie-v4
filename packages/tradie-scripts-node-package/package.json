@@ -1,6 +1,6 @@
 {
   "name": "tradie-scripts-node-package",
-  "description": "A tradie template for creating NodeJS packages.",
+  "description": "Scripts for creating NodeJS packages.",
   "version": "2.0.0",
   "repository": "jameslnewell/tradie-v4",
   "files": [

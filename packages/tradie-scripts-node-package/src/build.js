@@ -3,8 +3,8 @@ import Linter from 'tradie-utils-eslint';
 import Transpiler from 'tradie-utils-babel';
 import TypeChecker from 'tradie-utils-flow';
 import Processor from 'tradie-utils-processor';
-import lint from '../utils/lint';
-import check from '../utils/check';
+import lint from './utils/lint';
+import check from './utils/check';
 
 export default function(options) {
   const {root, src, dest, include, exclude, babel, eslint, watch} = options;

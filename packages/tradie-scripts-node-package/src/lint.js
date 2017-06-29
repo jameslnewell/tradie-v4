@@ -2,8 +2,8 @@ import Linter from 'tradie-utils-eslint';
 import TypeChecker from 'tradie-utils-flow';
 import Processor from 'tradie-utils-processor';
 import matcher from 'tradie-utils-match';
-import lint from '../utils/lint';
-import check from '../utils/check';
+import lint from './utils/lint';
+import check from './utils/check';
 
 export default function(options) {
   const {watch, root, src, dest, sourceOptions, testOptions} = options;
