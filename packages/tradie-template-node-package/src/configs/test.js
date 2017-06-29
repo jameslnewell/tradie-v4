@@ -14,7 +14,8 @@ export default function(options = {}) {
       coverage: options.coverage,
       config: {
         testEnvironment: 'node',
-        rootDir: src,
+        rootDir: src, //TODO: change to root
+        testPathIgnorePatterns: ['/node_modules/', 'src/_\\.test\\.js$'], //don't run the test setup file
         testMatch: ['**/*.test.{js,jsx}'], //TODO: support integration tests in ./test??
         moduleFileExtensions: ['js', 'jsx'],
         transform: {
