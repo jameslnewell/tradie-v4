@@ -34,14 +34,14 @@ export default class Scripts {
   }
 
   describe(yargs) {
-    return this.requireModule(`./lib/cli`).then(
+    return this.requireModule(`./lib/_args_`).then(
       module => {
         if (module.__esModule) {
           module = module.default; //eslint-disable-line no-param-reassign
         }
 
         if (typeof module !== 'function') {
-          throw new Error(`tradie: "${this.name}/cli" is not a function`);
+          throw new Error(`tradie: "${this.name}/_args_" is not a function`);
         }
 
         module(yargs);
@@ -51,7 +51,7 @@ export default class Scripts {
   }
 
   run(script, config) {
-    return this.requireModule(`./lib/scripts/${script}`).then(module => {
+    return this.requireModule(`./lib/${script}`).then(module => {
       if (module.__esModule) {
         module = module.default; //eslint-disable-line no-param-reassign
       }

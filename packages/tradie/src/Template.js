@@ -35,7 +35,7 @@ export default class Template {
   }
 
   getConfig(script, args) {
-    return this.requireModule(`./lib/configs/${script}`).then(module => {
+    return this.requireModule(`./lib/${script}`).then(module => {
       if (module.__esModule) {
         module = module.default; //eslint-disable-line no-param-reassign
       }
@@ -58,9 +58,10 @@ export default class Template {
 
 Template.find = function() {
   const projectDirectory = process.cwd();
-  return import(
-    path.join(projectDirectory, 'package.json')
-  ).then(projectMetadata => {
+  return import(path.join(
+    projectDirectory,
+    'package.json'
+  )).then(projectMetadata => {
     //this is used so we can dogfood tradie, using the previous version to run the build,
     //rather than lerna symlinking the latest version
     let templateName = projectMetadata['tradie-template'];
