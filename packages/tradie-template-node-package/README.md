@@ -122,7 +122,7 @@ Will run test files matching `{src,test}/**/*.test.{js,jsx}`.
 
     `flow-typed install jest@^20 --flowVersion 0.48.0`
 
-    > You can learn more about installing types [here](https://github.com/flowtype/flow-typed#readme).
+    > You can learn more about installing Flow types [here](https://github.com/flowtype/flow-typed#readme).
 
 3. Annotate your files:
 
@@ -138,7 +138,7 @@ Will run test files matching `{src,test}/**/*.test.{js,jsx}`.
     ...
     ```
 
-    > You can learn more about writing Flow code [here](https://flow.org/en/docs/usage/#toc-write-flow-code).
+    > You can learn more about writing code for Flow [here](https://flow.org/en/docs/usage/#toc-write-flow-code).
 
 ### Writing tests
 
@@ -157,11 +157,11 @@ Will run test files matching `{src,test}/**/*.test.{js,jsx}`.
 
     > You can learn more about writing assertions with Jest [here](https://facebook.github.io/jest/docs/expect.html#content). 
     
-    > Jest also provides [mock functions](https://facebook.github.io/jest/docs/mock-function-api.html#content) and [manual mock functions](https://facebook.github.io/jest/docs/manual-mocks.html) which are very useful.
+    > Jest provides [mock functions](https://facebook.github.io/jest/docs/mock-function-api.html#content) and [manual mock functions](https://facebook.github.io/jest/docs/manual-mocks.html) which are worth learning!
 
-#### Setting up the test environment
+#### Customising the test environment
 
-*Occasionally* you'll need to run some code to setup your test environment before running your tests. Jest will try running `src/_.test.js` and `test/_.test.js` before running your tests. You can place any necessary test setup in here.
+*Occasionally* you'll need to run some code to setup your test environment before running your tests. Jest will try running `src/_.test.js` and `test/_.test.js` before it runs your tests. You can place any necessary test setup in here.
 
 e.g.
 
