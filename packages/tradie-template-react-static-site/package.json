@@ -42,7 +42,7 @@
     "tradie-scripts-webpack": "^2.0.0",
     "tradie-webpack-utils": "^6.0.0",
     "trailing-slash-it": "^0.3.0",
-    "webpack": "^2.3.2",
+    "webpack": "^2.2.0",
     "webpack-node-externals": "^1.5.4"
   },
   "scripts": {
