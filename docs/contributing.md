@@ -4,7 +4,7 @@
 
 This repo is a [`monorepo`](https://github.com/babel/babel/blob/master/doc/design/monorepo.md) managed by [LernaJS](https://lernajs.io).
 
-`tradie` is [dog-fooding](https://en.wikipedia.org/wiki/Eating_your_own_dog_food). That means `tradie` is built using a previously published version of [`tradie-template-node-package`](./packages/tradie-template-node-package/README.md).
+`tradie` is [dog-fooding](https://en.wikipedia.org/wiki/Eating_your_own_dog_food). That means `tradie` is built using a previously published version of [`tradie-template-node-package`](../packages/tradie-template-node-package/README.md).
 
 `tradie` requires Node.js v4 or greater and the [Yarn](https://yarnpkg.com/en/) package manager.
 

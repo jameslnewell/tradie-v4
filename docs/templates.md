@@ -1,5 +1,11 @@
 # Build your own...
 
+<img alt="tradie flow" src="./img/flow.png"/>
+
+1. `tradie` parses the CLI arguments.
+2. `tradie-template-<name>` takes the CLI arguments and uses them to create a configuration object usable by `tradie-scripts-<name>`.
+3. `tradie-scripts-<name>` receives the configuation object and does something with it (starts transpiling, spins up a server whatever) and returns a promise to let `tradie` know when its finished.
+
 ## Templates
 
 Templates encapsulate the configuration of the tools (e.g. `flow`, `babel`, `webpack`, `jest` and `express`).
@@ -18,7 +24,7 @@ A template **MUST** have the `tradie` package and a `tradie-scripts-*` package l
 
 A template **MUST** expose:
 
-- A `./config` directory containing a module for each script exposed by the chosen `tradie-scripts-*` pacakge.
+- A `lib` directory containing a module for each script exposed by the chosen `tradie-scripts-*` pacakge e.g. `lib/build.js`.
 
 ## Scripts
 
@@ -36,5 +42,5 @@ OR
 
 A script **MUST** expose:
 
-- A `./cli.js` module that exports a function. The function will be passed an instance of `yargs` and should configure the necessary commands and arguments it requires.
-- A `./scripts` directory cotaining a module for each configured command. Each script module should export a function that returns a promise when the command is complete. The script will be passed a configuration object, configured as desired by a template.
+- A `lib/__args__.js` module that exports a function. The function will be passed an instance of `yargs` and should configure the necessary commands and arguments it requires.
+- A `lib` directory cotaining a module for each configured command e.g. `lib/build.js`. Each script module should export a function that returns a promise when the command is complete. The script will be passed a configuration object, configured as desired by a template.

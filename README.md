@@ -1,4 +1,4 @@
-# <a href="https://github.com/jameslnewell/tradie"><img alt="tradie" src="./logo.png" height="60px" /></a>
+# <a href="https://github.com/jameslnewell/tradie"><img alt="tradie" src="./docs/img/logo.png" height="60px" /></a>
 
 > The documentation for `tradie` is still a little rough. Please [ask questions and raise bugs on Github](https://github.com/jameslnewell/tradie-v4/issues). PRs are welcome!
 

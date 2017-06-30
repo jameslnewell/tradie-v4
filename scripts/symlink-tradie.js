@@ -35,14 +35,6 @@ function listPackageJSONFiles() {
     .files()
     .depth(3)
     .path('packages/*/package.json')
-    .filter(path => {
-      const packageMetadata = require(path);
-      return (
-        packageMetadata['tradie-template'] === TEMPLATE_NAME ||
-        (packageMetadata.devDependencies &&
-          packageMetadata.devDependencies[TEMPLATE_NAME])
-      );
-    })
     .find();
 }
 
@@ -100,7 +92,14 @@ listPackageJSONFiles()
           return symlinkCurrentBinary(path.dirname(file));
         }
 
-        return symlinkInstalledBinary(path.dirname(file));
+        const packageMetadata = require(file);
+        if (
+          packageMetadata['tradie-template'] === TEMPLATE_NAME ||
+          (packageMetadata.devDependencies &&
+            packageMetadata.devDependencies[TEMPLATE_NAME])
+        ) {
+          return symlinkInstalledBinary(path.dirname(file));
+        }
       })
     )
   )
