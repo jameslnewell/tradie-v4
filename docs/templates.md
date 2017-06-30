@@ -3,8 +3,8 @@
 <img alt="tradie flow" src="./img/flow.png"/>
 
 1. `tradie` parses the CLI arguments.
-2. `tradie-template-<name>` takes the CLI arguments and uses them to create a configuration object usable by `tradie-scripts-<name>`.
-3. `tradie-scripts-<name>` receives the configuation object and does something with it (starts transpiling, spins up a server whatever) and returns a promise to let `tradie` know when its finished.
+2. `tradie-template-<name>` takes the CLI arguments and creates a configuration object usable by `tradie-scripts-<name>`.
+3. `tradie-scripts-<name>` takes a configuation object and does something with it (transpiling files, spins up a server or whatever) and returns a promise to let `tradie` know when its finished.
 
 ## Templates
 
