@@ -34,7 +34,7 @@ export default class Scripts {
   }
 
   describe(yargs) {
-    return this.requireModule(`./lib/_args_`).then(
+    return this.requireModule(`./lib/__args__`).then(
       module => {
         if (module.__esModule) {
           module = module.default; //eslint-disable-line no-param-reassign

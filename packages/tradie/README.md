@@ -1,4 +1,4 @@
-# <a href="https://github.com/jameslnewell/tradie"><img alt="tradie" src="https://raw.githubusercontent.com/jameslnewell/tradie-v4/master/logo.png" height="60px" /></a>
+# <a href="https://github.com/jameslnewell/tradie"><img alt="tradie" src="https://raw.githubusercontent.com/jameslnewell/tradie-v4/master/docs/img/logo.png" height="60px" /></a>
 
 [![npm](https://img.shields.io/npm/v/tradie.svg)]()
 [![Travis](https://img.shields.io/travis/jameslnewell/tradie-v4.svg)]()
