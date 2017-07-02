@@ -29,7 +29,8 @@
     "clean": "tradie clean",
     "build": "tradie build && chmod 0755 ./lib/tradie.js",
     "watch": "tradie build --watch",
-    "test": "tradie test"
+    "test": "tradie test",
+    "postinstall": "yarn run build"
   },
   "license": "MIT"
 }

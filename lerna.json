@@ -6,6 +6,9 @@
   ],
   "npmClient": "yarn",
   "command": {
+    "bootstrap": {
+      "hoist": []
+    },
     "publish": {
       "npmTag": "next",
       "message": "chore: publish"

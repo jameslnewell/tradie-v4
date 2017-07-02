@@ -1,4 +1,6 @@
 {
+  "name": "tradie-monorepo",
+  "private": true,
   "engines": {
     "yarn": "^0.25.4"
   },
@@ -34,5 +36,6 @@
     "commitizen": {
       "path": "cz-conventional-changelog"
     }
-  }
+  },
+  "dependencies": {}
 }

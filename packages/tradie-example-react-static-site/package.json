@@ -11,5 +11,9 @@
     "build": "tradie build",
     "serve": "tradie serve",
     "test": "tradie test"
+  },
+  "dependencies": {
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
   }
 }

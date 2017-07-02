@@ -39,7 +39,7 @@ export default root => {
   } else {
     layout = {
       chunkName: 'layout',
-      buildPath: require.resolve(''), //TODO:
+      buildPath: null, //require.resolve(''), //TODO:
       clientPath: null
     };
   }
@@ -50,6 +50,7 @@ export default root => {
       Error('site.json: Page must be an array of strings.')
     );
   }
+
   const pages = site.pages.map(page => ({
     chunkName: path.relative('.', page),
     buildPath: getComponentPath(page),
