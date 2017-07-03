@@ -1,0 +1,15 @@
+{
+  "name": "tradie-example-template-react-component",
+  "version": "2.0.0",
+  "private": true,
+  "devDependencies": {
+    "tradie-template-react-component": "*"
+  },
+  "scripts": {
+    "clean": "tradie clean",
+    "lint": "tradie lint",
+    "build": "tradie build",
+    "watch": "tradie build --watch",
+    "test": "tradie test"
+  }
+}

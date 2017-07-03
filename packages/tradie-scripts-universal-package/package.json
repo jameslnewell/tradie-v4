@@ -1,0 +1,20 @@
+{
+  "name": "tradie-scripts-universal-package",
+  "version": "2.0.0",
+  "repository": "jameslnewell/tradie-v4",
+  "files": [
+    "lib"
+  ],
+  "tradie-template": "tradie-template-node-package",
+  "dependencies": {
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-uglify": "^2.0.1"
+  },
+  "scripts": {
+    "clean": "tradie clean",
+    "lint": "tradie lint",
+    "build": "tradie build",
+    "watch": "tradie build --watch",
+    "test": "tradie test"
+  }
+}
