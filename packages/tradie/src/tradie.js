@@ -1,25 +1,41 @@
 #!/usr/bin/env node
+import 'babel-polyfill';
 import path from 'path';
 import chalk from 'chalk';
 import yargs from 'yargs';
 import Template from './Template';
+import Scripts from './Scripts';
 
-Template.find()
+function getScriptsByNameOrTemplate(name, template) {
+  if (name) {
+    return Scripts.find(name);
+  } else {
+    return template.getScripts();
+  }
+}
+
+//configure the arguments
+yargs
+  .help()
+  .exitProcess()
+  .strict()
+  .usage('Usage: tradie <command> [options]')
+  .option('template', {
+    describe: 'The template to use'
+  })
+  .option('scripts', {
+    describe: 'The scripts to use'
+  })
+  .demandCommand(1, "run 'tradie help' for a list of available commands");
+
+//parse the arguments
+const {template: templateName, scripts: scriptsName} = yargs.argv;
+
+Template.find(templateName)
   .then(template =>
-    template.getScripts().then(scripts =>
+    getScriptsByNameOrTemplate(scriptsName, template).then(scripts =>
       scripts.describe(yargs).then(() => {
-        //configure the arguments
-        yargs
-          .help()
-          .exitProcess()
-          .strict()
-          .usage('Usage: tradie <command> [options]')
-          .demandCommand(
-            1,
-            "run 'tradie help' for a list of available commands"
-          );
-
-        //parse the arguments
+        //parse the arguments now the scripts have been registered
         const args = yargs.argv;
 
         //get the options

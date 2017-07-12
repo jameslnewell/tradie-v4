@@ -69,6 +69,8 @@ export default class Scripts {
 }
 
 Scripts.find = function(template) {
+  //TODO: implement variant to find by name
+
   return new Promise((resolve, reject) => {
     template
       .requireModule('./package.json')

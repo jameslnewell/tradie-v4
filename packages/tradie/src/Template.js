@@ -56,8 +56,32 @@ export default class Template {
   }
 }
 
-Template.find = function() {
+/**
+ * Get the name
+ */
+Template.find = function(name) {
   const projectDirectory = process.cwd();
+
+  if (name) {
+    //TODO: refactor resolve to be easier
+    //TODO: also try variants of template names without the prefix
+    //TODO: also look in the global directory
+    return new Promise((resolve, reject) => {
+      resolveModule(
+        `${name}/package.json`,
+        {basedir: projectDirectory},
+        (resolveError, file) => {
+          if (resolveError) {
+            reject(resolveError);
+          } else {
+            const templateDirectory = path.dirname(file);
+            resolve(new Template(name, templateDirectory));
+          }
+        }
+      );
+    });
+  }
+
   return import(path.join(
     projectDirectory,
     'package.json'
@@ -70,8 +94,8 @@ Template.find = function() {
       const projectDependencies = Object.keys(
         projectMetadata.devDependencies || {}
       );
-      const templateNames = projectDependencies.filter(name =>
-        TEMPLATE_NAME_REGEXP.test(name)
+      const templateNames = projectDependencies.filter(dependencyName =>
+        TEMPLATE_NAME_REGEXP.test(dependencyName)
       );
 
       if (templateNames.length === 0) {
