@@ -1,10 +1,8 @@
 // @flow
-import Files from '.';
 import finder from 'finder-on-steroids';
+import Files from '.';
 
 jest.mock('finder-on-steroids');
-
-console.log(finder.foo);
 
 describe('Files', () => {
   describe('.include()', () => {
