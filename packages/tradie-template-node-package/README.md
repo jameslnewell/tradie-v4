@@ -77,6 +77,10 @@ npm install --save-dev tradie-template-node-package
 
 ## Commands
 
+### `tradie create`
+
+Create the project files.
+
 ### `tradie clean`
 
 Remove generated files.
