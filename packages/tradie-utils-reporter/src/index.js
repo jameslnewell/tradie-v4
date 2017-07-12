@@ -145,7 +145,7 @@ export default class Reporter {
     } else if (this.hasWarnings()) {
       this.printMessages('warn', this.warningsByFile);
       console.log(
-        chalk.red(chalk.bold(`  ⚠️  ${this.finishedText} with warnings`))
+        chalk.yellow(chalk.bold(`  ⚠️  ${this.finishedText} with warnings`))
       );
     } else {
       console.log(chalk.green(`  ✅  ${this.finishedText} successfully.`));
