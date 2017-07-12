@@ -1,4 +1,4 @@
-//@flow
-import sum from './sum';
+// @flow
 
-console.log(sum(1, 1)); //eslint-disable-line no-console
+export default (...args: Array<number>): number =>
+  args.reduce((total, next) => total + next);
