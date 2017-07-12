@@ -36,9 +36,17 @@ export function format(directory: string, error: FlowError) {
         msg.context.substr(msg.start - 1, msg.end - msg.start + 1)
       )}${msg.context.substr(msg.end)}`;
 
-      const sourceCodePointer = `${' '.repeat(msg.start - 1)}${'^'.repeat(
-        msg.end - msg.start + 1
-      )}`;
+      let sourceCodePointer = '';
+      if (msg.endline === msg.startline) {
+        sourceCodePointer = `${' '.repeat(msg.start - 1)}${'^'.repeat(
+          msg.end - msg.start + 1
+        )}`;
+      } else {
+        //FIXME: handle when startline and endline aren't the same
+        //put a down marker at msg.start
+        //print context code
+        //put a up marker at msg.end
+      }
 
       const description = `${msg.descr}`;
 
