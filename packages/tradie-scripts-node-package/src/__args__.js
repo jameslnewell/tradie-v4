@@ -1,4 +1,5 @@
 export default function(yargs) {
+  yargs.command('create', 'create a new project');
   yargs.command('clean', 'remove generated files');
 
   yargs.command('lint', 'lint source and test files', {

@@ -15,7 +15,8 @@
     "tradie-utils-match": "^2.0.0",
     "tradie-utils-jest": "^2.0.0",
     "tradie-utils-reporter": "^2.0.0",
-    "tradie-utils-processor": "^2.0.0"
+    "tradie-utils-processor": "^2.0.0",
+    "tradie-utils-generator": "^2.0.0"
   },
   "scripts": {
     "clean": "tradie clean",
