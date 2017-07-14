@@ -1,0 +1,19 @@
+{
+  "name": "tradie-utils-group-exec",
+  "version": "2.0.0",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "dependencies": {
+    "tradie-utils-match": "^2.0.0"
+  },
+  "tradie-template": "tradie-template-node-package",
+  "scripts": {
+    "clean": "tradie clean",
+    "lint": "tradie lint",
+    "build": "tradie build",
+    "watch": "tradie build --watch",
+    "test": "tradie test"
+  }
+}
