@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import {getErrors} from '.';
+import {getErrors} from './messages';
 
 const report = {
   results: [

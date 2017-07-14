@@ -1,61 +1,73 @@
-import fs from 'fs';
-import chalk from 'chalk';
-import table from 'text-table';
+//@flow
+import fs from 'fs-extra';
 import {CLIEngine} from 'eslint';
+import GroupExecutor, {
+  type Group,
+  type GroupOrGroups
+} from 'tradie-utils-group-exec';
+import {getErrors, getWarnings} from './messages';
 
-export function getMessages(report, filter) {
-  const errors = {};
-  report.results.forEach(result => {
-    const file = result.filePath;
-    const text = table(
-      result.messages
-        .filter(filter)
-        .map(message => [
-          chalk.bold(`${message.line}:${message.column}`),
-          chalk.grey(message.ruleId || ''),
-          message.message
-        ]),
-      {align: ['r', 'l', 'l']}
-    );
-    errors[file] = text;
-  });
-  return errors;
-}
+export type GroupOptions = {
+  options: {}
+};
 
-export function getErrors(report) {
-  return getMessages(report, message => message.severity === 2);
-}
+export type GroupContext = {
+  engine: CLIEngine
+};
 
-export function getWarnings(report) {
-  return getMessages(report, message => message.severity === 1);
+function createContext({options}: Group<GroupOptions>) {
+  return {
+    engine: new CLIEngine({
+      ignore: false,
+      useEslintrc: false,
+      baseConfig: options
+    })
+  };
 }
 
 export default class Linter {
-  constructor(config) {
-    this.engine = new CLIEngine({
-      ignore: false,
-      useEslintrc: false,
-      baseConfig: config
-    });
+  /** @private */
+  executor: GroupExecutor<GroupOptions, GroupContext>;
+
+  /**
+   * @param {string}        root            The root directory where paths are matched from
+   * @param {GroupOrGroups} groupOrGroups   The groups
+   */
+  constructor(root: string, groupOrGroups: GroupOrGroups<GroupOptions>) {
+    this.executor = new GroupExecutor(createContext, groupOrGroups, {root});
   }
 
   /**
-   * Perform linting on a single file
-   * @param {string} file The full path to a file
+   * @param {string}        file            The full file path
    */
-  lint(file) {
-    return new Promise((resolve, reject) => {
-      fs.readFile(file, (readError, text) => {
-        if (readError) {
-          reject(readError);
-          return;
-        }
-        const report = this.engine.executeOnText(text.toString(), file);
-        resolve({
-          error: getErrors(report)[file],
-          warning: getWarnings(report)[file]
-        });
-      });
-    });
+  lint(file: string) {
+    return this.executor
+      .exec(file, (f, {engine}) =>
+        fs.readFile(file).then(text => {
+          const report = engine.executeOnText(text.toString(), file);
+          return {
+            error: getErrors(report)[file],
+            warning: getWarnings(report)[file]
+          };
+        })
+      )
+      .then(results =>
+        results.reduce(
+          (combined, result) => {
+            if (result.error) {
+              combined.error = combined.error
+                ? combined.error + result.error
+                : result.error;
+            }
+            if (result.warning) {
+              combined.warning = combined.warning
+                ? combined.warning + result.warning
+                : result.warning;
+            }
+            return combined;
+          },
+          {error: null, warning: null}
+        )
+      );
   }
 }
