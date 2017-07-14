@@ -9,12 +9,6 @@ import {
   type FileStatusMap
 } from './types';
 
-const STATUS_COLOR = {
-  A: 'green',
-  M: 'yellow',
-  D: 'red'
-};
-
 function printStatus(filePath: string, status: FileStatus) {
   console.log(chalk.yellow(`${chalk.bold(status)} ${filePath}`));
 }
