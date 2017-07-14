@@ -12,10 +12,10 @@ export default class TypeChecker {
   dest: string;
 
   /**
-   * 
+   *
    * @param {string} directory The directory containing the `.flowconfig` file
-   * @param {*} src 
-   * @param {*} dest 
+   * @param {*} src
+   * @param {*} dest
    */
   constructor(directory: string, src: string, dest: string) {
     this.directory = directory;
@@ -27,7 +27,7 @@ export default class TypeChecker {
    * Export the typings for a file
    * @param {string} file The full path to the file
    */
-  async typings(file: string) {
+  async export(file: string) {
     if (isFlowConfigured(this.directory)) {
       return;
     }

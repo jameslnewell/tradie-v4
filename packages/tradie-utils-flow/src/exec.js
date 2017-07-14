@@ -3,7 +3,7 @@ import flowPath from 'flow-bin';
 
 /**
  * Execute flow
- * @param {string[]} args 
+ * @param {string[]} args
  * @param {Object} options
  * @returns {Object}
  */
@@ -15,14 +15,19 @@ export default function(
     if (args[0] !== 'check') {
       args.push('--json');
     }
-
-    execFile(flowPath, [...args], options, (execError, stdout, stderr) => {
-      try {
-        resolve(JSON.parse(String(stdout)));
-      } catch (parseError) {
-        console.log(stdout, stderr);
-        reject(parseError);
+    //maxBuffer - process exits if more data is the max buffer
+    execFile(
+      flowPath,
+      [...args],
+      {...options, maxBuffer: 2000 * 1024},
+      (execError, stdout, stderr) => {
+        try {
+          resolve(JSON.parse(String(stdout)));
+        } catch (parseError) {
+          console.log(stdout, stderr);
+          reject(parseError);
+        }
       }
-    });
+    );
   });
 }
