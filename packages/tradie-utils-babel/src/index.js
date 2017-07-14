@@ -1,46 +1,42 @@
-import fs from 'fs';
-import path from 'path';
-import mkdirp from 'mkdirp';
-import {transformFile} from 'babel-core';
+//@flow
+import GroupExecutor, {
+  type Group,
+  type GroupOrGroups
+} from 'tradie-utils-group-exec';
+import transpile from './transpile';
+
+export type TranspilerContext = {
+  src: string,
+  dest: string,
+  options: {}
+};
+
+function createContext({src, dest, options}: Group<TranspilerContext>) {
+  return {
+    src,
+    dest,
+    options
+  };
+}
 
 export default class Transpiler {
-  constructor(src, dest, options) {
-    this.src = src;
-    this.dest = dest;
-    this.options = options;
+  /** @private */
+  executor: GroupExecutor<TranspilerContext, TranspilerContext>;
+
+  /**
+   * @param {string}        root            The root directory where paths are matched from
+   * @param {GroupOrGroups} groupOrGroups   The groups
+   */
+  constructor(root: string, groupOrGroups: GroupOrGroups<TranspilerContext>) {
+    this.executor = new GroupExecutor(createContext, groupOrGroups, {root});
   }
 
-  destFile(file) {
-    const relFilePath = path.relative(this.src, file);
-    const pathinfo = path.parse(relFilePath);
-    pathinfo.ext = '.js';
-    return path.join(this.dest, path.format(pathinfo));
-  }
-
-  transpile(file) {
-    return new Promise((resolve, reject) => {
-      const srcFile = file;
-      const destFile = this.destFile(file);
-      transformFile(srcFile, this.options || {}, (babelError, result) => {
-        if (babelError) {
-          reject(babelError); //TODO: strip stack trace
-          return;
-        }
-        mkdirp(path.dirname(destFile), mkdirError => {
-          if (mkdirError) {
-            reject(mkdirError);
-            return;
-          }
-          fs.writeFile(destFile, result.code, writeError => {
-            if (writeError) {
-              reject(writeError);
-              return;
-            }
-            resolve();
-          });
-          // fs.writeFileSync(`${path.join(opts.dest, file)}.map`, result.map);
-        });
-      });
-    });
+  /**
+   * @param {string}        file            The full file path
+   */
+  transpile(file: string) {
+    return this.executor.exec(file, (f, {src, dest, options}) =>
+      transpile(f, src, dest, options)
+    );
   }
 }
