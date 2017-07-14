@@ -1,38 +1,116 @@
+import wp from 'webpack';
 import {rollup} from 'rollup';
-import babel from 'rollup-plugin-babel';
+import Files from 'tradie-utils-file';
+import Linter from 'tradie-utils-eslint';
+import Transpiler from 'tradie-utils-babel';
+import TypeChecker from 'tradie-utils-flow';
+import Reporter from 'tradie-utils-reporter';
 
-
-const config = {
-  entry: './src/index.js',
-  external: id => {
-    console.log('module id':, id);
-    //TODO: chekc the module is inside the `src` dir
-  },
-  plugins: [
-    replace({
-      'process.env.NODE_ENV': JSON.stringify(prod ? 'production' : 'development'),
-    }),
-    babel({}),
-    uglify()
-    //rollup-plugin-node-resolve //for pkg.browser
-    //rollup-plugin-node-builtins //for `process.env`
-  ]
+function runRollup(rollupOptions) {
+  rollupOptions = [].concat(rollupOptions);
+  return Promise.all(
+    rollupOptions.map(options =>
+      rollup(options).then(bundle =>
+        Promise.all(options.targets.map(target => bundle.write(target)))
+      )
+    )
+  ); //TODO: report errors
 }
 
-//TODO: minified version of UMD
-//TODO: babel for lib
+export default async function(options) {
+  const {root, eslint, babel, rollup, webpack} = options;
 
-export default function(options) {
-  return Promise.all(config.map(cfg => new Promise((resolve, reject) => {
-    mkdirp(path.dirname(cfg.dest), mkdirError => {
-      if (mkdirError) return reject(mkdirError);
-      rollup.rollup(cfg.options).then(bundle => {
-          return bundle.write({
-            format: cfg.format, //umd, es
-            dest: cfg.dest, //./dist/<package-name>.es.js
-            sourceMap: true
-          })
+  const linter = new Linter(root, eslint);
+  const transpiler = new Transpiler(root, babel);
+  const typechecker = new TypeChecker(root);
+
+  const reporter = new Reporter({
+    directory: root,
+    startedText: 'Building',
+    finishedText: 'Built'
+  });
+
+  function lint(file) {
+    return linter.lint(file).then(result => {
+      if (result.error) reporter.error(file, result.error);
+      if (result.warning) reporter.warning(file, result.warning);
+    });
+  }
+
+  function transpile(file) {
+    return transpiler
+      .transpile(file)
+      .catch(error => reporter.error(file, error));
+  }
+
+  function exportTypes(file) {
+    return typechecker.export(file).catch(error => reporter.error(file, error));
+  }
+
+  function bundle() {
+    return runRollup(rollup).catch(error => reporter.errored(error)); //TODO: report errors for individual files
+  }
+
+  function checkTypes() {
+    return typechecker.check().then(result => {
+      result.errors.forEach(error => reporter.error(error.file, error.message));
+      result.warnings.forEach(warning =>
+        reporter.error(warning.file, warning.message)
+      );
+    });
+  }
+
+  //TODO: create webpack bundle+html for demo
+  function demo() {
+    return new Promise((resolve, reject) => {
+      if (!webpack) {
+        resolve();
+        return;
+      }
+
+      wp(webpack, (error, stats) => {
+        if (error) {
+          reject(error);
+          return;
+        }
+
+        if (stats.hasErrors()) {
+          console.log(stats.toJson().errors);
+        }
+
+        if (stats.hasWarnings()) {
+          console.log(stats.toJson().warnings);
+        }
+
+        resolve();
       });
     });
-  })));
+  }
+
+  function processFile(file) {
+    return Promise.all([lint(file), transpile(file), exportTypes(file)]);
+  }
+
+  function processFiles() {
+    const files = new Files(
+      root,
+      {
+        include: 'src/**'
+      } /* FIXME: {include, exclude} - merge from babel and eslint groups */
+    );
+    return Promise.all([
+      files.list().then(list => Promise.all(list.map(processFile))),
+      bundle(),
+      demo(),
+      checkTypes()
+    ]);
+  }
+
+  reporter.started();
+  processFiles().then(
+    () => reporter.finished(),
+    error => reporter.errored(error)
+  );
+
+  await reporter.wait();
 }

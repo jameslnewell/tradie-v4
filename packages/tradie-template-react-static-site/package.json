@@ -26,7 +26,7 @@
     "babili-webpack-plugin": "0.0.11",
     "css-loader": "^0.28.0",
     "eslint": "^3.17.1",
-    "eslint-config-jameslnewell": "^3.0.2",
+    "eslint-config-jameslnewell": "^3.0.3",
     "eslint-loader": "^1.6.3",
     "ext-to-regex": "^0.1.0",
     "extract-text-webpack-plugin": "^2.1.0",

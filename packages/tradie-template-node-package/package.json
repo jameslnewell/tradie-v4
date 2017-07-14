@@ -14,7 +14,7 @@
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.5.1",
     "babel-preset-flow": "^6.23.0",
-    "eslint-config-jameslnewell": "^3.0.2",
+    "eslint-config-jameslnewell": "^3.0.3",
     "tradie": "^6.0.0",
     "tradie-scripts-node-package": "^2.0.0",
     "tradie-utils-jest": "^2.0.0"

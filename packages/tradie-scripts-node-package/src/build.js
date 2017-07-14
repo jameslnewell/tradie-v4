@@ -13,6 +13,8 @@ export default function(options) {
   const transpiler = new Transpiler(src, dest, babel);
   const typechecker = new TypeChecker(root, src, dest);
 
+  //FIXME: copy non-script files
+
   const processor = new Processor(root, {
     watch,
     include,

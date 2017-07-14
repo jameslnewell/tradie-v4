@@ -1,84 +1,52 @@
-// const path = require('path');
-// const babel = require('rollup-plugin-babel');
+import fs from 'fs-extra';
+import path from 'path';
+import {
+  SOURCE_FILES,
+  TEST_FILES,
+  MOCK_FILES,
+  FIXTURE_FILES
+} from './utils/paths';
+import * as eslint from './utils/eslint';
+import * as babel from './utils/babel';
+import * as rollup from './utils/rollup';
+import * as webpack from './utils/webpack';
 
-// const root = path.resolve('.');
-// const src = path.resolve('src');
-// const dest = path.resolve('dist');
+export default function(cliOptions) {
+  const {root} = cliOptions;
 
-// const pkg = require(path.resolve('./package.json'));
+  const src = path.join(root, 'src');
+  const include = SOURCE_FILES;
+  const exclude = [TEST_FILES, MOCK_FILES, FIXTURE_FILES];
 
-// module.exports = {
-
-//   babel: [
-
-//     //transpile to es5 commonjs for legacy
-//     {
-//       src,
-//       dest: path.join(dest, 'es5-commonjs'),
-//       include: /\.jsx?$/,
-//       exclude: /\.test\.jsx?$/,
-//       options: {
-//         babelrc: false,
-//         presets: [
-//           require.resolve('babel-preset-env'),
-//           require.resolve('babel-preset-react')
-//         ],
-//         plugins: [
-//           require.resolve('babel-plugin-transform-object-rest-spread')
-//         ]
-//       }
-//     },
-
-//     //transpile except for es modules for treeshaking
-//     {
-//       src,
-//       dest: path.join(dest, 'es-modules'),
-//       include: /\.jsx?$/,
-//       exclude: /\.test\.jsx?$/,
-//       options: {
-//         babelrc: false,
-//         presets: [
-//           [require.resolve('babel-preset-env'), {modules: false}],
-//           require.resolve('babel-preset-react')
-//         ],
-//         plugins: [
-//           require.resolve('babel-plugin-transform-object-rest-spread')
-//         ]
-//       }
-//     }
-
-//   ],
-
-//   rollup: [
-
-//     //non-optimized UMD bundle
-//     {
-//       format: 'umd',
-//       dest: path.join(dest, `${pkg.name}.js`),
-//       options: {
-//         entry: path.join(src, 'index.js'), //TODO: check for index.jsx too
-//         external: Object.keys(pkg.dependencies || {}),
-//         plugins: [
-//           babel({
-//             babelrc: false,
-//             exclude: 'node_modules/**',
-//             presets: [
-//               [require.resolve('babel-preset-env'), {modules: false}],
-//               require.resolve('babel-preset-react')
-//             ],
-//             plugins: [
-//               require.resolve('babel-plugin-transform-object-rest-spread')
-//             ]
-//           })
-//         ]
-//       }
-//     },
-
-//     //optimized UMD bundle
-//     // {
-
-//     // }
-
-//   ]
-
-// };
+  return {
+    root,
+    eslint: [
+      {
+        include,
+        exclude,
+        options: eslint.getSourceOptions()
+      }
+    ],
+    babel: [
+      {
+        include,
+        exclude,
+        src,
+        dest: path.join(root, 'dist/cjs'),
+        options: babel.getCommonJSOptions()
+      },
+      {
+        include,
+        exclude,
+        src,
+        dest: path.join(root, 'dist/es'),
+        options: babel.getESModuleOptions()
+      }
+    ],
+    rollup: [
+      rollup.getUMDOptions({root, optimized: false}),
+      rollup.getUMDOptions({root, optimized: true})
+    ],
+    webpack: webpack.getOptions({root})
+  };
+}

@@ -5,10 +5,15 @@
   "files": [
     "lib"
   ],
-  "tradie-template": "tradie-template-node-package",
   "dependencies": {
-    "rollup-plugin-babel": "^2.7.1",
-    "rollup-plugin-uglify": "^2.0.1"
+    "del": "^3.0.0",
+    "rollup": "^0.43.0",
+    "webpack": "^3.2.0",
+    "tradie-utils-file": "^2.0.0",
+    "tradie-utils-babel": "^2.0.0",
+    "tradie-utils-flow": "^2.0.0",
+    "tradie-utils-eslint": "^2.0.0",
+    "tradie-utils-reporter": "^2.0.0"
   },
   "scripts": {
     "clean": "tradie clean",
@@ -16,5 +21,6 @@
     "build": "tradie build",
     "watch": "tradie build --watch",
     "test": "tradie test"
-  }
+  },
+  "tradie-template": "tradie-template-node-package"
 }
