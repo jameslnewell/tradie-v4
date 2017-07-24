@@ -1,4 +1,3 @@
-import path from 'path';
 import generator from 'tradie-utils-generator';
 
 export default function(options) {

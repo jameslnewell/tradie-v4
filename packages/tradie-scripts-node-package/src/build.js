@@ -4,33 +4,35 @@ import Transpiler from 'tradie-utils-babel';
 import TypeChecker from 'tradie-utils-flow';
 import Processor from 'tradie-utils-processor';
 import lint from './utils/lint';
+import transpile from './utils/transpile';
 import check from './utils/check';
 
 export default function(options) {
-  const {root, src, dest, include, exclude, babel, eslint, watch} = options;
+  const {root, src, dest, eslint, babel, watch} = options;
 
-  const linter = new Linter(eslint);
-  const transpiler = new Transpiler(src, dest, babel);
+  const linter = new Linter(root, eslint);
+  const transpiler = new Transpiler(root, babel);
   const typechecker = new TypeChecker(root, src, dest);
-
-  //FIXME: copy non-script files
 
   const processor = new Processor(root, {
     watch,
-    include,
-    exclude,
+    include: [
+      ...eslint.map(o => o.include),
+      ...babel.map(o => o.include)
+    ].reduce((a, b) => a.concat(b), []),
+    // exclude: //FIXME: include eslint[x].include and babel[x].include to include perf,
 
-    unlink: file => del([babel.destFile(file), typechecker.destFile(file)]), //FIXME:
+    startedText: 'Building',
+    finishedText: 'Built',
+
+    unlink: () => del([]), //FIXME:
     process: (file, report) =>
       Promise.all([
         lint(linter)(file, report),
-        transpiler.transpile(file).catch(error => report.error(file, error, 1)),
-        typechecker.typings(file)
+        transpile(transpiler)(file, report),
+        typechecker.export(file).catch(error => report.error(file, error))
       ]),
-    postProcessing: report => check(typechecker)(report),
-
-    startedText: 'Building',
-    finishedText: 'Built'
+    postProcessing: report => check(typechecker)(report)
   });
 
   process.on('SIGINT', () => {
