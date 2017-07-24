@@ -32,17 +32,20 @@ export function format(directory: string, error: FlowError) {
     if (msg.type === 'Blame') {
       const lineAndColumn = sprintf('%3d:%-3d', msg.line, msg.start);
 
-      const sourceCode = `${msg.context.substr(0, msg.start - 1)}${chalk.red(
-        msg.context.substr(msg.start - 1, msg.end - msg.start + 1)
-      )}${msg.context.substr(msg.end)}`;
+      //FIXME: when context is undefined
+      const sourceCode = msg.context
+        ? `${msg.context.substr(0, msg.start - 1)}${chalk.red(
+            msg.context.substr(msg.start - 1, msg.end - msg.start + 1)
+          )}${msg.context.substr(msg.end)}`
+        : '';
 
       let sourceCodePointer = '';
-      if (msg.endline === msg.startline) {
+      if (msg.endline !== msg.startline && msg.start < msg.end) {
         sourceCodePointer = `${' '.repeat(msg.start - 1)}${'^'.repeat(
           msg.end - msg.start + 1
         )}`;
       } else {
-        //FIXME: handle when startline and endline aren't the same
+        //FIXME: handle when startline and endline aren't the same line or when its reversed
         //put a down marker at msg.start
         //print context code
         //put a up marker at msg.end

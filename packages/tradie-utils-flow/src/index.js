@@ -6,6 +6,8 @@ import isFlowConfigured from './isFlowConfigured';
 import isFileAnnotated from './isFileAnnotated';
 import {getErrors, getWarnings} from './messages';
 
+export {isFlowConfigured as isConfigured};
+
 export default class TypeChecker {
   directory: string;
   src: string;
@@ -28,7 +30,8 @@ export default class TypeChecker {
    * @param {string} file The full path to the file
    */
   async export(file: string) {
-    if (isFlowConfigured(this.directory)) {
+    //check if flow is configured before wasting time checking and getting errors
+    if (!isFlowConfigured(this.directory)) {
       return;
     }
 
@@ -43,7 +46,7 @@ export default class TypeChecker {
   }
 
   async check() {
-    //check if flow is configured before wasting time checking
+    //check if flow is configured before wasting time checking and getting errors
     if (!isFlowConfigured(this.directory)) {
       return {errors: [], warnings: []};
     }

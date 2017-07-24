@@ -189,4 +189,87 @@ describe('messages', () => {
       );
     });
   });
+
+  /*
+
+//see https://github.com/facebook/flow/blob/master/src/common/errors/errors.ml
+//see https://github.com/facebook/flow/blob/f10f8fa92a3081ec6c7a28877310fdcbabbfd89e/tsrc/flowResult.js
+
+{
+  "kind":"infer",
+  "level":"error",
+  "suppressions":[
+
+  ],
+  "message":[
+    {
+        "context":"  [path: string]: File",
+        "descr":"property `contents` of object type",
+        "type":"Blame",
+        "loc":{
+          "source":"/Users/james/code/tradie/tradie-v4/packages/tradie-utils-generator/src/types.js",
+          "type":"SourceFile",
+          "start":{
+              "line":8,
+              "column":19,
+              "offset":95
+          },
+          "end":{
+              "line":8,
+              "column":22,
+              "offset":99
+          }
+        },
+        "path":"/Users/james/code/tradie/tradie-v4/packages/tradie-utils-generator/src/types.js",
+        "line":8,
+        "endline":8,
+        "start":19,
+        "end":22
+    },
+    {
+        "context":null,
+        "descr":"Property not found in",
+        "type":"Comment",
+        "path":"",
+        "line":0,
+        "endline":0,
+        "start":1,
+        "end":0
+    },
+    {
+        "context":"    list(): string[] {",
+        "descr":"function",
+        "type":"Blame",
+        "loc":{
+          "source":"/Users/james/code/tradie/tradie-v4/packages/tradie-utils-generator/src/vfs.js",
+          "type":"SourceFile",
+          "start":{
+              "line":19,
+              "column":9,
+              "offset":357
+          },
+          "end":{
+              "line":21,
+              "column":5,
+              "offset":410
+          }
+        },
+        "path":"/Users/james/code/tradie/tradie-v4/packages/tradie-utils-generator/src/vfs.js",
+        "line":19,
+        "endline":21,
+        "start":9,
+        "end":5
+    }
+  ]
+},
+
+src/types.js:8
+  8:   [path: string]: File
+                       ^^^^ property `contents` of object type. Property not found in
+             v-------------
+ 19:     list(): string[] {
+ 20:       return Object.keys(files);
+ 21:     },
+         ^ function. See: src/vfs.js:19
+*/
 });
