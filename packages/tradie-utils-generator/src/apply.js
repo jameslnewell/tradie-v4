@@ -3,21 +3,17 @@ import path from 'path';
 import fs from 'fs-extra';
 import {type FileMap, type FileStatusMap} from './types';
 
-export type ApplyOptions = {};
-
 /**
  * Apply differences to disk
- * @param {string} dest 
- * @param {FileStatusMap} statuses 
- * @param {FileMap} oldFiles 
- * @param {FileMap} newFiles 
- * @param {ApplyOptions} opts 
+ * @param {string} dest
+ * @param {FileStatusMap} statuses
+ * @param {FileMap} oldFiles
+ * @param {FileMap} newFiles
  */
 export default function(
   dest: string,
   statuses: FileStatusMap,
-  newFiles: FileMap,
-  opts: ApplyOptions = {}
+  newFiles: FileMap
 ) {
   return Promise.all(
     Object.keys(statuses).map(filePath => {
@@ -29,14 +25,15 @@ export default function(
         case 'M':
           return fs
             .ensureDir(path.dirname(destFilePath))
-            .then(
-              () =>
-                console.log(destFilePath, newFiles[filePath].contents) ||
-                fs.writeFile(destFilePath, newFiles[filePath].contents)
+            .then(() =>
+              fs.writeFile(destFilePath, newFiles[filePath].contents)
             );
 
         case 'D':
           return fs.unlink(destFilePath);
+
+        default:
+          return Promise.reject('Unknown status');
       }
     })
   );

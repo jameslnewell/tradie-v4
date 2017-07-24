@@ -17,9 +17,9 @@ export default function(directory: string, generate: FileMap => FileMap) {
     const vfs = create({files: newFiles});
     return Promise.resolve(generate(vfs)).then(() => {
       const statuses = diff(oldFiles, newFiles);
-      return accept(statuses, oldFiles, newFiles).then(accepted => {
-        return apply(directory, accepted, newFiles);
-      });
+      return accept(statuses, oldFiles, newFiles).then(accepted =>
+        apply(directory, accepted, newFiles)
+      );
     });
   });
 }

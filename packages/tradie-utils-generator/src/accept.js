@@ -20,7 +20,7 @@ function printDiff(
   newFile: File
 ) {
   switch (status) {
-    case 'M':
+    case 'M': {
       const oldContents = oldFile.contents;
       const newContents = newFile.contents;
 
@@ -36,19 +36,20 @@ function printDiff(
         }
         const output = lines
           .map(line => {
-            line = line.replace(/(?:\r)?\n/, '\\n');
+            const filteredLine = line.replace(/(?:\r)?\n/, '\\n');
             if (change.added) {
-              return chalk.green(line);
+              return chalk.green(filteredLine);
             } else if (change.removed) {
-              return chalk.red(line);
+              return chalk.red(filteredLine);
             } else {
-              return `${line}`;
+              return `${filteredLine}`;
             }
           })
           .join('\n');
         console.log(output);
       });
       break;
+    }
 
     default:
       break;
@@ -89,6 +90,7 @@ export default function(
           } else {
             console.log();
             acceptedStatuses[filePath] = status;
+            return Promise.resolve();
           }
         }),
       Promise.resolve()

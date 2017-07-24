@@ -1,4 +1,5 @@
 //@flow
+/* eslint-disable import/prefer-default-export */
 import {type FileMap} from './types';
 
 export type Options = {
@@ -10,9 +11,9 @@ export function create(opts: Options = {}) {
 
   /**
    * Normalise the filename
-   * @param {string} file 
+   * @param {string} file
    */
-  const normalise = file => file;
+  const normalise = (file: string): string => file;
 
   const vfs = {
     list(): string[] {
@@ -39,9 +40,10 @@ export function create(opts: Options = {}) {
     write(file: string, contents: string) {
       const filename = normalise(file);
       if (!files[filename]) {
-        files[filename] = {contents: ''};
+        files[filename] = {contents};
+      } else {
+        files[filename].contents = contents;
       }
-      files[filename].contents = contents;
     },
 
     writeJSON(file: string, contents: any) {

@@ -13,14 +13,15 @@ export type ListOptions = {
 
 /**
  * List all files
- * @param {string} src 
- * @param {ReadOptions} [opts] 
+ * @param {string} src
+ * @param {ListOptions} [opts]
  */
 export default function(
   src: string,
   opts: ListOptions = {exclude: /\/node_modules\//}
 ): Promise<FileMap> {
-  const filter = file => match(opts);
+  const {include, exclude} = opts;
+  const filter = file => match({include, exclude});
   return finder(src)
     .files()
     .filter(filter)
