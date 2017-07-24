@@ -47,14 +47,12 @@ export default class GroupExecutor<GroupOptions, GroupContext> {
     file: string,
     fn: (file: string, context: GroupContext) => any | Promise<any>
   ) {
-    return Promise.all(
-      this.matchers.map((matcher, index) => {
-        if (matcher(file)) {
-          return fn(file, this.contexts[index]);
-        } else {
-          return null;
-        }
-      })
-    );
+    const promises = [];
+    this.matchers.forEach((matcher, index) => {
+      if (matcher(file)) {
+        promises.push(fn(file, this.contexts[index]));
+      }
+    });
+    return Promise.all(promises);
   }
 }
