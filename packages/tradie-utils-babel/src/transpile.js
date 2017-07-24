@@ -10,8 +10,10 @@ export function getDestPath(file: string, src: string, dest: string) {
 
   //replace the extension with JS
   const pathinfo = path.parse(destFilePath);
-  pathinfo.ext = '.js';
-  return path.format(pathinfo);
+  return path.format({
+    ...pathinfo,
+    ext: '.js'
+  });
 }
 
 export default function(file: string, src: string, dest: string, options: {}) {
