@@ -21,6 +21,8 @@ type FlowError = {
 
 type FlowResult = {};
 
+// See https://github.com/torifat/flowtype-loader/blob/master/lib/flowResult.js
+
 export function format(directory: string, error: FlowError) {
   //TODO: format like eslint
   let file = null;

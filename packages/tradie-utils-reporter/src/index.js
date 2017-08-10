@@ -1,49 +1,35 @@
 // @flow
 /* eslint-disable no-console */
-import path from 'path';
 import chalk from 'chalk';
 import {clear} from 'tradie-utils-cli';
-import printMessages from './printMessages';
-
-type Message = {
-  content: Error | string,
-  priority: number
-};
-
-const noop = () => {
-  /* do nothing */
-};
+import {type Data, type Record} from './log/types';
+import Collector from './log/Collector';
+import {formatLogs} from './log/formatting';
 
 export type Options = {
   watch?: boolean,
   directory?: string,
   startedText?: string,
-  finishedText?: string,
-  beforeFinished?: () => any,
-  afterFinished?: () => any
+  finishedText?: string
 };
 
+export type EventHandler = () => void | Promise<void>;
+
 export default class Reporter {
-  /** 
+  /**
    * The number of compilations currently in progress
    * @private
    */
   running = 0;
 
   /**
-   * The timeout to determine if we're still running 
-   * @private 
+   * The timeout to determine if we're still running
+   * @private
    */
   runningTimeout = null;
 
   /** @private */
   directory: ?string;
-
-  /** @private */
-  errorsByFile = {};
-
-  /** @private */
-  warningsByFile = {};
 
   /** @private */
   promise = null;
@@ -69,34 +55,26 @@ export default class Reporter {
    */
   finishedText: string;
 
-  /**
-   * A function executed before the compilation has finished and the messages have been printed
-   * @private
-   */
-  beforeFinished: () => any;
+  /** @private */
+  logs: Collector = new Collector();
 
-  /**
-   * A function executed after the compilation has finished and the messages have been printed
-   * @private
-   */
-  afterFinished: () => any;
+  /** @private */
+  events: {[name: string]: EventHandler[]} = {};
 
   constructor(options: Options = {}) {
     const {
       watch = false,
       directory,
       startedText = 'Starting',
-      finishedText = 'Finished',
-      beforeFinished = noop,
-      afterFinished = noop
+      finishedText = 'Finished'
     } = options;
 
     this.directory = directory;
     this.watch = watch;
+
     this.startedText = startedText;
     this.finishedText = finishedText;
-    this.beforeFinished = beforeFinished;
-    this.afterFinished = afterFinished;
+
     this.promise = new Promise((resolve, reject) => {
       this.resolve = resolve;
       this.reject = reject;
@@ -121,29 +99,26 @@ export default class Reporter {
   }
 
   /** @private */
-  printMessages(type: string, messages: {[file: string]: Array<Message>}) {
-    Object.keys(messages).forEach(file => {
-      //make the path relative to the directory
-      let filename = file;
-      if (this.directory) {
-        filename = path.relative(this.directory, file); //eslint-disable-line no-param-reassign
-      }
-
-      printMessages(type, filename, messages[file]);
-    });
+  printMessages(level: string) {
+    console.log(
+      formatLogs(this.logs.filter(log => log.level === level), {
+        cwd: this.directory
+      })
+    );
   }
 
   /** @private */
   printEndOfReport() {
     clear();
     console.log();
+    this.printMessages('info');
     if (this.hasErrors()) {
-      this.printMessages('error', this.errorsByFile);
+      this.printMessages('error');
       console.log(
         chalk.red(chalk.bold(`  ❌  ${this.finishedText} with errors`))
       );
     } else if (this.hasWarnings()) {
-      this.printMessages('warn', this.warningsByFile);
+      this.printMessages('warn');
       console.log(
         chalk.yellow(chalk.bold(`  ⚠️  ${this.finishedText} with warnings`))
       );
@@ -155,49 +130,61 @@ export default class Reporter {
     return this;
   }
 
-  hasErrors() {
-    return Object.keys(this.errorsByFile).length;
+  /** @private */
+  trigger(type: string): Promise<void> {
+    if (!this.events[type]) {
+      return Promise.resolve();
+    }
+    return Promise.all(this.events[type].map(fn => fn())).then(() => {});
   }
 
-  /**
-   * Raise an error message for a specific file
-   * @param {string} file 
-   * @param {Error|string} message 
-   * @param {number} priority 
-   */
-  error(file: string, message: Error | string, priority: number = 0) {
-    if (!this.errorsByFile[file]) {
-      this.errorsByFile[file] = [];
+  before(event: string, fn: EventHandler) {
+    const type = `before:${event}`;
+    if (!this.events[type]) {
+      this.events[type] = [];
     }
-
-    this.errorsByFile[file].push({
-      priority,
-      content: message
-    });
-
+    this.events[type].push(fn);
     return this;
   }
 
-  hasWarnings() {
-    return Object.keys(this.warningsByFile).length;
+  after(event: string, fn: EventHandler) {
+    const type = `after:${event}`;
+    if (!this.events[type]) {
+      this.events[type] = [];
+    }
+    this.events[type].push(fn);
+    return this;
   }
 
-  /**
-   * Raise a warning message for a specific file
-   * @param {string} file 
-   * @param {Error|string} message 
-   * @param {number} priority 
-   */
-  warning(file: string, message: Error | string, priority: number = 0) {
-    if (!this.warningsByFile[file]) {
-      this.warningsByFile[file] = [];
-    }
+  hasInfo() {
+    return this.logs.filter(log => log.level === 'info').length > 0;
+  }
 
-    this.warningsByFile[file].push({
-      priority,
-      content: message
-    });
+  hasWarnings() {
+    return this.logs.filter(log => log.level === 'warn').length > 0;
+  }
 
+  hasErrors() {
+    return this.logs.filter(log => log.level === 'error').length > 0;
+  }
+
+  log(record: Record) {
+    this.logs.log(record);
+    return this;
+  }
+
+  info(data: Data) {
+    this.logs.info(data);
+    return this;
+  }
+
+  warn(data: Data) {
+    this.logs.warn(data);
+    return this;
+  }
+
+  error(data: Data) {
+    this.logs.error(data);
     return this;
   }
 
@@ -209,9 +196,8 @@ export default class Reporter {
 
     //if this is the first compilation running, and we're not waiting for other compilations to start then
     if (this.running === 1 && !this.runningTimeout) {
-      //clear errors and warnings
-      this.errorsByFile = {};
-      this.warningsByFile = {};
+      //clear the logs
+      this.logs.clear();
 
       //print the start of the report
       this.printStartOfReport();
@@ -244,7 +230,7 @@ export default class Reporter {
         }
 
         //let the caller do stuff before the report is printed
-        Promise.resolve(this.beforeFinished()).then(
+        this.trigger('before:finished').then(
           () => {
             //wait for any running compilations to finish
             if (this.running || this.runningTimeout) {
@@ -255,7 +241,7 @@ export default class Reporter {
             this.printEndOfReport();
 
             //let the caller do stuff after the report is printed
-            return Promise.resolve(this.afterFinished()).then(() => {
+            return this.trigger('after:finished').then(() => {
               //if we're not watching and all the compilations have finished, then resolve or reject
               if (!this.watch && !this.running && !this.runningTimeout) {
                 this.resolveOrReject();
@@ -272,7 +258,7 @@ export default class Reporter {
 
   /**
    * A fatal error occurred. Stop immedietly.
-   * @param {Error} error 
+   * @param {Error} error
    */
   errored(error: any) {
     if (this.reject) this.reject(error);

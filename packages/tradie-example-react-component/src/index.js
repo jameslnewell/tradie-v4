@@ -4,9 +4,9 @@ import styled from 'styled-components';
 
 const Button = styled.button`
   padding: 1em;
-  color: blue;
+  color: blues;
 `;
 
-const Component = () => <Button>Hello World!</Button>;
+const Component = () => <Button>Hello Worlds!</Button>;
 
 export default Component;

@@ -10,6 +10,8 @@
     "babel-preset-env": "^1.5.1",
     "babel-preset-react": "^6.24.1",
     "babel-plugin-transform-runtime":"^6.23.0",
+    "babel-plugin-transform-react-jsx-source":"^6.22.0",
+    "babel-plugin-transform-react-jsx-self":"^6.22.0",
     "eslint-config-jameslnewell": "^3.0.3",
     "html-webpack-plugin":"^2.29.0",
     "rollup-plugin-babel": "^2.7.1",
@@ -18,7 +20,9 @@
     "rollup-plugin-replace": "^1.1.1",
     "rollup-plugin-uglify": "^2.0.1",
     "to-pascal-case": "^1.0.0",
+    "tradie": "^6.0.0",
     "tradie-scripts-universal-package": "^2.0.0",
+    "tradie-utils-jest": "^2.0.0",
     "webpack": "^3.2.0"
   },
   "scripts": {

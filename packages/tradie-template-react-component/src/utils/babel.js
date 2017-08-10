@@ -12,7 +12,7 @@ function getCommonOptions({modules = true}) {
     presets: [
       [
         require.resolve('babel-preset-env'),
-        {modules: modules ? 'commonjs' : false}
+        {modules: modules ? 'commonjs' : false, targets: {ie: 9, uglify: true}}
       ],
       require.resolve('babel-preset-react')
     ],
@@ -39,10 +39,30 @@ export function getUMDOptions() {
   const options = getCommonOptions({modules: false});
   options.include = SOURCE_FILES;
   options.plugins.push(require.resolve('babel-plugin-external-helpers'));
+  //TODO: when optimized babel-plugin-transform-react-remove-prop-types
   return options;
 }
 
-export function getDemoOptions() {
+export function getExampleOptions() {
   const options = getCommonOptions({modules: false});
+  options.plugins.push(
+    require.resolve('babel-plugin-transform-react-jsx-source')
+  ); //FIXME: only in dev
+  options.plugins.push(
+    require.resolve('babel-plugin-transform-react-jsx-self')
+  );
+  //TODO: when optimized babel-plugin-transform-react-remove-prop-types
+  return options;
+}
+
+export function getTestOptions() {
+  const options = getCommonOptions({modules: true});
+  options.plugins.push(
+    require.resolve('babel-plugin-transform-react-jsx-source')
+  ); //FIXME: only in dev
+  options.plugins.push(
+    require.resolve('babel-plugin-transform-react-jsx-self')
+  );
+  //TODO: when optimized babel-plugin-transform-react-remove-prop-types
   return options;
 }

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import path from 'path';
 import toPascalCase from 'to-pascal-case';
 import babelPlugin from 'rollup-plugin-babel';
@@ -17,7 +18,7 @@ export function getUMDOptions(options) {
   const libraryName = toPascalCase(packageName);
 
   const rollupOptions = {
-    entry: 'src/index.js', //TODO: check for index.js or index.jsx
+    entry: 'src/index.js', //FIXME: check for index.js or index.jsx
     external: [].concat(
       Object.keys(manifest.dependencies || {}),
       Object.keys(manifest.devDependencies || {}),
@@ -25,7 +26,9 @@ export function getUMDOptions(options) {
       Object.keys(manifest.optionalDependencies || {})
     ),
     plugins: [
-      resolvePlugin(),
+      resolvePlugin({
+        extensions: ['.js', '.jsx', '.json']
+      }),
       commonjsPlugin(),
       babelPlugin(babel.getUMDOptions())
     ],

@@ -4,6 +4,7 @@ export function getESLintConfig() {
     env: {node: true},
     rules: {
       'no-console': 1
+      //TODO: disable `no-undefined` when flowtype is enabled
     }
   };
 }

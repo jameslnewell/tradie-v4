@@ -1,6 +1,6 @@
 import Reporter from '.';
 
-describe('Reporter', () => {
+describe.skip('Reporter', () => {
   it('should call .printStartOfReport() and .printEndOfReport() once when there is a single sync compilation', () => {
     const reporter = new Reporter();
     reporter.printStartOfReport = jest.fn();

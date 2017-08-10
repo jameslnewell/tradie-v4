@@ -12,19 +12,18 @@ export default function(
   options: {} = {}
 ): Promise<Object> {
   return new Promise((resolve, reject) => {
-    if (args[0] !== 'check') {
+    if (args[0] !== 'ast') {
       args.push('--json');
     }
-    //maxBuffer - process exits if more data is the max buffer
+    //options.maxBuffer - process exits if more data is the max buffer
     execFile(
       flowPath,
-      [...args],
+      args,
       {...options, maxBuffer: 2000 * 1024},
-      (execError, stdout, stderr) => {
+      (execError, stdout) => {
         try {
           resolve(JSON.parse(String(stdout)));
         } catch (parseError) {
-          console.log(stdout, stderr);
           reject(parseError);
         }
       }

@@ -7,6 +7,11 @@ import GroupExecutor, {
 } from 'tradie-utils-group-exec';
 import {getErrors, getWarnings} from './messages';
 
+export type LintResult = {
+  errors: {file: string, message: string}[],
+  warnings: {file: string, message: string}[]
+};
+
 export type GroupOptions = {
   options: {}
 };
@@ -30,44 +35,35 @@ export default class Linter {
   executor: GroupExecutor<GroupOptions, GroupContext>;
 
   /**
-   * @param {string}        root            The root directory where paths are matched from
+   * @param {string}        directory            The root directory where paths are matched from
    * @param {GroupOrGroups} groupOrGroups   The groups
    */
-  constructor(root: string, groupOrGroups: GroupOrGroups<GroupOptions>) {
-    this.executor = new GroupExecutor(createContext, groupOrGroups, {root});
+  constructor(directory: string, groupOrGroups: GroupOrGroups<GroupOptions>) {
+    this.executor = new GroupExecutor(createContext, groupOrGroups, {
+      directory
+    });
   }
 
   /**
    * @param {string}        file            The full file path
    */
-  lint(file: string) {
+  async lint(file: string): Promise<LintResult> {
+    const result = {
+      errors: [],
+      warnings: []
+    };
     return this.executor
       .exec(file, (f, {engine}) =>
         fs.readFile(file).then(text => {
           const report = engine.executeOnText(text.toString(), file);
-          return {
-            error: getErrors(report)[file],
-            warning: getWarnings(report)[file]
-          };
+
+          const error = getErrors(report)[file];
+          if (error) result.errors.push({file, message: error});
+
+          const warning = getWarnings(report)[file];
+          if (warning) result.warnings.push({file, message: warning});
         })
       )
-      .then(results =>
-        results.reduce(
-          (combined, result) => {
-            if (result.error) {
-              combined.error = combined.error
-                ? combined.error + result.error
-                : result.error;
-            }
-            if (result.warning) {
-              combined.warning = combined.warning
-                ? combined.warning + result.warning
-                : result.warning;
-            }
-            return combined;
-          },
-          {error: null, warning: null}
-        )
-      );
+      .then(() => result);
   }
 }

@@ -18,7 +18,6 @@ function getScriptsByNameOrTemplate(name, template) {
 yargs
   .help()
   .exitProcess()
-  .strict()
   .usage('Usage: tradie <command> [options]')
   .option('template', {
     describe: 'The template to use'
@@ -28,7 +27,7 @@ yargs
   })
   .demandCommand(1, "run 'tradie help' for a list of available commands");
 
-//parse the arguments
+//parse the arguments to get the template/script
 const {template: templateName, scripts: scriptsName} = yargs.argv;
 
 Template.find(templateName)
@@ -36,7 +35,7 @@ Template.find(templateName)
     getScriptsByNameOrTemplate(scriptsName, template).then(scripts =>
       scripts.describe(yargs).then(() => {
         //parse the arguments now the scripts have been registered
-        const args = yargs.argv;
+        const args = yargs.strict().argv;
 
         //get the options
         const scriptName = args._[0];

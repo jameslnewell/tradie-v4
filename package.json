@@ -8,7 +8,7 @@
     "commitizen": "^2.9.6",
     "fs-extra": "^3.0.1",
     "husky": "^0.13.4",
-    "lerna": "2.0.0-rc.5",
+    "lerna": "^2.0.0",
     "lint-staged": "^3.4.0",
     "prettier": "^1.1.0",
     "tradie-template-node-package": "next",
@@ -37,5 +37,7 @@
       "path": "cz-conventional-changelog"
     }
   },
-  "dependencies": {}
+  "dependencies": {
+    "eslint-config-jameslnewell": "^3.0.5"
+  }
 }

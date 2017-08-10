@@ -1,18 +1,35 @@
 // @flow
-import Files, {type Filter} from 'tradie-utils-file';
+import Files from 'tradie-utils-file';
 import Reporter from 'tradie-utils-reporter';
 
-export type Options = {
-  watch?: boolean,
-  include?: Filter,
-  exclude?: Filter,
+export type ProcessFileFunction = (file: string) => Promise<void>;
+export type FilesProcessedFunction = () => Promise<void>;
 
-  process?: (file: string, report: any) => Promise<any>,
-  unlink?: (file: string, report: any) => Promise<any>,
-  postProcessing?: (report: any) => Promise<any>,
+export type ProcessorOptions = {
+  /**
+   * The files to process
+   */
+  files: Files,
 
-  startedText: string,
-  finishedText: string
+  /**
+   * The reporter to report to
+   */
+  reporter: Reporter,
+
+  /**
+   * Called when the source file is created or updated
+   */
+  onChange?: ProcessFileFunction,
+
+  /**
+   * Called when the source file has been removed
+   */
+  onRemove?: ProcessFileFunction,
+
+  /**
+   * Called when processing a group of files has finished
+   */
+  onFinished?: FilesProcessedFunction
 };
 
 export default class Processor {
@@ -23,124 +40,100 @@ export default class Processor {
   reporter: Reporter;
 
   /** @private */
-  options: Options;
+  onChange: ?ProcessFileFunction;
 
   /** @private */
-  reportMethods = {
-    hasErrors: () => this.reporter.hasErrors(),
+  onRemove: ?ProcessFileFunction;
 
-    error: (file: string, ...args: any) => {
-      if (this.files.include(file)) {
-        this.reporter.error(file, ...args);
-      }
-    },
+  /** @private */
+  onFinished: ?FilesProcessedFunction;
 
-    hasWarnings: () => this.reporter.hasWarnings(),
+  constructor(options: ProcessorOptions) {
+    const {files, reporter, onChange, onRemove, onFinished} = options;
 
-    warning: (file: string, ...args: any) => {
-      if (this.files.include(file)) {
-        this.reporter.warning(file, ...args);
-      }
+    this.files = files;
+    this.reporter = reporter;
+    this.onChange = onChange;
+    this.onRemove = onRemove;
+    this.onFinished = onFinished;
+
+    if (onFinished) {
+      this.reporter.before('finished', this.processedFiles);
     }
-  };
 
-  constructor(directory: string, options: Options) {
-    const {
-      watch = false,
-      include,
-      exclude,
-      startedText,
-      finishedText
-    } = options;
-
-    this.files = new Files(directory, {
-      watch,
-      include,
-      exclude
-    });
-
-    this.reporter = new Reporter({
-      watch,
-      directory,
-      startedText,
-      finishedText,
-      beforeFinished: this.postProcessing.bind(this)
-    });
-
-    this.options = options;
+    this.files.on('add', this.processSingleFile);
+    this.files.on('change', this.processSingleFile);
+    this.files.on('unlink', this.cleanSingleFile);
   }
 
   /** @private */
-  processFiles() {
-    const fn = this.options.process;
-    if (!fn) {
+  processMultipleFiles = () => {
+    const onChange = this.onChange;
+    if (!onChange) {
       return;
     }
     this.reporter.started();
     this.files
       .list()
-      .then(files =>
-        Promise.all(files.map(file => fn(file, this.reportMethods)))
-      )
+      .then(files => Promise.all(files.map(file => onChange(file))))
       .then(
         () => this.reporter.finished(),
         error => this.reporter.errored(error)
       );
-  }
+  };
 
   /** @private */
-  processFile(file: string) {
-    const fn = this.options.process;
-    if (!fn) {
+  processSingleFile = (file: string) => {
+    const onChange = this.onChange;
+    if (!onChange) {
       return;
     }
     this.reporter.started();
     Promise.resolve()
-      .then(() => fn(file, this.reportMethods))
+      .then(() => onChange(file))
       .then(
         () => this.reporter.finished(),
         error => this.reporter.errored(error)
       );
-  }
+  };
 
   /** @private */
-  unlinkFile(file: string) {
-    const fn = this.options.unlink;
-    if (!fn) {
+  cleanSingleFile = (file: string) => {
+    const onRemove = this.onRemove;
+    if (!onRemove) {
       return;
     }
     this.reporter.started();
     Promise.resolve()
-      .then(() => fn(file, this.reportMethods))
+      .then(() => onRemove(file))
       .then(
         () => this.reporter.finished(),
         error => this.reporter.errored(error)
       );
-  }
+  };
 
   /** @private */
-  postProcessing() {
-    const fn = this.options.postProcessing;
-    if (!fn) {
+  processedFiles = () => {
+    const onFinished = this.onFinished;
+    if (!onFinished) {
       return Promise.resolve();
     }
-    return Promise.resolve().then(() => fn(this.reportMethods));
-  }
+    return Promise.resolve(onFinished()).then(
+      () => {},
+      error => {
+        this.reporter.errored(error);
+      }
+    );
+  };
 
   run() {
-    this.processFiles();
-
-    if (this.options.watch) {
-      this.files.on('add', this.processFile.bind(this));
-      this.files.on('change', this.processFile.bind(this));
-      this.files.on('unlink', this.unlinkFile.bind(this));
-    }
-
+    this.processMultipleFiles();
     return this.reporter.wait();
   }
 
   stop() {
     this.files.close();
+    this.reporter.stopping();
     return this;
   }
 }

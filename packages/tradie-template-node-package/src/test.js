@@ -40,7 +40,7 @@ export default function(options = {}) {
         moduleFileExtensions: ['js', 'jsx'],
 
         transform: {
-          '^.+\\.jsx?$': require.resolve('./utils/jestBabelTransform')
+          '^.+\\.jsx?$': require.resolve('./utils/jest-babel-transform')
         },
 
         mapCoverage: coverage,

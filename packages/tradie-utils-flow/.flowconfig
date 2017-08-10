@@ -1,2 +1,6 @@
 [ignore]
 <PROJECT_ROOT>/lib
+
+[include]
+../tradie-utils-reporter
+../tradie-utils-group-exec

@@ -8,19 +8,19 @@ export type Filter =
   | RegExp
   | FilterFunction
   | Array<string | RegExp | FilterFunction>;
+
 export type Options = {
-  root?: string,
+  directory?: string,
   include?: Filter,
   exclude?: Filter
 }; //cause flow
 
-/* eslint-disable no-unused-vars */ const defaultIncludeFilter = value => true;
-const defaultExcludeFilter = value => false;
-/* eslint-enable no-unused-vars */
+const defaultIncludeFilter = () => true;
+const defaultExcludeFilter = () => false;
 
 export default function(options: Options = {}): FilterFunction {
   const {
-    root,
+    directory,
     include = defaultIncludeFilter,
     exclude = defaultExcludeFilter
   } = options;
@@ -30,8 +30,8 @@ export default function(options: Options = {}): FilterFunction {
 
   return (value: string) => {
     //match on the relative path
-    if (root) {
-      value = path.relative(root, value); //eslint-disable-line no-param-reassign
+    if (directory) {
+      value = path.relative(directory, value); //eslint-disable-line no-param-reassign
     }
 
     const included = includeMatch(value);

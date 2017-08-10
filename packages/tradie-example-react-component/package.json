@@ -1,23 +1,26 @@
 {
-  "name": "tradie-example-template-react-component",
+  "name": "tradie-example-react-component",
   "version": "2.0.0",
   "private": true,
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "styled-components": "^2.1.1"
   },
   "devDependencies": {
+    "react-test-renderer": "^15.6.1",
     "tradie-template-react-component": "*"
   },
   "scripts": {
     "clean": "tradie clean",
     "lint": "tradie lint",
     "build": "tradie build",
-    "watch": "tradie build --watch",
+    "dev": "tradie dev",
     "test": "tradie test"
   }
 }

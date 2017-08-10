@@ -7,9 +7,10 @@ import match, {type Filter, type FilterFunction} from 'tradie-utils-match';
 //FIXME: seems to be leaving a child process around
 
 export type Options = {
+  directory: string,
   watch?: boolean,
-  include?: Filter, //filter based on the path relative from `directory`
-  exclude?: Filter //filter based on the path relative from `directory`
+  include?: Filter,
+  exclude?: Filter
 };
 
 export type EventListener = (file: string) => void;
@@ -17,12 +18,18 @@ export type EventListener = (file: string) => void;
 export type {Filter};
 
 export default class Files {
+  /** @private */
   directory: string;
+
+  /** @private */
   filter: FilterFunction;
+
+  /** @private */
   watcher: any;
 
-  constructor(directory: string, options: Options = {}) {
+  constructor(options: Options) {
     const {
+      directory,
       watch = false,
       include = () => true,
       exclude = () => false
@@ -30,7 +37,7 @@ export default class Files {
 
     this.directory = directory;
     this.filter = match({
-      root: directory,
+      directory,
       include,
       exclude
     });

@@ -15,7 +15,7 @@ export type CreateContextFunction<GroupOptions, GroupContext> = (
 ) => GroupContext;
 
 export type GroupExecutorOptions = {
-  root?: string
+  directory?: string
 };
 
 export default class GroupExecutor<GroupOptions, GroupContext> {
@@ -27,14 +27,14 @@ export default class GroupExecutor<GroupOptions, GroupContext> {
     groupOrGroups: GroupOrGroups<GroupOptions>,
     options: GroupExecutorOptions = {}
   ) {
-    const {root} = options;
+    const {directory} = options;
 
     const groups = [].concat(groupOrGroups);
 
     this.matchers = groups.map(group => {
       const {include, exclude} = group;
       return match({
-        root,
+        directory,
         include,
         exclude
       });
@@ -43,16 +43,26 @@ export default class GroupExecutor<GroupOptions, GroupContext> {
     this.contexts = groups.map(group => createContext(group));
   }
 
+  /**
+   * Get the context for each group that matches the file
+   */
+  context(file: string): GroupContext[] {
+    return this.matchers.reduce((contexts, matcher, index) => {
+      if (matcher(file)) {
+        return contexts.concat(this.contexts[index]);
+      } else {
+        return contexts;
+      }
+    }, []);
+  }
+
+  /**
+   * Execute a function for each groups that matches the file
+   */
   exec(
     file: string,
     fn: (file: string, context: GroupContext) => any | Promise<any>
-  ) {
-    const promises = [];
-    this.matchers.forEach((matcher, index) => {
-      if (matcher(file)) {
-        promises.push(fn(file, this.contexts[index]));
-      }
-    });
-    return Promise.all(promises);
+  ): Promise<any[]> {
+    return Promise.all(this.context(file).map(context => fn(file, context)));
   }
 }

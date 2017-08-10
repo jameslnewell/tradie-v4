@@ -8,12 +8,15 @@
   "dependencies": {
     "del": "^3.0.0",
     "rollup": "^0.43.0",
-    "webpack": "^3.2.0",
     "tradie-utils-file": "^2.0.0",
     "tradie-utils-babel": "^2.0.0",
     "tradie-utils-flow": "^2.0.0",
     "tradie-utils-eslint": "^2.0.0",
-    "tradie-utils-reporter": "^2.0.0"
+    "tradie-utils-processor": "^2.0.0",
+    "tradie-utils-reporter": "^2.0.0",
+    "tradie-utils-rollup": "^2.0.0",
+    "tradie-utils-webpack": "^2.0.0",
+    "tradie-utils-jest": "^2.0.0"
   },
   "scripts": {
     "clean": "tradie clean",

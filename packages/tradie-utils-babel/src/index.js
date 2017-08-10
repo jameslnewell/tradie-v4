@@ -24,19 +24,24 @@ export default class Transpiler {
   executor: GroupExecutor<TranspilerContext, TranspilerContext>;
 
   /**
-   * @param {string}        root            The root directory where paths are matched from
+   * @param {string}        directory            The root directory where paths are matched from
    * @param {GroupOrGroups} groupOrGroups   The groups
    */
-  constructor(root: string, groupOrGroups: GroupOrGroups<TranspilerContext>) {
-    this.executor = new GroupExecutor(createContext, groupOrGroups, {root});
+  constructor(
+    directory: string,
+    groupOrGroups: GroupOrGroups<TranspilerContext>
+  ) {
+    this.executor = new GroupExecutor(createContext, groupOrGroups, {
+      directory
+    });
   }
 
   /**
    * @param {string}        file            The full file path
    */
-  transpile(file: string) {
-    return this.executor.exec(file, (f, {src, dest, options}) =>
-      transpile(f, src, dest, options)
-    );
+  transpile(file: string): Promise<void> {
+    return this.executor
+      .exec(file, (f, {src, dest, options}) => transpile(f, src, dest, options))
+      .then(() => {});
   }
 }

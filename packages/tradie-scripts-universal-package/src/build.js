@@ -1,28 +1,49 @@
-import wp from 'webpack';
-import {rollup} from 'rollup';
+// @flow
+import {compile} from 'tradie-utils-webpack';
+import rollup from 'tradie-utils-rollup';
 import Files from 'tradie-utils-file';
-import Linter from 'tradie-utils-eslint';
-import Transpiler from 'tradie-utils-babel';
-import TypeChecker from 'tradie-utils-flow';
+import ESLint from 'tradie-utils-eslint';
+import Babel from 'tradie-utils-babel';
+import Flow from 'tradie-utils-flow';
 import Reporter from 'tradie-utils-reporter';
 
-function runRollup(rollupOptions) {
-  rollupOptions = [].concat(rollupOptions);
-  return Promise.all(
-    rollupOptions.map(options =>
-      rollup(options).then(bundle =>
-        Promise.all(options.targets.map(target => bundle.write(target)))
-      )
-    )
-  ); //TODO: report errors
+export interface Options {
+  root: string,
+  eslint: Object,
+  babel: Object,
+  flow: Object,
+  rollup: Object,
+  webpack: Object
 }
 
-export default async function(options) {
-  const {root, eslint, babel, rollup, webpack} = options;
+export default async function(options: Options) {
+  const {
+    root,
+    eslint: eslintGroups,
+    babel: babelGroups,
+    flow: flowGroups,
+    rollup: rollupConfig,
+    webpack: webpackConfig
+  } = options;
 
-  const linter = new Linter(root, eslint);
-  const transpiler = new Transpiler(root, babel);
-  const typechecker = new TypeChecker(root);
+  const files = new Files({
+    directory: root,
+    include: [
+      ...[]
+        .concat(eslintGroups)
+        .reduce(
+          (includes, eslintGroup) => includes.concat(eslintGroup.include),
+          []
+        ),
+      ...[]
+        .concat(babelGroups)
+        .reduce(
+          (includes, babelGroup) => includes.concat(babelGroup.include),
+          []
+        )
+    ]
+    /* FIXME: {exclude} - merge from babel and eslint groups */
+  });
 
   const reporter = new Reporter({
     directory: root,
@@ -30,87 +51,53 @@ export default async function(options) {
     finishedText: 'Built'
   });
 
-  function lint(file) {
-    return linter.lint(file).then(result => {
-      if (result.error) reporter.error(file, result.error);
-      if (result.warning) reporter.warning(file, result.warning);
-    });
-  }
-
-  function transpile(file) {
-    return transpiler
-      .transpile(file)
-      .catch(error => reporter.error(file, error));
-  }
-
-  function exportTypes(file) {
-    return typechecker.export(file).catch(error => reporter.error(file, error));
-  }
+  const eslint = new ESLint(root, eslintGroups);
+  const babel = new Babel(root, babelGroups);
+  const flow = new Flow(root, flowGroups);
 
   function bundle() {
-    return runRollup(rollup).catch(error => reporter.errored(error)); //TODO: report errors for individual files
-  }
-
-  function checkTypes() {
-    return typechecker.check().then(result => {
-      result.errors.forEach(error => reporter.error(error.file, error.message));
-      result.warnings.forEach(warning =>
-        reporter.error(warning.file, warning.message)
-      );
+    return rollup(rollupConfig).then(result => {
+      result.errors.forEach(error => reporter.error(error));
+      result.warnings.forEach(warning => reporter.warn(warning));
     });
   }
 
   //TODO: create webpack bundle+html for demo
-  function demo() {
-    return new Promise((resolve, reject) => {
-      if (!webpack) {
-        resolve();
-        return;
-      }
-
-      wp(webpack, (error, stats) => {
-        if (error) {
-          reject(error);
-          return;
-        }
-
-        if (stats.hasErrors()) {
-          console.log(stats.toJson().errors);
-        }
-
-        if (stats.hasWarnings()) {
-          console.log(stats.toJson().warnings);
-        }
-
-        resolve();
-      });
+  function example() {
+    return compile(webpackConfig).then(result => {
+      result.errors.forEach(error => reporter.error(error));
+      result.warnings.forEach(warning => reporter.warn(warning));
     });
   }
 
   function processFile(file) {
-    return Promise.all([lint(file), transpile(file), exportTypes(file)]);
-  }
-
-  function processFiles() {
-    const files = new Files(
-      root,
-      {
-        include: 'src/**'
-      } /* FIXME: {include, exclude} - merge from babel and eslint groups */
-    );
     return Promise.all([
-      files.list().then(list => Promise.all(list.map(processFile))),
-      bundle(),
-      demo(),
-      checkTypes()
+      //TODO: don't show all errors at once... but how if they handle reporting themselves?
+
+      eslint.lint(file).then(result => {
+        result.errors.forEach(error => reporter.error(error));
+        result.warnings.forEach(warning => reporter.warn(warning));
+      }),
+
+      babel.transpile(file).catch(error => reporter.error(error)),
+
+      flow.export(file).catch(error => reporter.error(error))
     ]);
   }
 
   reporter.started();
-  processFiles().then(
-    () => reporter.finished(),
-    error => reporter.errored(error)
-  );
+  Promise.all([
+    files.list().then(list => Promise.all(list.map(processFile))),
+
+    bundle(),
+
+    example(),
+
+    flow.check().then(result => {
+      result.errors.forEach(error => reporter.error(error));
+      result.warnings.forEach(warning => reporter.warn(warning));
+    })
+  ]).then(() => reporter.finished(), error => reporter.errored(error));
 
   await reporter.wait();
 }

@@ -1,7 +1,7 @@
-import fs from 'fs-extra';
 import path from 'path';
 import {
   SOURCE_FILES,
+  EXAMPLE_FILES,
   TEST_FILES,
   MOCK_FILES,
   FIXTURE_FILES
@@ -9,7 +9,7 @@ import {
 import * as eslint from './utils/eslint';
 import * as babel from './utils/babel';
 import * as rollup from './utils/rollup';
-import * as webpack from './utils/webpack';
+import getBuildConfig from './utils/webpack/getBuildConfig';
 
 export default function(cliOptions) {
   const {root} = cliOptions;
@@ -22,9 +22,9 @@ export default function(cliOptions) {
     root,
     eslint: [
       {
-        include,
+        include: [].concat(include, EXAMPLE_FILES),
         exclude,
-        options: eslint.getSourceOptions()
+        options: eslint.getSourceConfig()
       }
     ],
     babel: [
@@ -43,10 +43,25 @@ export default function(cliOptions) {
         options: babel.getESModuleOptions()
       }
     ],
+    flow: [
+      {
+        include,
+        exclude,
+        src,
+        dest: path.join(root, 'dist/cjs')
+      },
+      {
+        include,
+        exclude,
+        src,
+        dest: path.join(root, 'dist/es')
+      }
+    ],
     rollup: [
+      //FIXME: fix named exports for UMD
       rollup.getUMDOptions({root, optimized: false}),
       rollup.getUMDOptions({root, optimized: true})
     ],
-    webpack: webpack.getOptions({root})
+    webpack: getBuildConfig({root})
   };
 }

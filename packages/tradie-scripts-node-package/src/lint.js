@@ -1,51 +1,51 @@
-import Linter from 'tradie-utils-eslint';
-import TypeChecker from 'tradie-utils-flow';
-import Processor from 'tradie-utils-processor';
-import matcher from 'tradie-utils-match';
-import lint from './utils/lint';
-import check from './utils/check';
+import Files from 'tradie-utils-file';
+import Reporter from 'tradie-utils-reporter';
+import ESLint from 'tradie-utils-eslint';
+import Flow from 'tradie-utils-flow';
+import FileProcessor from 'tradie-utils-processor';
 
 export default function(options) {
-  const {watch, root, src, dest, sourceOptions, testOptions} = options;
+  const {root, watch, eslint: eslintGroups, flow: flowGroups} = options;
 
-  const files = {
-    source: {
-      match: matcher({
-        root,
-        include: sourceOptions.include,
-        exclude: sourceOptions.exclude
-      }),
-      linter: new Linter(sourceOptions.eslint)
-    },
-    test: {
-      match: matcher({
-        root,
-        include: testOptions.include,
-        exclude: testOptions.exclude
-      }),
-      linter: new Linter(testOptions.eslint)
-    }
-  };
-
-  const typechecker = new TypeChecker(root, src, dest);
-
-  const processor = new Processor(root, {
+  const files = new Files({
+    directory: root,
     watch,
-    include: value => files.source.match(value) || files.test.match(value),
+    include: [
+      ...[]
+        .concat(eslintGroups)
+        .reduce(
+          (includes, eslintGroup) => includes.concat(eslintGroup.include),
+          []
+        ) //TODO: create a fn
+    ]
+    /* FIXME: {exclude} - merge from flow and eslint groups */
+  });
 
-    process: (file, report) => {
-      if (files.source.match(file)) {
-        return lint(files.source.linter)(file, report);
-      }
-      if (files.test.match(file)) {
-        return lint(files.test.linter)(file, report);
-      }
-      return Promise.resolve();
-    },
-    postProcessing: report => check(typechecker)(report),
-
+  const reporter = new Reporter({
+    directory: root,
+    watch,
     startedText: 'Linting',
     finishedText: 'Linted'
+  });
+
+  const eslint = new ESLint(root, eslintGroups);
+  const flow = new Flow(root, flowGroups);
+
+  const processor = new FileProcessor({
+    files,
+    reporter,
+
+    onChange: file =>
+      eslint.lint(file).then(result => {
+        result.errors.forEach(error => reporter.error(error));
+        result.warnings.forEach(warning => reporter.warn(warning));
+      }),
+
+    onFinished: () =>
+      flow.check().then(result => {
+        result.errors.forEach(error => reporter.error(error));
+        result.warnings.forEach(warning => reporter.warn(warning));
+      })
   });
 
   process.on('SIGINT', () => {

@@ -1,38 +1,74 @@
 import del from 'del';
-import Linter from 'tradie-utils-eslint';
-import Transpiler from 'tradie-utils-babel';
-import TypeChecker from 'tradie-utils-flow';
-import Processor from 'tradie-utils-processor';
-import lint from './utils/lint';
-import transpile from './utils/transpile';
-import check from './utils/check';
+import Files from 'tradie-utils-file';
+import Reporter from 'tradie-utils-reporter';
+import ESLint from 'tradie-utils-eslint';
+import Babel from 'tradie-utils-babel';
+import Flow from 'tradie-utils-flow';
+import FileProcessor from 'tradie-utils-processor';
 
 export default function(options) {
-  const {root, src, dest, eslint, babel, watch} = options;
+  const {
+    root,
+    watch,
+    eslint: eslintGroups,
+    babel: babelGroups,
+    flow: flowGroups
+  } = options;
 
-  const linter = new Linter(root, eslint);
-  const transpiler = new Transpiler(root, babel);
-  const typechecker = new TypeChecker(root, src, dest);
-
-  const processor = new Processor(root, {
+  const files = new Files({
+    directory: root,
     watch,
     include: [
-      ...eslint.map(o => o.include),
-      ...babel.map(o => o.include)
-    ].reduce((a, b) => a.concat(b), []),
-    // exclude: //FIXME: include eslint[x].include and babel[x].include to include perf,
+      ...[]
+        .concat(eslintGroups)
+        .reduce(
+          (includes, eslintGroup) => includes.concat(eslintGroup.include),
+          []
+        ),
+      ...[]
+        .concat(babelGroups)
+        .reduce(
+          (includes, babelGroup) => includes.concat(babelGroup.include),
+          []
+        )
+    ]
+    /* FIXME: {exclude} - merge from babel and eslint groups */
+  });
 
+  const reporter = new Reporter({
+    directory: root,
+    watch,
     startedText: 'Building',
-    finishedText: 'Built',
+    finishedText: 'Built'
+  });
 
-    unlink: () => del([]), //FIXME:
-    process: (file, report) =>
+  const eslint = new ESLint(root, eslintGroups);
+  const babel = new Babel(root, babelGroups);
+  const flow = new Flow(root, flowGroups);
+
+  const processor = new FileProcessor({
+    files,
+    reporter,
+
+    onChange: file =>
       Promise.all([
-        lint(linter)(file, report),
-        transpile(transpiler)(file, report),
-        typechecker.export(file).catch(error => report.error(file, error))
+        eslint.lint(file).then(result => {
+          result.errors.forEach(error => reporter.error(error));
+          result.warnings.forEach(warning => reporter.warn(warning));
+        }),
+        babel
+          .transpile(file)
+          .catch(error => reporter.error({file, message: error})),
+        flow.export(file).catch(error => reporter.error({file, message: error}))
       ]),
-    postProcessing: report => check(typechecker)(report)
+
+    onRemove: () => del([]), //FIXME:
+
+    onFinished: () =>
+      flow.check().then(result => {
+        result.errors.forEach(error => reporter.error(error));
+        result.warnings.forEach(warning => reporter.warn(warning));
+      })
   });
 
   process.on('SIGINT', () => {
