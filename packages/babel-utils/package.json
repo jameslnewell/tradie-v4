@@ -1,0 +1,20 @@
+{
+  "name": "@tradie/babel-utils",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "dependencies": {
+    "babel-core": "^6.24.1",
+    "fs-extra": "^3.0.1",
+    "@tradie/group-exec-utils": "^1.0.0"
+  },
+  "tradie-template": "tradie-template-node-package",
+  "scripts": {
+    "clean": "tradie clean",
+    "build": "tradie build",
+    "watch": "tradie build --watch",
+    "test": "tradie test"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "@tradie/react-component-template",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.1.1",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-react-jsx-self": "^6.22.0",
+    "babel-plugin-transform-react-jsx-source": "^6.22.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.5.1",
+    "babel-preset-react": "^6.24.1",
+    "eslint-config-jameslnewell": "^3.0.3",
+    "html-webpack-plugin": "^2.29.0",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-commonjs": "^8.0.2",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-replace": "^1.1.1",
+    "rollup-plugin-uglify": "^2.0.1",
+    "to-pascal-case": "^1.0.0",
+    "@tradie/cli": "^1.0.0",
+    "@tradie/universal-package-scripts": "^1.0.0",
+    "@tradie/jest-utils": "^1.0.0",
+    "webpack": "^3.2.0"
+  },
+  "scripts": {
+    "clean": "tradie clean",
+    "lint": "tradie lint",
+    "build": "tradie build",
+    "watch": "tradie build --watch",
+    "test": "tradie test"
+  },
+  "tradie-template": "tradie-template-node-package"
+}

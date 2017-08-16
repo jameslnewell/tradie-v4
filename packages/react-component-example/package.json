@@ -1,0 +1,26 @@
+{
+  "name": "@tradie/react-component-example",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/cjs/index.js",
+  "module": "dist/es/index.js",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "styled-components": "^2.1.1"
+  },
+  "devDependencies": {
+    "react-test-renderer": "^15.6.1",
+    "@tradie/react-component-template": "^1.0.0"
+  },
+  "scripts": {
+    "clean": "tradie clean",
+    "lint": "tradie lint",
+    "build": "tradie build",
+    "dev": "tradie dev",
+    "test": "tradie test"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "@tradie/file-processor-utils",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "dependencies": {
+    "@tradie/file-utils": "^1.0.0",
+    "@tradie/reporter-utils": "^1.0.0"
+  },
+  "tradie-template": "tradie-template-node-package",
+  "scripts": {
+    "clean": "tradie clean",
+    "build": "tradie build",
+    "watch": "tradie build --watch",
+    "test": "tradie test"
+  }
+}

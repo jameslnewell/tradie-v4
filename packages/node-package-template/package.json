@@ -1,0 +1,28 @@
+{
+  "name": "@tradie/node-package-template",
+  "version": "1.0.0",
+  "repository": "jameslnewell/tradie-v4",
+  "files": [
+    "lib",
+    "tpl"
+  ],
+  "tradie-template": "tradie-template-node-package",
+  "dependencies": {
+    "babel-plugin-dynamic-import-node": "^1.0.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.5.1",
+    "babel-preset-flow": "^6.23.0",
+    "eslint-config-jameslnewell": "^3.0.3",
+    "@tradie/cli": "^1.0.0",
+    "@tradie/node-package-scripts": "^1.0.0",
+    "@tradie/jest-utils": "^1.0.0"
+  },
+  "scripts": {
+    "clean": "tradie clean",
+    "build": "tradie build",
+    "watch": "tradie build --watch",
+    "test": "tradie test"
+  }
+}

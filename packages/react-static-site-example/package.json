@@ -1,0 +1,19 @@
+{
+  "name": "@tradie/react-static-site-example",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "@tradie/react-static-site-template": "^1.0.0"
+  },
+  "scripts": {
+    "clean": "tradie clean",
+    "lint": "tradie lint",
+    "build": "tradie build",
+    "serve": "tradie serve",
+    "test": "tradie test"
+  },
+  "dependencies": {
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
+  }
+}

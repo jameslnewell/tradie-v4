@@ -1,5 +1,0 @@
-[ignore]
-<PROJECT_ROOT>/lib
-
-[include]
-../tradie-utils-reporter

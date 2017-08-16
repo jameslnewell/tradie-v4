@@ -1,0 +1,25 @@
+{
+  "name": "@tradie/generator-utils",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "dependencies": {
+    "chalk": "^2.0.1",
+    "diff": "^3.2.0",
+    "extend": "^3.0.1",
+    "finder-on-steroids": "^0.4.0",
+    "fs-extra": "^3.0.1",
+    "inquirer": "^3.2.0",
+    "@tradie/match-utils": "^1.0.0"
+  },
+  "tradie-template": "tradie-template-node-package",
+  "scripts": {
+    "lint": "tradie lint",
+    "clean": "tradie clean",
+    "build": "tradie build",
+    "watch": "tradie build --watch",
+    "test": "tradie test"
+  }
+}

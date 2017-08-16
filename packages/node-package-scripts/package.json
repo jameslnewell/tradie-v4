@@ -1,0 +1,29 @@
+{
+  "name": "@tradie/node-package-scripts",
+  "description": "Scripts for creating NodeJS packages.",
+  "version": "1.0.0",
+  "repository": "jameslnewell/tradie-v4",
+  "files": [
+    "lib"
+  ],
+  "tradie-template": "tradie-template-node-package",
+  "dependencies": {
+    "del": "^3.0.0",
+    "@tradie/babel-utils": "^1.0.0",
+    "@tradie/eslint-utils": "^1.0.0",
+    "@tradie/file-utils": "^1.0.0",
+    "@tradie/flow-utils": "^1.0.0",
+    "@tradie/generator-utils": "^1.0.0",
+    "@tradie/jest-utils": "^1.0.0",
+    "@tradie/match-utils": "^1.0.0",
+    "@tradie/file-processor-utils": "^1.0.0",
+    "@tradie/reporter-utils": "^1.0.0"
+  },
+  "scripts": {
+    "clean": "tradie clean",
+    "build": "tradie build",
+    "watch": "tradie build --watch",
+    "test": "tradie test"
+  },
+  "license": "MIT"
+}

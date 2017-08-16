@@ -1,0 +1,16 @@
+{
+  "name": "@tradie/node-package-example",
+  "version": "1.0.0",
+  "private": true,
+  "files": ["lib"],
+  "devDependencies": {
+    "@tradie/node-package-template": "^1.0.0"
+  },
+  "scripts": {
+    "clean": "tradie clean",
+    "lint": "tradie lint",
+    "build": "tradie build",
+    "watch": "tradie build --watch",
+    "test": "tradie test"
+  }
+}

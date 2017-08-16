@@ -12,21 +12,19 @@ This repo is a [`monorepo`](https://github.com/babel/babel/blob/master/doc/desig
 
 | Package | Version | Description |
 |---------|---------|-------------|
-| [tradie](../packages/tradie) | [![npm](https://img.shields.io/npm/v/tradie.svg)]() | The CLI for running tradie in your project. |
-
-### Templates
-
-| Package | Version | Description |
-|---------|---------|-------------|
-| [tradie-template-node-package](../packages/tradie-template-node-package) | [![npm](https://img.shields.io/npm/v/tradie-template-node-package.svg)]() | Template for creating a NodeJS package. |
-| [tradie-template-react--site](../packages/tradie-template-react-site) | [![npm](https://img.shields.io/npm/v/tradie-template-react-site.svg)]() | Template for creating static sites rendered at build-time with React. |
-| [tradie-template-react-app](../packages/tradie-template-react-app) | [![npm](https://img.shields.io/npm/v/tradie-template-react-app.svg)]() | Template for creating a universaljs app rendered at run-time with React. |
+| [@tradie/cli](../packages/cli) | [![npm](https://img.shields.io/npm/v/@tradie/cli.svg)]() | The CLI for running tradie in your project. |
 
 ### Scripts
 
 | Package | Version | Description |
 |---------|---------|-------------|
-| [tradie-template-node-package](../packages/tradie-template-template-node-package) | [![npm](https://img.shields.io/npm/v/tradie-template-template-nodejs-package.svg)]() | Scripts for creating a NodeJS package. |
+| [@tradie/node-package-scripts](../packages/node-package-scripts) | [![npm](https://img.shields.io/npm/v/tradie-template-template-nodejs-package.svg)]() | Scripts for creating a NodeJS package. |
+
+### Templates
+
+| Package | Version | Description |
+|---------|---------|-------------|
+| [@tradie/node-package-template](../packages/node-package-template) | [![npm](https://img.shields.io/npm/v/@tradie/node-package-template.svg)]() | Template for creating a NodeJS package. |
 
 ### Utilities
 

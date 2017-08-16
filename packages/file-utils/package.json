@@ -1,0 +1,21 @@
+{
+  "name": "@tradie/file-utils",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "dependencies": {
+    "chokidar": "^1.7.0",
+    "finder-on-steroids": "^0.4.0",
+    "@tradie/match-utils": "^1.0.0"
+  },
+  "tradie-template": "tradie-template-node-package",
+  "scripts": {
+    "lint": "tradie lint",
+    "clean": "tradie clean",
+    "build": "tradie build",
+    "watch": "tradie build --watch",
+    "test": "tradie test"
+  }
+}

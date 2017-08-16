@@ -11,7 +11,7 @@
     "lerna": "^2.0.0",
     "lint-staged": "^3.4.0",
     "prettier": "^1.1.0",
-    "tradie-template-node-package": "next",
+    "tradie-template-node-package": "2.0.0-alpha.22f158e7",
     "validate-commit-msg": "^2.12.1"
   },
   "scripts": {
@@ -38,6 +38,7 @@
     }
   },
   "dependencies": {
-    "eslint-config-jameslnewell": "^3.0.5"
+    "eslint-config-jameslnewell": "^3.0.5",
+    "resolve": "^1.4.0"
   }
 }
