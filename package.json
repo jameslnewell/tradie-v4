@@ -24,7 +24,7 @@
     "lint": "lerna run lint",
     "build": "lerna run build",
     "test": "lerna run test",
-    "publish": "yarn run build && lerna publish --canary --exact",
+    "publish": "yarn run lint && yarn run build && lerna publish --canary --exact",
     "commitmsg": "commitlint -e",
     "precommit": "lint-staged"
   },

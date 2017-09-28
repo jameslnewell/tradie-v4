@@ -1,3 +1,4 @@
+/* eslint-disable */
 import stripAnsi from 'strip-ansi';
 import {formatResult, formatError, formatMessage} from './messages';
 

@@ -10,6 +10,9 @@
     "finder-on-steroids": "^0.4.0",
     "@tradie/match-utils": "^1.0.0"
   },
+  "devDependencies": {
+    "fs-extra": "^4.0.2"
+  },
   "tradie-template": "tradie-template-node-package",
   "scripts": {
     "lint": "tradie lint",

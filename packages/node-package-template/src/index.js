@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env node
 // @flow
 
 import {run} from '@tradie/cli';

@@ -25,7 +25,7 @@
   },
   "scripts": {
     "clean": "tradie clean",
-    "build": "tradie build && chmod 0755 ./lib/tradie.js",
+    "build": "tradie build && chmod 0755 ./lib/index.js",
     "watch": "tradie build --watch",
     "test": "tradie test"
   }

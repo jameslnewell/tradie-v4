@@ -1,3 +1,4 @@
+/* eslint-disable */
 import path from 'path';
 import chalk from 'chalk';
 import {sprintf} from 'sprintf-js';

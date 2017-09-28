@@ -10,7 +10,7 @@ fs.unlink = jest.fn(file => {
 });
 
 fs.readFile = jest.fn(file => {
-  if (typeof fs.__files[file] === undefined) {
+  if (typeof fs.__files[file] === 'undefined') {
     return Promise.reject(new Error(`File "${file}" not found.`));
   }
   return Promise.resolve(new Buffer(fs.__files[file]));
