@@ -25,7 +25,7 @@
     "lint": "lerna run lint",
     "build": "lerna run build",
     "test": "lerna run test",
-    "publish": "yarn run lint && yarn run build && lerna publish --canary --conventional-commits",
+    "publish": "yarn run lint && yarn run build && lerna publish --canary --exact --force",
     "commitmsg": "commitlint -e",
     "precommit": "lint-staged",
     "prepublishOnly": "echo 'Run `npm run publish` instead.' && exit 1"
