@@ -8,6 +8,7 @@
   "command": {
     "publish": {
       "npmTag": "next",
+      "access": "public",
       "message": "chore: publish"
     }
   }

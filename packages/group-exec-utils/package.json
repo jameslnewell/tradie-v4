@@ -1,12 +1,12 @@
 {
   "name": "@tradie/group-exec-utils",
-  "version": "1.0.0",
+  "version": "1.1.0-alpha.b2a4b8e1",
   "main": "lib/index.js",
   "files": [
     "lib"
   ],
   "dependencies": {
-    "@tradie/match-utils": "^1.0.0"
+    "@tradie/match-utils": "^1.1.0-alpha.b2a4b8e1"
   },
   "tradie-template": "tradie-template-node-package",
   "scripts": {

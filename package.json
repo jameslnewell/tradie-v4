@@ -2,7 +2,8 @@
   "name": "tradie-monorepo",
   "private": true,
   "engines": {
-    "yarn": "^1.0.1"
+    "yarn": "^1.0.0",
+    "node": "^8.5.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^3.2.0",
@@ -24,9 +25,10 @@
     "lint": "lerna run lint",
     "build": "lerna run build",
     "test": "lerna run test",
-    "publish": "yarn run lint && yarn run build && lerna publish --canary --exact",
+    "publish": "yarn run lint && yarn run build && lerna publish --canary --conventional-commits",
     "commitmsg": "commitlint -e",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "prepublishOnly": "echo 'Run `npm run publish` instead.' && exit 1"
   },
   "lint-staged": {
     "*.js": [

@@ -1,7 +1,18 @@
 # Change Log
 
 All notable changes to this project will be documented in this file.
-See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+<a name="1.1.0-alpha.b2a4b8e1"></a>
+# 1.1.0-alpha.b2a4b8e1 (2017-09-28)
+
+
+### Bug Fixes
+
+* linting issues ([b2a4b8e](https://github.com/jameslnewell/tradie-v4/commit/b2a4b8e))
+
+
+
 
 <a name="1.0.5"></a>
 ## [1.0.5](https://github.com/jameslnewell/tradie-v4/compare/@tradie/file-utils@1.0.3...@tradie/file-utils@1.0.5) (2017-06-19)

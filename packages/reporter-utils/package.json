@@ -1,17 +1,17 @@
 {
   "name": "@tradie/reporter-utils",
-  "version": "1.0.0",
+  "version": "1.1.0-alpha.b2a4b8e1",
   "main": "lib/index.js",
   "files": [
     "lib"
   ],
   "dependencies": {
+    "@tradie/cli-utils": "^1.1.0-alpha.b2a4b8e1",
     "chalk": "^2.0.1",
     "eslint": "^4.0.0",
     "lodash.padstart": "^4.6.1",
     "lodash.sortby": "^4.7.0",
-    "lodash.trim": "^4.5.1",
-    "@tradie/cli-utils": "^1.0.0"
+    "lodash.trim": "^4.5.1"
   },
   "tradie-template": "tradie-template-node-package",
   "scripts": {
