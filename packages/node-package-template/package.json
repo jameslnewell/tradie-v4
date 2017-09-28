@@ -12,7 +12,7 @@
   ],
   "tradie-template": "tradie-template-node-package",
   "dependencies": {
-    "@tradie/cli": "^1.1.0-alpha.b2a4b8e1",
+    "@tradie/cli": "^1.1.0-alpha.20f28a18",
     "@tradie/jest-utils": "^1.1.0-alpha.b2a4b8e1",
     "@tradie/node-package-scripts": "^1.1.0-alpha.b2a4b8e1",
     "babel-plugin-dynamic-import-node": "^1.0.2",
