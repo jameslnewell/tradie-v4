@@ -10,6 +10,7 @@ export default function(message, options = {}) {
   let file = null;
 
   //TODO: format syntax errors
+  console.log(typeof message, message);
   let lines = message.split('\n');
 
   //extract and remove the filename

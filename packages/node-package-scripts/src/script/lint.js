@@ -16,7 +16,7 @@ export default function(options) {
         .reduce(
           (includes, eslintGroup) => includes.concat(eslintGroup.include),
           []
-        ) //TODO: create a fn
+        ) //TODO: create a fn that does this
     ]
     /* FIXME: {exclude} - merge from flow and eslint groups */
   });

@@ -11,6 +11,7 @@ install:
   - yarn
   - yarn run bootstrap
 
-script: 
+script:
+  - ./node_modules/.bin/commitlint --from=HEAD~1
   - yarn run build
   - yarn run test

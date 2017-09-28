@@ -1,7 +1,11 @@
 {
   "name": "@tradie/node-package-template",
   "version": "1.0.0",
+  "description": "A tradie template for creating packages that run on NodeJS.",
   "repository": "jameslnewell/tradie-v4",
+  "bin": {
+    "tradie": "./lib/index.js"
+  },
   "files": [
     "lib",
     "tpl"
@@ -21,7 +25,7 @@
   },
   "scripts": {
     "clean": "tradie clean",
-    "build": "tradie build",
+    "build": "tradie build && chmod 0755 ./lib/tradie.js",
     "watch": "tradie build --watch",
     "test": "tradie test"
   }

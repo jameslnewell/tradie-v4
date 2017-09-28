@@ -6,6 +6,7 @@
   "files": [
     "lib"
   ],
+  "main": "./lib/index.js",
   "tradie-template": "tradie-template-node-package",
   "dependencies": {
     "del": "^3.0.0",

@@ -166,7 +166,10 @@ export default options => {
         return;
       }
 
-      bundlers.server.once('completed', resolve).once('error', reject).start();
+      bundlers.server
+        .once('completed', resolve)
+        .once('error', reject)
+        .start();
     });
 
   const startBuildCompiler = () =>
@@ -176,7 +179,10 @@ export default options => {
         return;
       }
 
-      bundlers.build.once('completed', resolve).once('error', reject).start();
+      bundlers.build
+        .once('completed', resolve)
+        .once('error', reject)
+        .start();
     });
 
   const startServer = () => {

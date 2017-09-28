@@ -41,7 +41,7 @@ function symlinkBinary(fromFile, toFile) {
     .then(() => fs.remove(toFile))
     .then(() => fs.ensureSymlink(fromFile, toFile))
     .catch(err => {
-      console.log(pkg, err);
+      console.log(err);
       console.log(fromFile, fs.existsSync(fromFile));
       console.log(toFile, fs.existsSync(toFile));
     });
@@ -87,7 +87,7 @@ listPackageJSONFiles()
         console.log(`  ${pkgname}:`);
 
         if (/example/.test(pkgname)) {
-          return symlinkCurrentBinary(path.dirname(file));
+          // return symlinkCurrentBinary(path.dirname(file));
         }
 
         const packageMetadata = require(file);

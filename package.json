@@ -2,28 +2,30 @@
   "name": "tradie-monorepo",
   "private": true,
   "engines": {
-    "yarn": "^0.25.4"
+    "yarn": "^1.0.1"
   },
   "devDependencies": {
-    "commitizen": "^2.9.6",
+    "@commitlint/cli": "^3.2.0",
+    "@commitlint/config-angular": "^3.1.1",
+    "@commitlint/prompt-cli": "^3.2.0",
     "fs-extra": "^3.0.1",
     "husky": "^0.13.4",
     "lerna": "^2.0.0",
     "lint-staged": "^3.4.0",
     "prettier": "^1.1.0",
-    "tradie-template-node-package": "2.0.0-alpha.22f158e7",
-    "validate-commit-msg": "^2.12.1"
+    "resolve": "^1.4.0",
+    "tradie-template-node-package": "2.0.0-alpha.22f158e7"
   },
   "scripts": {
     "clean": "lerna run clean && lerna clean",
     "bootstrap": "lerna bootstrap && node scripts/symlink-tradie.js",
     "upgrade": "lerna exec --concurrency 1 -- npm-check -u",
-    "commit": "git-cz",
+    "commit": "commit",
     "lint": "lerna run lint",
     "build": "lerna run build",
     "test": "lerna run test",
     "publish": "yarn run build && lerna publish --canary --exact",
-    "commitmsg": "validate-commit-msg",
+    "commitmsg": "commitlint -e",
     "precommit": "lint-staged"
   },
   "lint-staged": {
@@ -31,14 +33,5 @@
       "prettier --write --tab-width 2 --single-quote true --trailing-comma none --bracket-spacing false --jsx-bracket-same-line false --semi true",
       "git add"
     ]
-  },
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
-  },
-  "dependencies": {
-    "eslint-config-jameslnewell": "^3.0.5",
-    "resolve": "^1.4.0"
   }
 }

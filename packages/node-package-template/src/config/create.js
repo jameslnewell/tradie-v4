@@ -1,5 +1,5 @@
 import fs from 'fs';
-import {version} from '../package.json';
+import {version} from '../../package.json';
 
 function fromFile(file, data = {}) {
   const filePath = require.resolve(`../tpl/${file}`);

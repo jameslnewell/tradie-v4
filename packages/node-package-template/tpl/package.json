@@ -1,6 +1,7 @@
 {
-  "name": "@tradie/node-package-template-example",
+  "name": "node-package-example",
   "version": "1.0.0",
+  "files": ["lib"],
   "devDependencies": {
     "@tradie/node-package-template": "^<%= version %>"
   },
@@ -9,6 +10,7 @@
     "lint": "tradie lint",
     "build": "tradie build",
     "watch": "tradie build --watch",
-    "test": "tradie test"
+    "test": "tradie test",
+    "prepublish": "tradie clean && tradie lint && tradie test && tradie build"
   }
 }

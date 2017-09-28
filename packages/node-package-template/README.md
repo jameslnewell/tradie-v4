@@ -4,7 +4,7 @@
 [![Travis](https://img.shields.io/travis/jameslnewell/tradie-v4.svg)]()
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
-A [`tradie`](https://www.npmjs.com/package/tradie) template for creating NodeJS packages.
+A [`tradie`](https://www.npmjs.com/package/tradie) template for creating packages that run on NodeJS.
 
 Featuring:
 
@@ -13,58 +13,14 @@ Featuring:
 - transpilation with `babel`
 - testing with `jest`
 
-## Installation
-
-```bash
-npm install --save-dev @tradie/node-package-template
-```
-
 ## Usage
 
-> Take a look at an [example project](https://github.com/jameslnewell/tradie-v4/tree/separate-builder/packages/@tradie/node-package-template-example).
+1. Create a new package:
 
-1. Create some files:
-
-    - `package.json`
-    ```json
-    {
-      "name": "my-node-package",
-      "main": "lib/index.js",
-      "files": ["lib"],
-      "devDependencies": {
-        "@tradie/node-package-template": "^2.0.0"
-      },
-      "scripts": {
-        "lint": "tradie lint",
-        "build": "tradie build",
-        "watch": "tradie build --watch",
-        "test": "tradie test",
-        "prepublish": "npm run lint && npm run build && npm run test"
-      }
-    }
-    ```
-    - `src/index.js`
-    ```js
-
-    export default function() {
-      return true;
-    }
-
-    ```
-    - `src/index.test.js`
-    ```js
-    import isEverythingAwesome from '.';
-
-    describe('isEverythingAwesome()', () => {
-      it('should return true', () => {
-        expect(isEverythingAwesome()).toBeTruthy();
-      });
-    });
-
-    ```
+    `npx --package @tradie/node-package-template tradie create`
 
 2. Build the files:
-  
+
     `yarn run build`
 
 3. Run the tests:
@@ -79,7 +35,7 @@ npm install --save-dev @tradie/node-package-template
 
 ### `tradie create`
 
-Create the project files.
+Create the package files.
 
 ### `tradie clean`
 
@@ -89,7 +45,7 @@ Will remove files matching `lib/**` and `coverage/**`.
 
 ### `tradie lint`
 
-Lint source and test files. 
+Lint source and test files.
 
 ### `tradie build [--watch]`
 
@@ -105,9 +61,9 @@ Run test files.
 
 Will run test files matching `{src,test}/**/*.test.{js,jsx}`.
 
-## How To
+## How to
 
-### Set up Flow
+### Setup Flowtype
 
 1. Create the config file:
 
@@ -135,7 +91,7 @@ Will run test files matching `{src,test}/**/*.test.{js,jsx}`.
     // @flow
     ...
     ```
-    
+
     - `src/index.test.js`
     ```js
     // @flow
@@ -144,13 +100,13 @@ Will run test files matching `{src,test}/**/*.test.{js,jsx}`.
 
     > You can learn more about writing code for Flow [here](https://flow.org/en/docs/usage/#toc-write-flow-code).
 
-### Writing tests
+### Write tests
 
 1. Create a test file and write some assertions
-  
+
     - `src/index.test.js`
     ```js
-  
+
     describe('lame example()', () => {
       it('should pass', () => {
         expect(true).toBeTruthy();
@@ -159,8 +115,8 @@ Will run test files matching `{src,test}/**/*.test.{js,jsx}`.
 
     ```
 
-    > You can learn more about writing assertions with Jest [here](https://facebook.github.io/jest/docs/expect.html#content). 
-    
+    > You can learn more about writing assertions with Jest [here](https://facebook.github.io/jest/docs/expect.html#content).
+
     > Jest provides [mock functions](https://facebook.github.io/jest/docs/mock-function-api.html#content) and [manual mock functions](https://facebook.github.io/jest/docs/manual-mocks.html) which are worth learning!
 
 #### Customising the test environment
@@ -177,3 +133,18 @@ import {shallow} from 'enzyme';
 global.shallow = shallow;
 
 ```
+
+### Include other ty[es of files
+
+1. Create a new directory for your files
+
+    e.g. `files/`
+
+2. Reference your files from your sources using `require.resolve()`
+
+    e.g. `fs.readFileSync(require.resolve('../files/data.txt'));`
+
+3. Update the `files` key in your `package.json` so NPM publishes the files in the package
+
+    e.g. `"files": ["lib", "files"],`
+

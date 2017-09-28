@@ -1,0 +1,11 @@
+{
+  "name": "test",
+  "private": true,
+  "scripts": {
+    "clean": "../../../../node_modules/@tradie/cli/lib/tradie.js --template ../../../.. clean",
+    "lint": "../../../../node_modules/@tradie/cli/lib/tradie.js --template ../../../.. lint",
+    "build": "../../../../node_modules/@tradie/cli/lib/tradie.js --template ../../../.. build",
+    "watch": "../../../../node_modules/@tradie/cli/lib/tradie.js --template ../../../.. build --watch",
+    "test": "../../../../node_modules/@tradie/cli/lib/tradie.js --template ../../../.. test"
+  }
+}

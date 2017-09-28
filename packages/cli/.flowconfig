@@ -1,2 +1,5 @@
 [ignore]
 <PROJECT_ROOT>/lib
+
+[options]
+module.ignore_non_literal_requires=true

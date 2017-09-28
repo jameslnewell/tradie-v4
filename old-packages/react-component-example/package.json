@@ -13,8 +13,8 @@
     "styled-components": "^2.1.1"
   },
   "devDependencies": {
-    "react-test-renderer": "^15.6.1",
-    "@tradie/react-component-template": "^1.0.0"
+    "@tradie/react-component-template": "^1.0.0",
+    "react-test-renderer": "^15.6.1"
   },
   "scripts": {
     "clean": "tradie clean",
