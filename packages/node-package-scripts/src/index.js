@@ -1,57 +1,70 @@
+#!/usr/bin/env node
 // @flow
+import {run} from '@tradie/cli';
 
 const resolve = require.resolve;
 
-export const cli = {
-  create: {
+run([
+  {
+    cmd: 'create',
     desc: 'Create a new project',
-    args: {}
+    exec: resolve('./scripts/create')
   },
-  clean: {
-    desc: 'Remove generated files',
-    args: {}
+
+  {
+    cmd: 'clean',
+    desc: 'Remove generated files and folders',
+    exec: resolve('./scripts/clean')
   },
-  lint: {
-    desc: 'Lint source and test files',
-    args: {
+
+  {
+    cmd: 'lint',
+    desc: 'Lint sources, tests and examples',
+    opts: {
       watch: {
         default: false,
         boolean: true,
-        description: 'watch source files and re-lint them when they change'
+        description:
+          'watch sources, tests and examples and re-lint them when they change'
       }
-    }
+    },
+    exec: resolve('./scripts/lint')
   },
-  build: {
-    desc: 'Transpile source files',
-    args: {
+
+  {
+    cmd: 'build',
+    desc: 'Transpile sources',
+    opts: {
       watch: {
         default: false,
         boolean: true,
-        description: 'watch test files and re-run them when they change'
+        description: 'watch sources and re-transpile them when they change'
       }
-    }
+    },
+    exec: resolve('./scripts/build')
   },
-  test: {
-    desc: 'Run test files',
-    args: {
+
+  {
+    cmd: 'test',
+    desc: 'Run tests',
+    opts: {
       watch: {
         default: false,
         boolean: true,
-        description: 'watch test files and re-run them when they change'
+        description: 'watch tests and re-run them when they change'
       },
       coverage: {
         default: false,
         boolean: true,
         description: 'report test coverage'
       }
-    }
-  }
-};
+    },
+    exec: resolve('./scripts/test')
+  },
 
-export const scripts = {
-  create: resolve('./script/create'),
-  clean: resolve('./script/clean'),
-  lint: resolve('./script/lint'),
-  build: resolve('./script/build'),
-  test: resolve('./script/test')
-};
+  {
+    cmd: 'example <module>',
+    desc: 'Run examples',
+    exec: resolve('./scripts/example')
+  }
+]);

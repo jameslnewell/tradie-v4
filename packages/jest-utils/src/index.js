@@ -8,8 +8,8 @@ type Options = {
   coverage?: boolean
 };
 
-export default function(options: Options): Promise<void> {
-  const {config, watch = options, coverage = false} = options;
+export default function(options: Options, config: {}): Promise<void> {
+  const {watch = false, coverage = false} = options;
 
   const args = ['--config', JSON.stringify(config)];
 

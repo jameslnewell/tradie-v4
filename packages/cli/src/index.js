@@ -4,18 +4,14 @@ import 'babel-polyfill';
 import chalk from 'chalk';
 import yargs from 'yargs';
 
-export type ConfigFn = (args: {}) => Promise<{}>;
-export type ScriptFn = (config: {}) => Promise<void>;
+export type ScriptOptions = {};
+export type ScriptFunction = (argv: {}) => Promise<void>;
 
-export type Options = {
-  cli: {
-    [name: string]: {
-      desc: string,
-      args: {}
-    }
-  },
-  configs: {[name: string]: string | ConfigFn},
-  scripts: {[name: string]: string | ScriptFn}
+export type Script = {
+  cmd: string,
+  desc?: string,
+  opts?: ScriptOptions,
+  exec: string | ScriptFunction
 };
 
 async function _load(path: string) {
@@ -24,75 +20,60 @@ async function _load(path: string) {
   );
 }
 
-async function _run(options: Options): Promise<void> {
-  const {cli, configs, scripts} = options;
-
-  //check we have options
-  if (
-    typeof cli !== 'object' ||
-    typeof configs !== 'object' ||
-    typeof scripts !== 'object'
-  ) {
-    throw new Error(`"cli", "configs" and "scripts" must all be objects.`);
-  }
-
-  //parse args
-  let args = null;
-  try {
+function _run(scripts: Script[]): Promise<void> {
+  return new Promise((resolve, reject) => {
     yargs
       .help()
       .strict()
       .exitProcess(false)
       .usage('Usage: $0 <command> [options]')
       .demandCommand(1, 'Missing the <command> argument.');
-    Object.keys(cli).forEach(name => {
-      yargs.command(name, cli[name].desc || '', cli[name].args || {});
+
+    Promise.all(
+      scripts.map(async script => {
+        const {cmd, desc, opts, exec} = script;
+
+        // get fn
+        let fn;
+        if (typeof exec === 'string') {
+          fn = await _load(exec);
+        } else {
+          fn = exec;
+        }
+
+        // check fn
+        if (typeof fn !== 'function') {
+          reject(new Error(`Script fn not found: "${cmd}".`));
+          return;
+        }
+
+        yargs.command({
+          command: cmd,
+          description: desc,
+          builder: opts,
+          handler: argv => {
+            try {
+              Promise.resolve(fn(argv)).then(resolve, reject);
+            } catch (error) {
+              reject(error);
+            }
+          }
+        });
+      })
+    ).then(() => {
+      try {
+        yargs.argv; // eslint-disable-line no-unused-expressions
+        resolve();
+      } catch (error) {
+        // eslint-disable-line no-empty
+      }
     });
-    args = yargs.argv;
-  } catch (error) {
-    return; //we assume yargs has already printed an error message
-  }
-
-  //check if the user used the "help" command and yargs is showing the help screen
-  if (args.help) {
-    return;
-  }
-
-  //get the command
-  const command = args._[0];
-
-  //check we have a config fn
-  const configFn: ConfigFn =
-    typeof configs[command] === 'string'
-      ? await _load(configs[command])
-      : configs[command];
-  if (!configFn) {
-    throw new Error(`Missing config for command "${command}".`);
-  }
-
-  //check we have a script fn
-  const scriptFn: ScriptFn =
-    typeof scripts[command] === 'string'
-      ? await _load(scripts[command])
-      : scripts[command];
-  if (!scriptFn) {
-    throw new Error(`Missing script for command "${command}".`);
-  }
-
-  //get the config
-  const config = await configFn({
-    root: process.cwd(),
-    debug: process.env.DEBUG,
-    ...args
-  }); //TODO: currently expects {root: ''}
-
-  //run the script with the config
-  await scriptFn(config);
+  });
 }
 
-export async function run(options: Options): Promise<void> {
+export async function run(scripts: Script[]): Promise<void> {
   try {
-    await _run(options);
+    await _run(scripts);
   } catch (error) {
     if (error) {
       if (error instanceof Error) {

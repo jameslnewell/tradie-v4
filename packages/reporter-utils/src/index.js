@@ -8,7 +8,7 @@ import {formatLogs} from './log/formatting';
 
 export type Options = {
   watch?: boolean,
-  directory?: string,
+  context?: string,
   startedText?: string,
   finishedText?: string
 };
@@ -29,7 +29,7 @@ export default class Reporter {
   runningTimeout = null;
 
   /** @private */
-  directory: ?string;
+  context: ?string;
 
   /** @private */
   promise = null;
@@ -64,12 +64,12 @@ export default class Reporter {
   constructor(options: Options = {}) {
     const {
       watch = false,
-      directory,
+      context,
       startedText = 'Starting',
       finishedText = 'Finished'
     } = options;
 
-    this.directory = directory;
+    this.context = context;
     this.watch = watch;
 
     this.startedText = startedText;
@@ -102,7 +102,7 @@ export default class Reporter {
   printMessages(level: string) {
     console.log(
       formatLogs(this.logs.filter(log => log.level === level), {
-        cwd: this.directory
+        cwd: this.context
       })
     );
   }
@@ -178,7 +178,7 @@ export default class Reporter {
     return this;
   }
 
-  warn(data: Data) {
+  warning(data: Data) {
     this.logs.warn(data);
     return this;
   }
@@ -191,7 +191,7 @@ export default class Reporter {
   /**
    * Notify the reporter that a compilation has started
    */
-  started() {
+  start() {
     ++this.running;
 
     //if this is the first compilation running, and we're not waiting for other compilations to start then
@@ -213,13 +213,13 @@ export default class Reporter {
   /**
    * Notify the reporter that a compilation has finished
    */
-  finished() {
+  finish() {
     --this.running;
 
     //if this is the only compilation running, then we'll wait to see if another compilation starts soon so we don't print
     // a million success messages
     if (this.running === 0) {
-      this.runningTimeout = setTimeout(() => {
+      this.runningTimeout = setTimeout(async () => {
         //clear the running timeout
         clearTimeout(this.runningTimeout);
         this.runningTimeout = null;
@@ -230,26 +230,31 @@ export default class Reporter {
         }
 
         //let the caller do stuff before the report is printed
-        this.trigger('before:finished').then(
-          () => {
-            //wait for any running compilations to finish
-            if (this.running || this.runningTimeout) {
-              return Promise.resolve();
-            }
+        try {
+          await this.trigger('before:finished');
+        } catch (error) {
+          this.errored(error);
+        }
 
-            //print the end of the report
-            this.printEndOfReport();
+        //wait for any running compilations to finish
+        if (this.running || this.runningTimeout) {
+          return;
+        }
 
-            //let the caller do stuff after the report is printed
-            return this.trigger('after:finished').then(() => {
-              //if we're not watching and all the compilations have finished, then resolve or reject
-              if (!this.watch && !this.running && !this.runningTimeout) {
-                this.resolveOrReject();
-              }
-            });
-          },
-          error => this.errored(error)
-        );
+        //print the end of the report
+        this.printEndOfReport();
+
+        //let the caller do stuff after the report is printed
+        try {
+          await this.trigger('after:finished');
+        } catch (error) {
+          this.errored(error);
+        }
+
+        //if we're not watching and all the compilations have finished, then resolve or reject
+        if (!this.watch && !this.running && !this.runningTimeout) {
+          this.resolveOrReject();
+        }
       }, 100);
     }
 
@@ -268,7 +273,7 @@ export default class Reporter {
   /**
    * Notify the reporter that the compilation is stopping now, or at the end of the current compilation
    */
-  stopping() {
+  stop() {
     //if there are no running compilations, then resolve or reject now (watching has already stopped)
     if (!this.running && !this.runningTimeout) {
       this.resolveOrReject();

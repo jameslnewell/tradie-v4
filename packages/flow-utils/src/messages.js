@@ -110,90 +110,14 @@ export function formatError(directory: string, error: FlowError) {
     .trimRight();
 }
 
-export function formatResult(directory: string, result: FlowResult) {
-  const {errors} = result;
-  return result.errors.reduce((accum, error) => {
-    const path = error.message[0].path;
-    const message = formatError(directory, error);
-
-    if (!accum[path]) {
-      accum[path] = [];
-    }
-    accum[path].push(message);
-
-    return accum;
-  }, {});
-}
-
-export function _formatError(directory: string, error: FlowError) {
-  //TODO: format like eslint
-  let file = null;
-  let line = null;
-  let column = null;
-
-  const content = [];
-  error.message.forEach(msg => {
-    if (msg.type === 'Blame') {
-      const lineAndColumn = format('%3d:%-3d', msg.line, msg.start);
-
-      //FIXME: when context is undefined
-      const sourceCode = msg.context
-        ? `${msg.context.substr(0, msg.start - 1)}${chalk.red(
-            msg.context.substr(msg.start - 1, msg.end - msg.start + 1)
-          )}${msg.context.substr(msg.end)}`
-        : '';
-
-      let sourceCodePointer = '';
-      if (msg.endline !== msg.startline && msg.start < msg.end) {
-        sourceCodePointer = `${' '.repeat(msg.start - 1)}${'^'.repeat(
-          msg.end - msg.start + 1
-        )}`;
-      } else {
-        //FIXME: handle when startline and endline aren't the same line or when its reversed
-        //put a down marker at msg.start
-        //print context code
-        //put a up marker at msg.end
-      }
-
-      const description = `${msg.descr}`;
-
-      content.push(`${chalk.bold(lineAndColumn)} ${sourceCode}\n`);
-      content.push(
-        chalk.bold(
-          `${' '.repeat(
-            lineAndColumn.length
-          )} ${sourceCodePointer} ${description}`
-        )
-      );
-
-      if (!file) {
-        file = msg.path;
-        line = msg.line;
-        column = msg.start;
-      } else if (file !== msg.path) {
-        const relFile = path.relative(directory, msg.path);
-        content.push(
-          chalk.bold(`. See: ${chalk.underline(`${relFile}:${msg.line}`)}`)
-        );
-      }
-    } else if (msg.type === 'Comment') {
-      content.push(`. ${chalk.bold(msg.descr)}\n`);
-    }
-  });
-
-  return {
-    file,
-    line,
-    column,
-    message: content.join('')
-  };
-}
-
 export function getErrors(directory: string, result: FlowResult) {
-  return result.errors.filter(error => error.level === 'error').map(error => ({
-    file: error.message[0].path,
-    message: formatError(directory, error)
-  }));
+  return result.errors
+    .filter(error => error.level === 'error')
+    .map(error => ({
+      file: error.message[0].path,
+      message: formatError(directory, error)
+    }))
+    .filter(error => error.file.startsWith(path.resolve(directory)));
 }
 
 /* eslint-disable no-unused-vars */

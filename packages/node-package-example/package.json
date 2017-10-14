@@ -5,8 +5,11 @@
   "files": [
     "lib"
   ],
+  "engines": {
+    "node": "8"
+  },
   "devDependencies": {
-    "@tradie/node-package-template": "^1.1.0-alpha.b2a4b8e1"
+    "@tradie/node-package-scripts": "^1.1.0-alpha.b2a4b8e1"
   },
   "scripts": {
     "clean": "tradie clean",
