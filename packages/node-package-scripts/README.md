@@ -147,3 +147,10 @@ Your sources will be transpiled to support `>=4`. You may change the targetted v
 ### Can I use types?
 
 Yes! Create a `.flowconfig` and add `// @flow` comments to the top of your files. Type information will be exported to `./lib/`.
+
+You should ignore the `./lib` directory. For example:
+```ini
+[ignore]
+.*/lib/.*
+```
+

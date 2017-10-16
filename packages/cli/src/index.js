@@ -27,7 +27,10 @@ function _run(scripts: Script[]): Promise<void> {
       .strict()
       .exitProcess(false)
       .usage('Usage: $0 <command> [options]')
-      .demandCommand(1, 'Missing the <command> argument.');
+      .demandCommand(1, 'Missing the <command> argument.')
+      .command('*', '', {hidden: true}, () => {
+        resolve();
+      });
 
     Promise.all(
       scripts.map(async script => {
@@ -51,9 +54,9 @@ function _run(scripts: Script[]): Promise<void> {
           command: cmd,
           description: desc,
           builder: opts,
-          handler: argv => {
+          handler: async argv => {
             try {
-              Promise.resolve(fn(argv)).then(resolve, reject);
+              await Promise.resolve(fn(argv));
             } catch (error) {
               reject(error);
             }
@@ -63,7 +66,6 @@ function _run(scripts: Script[]): Promise<void> {
     ).then(() => {
       try {
         yargs.argv; // eslint-disable-line no-unused-expressions
-        resolve();
       } catch (error) {
         // eslint-disable-line no-empty
       }

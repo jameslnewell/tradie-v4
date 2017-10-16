@@ -46,7 +46,7 @@ export default async function(args) {
     }
   });
 
-  const processor = processFiles(
+  const processing = processFiles(
     paths.ROOT,
     [
       // lint source files
@@ -92,9 +92,11 @@ export default async function(args) {
   );
 
   process.on('SIGINT', () => {
-    processor.cancel();
+    processing.cancel();
     reporter.stop();
   });
 
+  // wait for processing to start
+  await processing;
   await reporter.wait();
 }

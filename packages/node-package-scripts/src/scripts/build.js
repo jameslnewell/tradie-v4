@@ -1,4 +1,4 @@
-import {rm, name, process as processFiles} from '@tradie/file-utils';
+import {copy, rm, name, process as processFiles} from '@tradie/file-utils';
 import linter from '@tradie/eslint-utils';
 import transpile from '@tradie/babel-utils';
 import Flow from '@tradie/flow-utils';
@@ -36,7 +36,7 @@ export default async function(args) {
     }
   });
 
-  const processor = processFiles(
+  const processing = processFiles(
     paths.ROOT,
     [
       // lint, transpile and extract types from source files
@@ -102,15 +102,57 @@ export default async function(args) {
           }
           reporter.finish();
         }
+      },
+      // copy other files
+      {
+        include: globs.FILES,
+        exclude: [globs.SOURCES, globs.TESTS, globs.MOCKS, globs.FIXTURES],
+        async process(file) {
+          reporter.start();
+          try {
+            copy(
+              file,
+              name(file, '[folder][name][ext]', {
+                src: paths.CODE_SRC,
+                dest: paths.CODE_DEST
+              })
+            );
+          } catch (error) {
+            reporter.error({
+              file: error.file || file,
+              message: debug ? error.stack || error.message : error.message
+            });
+          }
+          reporter.finish();
+        },
+        async delete(file) {
+          reporter.start();
+          try {
+            await rm(
+              name(file, '[folder][name][ext]', {
+                src: paths.CODE_SRC,
+                dest: paths.CODE_DEST
+              })
+            );
+          } catch (error) {
+            reporter.error({
+              file: error.file || file,
+              message: debug ? error.stack || error.message : error.message
+            });
+          }
+          reporter.finish();
+        }
       }
     ],
     {watch}
   );
 
   process.on('SIGINT', async () => {
-    processor.cancel();
+    processing.cancel();
     reporter.stop();
   });
 
+  // wait for processing to start
+  await processing;
   await reporter.wait();
 }

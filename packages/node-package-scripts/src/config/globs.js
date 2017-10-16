@@ -1,3 +1,4 @@
+export const FILES = 'src/**';
 export const SOURCES = 'src/**/*.{js,jsx}';
 export const EXAMPLES = 'examples/**/*.{js,jsx}';
 export const TESTS = '{src,test}/**/*.test.{js,jsx}';
