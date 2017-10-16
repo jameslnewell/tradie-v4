@@ -1,6 +1,10 @@
-# @tradie/node-package-scripts
+<center>
+  <img src="https://github.com/jameslnewell/tradie-v4/blob/separate-builder/docs/img/logo.png" height="80"/>
+</center>
 
-<img src="https://github.com/jameslnewell/tradie-v4/blob/separate-builder/docs/img/logo.png" height="80"/>
+---
+
+# @tradie/node-package-scripts
 
 An opinionated set of scripts for creating and maintaining node packages.
 
