@@ -1,5 +1,5 @@
 <center>
-  <img src="https://github.com/jameslnewell/tradie-v4/blob/separate-builder/docs/img/logo.png" height="80"/>
+  <img src="https://github.com/jameslnewell/tradie-v4/blob/separate-builder/docs/img/logo.png" height="40"/>
 </center>
 
 ---
@@ -8,7 +8,7 @@
 
 An opinionated set of scripts for creating and maintaining node packages.
 
-Feel like you spend more time setting up, and updating the tools tools?`@tradie/node-package-scripts` lets you spend more time writing code and less time setting up, updating and maintaining the tools for your packages. It provides you with a way to keep tooling consistent across all of your node packages with minimal effort.
+Feel like you spend more time setting up, and updating the tools tools?`@tradie/node-package-scripts` lets you spend more time writing code and less time setting up, updating and maintaining the tools for your package. It provides you with a way to keep tooling consistent across multiple packages with minimal effort.
 
 ## Usage
 
@@ -18,8 +18,6 @@ npx --package @tradie/node-package-scripts tradie create
 ```
 
 This will create a new project in the current directory.
-
----
 
 ## Files
 
@@ -165,3 +163,4 @@ TODO:
 - test create cmd
 - test example cmd
 - test watchers
+- require babel-polyfill in tests

@@ -11,7 +11,6 @@ describe('tradie build', () => {
   it('should transpile source when there are no errors', async () => {
     const {code} = await exec('build', {cwd: fixture('sum')});
     expect(code).toEqual(0);
-    // expect(await exists(path.join(fixture('sum'), 'lib/index.js'))).toBeTruthy();
     expect(
       await read(path.join(fixture('sum'), 'lib/index.js'))
     ).toMatchSnapshot();

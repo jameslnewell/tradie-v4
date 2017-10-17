@@ -30,7 +30,9 @@ export default function(argv) {
       testPathIgnorePatterns: [
         '<rootDir>/node_modules/',
         '<rootDir>/src/_\\.test\\.js$', //ignore the test setup file
-        '<rootDir>/test/_\\.test\\.js$' //ignore the test setup file
+        '<rootDir>/test/_\\.test\\.js$', //ignore the test setup file
+        '<rootDir>/.*/__fixtures__/', //ignore test files within fixtures
+        '<rootDir>/.*/__mocks__/' //ignore test files within mocks
       ],
       moduleFileExtensions: ['jsx', 'js'],
       transform: {

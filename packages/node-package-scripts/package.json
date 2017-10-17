@@ -1,6 +1,6 @@
 {
   "name": "@tradie/node-package-scripts",
-  "description": "Scripts for creating NodeJS packages.",
+  "description": "An opinionated set of scripts for creating and maintaining node packages.",
   "version": "1.1.0-alpha.b2a4b8e1",
   "repository": "jameslnewell/tradie-v4",
   "files": [
