@@ -12,12 +12,17 @@ Feel like you spend more time setting up, and updating the tools tools?`@tradie/
 
 ## Usage
 
+Create a folder for your project:
+
 ```
 mkdir my-package && cd my-package
-npx --package @tradie/node-package-scripts tradie create
 ```
 
-This will create a new project in the current directory.
+Generate your project with `tradie`:
+
+```
+npx --package @tradie/node-package-scripts tradie create
+```
 
 ## Files
 
@@ -159,8 +164,7 @@ You should ignore the `./lib` directory. For example:
 ```
 
 TODO:
-- test test cmd
 - test create cmd
 - test example cmd
 - test watchers
-- require babel-polyfill in tests
+- require babel-polyfill in tests???

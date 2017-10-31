@@ -7,11 +7,13 @@ export function sources({root}) {
   //get min supported node version supported from engines range
   let nodeTargetVersion = '4.0.0';
   try {
-    const metadata = require(path.join(root, 'package.json'));
+    const metadata = require(path.join(root, 'package.json')); //eslint-disable-line no-require,global-require
     if (metadata.engines && metadata.engines.node) {
       nodeTargetVersion = min(metadata.engines.node);
     }
-  } catch (error) {}
+  } catch (error) {
+    // default to v4
+  }
 
   const options = {
     babelrc: false,

@@ -15,7 +15,6 @@ export type ProcessGroup = {
   delete?: (file: string) => void | Promise<void>
 };
 
-const noop = () => {};
 const flatten = arrays => [].concat(...arrays);
 
 export function process( //TODO: even emitter more appropiate??
@@ -27,13 +26,14 @@ export function process( //TODO: even emitter more appropiate??
 
   // called for each file being created or updated
   const onStartProcessing = async function(file) {
-    file = path.resolve(directory, file);
+    // eslint-disable-line func-style
+    const fullFilePath = path.resolve(directory, file);
     await Promise.all(
       groups.map(async function(group) {
         const {process: processFn, include, exclude} = group;
         const filter = match({context: directory, include, exclude}); //TODO: cache filters
-        if (processFn && filter(file)) {
-          await processFn(file);
+        if (processFn && filter(fullFilePath)) {
+          await processFn(fullFilePath);
         }
       })
     );
@@ -41,6 +41,7 @@ export function process( //TODO: even emitter more appropiate??
 
   // called for each file being deleted
   const onStartDeleting = async function(file) {
+    // eslint-disable-line func-style
     await Promise.all(
       groups.map(async function(group) {
         const {delete: deleteFn, include, exclude} = group;

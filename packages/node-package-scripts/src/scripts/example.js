@@ -1,4 +1,4 @@
-import path from 'path';
+// import path from 'path';
 import register from 'babel-register';
 import {match} from '@tradie/file-utils';
 
@@ -12,12 +12,13 @@ export default function(argv) {
     include: [globs.SOURCES, globs.EXAMPLES]
   });
 
-  require('babel-register')({
-    ...babel.sources({root: paths.ROOT}),
+  register({
+    babelrc: false,
     extensions: ['.jsx', '.js'],
+    ...babel.sources({root: paths.ROOT}),
     only: filter
     //TODO: use resolveModuleSource() so we can just do '..' instead of '../src'
   });
 
-  require(`${paths.EXAMPLES_SRC}/${argv.module}`);
+  return import(`${paths.EXAMPLES_SRC}/${argv.module}`);
 }

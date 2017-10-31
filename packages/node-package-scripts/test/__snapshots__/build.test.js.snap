@@ -16,6 +16,15 @@ export default function(...args: number[]) {
 "
 `;
 
+exports[`tradie build should export types when there are no errors 2`] = `
+"// @flow
+
+export default function(...args: number[]) {
+  return args.reduce((total, arg) => total + arg, 0);
+}
+"
+`;
+
 exports[`tradie build should transpile source when there are no errors 1`] = `
 "\\"use strict\\";
 

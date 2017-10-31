@@ -17,7 +17,7 @@ export default function(
       flowPath,
       args,
       {...options, maxBuffer: 2000 * 1024},
-      (execError, stdout, stderr) => {
+      (execError, stdout) => {
         if (args.indexOf('ast') !== -1 || args.indexOf('--json') !== -1) {
           try {
             resolve(JSON.parse(String(stdout)));

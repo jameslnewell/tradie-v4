@@ -13,7 +13,7 @@ function formatError(error: SyntaxError) {
       const [, file, message, pos] = match;
       return {
         file,
-        message: `${chalk.bold(pos)}    ${message}\n\n${error.codeFrame}`
+        message: `${chalk.bold(pos)}    ${message}\n\n${(error: any).codeFrame}`
       };
     }
   }
@@ -29,19 +29,19 @@ export default async function(
 ) {
   return new Promise((resolve, reject) => {
     transformFile(srcFile, {...options, filename: srcFile}, async function(
-      error,
+      transpileError,
       result
     ) {
-      if (error) {
-        reject(formatError(error));
+      if (transpileError) {
+        reject(formatError(transpileError));
       } else {
         try {
           await fs.mkdirs(path.dirname(destFile));
           await fs.writeFile(destFile, result.code);
           //await fs.writeFile(`${destFilePath}.map`, result.map) //FIXME: only if there is a map
           resolve();
-        } catch (error) {
-          reject(error);
+        } catch (writeError) {
+          reject(writeError);
         }
       }
     });

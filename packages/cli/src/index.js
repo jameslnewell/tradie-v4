@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 //@flow
-import 'babel-polyfill';
+// import 'babel-polyfill';
 import chalk from 'chalk';
 import yargs from 'yargs';
 
