@@ -6,6 +6,7 @@ type Options = {
   bail?: boolean,
   cache?: boolean,
   clearCache?: boolean,
+  coverage?: boolean,
   debug?: boolean,
   expand?: boolean,
   lastCommit?: boolean,
