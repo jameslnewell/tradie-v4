@@ -3,23 +3,61 @@ import jest from 'jest';
 export {default as createBabelTransform} from './createBabelTransform';
 
 type Options = {
-  config: {},
+  bail?: boolean,
+  cache?: boolean,
+  clearCache?: boolean,
+  debug?: boolean,
+  expand?: boolean,
+  lastCommit?: boolean,
+  noCache?: boolean,
+  notify?: boolean,
+  onlyChanged?: boolean,
+  runInBand?: boolean,
+  silent?: boolean,
+  testNamePattern?: string,
+  testPathPattern?: string,
+  updateSnapshot?: boolean,
+  useStderr?: boolean,
+  verbose?: boolean,
   watch?: boolean,
-  coverage?: boolean
+  watchAll?: boolean
 };
 
-export default function(options: Options, config: {}): Promise<void> {
-  const {watch = false, coverage = false} = options;
+const jestFlags = [
+  'bail',
+  'cache',
+  'clearCache',
+  'coverage',
+  'debug',
+  'expand',
+  'lastCommit',
+  'noCache',
+  'notify',
+  'onlyChanged',
+  'runInBand',
+  'silent',
+  'testNamePattern',
+  'testPathPattern',
+  'updateSnapshot',
+  'useStderr',
+  'verbose',
+  'watch',
+  'watchAll'
+];
 
+export default function(options: Options, config: {}): Promise<void> {
   const args = ['--config', JSON.stringify(config)];
 
-  if (watch) {
-    args.push('--watch');
-  }
-
-  if (coverage) {
-    args.push('--coverage');
-  }
+  jestFlags.forEach(jestFlag => {
+    const value = options[jestFlag];
+    if (typeof value === 'boolean') {
+      if (value === true) {
+        args.push(`--${jestFlag}`);
+      }
+    } else if (typeof value !== 'undefined') {
+      args.push(`--${jestFlag}=${value}`);
+    }
+  });
 
   //TODO: support other args? https://facebook.github.io/jest/docs/cli.html
 

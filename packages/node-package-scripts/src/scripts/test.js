@@ -18,34 +18,28 @@ export default function(argv) {
     setupFiles.push(testSetupFile);
   }
 
-  return jest(
-    {
-      watch,
-      coverage
+  return jest(argv, {
+    testEnvironment: 'node',
+    rootDir: paths.ROOT,
+    testMatch: [`**/${globs.TESTS}`],
+    testPathIgnorePatterns: [
+      '<rootDir>/node_modules/',
+      '<rootDir>/src/_\\.test\\.js$', //ignore the test setup file
+      '<rootDir>/test/_\\.test\\.js$', //ignore the test setup file
+      '<rootDir>/.*/__fixtures__/', //ignore test files within fixtures
+      '<rootDir>/.*/__mocks__/' //ignore test files within mocks
+    ],
+    moduleFileExtensions: ['jsx', 'js'],
+    transform: {
+      '^.+\\.jsx?$': require.resolve('../config/jest/babelTransform')
     },
-    {
-      testEnvironment: 'node',
-      rootDir: paths.ROOT,
-      testMatch: [`**/${globs.TESTS}`],
-      testPathIgnorePatterns: [
-        '<rootDir>/node_modules/',
-        '<rootDir>/src/_\\.test\\.js$', //ignore the test setup file
-        '<rootDir>/test/_\\.test\\.js$', //ignore the test setup file
-        '<rootDir>/.*/__fixtures__/', //ignore test files within fixtures
-        '<rootDir>/.*/__mocks__/' //ignore test files within mocks
-      ],
-      moduleFileExtensions: ['jsx', 'js'],
-      transform: {
-        '^.+\\.jsx?$': require.resolve('../config/jest/babelTransform')
-      },
-      mapCoverage: true,
-      collectCoverageFrom: [
-        `**/${globs.SOURCES}`,
-        `!**/${globs.TESTS}`,
-        `!**/${globs.MOCKS}`,
-        `!**/${globs.FIXTURES}`
-      ],
-      setupFiles
-    }
-  );
+    mapCoverage: true,
+    collectCoverageFrom: [
+      `**/${globs.SOURCES}`,
+      `!**/${globs.TESTS}`,
+      `!**/${globs.MOCKS}`,
+      `!**/${globs.FIXTURES}`
+    ],
+    setupFiles
+  });
 }

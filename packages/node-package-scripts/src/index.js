@@ -43,20 +43,107 @@ run([
     },
     exec: resolve('./scripts/build')
   },
-
   {
     cmd: 'test',
     desc: 'Run tests',
     opts: {
+      bail: {
+        default: false,
+        boolean: true,
+        description:
+          'Exit the test suite immediately upon the first failing test.'
+      },
+      cache: {
+        default: true,
+        boolean: true,
+        description:
+          'Whether to use the transform cache. Disable the cache using --no-cache.'
+      },
+      clearCache: {
+        default: false,
+        boolean: true,
+        description: '_'
+      },
+      coverage: {
+        default: false,
+        boolean: true,
+        description:
+          'Indicates that test coverage information should be collected and reported in the output.'
+      },
+      debug: {
+        default: false,
+        boolean: true,
+        description: '_'
+      },
+      expand: {
+        default: false,
+        boolean: true,
+        description: '_'
+      },
+      lastCommit: {
+        default: false,
+        boolean: true,
+        description: '_'
+      },
+      noCache: {
+        default: false,
+        boolean: true,
+        description: '_'
+      },
+      notify: {
+        default: false,
+        boolean: true,
+        description: '_'
+      },
+      onlyChanged: {
+        default: false,
+        boolean: true,
+        description: '_'
+      },
+      runInBand: {
+        default: false,
+        boolean: true,
+        description: '_'
+      },
+      silent: {
+        default: false,
+        boolean: true,
+        description: '_'
+      },
+      testNamePattern: {
+        default: false,
+        boolean: true,
+        description: '_'
+      },
+      testPathPattern: {
+        default: false,
+        boolean: true,
+        description: '_'
+      },
+      updateSnapshot: {
+        default: false,
+        boolean: true,
+        description: '_'
+      },
+      useStderr: {
+        default: false,
+        boolean: true,
+        description: '_'
+      },
+      verbose: {
+        default: false,
+        boolean: true,
+        description: '_'
+      },
       watch: {
         default: false,
         boolean: true,
         description: 'watch tests and re-run them when they change'
       },
-      coverage: {
+      watchAll: {
         default: false,
         boolean: true,
-        description: 'report test coverage'
+        description: '_'
       }
     },
     exec: resolve('./scripts/test')
