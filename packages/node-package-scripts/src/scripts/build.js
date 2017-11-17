@@ -147,12 +147,14 @@ export default async function(args) {
     {watch}
   );
 
-  process.on('SIGINT', async () => {
+  process.on('SIGINT', () => {
     processing.cancel();
     reporter.stop();
   });
 
   // wait for processing to start
-  await processing;
-  await reporter.wait();
+  await Promise.all([
+    processing, //TODO: is this necessary?
+    reporter.wait() //necessary for something to receive reporter errors
+  ]);
 }

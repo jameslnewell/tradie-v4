@@ -27,10 +27,7 @@ function _run(scripts: Script[]): Promise<void> {
       .strict()
       .exitProcess(false)
       .usage('Usage: $0 <command> [options]')
-      .demandCommand(1, 'Missing the <command> argument.')
-      .command('*', '', {hidden: true}, () => {
-        resolve();
-      });
+      .demandCommand(1, 'Missing the <command> argument.');
 
     Promise.all(
       scripts.map(async script => {
@@ -67,7 +64,7 @@ function _run(scripts: Script[]): Promise<void> {
       try {
         yargs.argv; // eslint-disable-line no-unused-expressions
       } catch (error) {
-        // eslint-disable-line no-empty
+        reject();
       }
     });
   });
