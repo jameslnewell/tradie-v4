@@ -6,8 +6,6 @@ import * as paths from '../config/paths';
 import * as globs from '../config/globs';
 
 export default function(argv) {
-  const {watch, coverage} = argv;
-
   const setupFiles = [];
   const codeSetupFile = path.join(paths.CODE_SRC, '_.test.js');
   if (fs.existsSync(codeSetupFile)) {

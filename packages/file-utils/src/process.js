@@ -25,7 +25,7 @@ export function process( //TODO: even emitter more appropiate??
   const {watch: isWatching = false} = options;
 
   // called for each file being created or updated
-  const onStartProcessing = async function(file) {
+  async function onStartProcessing(file) {
     // eslint-disable-line func-style
     const fullFilePath = path.resolve(directory, file);
     await Promise.all(
@@ -37,10 +37,10 @@ export function process( //TODO: even emitter more appropiate??
         }
       })
     );
-  };
+  }
 
   // called for each file being deleted
-  const onStartDeleting = async function(file) {
+  async function onStartDeleting(file) {
     // eslint-disable-line func-style
     await Promise.all(
       groups.map(async function(group) {
@@ -51,7 +51,7 @@ export function process( //TODO: even emitter more appropiate??
         }
       })
     );
-  };
+  }
 
   return new CancellablePromise((resolve, reject, onCancel) => {
     // list included files
