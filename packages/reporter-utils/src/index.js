@@ -84,9 +84,9 @@ export default class Reporter {
   /** @private */
   resolveOrReject() {
     if (this.hasErrors() && this.reject) {
-      this.reject();
+      if (this.reject) this.reject();
     } else if (!this.hasErrors() && this.resolve) {
-      this.resolve();
+      if (this.resolve) this.resolve();
     }
   }
 

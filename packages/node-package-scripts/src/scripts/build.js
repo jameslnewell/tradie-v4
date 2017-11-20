@@ -152,9 +152,9 @@ export default async function(args) {
     reporter.stop();
   });
 
-  // wait for processing to start
-  await Promise.all([
-    processing, //TODO: is this necessary?
-    reporter.wait() //necessary for something to receive reporter errors
-  ]);
+  // wait for processing to finish or be cancelled
+  await processing;
+
+  // reject with an error when any errors were reported
+  await reporter.wait();
 }

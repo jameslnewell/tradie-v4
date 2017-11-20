@@ -33,7 +33,6 @@ export default async function(args) {
   const flow = new Flow(paths.ROOT);
 
   reporter.before('finished', async function() {
-    console.log('before:finished');
     try {
       const result = await flow.status(); //TODO: exclude files not processed
       result.errors.forEach(error => reporter.error(error));
@@ -96,7 +95,9 @@ export default async function(args) {
     reporter.stop();
   });
 
-  // wait for processing to start
+  // wait for processing to finish or be cancelled
   await processing;
+
+  // reject with an error when any errors were reported
   await reporter.wait();
 }
