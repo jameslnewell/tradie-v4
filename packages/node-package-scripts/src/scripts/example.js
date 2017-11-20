@@ -15,7 +15,7 @@ export default function(argv) {
   register({
     babelrc: false,
     extensions: ['.jsx', '.js'],
-    ...babel.sources({root: paths.ROOT}),
+    ...babel.examples({root: paths.ROOT}),
     only: filter
     //TODO: use resolveModuleSource() so we can just do '..' instead of '../src'
   });

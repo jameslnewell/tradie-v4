@@ -17,6 +17,7 @@
     "build": "tradie build",
     "watch": "tradie build --watch",
     "test": "tradie test",
+    "example": "tradie example",
     "prepublishOnly": "tradie clean && tradie lint && tradie test && tradie build"
   }
 }

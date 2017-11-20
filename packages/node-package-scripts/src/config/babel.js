@@ -43,3 +43,15 @@ export function sources({root}) {
 export function tests({root}) {
   return sources({root});
 }
+
+export function examples({root}) {
+  const options = sources({root});
+  try {
+    const metadata = require(path.join(root, 'package.json')); //eslint-disable-line no-require,global-require
+    options.plugins.push([
+      require.resolve('babel-plugin-module-alias'),
+      [{src: './src', expose: metadata.name}]
+    ]);
+  } catch (error) {} //eslint-disable-line no-empty
+  return options;
+}
