@@ -49,8 +49,12 @@ export function examples({root}) {
   try {
     const metadata = require(path.join(root, 'package.json')); //eslint-disable-line no-require,global-require
     options.plugins.push([
-      require.resolve('babel-plugin-module-alias'),
-      [{src: './src', expose: metadata.name}]
+      require.resolve('babel-plugin-module-resolver'),
+      {
+        alias: {
+          [metadata.name]: './src'
+        }
+      }
     ]);
   } catch (error) {} //eslint-disable-line no-empty
   return options;

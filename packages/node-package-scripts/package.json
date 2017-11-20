@@ -21,7 +21,7 @@
     "@tradie/jest-utils": "^1.1.0-alpha.b2a4b8e1",
     "@tradie/reporter-utils": "^1.1.0-alpha.b2a4b8e1",
     "babel-plugin-dynamic-import-node": "^1.0.2",
-    "babel-plugin-module-alias": "^1.6.0",
+    "babel-plugin-module-resolver": "^3.0.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-plugin-transform-runtime": "^6.23.0",
