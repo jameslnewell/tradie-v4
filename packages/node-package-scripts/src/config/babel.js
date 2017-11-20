@@ -52,7 +52,11 @@ export function examples({root}) {
       require.resolve('babel-plugin-module-resolver'),
       {
         alias: {
-          [metadata.name]: './src'
+          [`^${metadata.name}/lib/(.+)`]: './src/\\1', // map the ./lib dir to ./src since it might not be built yet
+          [`^${metadata.name}/(.+)`]: './\\1',
+          [metadata.name]: metadata.main
+            ? metadata.main.replace(/^(\.\/)?lib/, './src')
+            : './src' // map the package to the main module in ./src
         }
       }
     ]);
