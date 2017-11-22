@@ -74,11 +74,6 @@ export default class Reporter {
 
     this.startedText = startedText;
     this.finishedText = finishedText;
-
-    this.promise = new Promise((resolve, reject) => {
-      this.resolve = resolve;
-      this.reject = reject;
-    });
   }
 
   /** @private */
@@ -287,10 +282,18 @@ export default class Reporter {
    * Wait until all the running compilations have stopped and we're no longer watching
    */
   wait() {
-    //if we're not watching and there are no running compilations, then resolve or reject now
-    if (!this.watch && !this.running && !this.runningTimeout) {
-      this.resolveOrReject();
+    if (!this.promise) {
+      this.promise = new Promise((resolve, reject) => {
+        this.resolve = resolve;
+        this.reject = reject;
+
+        //if we're not watching and there are no running compilations, then resolve or reject now
+        if (!this.watch && !this.running && !this.runningTimeout) {
+          this.resolveOrReject();
+        }
+      });
     }
+
     return this.promise;
   }
 }
