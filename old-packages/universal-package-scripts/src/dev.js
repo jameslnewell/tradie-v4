@@ -3,8 +3,8 @@ import Reporter from '@tradie/reporter-utils';
 import {serve} from '@tradie/webpack-utils';
 
 export interface Options {
-  root: string,
-  webpack: Object
+  root: string;
+  webpack: Object;
 }
 
 export default async function(options: Options) {

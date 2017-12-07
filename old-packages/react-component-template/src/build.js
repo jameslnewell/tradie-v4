@@ -1,11 +1,5 @@
 import path from 'path';
-import {
-  SOURCE_FILES,
-  EXAMPLE_FILES,
-  TEST_FILES,
-  MOCK_FILES,
-  FIXTURE_FILES
-} from './utils/paths';
+import {SOURCE_FILES, EXAMPLE_FILES, TEST_FILES, MOCK_FILES, FIXTURE_FILES} from './utils/paths';
 import * as eslint from './utils/eslint';
 import * as babel from './utils/babel';
 import * as rollup from './utils/rollup';

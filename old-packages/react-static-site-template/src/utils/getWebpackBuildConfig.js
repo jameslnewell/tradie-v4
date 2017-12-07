@@ -74,9 +74,7 @@ export default options => {
   // === ignore the files ===
 
   config.module.rules.push({
-    exclude: extensionsToRegex(
-      [].concat(scriptExtensions, styleExtensions, '.json')
-    ),
+    exclude: extensionsToRegex([].concat(scriptExtensions, styleExtensions, '.json')),
     use: [
       {
         loader: require.resolve('file-loader'),
@@ -116,9 +114,7 @@ export default options => {
         if (manifest.entry[context.pageChunk.name]) {
           entryAssets.push(...manifest.entry[context.pageChunk.name]);
         }
-        entryAssets = entryAssets.map(
-          filename => `${config.output.publicPath}${filename}`
-        );
+        entryAssets = entryAssets.map(filename => `${config.output.publicPath}${filename}`);
 
         //get async assets for the layout and this page
         if (manifest.async.vendor) {
@@ -127,9 +123,7 @@ export default options => {
         if (manifest.async[context.pageChunk.name]) {
           asyncAssets.push(...manifest.async[context.pageChunk.name]);
         }
-        asyncAssets = asyncAssets.map(
-          filename => `${config.output.publicPath}${filename}`
-        );
+        asyncAssets = asyncAssets.map(filename => `${config.output.publicPath}${filename}`);
 
         const layoutProps = Object.assign({}, props, {
           root: config.output.publicPath,

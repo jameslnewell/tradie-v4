@@ -52,9 +52,7 @@ module.exports = options => {
     {
       loader: require.resolve('postcss-loader'),
       options: {
-        plugins: () => [
-          autoprefixer({browsers: 'last 2 versions, > 5%, ie >= 11'})
-        ]
+        plugins: () => [autoprefixer({browsers: 'last 2 versions, > 5%, ie >= 11'})]
       }
     }
   ];
@@ -84,9 +82,7 @@ module.exports = options => {
   // === load the files ===
 
   config.module.rules.push({
-    exclude: extensionsToRegex(
-      [].concat(scriptExtensions, styleExtensions, '.json')
-    ),
+    exclude: extensionsToRegex([].concat(scriptExtensions, styleExtensions, '.json')),
     use: [
       {
         loader: require.resolve('file-loader'),

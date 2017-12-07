@@ -15,9 +15,7 @@ export type Script = {
 };
 
 async function _load(path: string) {
-  return await import(path).then(
-    module => (module.__esModule ? module.default : module)
-  );
+  return await import(path).then(module => (module.__esModule ? module.default : module));
 }
 
 function _run(scripts: Script[]): Promise<void> {

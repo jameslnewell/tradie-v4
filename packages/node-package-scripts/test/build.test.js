@@ -11,25 +11,19 @@ describe('tradie build', () => {
   it('should transpile source when there are no errors', async () => {
     const {code} = await exec('build', {cwd: fixture('sum')});
     expect(code).toEqual(0);
-    expect(
-      await read(path.join(fixture('sum'), 'lib/index.js'))
-    ).toMatchSnapshot();
+    expect(await read(path.join(fixture('sum'), 'lib/index.js'))).toMatchSnapshot();
   });
 
   it('should export types when there are no errors', async () => {
     const {code} = await exec('build', {cwd: fixture('sum')});
     expect(code).toEqual(0);
-    expect(
-      await read(path.join(fixture('sum'), 'lib/index.js.flow'))
-    ).toMatchSnapshot();
+    expect(await read(path.join(fixture('sum'), 'lib/index.js.flow'))).toMatchSnapshot();
   });
 
   it('should copy other files when there are no errors', async () => {
     const {code} = await exec('build', {cwd: fixture('sum')});
     expect(code).toEqual(0);
-    expect(
-      await read(path.join(fixture('sum'), 'lib/data.json'))
-    ).toMatchSnapshot();
+    expect(await read(path.join(fixture('sum'), 'lib/data.json'))).toMatchSnapshot();
   });
 
   it('should exit with a code of 1 when there are lint errors', async () => {

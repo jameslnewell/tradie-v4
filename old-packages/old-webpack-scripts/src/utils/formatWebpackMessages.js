@@ -98,10 +98,7 @@ function formatMessage(message) {
     // We are clean now!
     lines = cleanedLines;
     // Finally, brush up the error message a little.
-    lines[1] = lines[1].replace(
-      'Module build failed: SyntaxError:',
-      friendlySyntaxErrorLabel
-    );
+    lines[1] = lines[1].replace('Module build failed: SyntaxError:', friendlySyntaxErrorLabel);
   }
 
   // Reassemble the message.

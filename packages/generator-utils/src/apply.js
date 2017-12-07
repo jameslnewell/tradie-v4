@@ -10,24 +10,17 @@ import {type FileMap, type FileStatusMap} from './types';
  * @param {FileMap} oldFiles
  * @param {FileMap} newFiles
  */
-export default function(
-  dest: string,
-  statuses: FileStatusMap,
-  newFiles: FileMap
-) {
+export default function(dest: string, statuses: FileStatusMap, newFiles: FileMap) {
   return Promise.all(
     Object.keys(statuses).map(filePath => {
       const status = statuses[filePath];
       const destFilePath = path.resolve(dest, filePath);
-      console.log(status, destFilePath);
       switch (status) {
         case 'A':
         case 'M':
           return fs
             .ensureDir(path.dirname(destFilePath))
-            .then(() =>
-              fs.writeFile(destFilePath, newFiles[filePath].contents)
-            );
+            .then(() => fs.writeFile(destFilePath, newFiles[filePath].contents));
 
         case 'D':
           return fs.unlink(destFilePath);

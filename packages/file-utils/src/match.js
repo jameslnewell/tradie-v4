@@ -3,11 +3,7 @@ import path from 'path';
 import anymatch from 'anymatch';
 
 export type FilterFunction = (value: string) => boolean;
-export type Filter =
-  | string
-  | RegExp
-  | FilterFunction
-  | Array<string | RegExp | FilterFunction>;
+export type Filter = string | RegExp | FilterFunction | Array<string | RegExp | FilterFunction>;
 
 export type MatchOptions = {
   context?: string,
@@ -19,11 +15,7 @@ const defaultIncludeFilter = () => true;
 const defaultExcludeFilter = () => false;
 
 export function match(options: MatchOptions): FilterFunction {
-  const {
-    context,
-    include = defaultIncludeFilter,
-    exclude = defaultExcludeFilter
-  } = options;
+  const {context, include = defaultIncludeFilter, exclude = defaultExcludeFilter} = options;
 
   const includeMatch = anymatch(include);
   const excludeMatch = anymatch(exclude);

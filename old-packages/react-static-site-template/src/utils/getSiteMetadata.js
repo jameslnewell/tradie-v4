@@ -46,9 +46,7 @@ export default root => {
 
   //get the page metadata
   if (!Array.isArray(site.pages)) {
-    return Promise.reject(
-      Error('site.json: Page must be an array of strings.')
-    );
+    return Promise.reject(Error('site.json: Page must be an array of strings.'));
   }
 
   const pages = site.pages.map(page => ({

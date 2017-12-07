@@ -4,8 +4,7 @@ import {getErrors} from './messages';
 const report = {
   results: [
     {
-      filePath:
-        '/Users/james/code/tradie/packages/@tradie/eslint-utils/src/index.js',
+      filePath: '/Users/james/code/tradie/packages/@tradie/eslint-utils/src/index.js',
       messages: [
         {
           ruleId: 'import/no-commonjs',
@@ -45,9 +44,7 @@ describe('getErrors()', () => {
     const line1 = ` ${chalk.bold(
       '2:14'
     )}  import/no-commonjs  Expected \"import\" instead of \"require()\"`;
-    const line2 = `${chalk.bold(
-      '13:23'
-    )}  no-undef            \'message\' is not defined.`;
+    const line2 = `${chalk.bold('13:23')}  no-undef            \'message\' is not defined.`;
 
     expect(getErrors(report)).toEqual({
       '/Users/james/code/tradie/packages/@tradie/eslint-utils/src/index.js': `${line1}\n${line2}`

@@ -17,12 +17,7 @@ export function sources({root}) {
 
   const options = {
     babelrc: false,
-    presets: [
-      [
-        require.resolve('babel-preset-env'),
-        {targets: {node: nodeTargetVersion}}
-      ]
-    ],
+    presets: [[require.resolve('babel-preset-env'), {targets: {node: nodeTargetVersion}}]],
     plugins: [
       require.resolve('babel-plugin-transform-object-rest-spread'),
       require.resolve('babel-plugin-transform-class-properties'),
@@ -54,9 +49,7 @@ export function examples({root}) {
         alias: {
           [`^${metadata.name}/lib/(.+)`]: './src/\\1', // map the ./lib dir to ./src since it might not be built yet
           [`^${metadata.name}/(.+)`]: './\\1',
-          [metadata.name]: metadata.main
-            ? metadata.main.replace(/^(\.\/)?lib/, './src')
-            : './src' // map the package to the main module in ./src
+          [metadata.name]: metadata.main ? metadata.main.replace(/^(\.\/)?lib/, './src') : './src' // map the package to the main module in ./src
         }
       }
     ]);

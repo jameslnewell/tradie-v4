@@ -53,9 +53,7 @@ class BuildReporter {
       console.log(chalk.red('Compiled with errors'));
       console.log();
       this.errors.forEach((msg, i) => {
-        console.error(
-          `${chalk.underline.red(`Error #${i + 1}:`)} \n\n${msg}\n\n`
-        );
+        console.error(`${chalk.underline.red(`Error #${i + 1}:`)} \n\n${msg}\n\n`);
       });
       /* eslint-enable no-console */
     } else if (this.warnings.length) {
@@ -64,9 +62,7 @@ class BuildReporter {
       console.log(chalk.yellow('Compiled with warnings'));
       console.log();
       this.warnings.forEach((msg, i) => {
-        console.error(
-          `${chalk.underline.yellow(`Warning #${i + 1}:`)} \n\n${msg}\n\n`
-        );
+        console.error(`${chalk.underline.yellow(`Warning #${i + 1}:`)} \n\n${msg}\n\n`);
       });
       /* eslint-enable no-console */
     } else {

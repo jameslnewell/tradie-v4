@@ -6,11 +6,7 @@ export function min(arg) {
   //FIXME: this is a VERY buggy method (rough guess) that doesn't take into account the operator
   new Range(arg).set.forEach(comparator => {
     comparator.forEach(range => {
-      if (
-        range.operator === '=' ||
-        range.operator === '>' ||
-        range.operator === '>='
-      ) {
+      if (range.operator === '=' || range.operator === '>' || range.operator === '>=') {
         if (version === null) {
           version = range.semver;
           return;

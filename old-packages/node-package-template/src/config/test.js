@@ -1,12 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import getPaths from './utils/paths';
-import {
-  SOURCE_FILES,
-  FIXTURE_FILES,
-  MOCK_FILES,
-  TEST_FILES
-} from './utils/globs';
+import {SOURCE_FILES, FIXTURE_FILES, MOCK_FILES, TEST_FILES} from './utils/globs';
 
 export default function(options = {}) {
   const {root, watch, coverage} = options;

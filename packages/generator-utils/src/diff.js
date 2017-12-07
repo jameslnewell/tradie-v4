@@ -7,8 +7,8 @@ export type DiffOptions = {
 
 /**
  * Calculate which files have changed
- * @param {FileMap} oldFiles 
- * @param {FileMap} newFiles 
+ * @param {FileMap} oldFiles
+ * @param {FileMap} newFiles
  * @param {DiffOptions} [options]
  */
 export default function(
@@ -16,9 +16,7 @@ export default function(
   newFiles: FileMap,
   options: DiffOptions = {}
 ): FileStatusMap {
-  const {
-    changed = (oldFile, newFile) => oldFile.contents !== newFile.contents
-  } = options;
+  const {changed = (oldFile, newFile) => oldFile.contents !== newFile.contents} = options;
 
   const statuses: FileStatusMap = {};
 
@@ -44,8 +42,10 @@ export default function(
   });
 
   //sort statuses
-  return Object.keys(statuses).sort().reduce((s, filePath) => {
-    s[filePath] = statuses[filePath];
-    return s;
-  }, {});
+  return Object.keys(statuses)
+    .sort()
+    .reduce((s, filePath) => {
+      s[filePath] = statuses[filePath];
+      return s;
+    }, {});
 }

@@ -66,8 +66,7 @@ const result = {
       suppressions: [],
       message: [
         {
-          context:
-            'class Npm$StyledComponents$ThemeProvider extends React$Component {',
+          context: 'class Npm$StyledComponents$ThemeProvider extends React$Component {',
           descr: 'identifier `React$Component`',
           type: 'Blame',
           loc: {
@@ -134,8 +133,7 @@ const result = {
       suppressions: [],
       message: [
         {
-          context:
-            'class Npm$StyledComponents$StyleSheetManager extends React$Component {',
+          context: 'class Npm$StyledComponents$StyleSheetManager extends React$Component {',
           descr: 'identifier `React$Component`',
           type: 'Blame',
           loc: {
@@ -204,9 +202,7 @@ describe('messages', () => {
   it('should', () => {
     const errorsByFile = formatResult('/foo/bar', result);
     Object.keys(errorsByFile).forEach(
-      file =>
-        console.log(file) ||
-        errorsByFile[file].forEach(error => console.log(error))
+      file => console.log(file) || errorsByFile[file].forEach(error => console.log(error))
     );
   });
 });

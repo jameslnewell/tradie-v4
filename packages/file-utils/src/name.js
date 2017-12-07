@@ -6,11 +6,7 @@ export type NameOptions = {
   dest?: string
 };
 
-export function name(
-  file: string,
-  pattern: string,
-  options: NameOptions = {}
-): string {
+export function name(file: string, pattern: string, options: NameOptions = {}): string {
   const {src = '.', dest = '.'} = options;
   const info = path.parse(path.relative(src, file));
   const fname = pattern

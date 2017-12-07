@@ -54,9 +54,7 @@ module.exports = options => {
   // === ignore the files ===
 
   config.module.rules.push({
-    exclude: extensionsToRegex(
-      [].concat(scriptExtensions, styleExtensions, '.json')
-    ),
+    exclude: extensionsToRegex([].concat(scriptExtensions, styleExtensions, '.json')),
     use: [
       {
         loader: require.resolve('file-loader'),

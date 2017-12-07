@@ -2,23 +2,13 @@
 import {diffLines} from 'diff';
 import chalk from 'chalk';
 import inquirer from 'inquirer';
-import {
-  type File,
-  type FileMap,
-  type FileStatus,
-  type FileStatusMap
-} from './types';
+import {type File, type FileMap, type FileStatus, type FileStatusMap} from './types';
 
 function printStatus(filePath: string, status: FileStatus) {
   console.log(chalk.yellow(`${chalk.bold(status)} ${filePath}`));
 }
 
-function printDiff(
-  filePath: string,
-  status: FileStatus,
-  oldFile: File,
-  newFile: File
-) {
+function printDiff(filePath: string, status: FileStatus, oldFile: File, newFile: File) {
   switch (status) {
     case 'M': {
       const oldContents = oldFile.contents;
@@ -63,6 +53,7 @@ export default function(
 ): Promise<FileStatusMap> {
   const acceptedStatuses = {};
 
+  console.log();
   return Object.keys(statuses)
     .reduce(
       (promise, filePath) =>

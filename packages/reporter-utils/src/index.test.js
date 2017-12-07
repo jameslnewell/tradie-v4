@@ -5,10 +5,14 @@ describe.skip('Reporter', () => {
     const reporter = new Reporter();
     reporter.printStartOfReport = jest.fn();
     reporter.printEndOfReport = jest.fn();
-    return reporter.started().finished().wait().then(() => {
-      expect(reporter.printStartOfReport).toHaveBeenCalledTimes(1);
-      expect(reporter.printEndOfReport).toHaveBeenCalledTimes(1);
-    });
+    return reporter
+      .started()
+      .finished()
+      .wait()
+      .then(() => {
+        expect(reporter.printStartOfReport).toHaveBeenCalledTimes(1);
+        expect(reporter.printEndOfReport).toHaveBeenCalledTimes(1);
+      });
   });
 
   it('should call .printStartOfReport() and .printEndOfReport() once when there are multiple sync compilations running at the same time', () => {
@@ -122,7 +126,10 @@ describe.skip('Reporter', () => {
 
       it('should resolve when we are watching and .stop() is called after 1 compilations have finished running', () => {
         const reporter = new Reporter({watching: true});
-        reporter.started().finished().stop();
+        reporter
+          .started()
+          .finished()
+          .stop();
         expect(reporter.wait()).resolves.toBeUndefined();
       });
     });
@@ -131,7 +138,10 @@ describe.skip('Reporter', () => {
       it('should reject when we are not watching, an error is reported and 1 compilation has finished', () => {
         const reporter = new Reporter();
 
-        reporter.started().error('my-file.js', 'an error message').finished();
+        reporter
+          .started()
+          .error('my-file.js', 'an error message')
+          .finished();
 
         return expect(reporter.wait()).rejects.toBeUndefined();
       });

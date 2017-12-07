@@ -21,10 +21,7 @@ const addEntry = (webpackConfig, newEntry) => {
     webpackConfig.entry.push(newEntry);
   } else if (typeof webpackConfig.entry === 'object') {
     Object.keys(webpackConfig.entry).forEach(entry => {
-      webpackConfig.entry[entry] = [].concat(
-        webpackConfig.entry[entry],
-        newEntry
-      );
+      webpackConfig.entry[entry] = [].concat(webpackConfig.entry[entry], newEntry);
     });
   } else {
     webpackConfig.entry = [webpackConfig.entry, newEntry];
@@ -77,9 +74,7 @@ export default options => {
     //configure HMR for the client bundle
     addEntry(
       options.webpack.client,
-      `${require.resolve(
-        'webpack-hot-middleware/client'
-      )}?reload=true&overlay=true`
+      `${require.resolve('webpack-hot-middleware/client')}?reload=true&overlay=true`
     );
     addPlugin(options.webpack.client, new webpack.HotModuleReplacementPlugin());
 
@@ -91,10 +86,7 @@ export default options => {
   if (options.webpack.server) {
     //configure HMR for the server bundle
     //"webpack/hot/signal" - https://github.com/webpack/webpack/issues/3558
-    addEntry(
-      options.webpack.server,
-      `${require.resolve('webpack/hot/poll')}?1000`
-    );
+    addEntry(options.webpack.server, `${require.resolve('webpack/hot/poll')}?1000`);
     addPlugin(options.webpack.server, new webpack.NamedModulesPlugin());
     addPlugin(options.webpack.server, new webpack.HotModuleReplacementPlugin());
 

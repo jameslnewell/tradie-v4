@@ -20,9 +20,7 @@ describe('name()', () => {
   });
 
   it('should append a new extension', () => {
-    expect(name('foo/bar.jsx', '[folder][name][ext].flow')).toEqual(
-      'foo/bar.jsx.flow'
-    );
+    expect(name('foo/bar.jsx', '[folder][name][ext].flow')).toEqual('foo/bar.jsx.flow');
   });
 
   it('should be relative', () => {

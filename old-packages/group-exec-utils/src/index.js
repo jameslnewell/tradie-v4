@@ -6,9 +6,7 @@ export type Group<GroupOptions> = {
   exclude?: Filter
 } & GroupOptions;
 
-export type GroupOrGroups<GroupOptions> =
-  | Group<GroupOptions>
-  | Group<GroupOptions>[];
+export type GroupOrGroups<GroupOptions> = Group<GroupOptions> | Group<GroupOptions>[];
 
 export type CreateContextFunction<GroupOptions, GroupContext> = (
   group: Group<GroupOptions>

@@ -21,7 +21,6 @@ export default options => {
       client: getWebpackClientConfig({root, optimize, metadata, manifest}),
       build: getWebpackBuildConfig({root, optimize, metadata, manifest})
     },
-    onServerStart: server =>
-      server.use(serveStatic(paths.dest)).use(serveIndex(paths.dest))
+    onServerStart: server => server.use(serveStatic(paths.dest)).use(serveIndex(paths.dest))
   }));
 };

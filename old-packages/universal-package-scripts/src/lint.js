@@ -6,10 +6,10 @@ import Flow from '@tradie/flow-utils';
 import FileProcessor from '@tradie/file-processor-utils';
 
 export interface Options {
-  root: string,
-  watch: boolean,
-  eslint: Object,
-  flow: Object
+  root: string;
+  watch: boolean;
+  eslint: Object;
+  flow: Object;
 }
 
 export default async function(options: Options) {
@@ -20,10 +20,7 @@ export default async function(options: Options) {
     watch,
     include: []
       .concat(eslintGroups)
-      .reduce(
-        (includes, eslintGroup) => includes.concat(eslintGroup.include),
-        []
-      )
+      .reduce((includes, eslintGroup) => includes.concat(eslintGroup.include), [])
     // exclude: //TODO:
   });
 

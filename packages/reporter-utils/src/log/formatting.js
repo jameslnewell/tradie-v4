@@ -31,9 +31,7 @@ function renderFile(file: string, cwd?: string) {
 
   const {dir, base} = path.parse(filePath);
   return chalk.dim(
-    ` in ${dir
-      ? `${chalk.dim(dir)}${chalk.dim('/')}`
-      : ''}${chalk.reset.white.bold(base)}`
+    ` in ${dir ? `${chalk.dim(dir)}${chalk.dim('/')}` : ''}${chalk.reset.white.bold(base)}`
   );
 }
 
@@ -55,14 +53,14 @@ export function formatLog(log: Record, opts: FormatOptions = {}) {
   const isMultiLineMessage = /\n/.test(message);
 
   if (!file && !isMultiLineMessage) {
-    return `${renderBadge(level)}${file
-      ? renderFile(file, cwd)
-      : ''} ${renderShortMessage(message)}\n`;
+    return `${renderBadge(level)}${file ? renderFile(file, cwd) : ''} ${renderShortMessage(
+      message
+    )}\n`;
   }
 
-  return `${renderBadge(level)}${file
-    ? renderFile(file, cwd)
-    : ''}\n\n${renderLongMessage(message)}\n`;
+  return `${renderBadge(level)}${file ? renderFile(file, cwd) : ''}\n\n${renderLongMessage(
+    message
+  )}\n`;
 }
 
 export function formatLogs(logs: Record[], opts: FormatOptions = {}) {

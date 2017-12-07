@@ -22,12 +22,8 @@ export default options => {
 
     output: {
       path: paths.dest,
-      filename: optimize
-        ? 'scripts/[name].[chunkhash:8].js'
-        : 'scripts/[name].js',
-      chunkFilename: optimize
-        ? 'scripts/[id].[chunkhash:8].js'
-        : 'scripts/[id].js',
+      filename: optimize ? 'scripts/[name].[chunkhash:8].js' : 'scripts/[name].js',
+      chunkFilename: optimize ? 'scripts/[id].[chunkhash:8].js' : 'scripts/[id].js',
       sourceMapFilename: '[file].map',
       publicPath: BASE_URL,
       pathinfo: !optimize //true in dev only

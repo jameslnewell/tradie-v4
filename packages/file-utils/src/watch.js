@@ -14,13 +14,7 @@ export type WatchOptions = {
 const noop = () => {};
 
 export function watch(dir: string, options: WatchOptions = {}) {
-  const {
-    include,
-    exclude,
-    created = noop,
-    updated = noop,
-    deleted = noop
-  } = options;
+  const {include, exclude, created = noop, updated = noop, deleted = noop} = options;
 
   const filter = match({
     context: dir,

@@ -22,16 +22,9 @@ function formatError(error: SyntaxError) {
   };
 }
 
-export default async function(
-  srcFile: string,
-  destFile: string,
-  options: BabelOptions = {}
-) {
+export default async function(srcFile: string, destFile: string, options: BabelOptions = {}) {
   return new Promise((resolve, reject) => {
-    transformFile(srcFile, {...options, filename: srcFile}, async function(
-      transpileError,
-      result
-    ) {
+    transformFile(srcFile, {...options, filename: srcFile}, async function(transpileError, result) {
       if (transpileError) {
         reject(formatError(transpileError));
       } else {

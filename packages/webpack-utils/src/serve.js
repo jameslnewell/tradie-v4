@@ -17,18 +17,13 @@ export default function(config) {
       entry: [].concat(
         config.entry, //TODO: support string, array or object
         require.resolve('webpack/hot/dev-server'),
-        `${require.resolve(
-          'webpack-dev-server/client'
-        )}?http://localhost:${port}/`
+        `${require.resolve('webpack-dev-server/client')}?http://localhost:${port}/`
       ),
       output: {
         ...config.output,
         publicPath: '/'
       },
-      plugins: [].concat(
-        config.plugins,
-        new webpack.HotModuleReplacementPlugin()
-      )
+      plugins: [].concat(config.plugins, new webpack.HotModuleReplacementPlugin())
     });
 
     emit(emitter, compiler);

@@ -18,7 +18,11 @@ const longInfoWithFile = {
   priority: 0
 };
 
-const shortWarn = {level: 'warn', message: 'That might not work!', priority: 0};
+const shortWarn = {
+  level: 'warn',
+  message: 'That might not work!',
+  priority: 0
+};
 const longWarn = {
   level: 'warn',
   message: 'That might not work!\nblah blah blah',
@@ -31,7 +35,11 @@ const longWarnWithFile = {
   priority: 0
 };
 
-const shortError = {level: 'error', message: 'That did not work!', priority: 0};
+const shortError = {
+  level: 'error',
+  message: 'That did not work!',
+  priority: 0
+};
 const longError = {
   level: 'error',
   message: new Error('That did not work!').stack,

@@ -8,12 +8,12 @@ import Flow from '@tradie/flow-utils';
 import Reporter from '@tradie/reporter-utils';
 
 export interface Options {
-  root: string,
-  eslint: Object,
-  babel: Object,
-  flow: Object,
-  rollup: Object,
-  webpack: Object
+  root: string;
+  eslint: Object;
+  babel: Object;
+  flow: Object;
+  rollup: Object;
+  webpack: Object;
 }
 
 export default async function(options: Options) {
@@ -31,16 +31,10 @@ export default async function(options: Options) {
     include: [
       ...[]
         .concat(eslintGroups)
-        .reduce(
-          (includes, eslintGroup) => includes.concat(eslintGroup.include),
-          []
-        ),
+        .reduce((includes, eslintGroup) => includes.concat(eslintGroup.include), []),
       ...[]
         .concat(babelGroups)
-        .reduce(
-          (includes, babelGroup) => includes.concat(babelGroup.include),
-          []
-        )
+        .reduce((includes, babelGroup) => includes.concat(babelGroup.include), [])
     ]
     /* FIXME: {exclude} - merge from babel and eslint groups */
   });

@@ -62,12 +62,7 @@ export default class Reporter {
   events: {[name: string]: EventHandler[]} = {};
 
   constructor(options: Options = {}) {
-    const {
-      watch = false,
-      context,
-      startedText = 'Starting',
-      finishedText = 'Finished'
-    } = options;
+    const {watch = false, context, startedText = 'Starting', finishedText = 'Finished'} = options;
 
     this.context = context;
     this.watch = watch;
@@ -109,14 +104,10 @@ export default class Reporter {
     this.printMessages('info');
     if (this.hasErrors()) {
       this.printMessages('error');
-      console.log(
-        chalk.red(chalk.bold(`  ❌  ${this.finishedText} with errors`))
-      );
+      console.log(chalk.red(chalk.bold(`  ❌  ${this.finishedText} with errors`)));
     } else if (this.hasWarnings()) {
       this.printMessages('warn');
-      console.log(
-        chalk.yellow(chalk.bold(`  ⚠️  ${this.finishedText} with warnings`))
-      );
+      console.log(chalk.yellow(chalk.bold(`  ⚠️  ${this.finishedText} with warnings`)));
     } else {
       console.log(chalk.green(`  ✅  ${this.finishedText} successfully.`));
     }

@@ -1,10 +1,4 @@
-import {
-  SOURCE_FILES,
-  EXAMPLE_FILES,
-  TEST_FILES,
-  MOCK_FILES,
-  FIXTURE_FILES
-} from './utils/paths';
+import {SOURCE_FILES, EXAMPLE_FILES, TEST_FILES, MOCK_FILES, FIXTURE_FILES} from './utils/paths';
 import * as eslint from './utils/eslint';
 
 export default function(cliOptions) {

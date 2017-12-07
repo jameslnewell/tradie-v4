@@ -343,11 +343,7 @@ type JestObjectType = {
    * The third argument can be used to create virtual mocks -- mocks of modules
    * that don't exist anywhere in the system.
    */
-  mock(
-    moduleName: string,
-    moduleFactory?: any,
-    options?: Object
-  ): JestObjectType,
+  mock(moduleName: string, moduleFactory?: any, options?: Object): JestObjectType,
   /**
    * Resets the module registry - the cache of all required modules. This is
    * useful to isolate modules where local state might conflict between tests.
@@ -518,10 +514,7 @@ declare var jasmine: {
   arrayContaining(value: Array<mixed>): void,
   clock(): JestClockType,
   createSpy(name: string): JestSpyType,
-  createSpyObj(
-    baseName: string,
-    methodNames: Array<string>
-  ): {[methodName: string]: JestSpyType},
+  createSpyObj(baseName: string, methodNames: Array<string>): {[methodName: string]: JestSpyType},
   objectContaining(value: Object): void,
   stringMatching(value: string): void
 };

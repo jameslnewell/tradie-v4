@@ -76,10 +76,7 @@ export default class Processor {
     this.files
       .list()
       .then(files => Promise.all(files.map(file => onChange(file))))
-      .then(
-        () => this.reporter.finished(),
-        error => this.reporter.errored(error)
-      );
+      .then(() => this.reporter.finished(), error => this.reporter.errored(error));
   };
 
   /** @private */
@@ -91,10 +88,7 @@ export default class Processor {
     this.reporter.started();
     Promise.resolve()
       .then(() => onChange(file))
-      .then(
-        () => this.reporter.finished(),
-        error => this.reporter.errored(error)
-      );
+      .then(() => this.reporter.finished(), error => this.reporter.errored(error));
   };
 
   /** @private */
@@ -106,10 +100,7 @@ export default class Processor {
     this.reporter.started();
     Promise.resolve()
       .then(() => onRemove(file))
-      .then(
-        () => this.reporter.finished(),
-        error => this.reporter.errored(error)
-      );
+      .then(() => this.reporter.finished(), error => this.reporter.errored(error));
   };
 
   /** @private */

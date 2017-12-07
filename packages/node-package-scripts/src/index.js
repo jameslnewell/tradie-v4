@@ -24,8 +24,7 @@ run([
       watch: {
         default: false,
         boolean: true,
-        description:
-          'watch sources, tests and examples and re-lint them when they change'
+        description: 'watch sources, tests and examples and re-lint them when they change'
       }
     },
     exec: resolve('./scripts/lint')
@@ -50,14 +49,12 @@ run([
       bail: {
         default: false,
         boolean: true,
-        description:
-          'Exit the test suite immediately upon the first failing test.'
+        description: 'Exit the test suite immediately upon the first failing test.'
       },
       cache: {
         default: true,
         boolean: true,
-        description:
-          'Whether to use the transform cache. Disable the cache using --no-cache.'
+        description: 'Whether to use the transform cache. Disable the cache using --no-cache.'
       },
       clearCache: {
         default: false,

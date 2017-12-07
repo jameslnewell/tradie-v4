@@ -25,15 +25,13 @@
     "lint": "lerna run lint",
     "build": "lerna run build",
     "test": "lerna run test",
-    "publish": "yarn run lint && yarn run build && lerna publish --canary --exact --force",
+    "publish":
+      "yarn run lint && yarn run build && lerna publish --canary --exact --force",
     "commitmsg": "commitlint -e",
     "precommit": "lint-staged",
     "prepublishOnly": "echo 'Run `npm run publish` instead.' && exit 1"
   },
   "lint-staged": {
-    "*.js": [
-      "prettier --write --tab-width 2 --single-quote true --trailing-comma none --bracket-spacing false --jsx-bracket-same-line false --semi true",
-      "git add"
-    ]
+    "*.js": ["prettier --write", "git add"]
   }
 }

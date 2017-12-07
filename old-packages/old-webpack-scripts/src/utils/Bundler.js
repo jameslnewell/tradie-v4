@@ -24,14 +24,11 @@ class Bundler {
     this.debug = debug(`tradie-webpack-scripts:bundler`);
 
     //listen for when Webpack starts compiling
-    this.compiler.plugin(
-      ['run', 'watch-run'],
-      (compilerOrWatcher, callback) => {
-        this.compiling = true;
-        this.emitter.emit('started');
-        callback();
-      }
-    );
+    this.compiler.plugin(['run', 'watch-run'], (compilerOrWatcher, callback) => {
+      this.compiling = true;
+      this.emitter.emit('started');
+      callback();
+    });
 
     //listen for when Webpack stops watching
     this.compiler.plugin('watch-close', () => {

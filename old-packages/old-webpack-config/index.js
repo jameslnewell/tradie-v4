@@ -39,12 +39,8 @@ class WebpackConfigBuilder {
         path: this.outputDirectory,
 
         //use name vs https://github.com/webpack/webpack-dev-server/issues/377#issuecomment-241258405
-        filename: this.optimize
-          ? 'scripts/[chunkhash:8].js'
-          : 'scripts/[name].js',
-        chunkFilename: this.optimize
-          ? 'scripts/[chunkhash:8]-[id].js'
-          : 'scripts/[name].js'
+        filename: this.optimize ? 'scripts/[chunkhash:8].js' : 'scripts/[name].js',
+        chunkFilename: this.optimize ? 'scripts/[chunkhash:8]-[id].js' : 'scripts/[name].js'
       },
 
       resolve: {
@@ -59,9 +55,7 @@ class WebpackConfigBuilder {
       plugins: [
         //enforce case sensitive paths to avoid issues between file systems
         new CaseSensitivePathsPlugin(),
-        new WatchMissingNodeModulesPlugin(
-          path.join(this.rootDirectory, 'node_modules')
-        ), //TODO: only do when watching for slight perf increase?
+        new WatchMissingNodeModulesPlugin(path.join(this.rootDirectory, 'node_modules')), //TODO: only do when watching for slight perf increase?
 
         new webpack.LoaderOptionsPlugin({
           minimize: this.optimize,
@@ -227,10 +221,7 @@ class WebpackConfigBuilder {
                   //allow packages to define a SASS entry file using the "main.scss", "main.sass" or "main.css" keys
                   packageFilter(pkg) {
                     pkg.main =
-                      pkg['main.scss'] ||
-                      pkg['main.sass'] ||
-                      pkg['main.css'] ||
-                      pkg['style'];
+                      pkg['main.scss'] || pkg['main.sass'] || pkg['main.css'] || pkg['style'];
                     return pkg;
                   }
                 },
@@ -259,13 +250,9 @@ class WebpackConfigBuilder {
     );
 
     const loaders = [
-      `css-loader?-autoprefixer${this.optimize || !options.extract
-        ? ''
-        : '&sourceMap'}`,
+      `css-loader?-autoprefixer${this.optimize || !options.extract ? '' : '&sourceMap'}`,
       `postcss-loader${this.optimize || !options.extract ? '' : '?sourceMap'}`,
-      `resolve-url-loader${this.optimize || !options.extract
-        ? ''
-        : '?sourceMap'}`, //devtool: [inline-]source-map is required for CSS source maps to work in the browser
+      `resolve-url-loader${this.optimize || !options.extract ? '' : '?sourceMap'}`, //devtool: [inline-]source-map is required for CSS source maps to work in the browser
       'sass-loader?sourceMap' //sourceMap is required by resolve-url-loader
     ];
 
@@ -284,9 +271,7 @@ class WebpackConfigBuilder {
         new ExtractTextPlugin({
           //other chunks should have styles in the JS and load the styles automatically onto the page (that way styles make use of code splitting) e.g. https://github.com/facebookincubator/create-react-app/issues/408
           allChunks: false,
-          filename: this.optimize
-            ? 'styles/[contenthash:8].css'
-            : 'styles/[name].css'
+          filename: this.optimize ? 'styles/[contenthash:8].css' : 'styles/[name].css'
         })
       );
     } else {

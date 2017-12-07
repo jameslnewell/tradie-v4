@@ -1,9 +1,4 @@
-import {
-  SOURCE_FILES,
-  FIXTURE_FILES,
-  MOCK_FILES,
-  TEST_FILES
-} from './utils/globs';
+import {SOURCE_FILES, FIXTURE_FILES, MOCK_FILES, TEST_FILES} from './utils/globs';
 import getPaths from './utils/paths';
 import {getESLintConfig, getTestESLintConfig} from './utils/eslint';
 

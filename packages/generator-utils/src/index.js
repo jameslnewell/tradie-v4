@@ -7,19 +7,12 @@ import diff from './diff';
 import accept from './accept';
 import apply from './apply';
 
-export default function(directory: string, generate: FileMap => FileMap) {
-  return list(directory).then(oldFiles => {
-    // if (Object.keys(oldFiles).length) {
-    //   throw new Error('Directory is not empty. Please run `tradie create` in an empty directory.');
-    // }
-
-    const newFiles = extend(true, {}, oldFiles);
-    const vfs = new VirtualFileSystem({files: newFiles});
-    return Promise.resolve(generate(vfs)).then(() => {
-      const statuses = diff(oldFiles, newFiles);
-      return accept(statuses, oldFiles, newFiles).then(accepted =>
-        apply(directory, accepted, newFiles)
-      );
-    });
-  });
+export default async function(directory: string, generate: FileMap => FileMap) {
+  const oldFiles = await list(directory);
+  const newFiles = extend(true, {}, oldFiles);
+  const vfs = new VirtualFileSystem({files: newFiles});
+  await Promise.resolve(generate(vfs));
+  const statuses = diff(oldFiles, newFiles);
+  const accepted = await accept(statuses, oldFiles, newFiles);
+  return await apply(directory, accepted, newFiles);
 }

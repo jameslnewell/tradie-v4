@@ -48,27 +48,13 @@ function symlinkBinary(fromFile, toFile) {
 }
 
 function symlinkInstalledBinary(pkgDir) {
-  const fromFile = path.join(
-    __dirname,
-    '..',
-    'node_modules',
-    'tradie',
-    'lib',
-    'tradie.js'
-  );
+  const fromFile = path.join(__dirname, '..', 'node_modules', 'tradie', 'lib', 'tradie.js');
   const toFile = path.join(pkgDir, 'node_modules', '.bin', 'tradie');
   return symlinkBinary(fromFile, toFile);
 }
 
 function symlinkCurrentBinary(pkgDir) {
-  const fromFile = path.join(
-    __dirname,
-    '..',
-    'packages',
-    'cli',
-    'lib',
-    'tradie.js'
-  );
+  const fromFile = path.join(__dirname, '..', 'packages', 'cli', 'lib', 'tradie.js');
   const toFile = path.join(pkgDir, 'node_modules', '.bin', 'tradie');
   return symlinkBinary(fromFile, toFile);
 }

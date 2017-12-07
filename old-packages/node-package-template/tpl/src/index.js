@@ -1,4 +1,3 @@
 // @flow
 
-export default (...args: number[]): number =>
-  args.reduce((total, next) => total + next);
+export default (...args: number[]): number => args.reduce((total, next) => total + next);

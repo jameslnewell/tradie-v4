@@ -84,18 +84,14 @@ export function formatMessage(directory: string, message: FlowMessage): string {
 
     let sourceCodePointer = '';
     if (endline === line) {
-      sourceCodePointer = `${' '.repeat(start - 1)}${'^'.repeat(
-        end - start + 1
-      )}`;
+      sourceCodePointer = `${' '.repeat(start - 1)}${'^'.repeat(end - start + 1)}`;
     } else {
       sourceCodePointer = '^';
     }
 
     return [
       `${chalk.bold(lineAndColumn)} ${sourceCode}`,
-      chalk.bold(
-        `${' '.repeat(lineAndColumn.length)} ${sourceCodePointer} ${descr}`
-      )
+      chalk.bold(`${' '.repeat(lineAndColumn.length)} ${sourceCodePointer} ${descr}`)
     ].join('\n');
   } else {
     return `. ${chalk.bold(descr)}\n`;

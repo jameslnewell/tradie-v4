@@ -35,9 +35,7 @@ export function getUMDOptions(options) {
     targets: [
       {
         format: 'umd',
-        dest: optimized
-          ? `dist/${packageName}.min.js`
-          : `dist/${packageName}.js`,
+        dest: optimized ? `dist/${packageName}.min.js` : `dist/${packageName}.js`,
         moduleName: `${libraryName}`, //FIXME: should be configurable by the user
         globals: id => toPascalCase(id) //FIXME: e.g. StyledComponents should be `styled` (create a library of common names?)
       }

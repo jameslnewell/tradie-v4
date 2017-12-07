@@ -27,13 +27,13 @@ export default function(
     .filter(filter)
     .find()
     .then(files =>
-      Promise.all(
-        files.map(file => fs.readFile(file).then(contents => [file, contents]))
-      )
+      Promise.all(files.map(file => fs.readFile(file).then(contents => [file, contents])))
     )
     .then(files =>
       files.reduce((fileMap, [filePath, contents]) => {
-        fileMap[path.relative(src, filePath)] = {contents: contents.toString()};
+        fileMap[path.relative(src, filePath)] = {
+          contents: contents.toString()
+        };
         return fileMap;
       }, {})
     );
