@@ -20,7 +20,7 @@ function generate(vfs) {
   vfs.write('src/index.test.js', fromFile('src/index.test.js'));
 }
 
-export default async function(options) {
+export default async function() {
   await generator(ROOT, generate);
   // 'flow-typed install jest'
   // 'yarn install';

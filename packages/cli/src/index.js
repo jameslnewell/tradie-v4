@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 //@flow
+/* eslint-disable func-style */
 import 'babel-polyfill';
 import chalk from 'chalk';
 import yargs from 'yargs';
@@ -14,11 +15,11 @@ export type Script = {
   exec: string | ScriptFunction
 };
 
-async function _load(path: string) {
+const _load = async function(path: string) {
   return await import(path).then(module => (module.__esModule ? module.default : module));
-}
+};
 
-function _run(scripts: Script[]): Promise<void> {
+const _run = function(scripts: Script[]): Promise<void> {
   return new Promise((resolve, reject) => {
     yargs
       .help()
@@ -66,9 +67,9 @@ function _run(scripts: Script[]): Promise<void> {
       }
     });
   });
-}
+};
 
-export async function run(scripts: Script[]): Promise<void> {
+const run = async function(scripts: Script[]): Promise<void> {
   try {
     await _run(scripts);
   } catch (error) {
@@ -81,4 +82,6 @@ export async function run(scripts: Script[]): Promise<void> {
     }
     process.exit(1);
   }
-}
+};
+
+export {run};
