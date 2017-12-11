@@ -17,8 +17,7 @@ export default function(argv) {
     extensions: ['.jsx', '.js'],
     ...babel.examples({root: paths.ROOT}),
     only: filter
-    //TODO: use resolveModuleSource() so we can just do '..' instead of '../src'
   });
 
-  return import(`${paths.EXAMPLES_SRC}/${argv.module}`);
+  return import(`${paths.EXAMPLES_SRC}/${argv.module || 'index'}`);
 }

@@ -147,7 +147,7 @@ run([
   },
 
   {
-    cmd: 'example <module>',
+    cmd: 'example [module]',
     desc: 'Run examples',
     exec: resolve('./scripts/example')
   }

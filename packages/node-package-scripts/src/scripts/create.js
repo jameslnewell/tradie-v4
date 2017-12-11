@@ -19,6 +19,7 @@ function generate(vfs) {
   vfs.write('.gitignore', fromFile('.gitignore'));
   vfs.write('src/index.js', fromFile('src/index.js'));
   vfs.write('src/index.test.js', fromFile('src/index.test.js'));
+  vfs.write('examples/index.js', fromFile('examples/index.js'));
 }
 
 export default async function() {
