@@ -1,4 +1,5 @@
 import fs from 'fs';
+import cp from 'child_process';
 import generator from '@tradie/generator-utils';
 import {version} from '../../package.json';
 import {ROOT} from '../config/paths';
@@ -22,7 +23,9 @@ function generate(vfs) {
 
 export default async function() {
   await generator(ROOT, generate);
-  // 'flow-typed install jest'
-  // 'yarn install';
+
+  cp.execSync('yarn');
+  cp.execSync('flow-typed install jest@21 --flowVersion 0.53.0');
+
   console.log('Project created.');
 }
