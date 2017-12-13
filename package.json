@@ -10,7 +10,7 @@
     "@commitlint/cli": "^4.3.0",
     "@commitlint/config-angular": "^4.3.0",
     "@commitlint/prompt-cli": "^4.3.0",
-    "@tradie/node-package-scripts": "^1.1.2",
+    "@tradie/node-package-scripts": "^1.1.3",
     "fs-extra": "^4.0.2",
     "husky": "^0.14.3",
     "lerna": "^2.0.0",
