@@ -198,15 +198,6 @@ const result = {
   passed: false
 };
 
-describe('messages', () => {
-  it('should', () => {
-    const errorsByFile = formatResult('/foo/bar', result);
-    Object.keys(errorsByFile).forEach(
-      file => console.log(file) || errorsByFile[file].forEach(error => console.log(error))
-    );
-  });
-});
-
 // describe('messages', () => {
 //   describe('format()', () => {
 //     it('should format the message like #1', () => {

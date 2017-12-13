@@ -89,7 +89,7 @@ which files will should be included in the package.
 ```json
 {
   "main": "lib/index.js",
-  "files": ["lib"]
+  "files": ["lib", ".flowconfig"]
 }
 ```
 

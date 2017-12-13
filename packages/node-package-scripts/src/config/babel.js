@@ -17,7 +17,12 @@ export function sources({root}) {
 
   const options = {
     babelrc: false,
-    presets: [[require.resolve('babel-preset-env'), {targets: {node: nodeTargetVersion}}]],
+    presets: [
+      [
+        require.resolve('babel-preset-env'),
+        {targets: {node: nodeTargetVersion}, useBuiltIns: 'usage'}
+      ]
+    ],
     plugins: [
       require.resolve('babel-plugin-transform-object-rest-spread'),
       require.resolve('babel-plugin-transform-class-properties'),

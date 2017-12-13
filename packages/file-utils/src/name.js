@@ -13,6 +13,6 @@ export function name(file: string, pattern: string, options: NameOptions = {}): 
     .replace('[folder]', info.dir.length ? `${info.dir}/` : info.dir)
     .replace('[name]', info.name)
     .replace('[ext]', info.ext === '.' ? '' : info.ext);
-  const fpath = path.join(path.resolve(dest), fname).replace(/(\/|\\)$/, '');
+  const fpath = path.join(dest, fname).replace(/(\/|\\)$/, '');
   return fpath === '.' ? '' : fpath;
 }

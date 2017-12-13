@@ -1,11 +1,13 @@
 {
-  "name": "tradie-monorepo",
+  "name": "tradie",
   "private": true,
   "engines": {
     "yarn": "^1.0.0",
     "node": "^8.5.0"
   },
-  "devDependencies": {
+  "dependencies": {
+    "eslint-config-jameslnewell": "^3.0.5",
+    "finder-on-steroids": "^0.4.0",
     "@commitlint/cli": "^4.3.0",
     "@commitlint/config-angular": "^4.3.0",
     "@commitlint/prompt-cli": "^4.3.0",
@@ -25,19 +27,13 @@
     "lint": "lerna run lint",
     "build": "lerna run build",
     "test": "lerna run test",
-    "publish": "yarn run lint && yarn run build && lerna publish --canary --exact --force",
+    "publish":
+      "yarn run lint && yarn run build && yarn run test && lerna publish --canary --exact --force",
     "commitmsg": "commitlint -e",
     "precommit": "lint-staged",
     "prepublishOnly": "echo 'Run `npm run publish` instead.' && exit 1"
   },
   "lint-staged": {
-    "*.js": [
-      "prettier --write",
-      "git add"
-    ]
-  },
-  "dependencies": {
-    "eslint-config-jameslnewell": "^3.0.5",
-    "finder-on-steroids": "^0.4.0"
+    "*.js": ["prettier --write", "git add"]
   }
 }

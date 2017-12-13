@@ -1,10 +1,25 @@
+
+# ignore NPM lock file (because we use yarn)
 package-lock.json
+
+# ignore YARN lock files for children
+packages/*/yarn.lock
+
+# ignore log files
 npm-debug.log
 lerna-debug.log
 yarn-error.log
+
+# ignore dependencies
 node_modules
+
+# ignore build files
 dist
 tmp
+
+# ignore IDE files
 .idea
 .vscode
+
+# ignore OS files
 .DS_Store
