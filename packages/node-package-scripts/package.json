@@ -1,22 +1,24 @@
 {
   "name": "@tradie/node-package-scripts",
-  "description":
-    "An opinionated set of scripts for creating and maintaining node packages.",
-  "version": "1.1.0-alpha.b2a4b8e1",
+  "description": "An opinionated set of scripts for creating and maintaining node packages.",
+  "version": "1.1.0",
   "repository": "jameslnewell/tradie-v4",
-  "files": ["lib", ".flowconfig"],
+  "files": [
+    "lib",
+    ".flowconfig"
+  ],
   "bin": {
     "tradie": "lib/index.js"
   },
   "dependencies": {
-    "@tradie/cli": "^1.1.0-alpha.b2a4b8e1",
-    "@tradie/babel-utils": "^1.1.0-alpha.b2a4b8e1",
-    "@tradie/eslint-utils": "^1.1.0-alpha.b2a4b8e1",
-    "@tradie/file-utils": "^1.1.0-alpha.b2a4b8e1",
-    "@tradie/flow-utils": "^1.1.0-alpha.b2a4b8e1",
-    "@tradie/generator-utils": "^1.1.0-alpha.b2a4b8e1",
-    "@tradie/jest-utils": "^1.1.0-alpha.b2a4b8e1",
-    "@tradie/reporter-utils": "^1.1.0-alpha.b2a4b8e1",
+    "@tradie/babel-utils": "^1.1.0",
+    "@tradie/cli": "^1.1.0",
+    "@tradie/eslint-utils": "^1.1.0",
+    "@tradie/file-utils": "^1.1.0",
+    "@tradie/flow-utils": "^1.1.0",
+    "@tradie/generator-utils": "^1.1.0",
+    "@tradie/jest-utils": "^1.1.0",
+    "@tradie/reporter-utils": "^1.1.0",
     "babel-plugin-dynamic-import-node": "^1.0.2",
     "babel-plugin-module-resolver": "^3.0.0",
     "babel-plugin-transform-class-properties": "^6.24.1",

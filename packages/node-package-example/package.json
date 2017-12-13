@@ -1,14 +1,17 @@
 {
   "name": "@tradie/node-package-example",
-  "version": "1.1.0-alpha.b2a4b8e1",
+  "version": "1.1.0",
   "private": true,
   "main": "lib/index.js",
-  "files": ["lib", ".flowconfig"],
+  "files": [
+    "lib",
+    ".flowconfig"
+  ],
   "engines": {
     "node": "8"
   },
   "devDependencies": {
-    "@tradie/node-package-scripts": "^1.1.0-alpha.b2a4b8e1"
+    "@tradie/node-package-scripts": "^1.1.0"
   },
   "scripts": {
     "clean": "tradie clean",
@@ -17,7 +20,6 @@
     "watch": "tradie build --watch",
     "test": "tradie test",
     "example": "tradie example",
-    "prepublishOnly":
-      "tradie clean && tradie lint && tradie test && tradie build"
+    "prepublishOnly": "tradie clean && tradie lint && tradie test && tradie build"
   }
 }

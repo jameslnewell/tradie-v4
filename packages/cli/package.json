@@ -1,8 +1,7 @@
 {
   "name": "@tradie/cli",
-  "version": "1.1.0-alpha.b2a4b8e1",
-  "description":
-    "A CLI for building web apps. Like create-react-app but configurable via templates.",
+  "version": "1.1.0",
+  "description": "A CLI for building web apps. Like create-react-app but configurable via templates.",
   "keywords": [
     "webpack",
     "hot-reloading",
@@ -15,7 +14,10 @@
   ],
   "repository": "jameslnewell/tradie-v4",
   "main": "lib/index.js",
-  "files": ["lib", ".flowconfig"],
+  "files": [
+    "lib",
+    ".flowconfig"
+  ],
   "dependencies": {
     "babel-polyfill": "^6.23.0",
     "chalk": "^1.1.3",

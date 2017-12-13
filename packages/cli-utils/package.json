@@ -1,8 +1,11 @@
 {
   "name": "@tradie/cli-utils",
-  "version": "1.1.0-alpha.b2a4b8e1",
+  "version": "1.1.0",
   "main": "lib/index.js",
-  "files": ["lib", ".flowconfig"],
+  "files": [
+    "lib",
+    ".flowconfig"
+  ],
   "scripts": {
     "clean": "tradie clean",
     "build": "tradie build",
