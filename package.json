@@ -9,13 +9,13 @@
     "@commitlint/cli": "^4.3.0",
     "@commitlint/config-angular": "^4.3.0",
     "@commitlint/prompt-cli": "^4.3.0",
+    "@tradie/node-package-scripts": "1.1.0-alpha.eab7be83",
     "fs-extra": "^4.0.2",
     "husky": "^0.14.3",
     "lerna": "^2.0.0",
     "lint-staged": "^5.0.0",
     "prettier": "^1.8.2",
-    "resolve": "^1.4.0",
-    "tradie-template-node-package": "2.0.0-alpha.22f158e7"
+    "resolve": "^1.4.0"
   },
   "scripts": {
     "clean": "lerna run clean && lerna clean",
@@ -25,13 +25,19 @@
     "lint": "lerna run lint",
     "build": "lerna run build",
     "test": "lerna run test",
-    "publish":
-      "yarn run lint && yarn run build && lerna publish --canary --exact --force",
+    "publish": "yarn run lint && yarn run build && lerna publish --canary --exact --force",
     "commitmsg": "commitlint -e",
     "precommit": "lint-staged",
     "prepublishOnly": "echo 'Run `npm run publish` instead.' && exit 1"
   },
   "lint-staged": {
-    "*.js": ["prettier --write", "git add"]
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "dependencies": {
+    "eslint-config-jameslnewell": "^3.0.5",
+    "finder-on-steroids": "^0.4.0"
   }
 }

@@ -2,7 +2,3 @@
 [ignore]
 <PROJECT_ROOT>/lib
 
-[include]
-./node_modules/chokidar
-./node_modules/anymatch
-./node_modules/finder-on-steroids

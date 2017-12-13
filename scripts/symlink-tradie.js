@@ -3,15 +3,14 @@ const fs = require('fs-extra');
 const resolve = require('resolve');
 const finder = require('finder-on-steroids');
 
-const INSTALLED_TEMPLATE_NAME = 'tradie-template-node-package';
-const CURRENT_TEMPLATE_PATH = 'node-package-template';
+const INSTALLED_TEMPLATE_NAME = '@tradie/node-package-scripts';
 
 /**
  * Get the installed version of the `tradie` template
  * @returns {string}
  */
 function getInstalledVersion() {
-  const metadata = require(`../node_modules/tradie-template-node-package/package.json`);
+  const metadata = require(`../node_modules/${INSTALLED_TEMPLATE_NAME}/package.json`);
   return metadata && metadata.version;
 }
 
@@ -48,7 +47,15 @@ function symlinkBinary(fromFile, toFile) {
 }
 
 function symlinkInstalledBinary(pkgDir) {
-  const fromFile = path.join(__dirname, '..', 'node_modules', 'tradie', 'lib', 'tradie.js');
+  const fromFile = path.join(
+    __dirname,
+    '..',
+    'node_modules',
+    '@tradie',
+    'node-package-scripts',
+    'lib',
+    'index.js'
+  );
   const toFile = path.join(pkgDir, 'node_modules', '.bin', 'tradie');
   return symlinkBinary(fromFile, toFile);
 }
@@ -73,14 +80,15 @@ listPackageJSONFiles()
         console.log(`  ${pkgname}:`);
 
         if (/example/.test(pkgname)) {
-          // return symlinkCurrentBinary(path.dirname(file));
+          console.log('skipped');
+          console.log();
+          return;
         }
 
         const packageMetadata = require(file);
         if (
-          packageMetadata['tradie-template'] === INSTALLED_TEMPLATE_NAME ||
-          (packageMetadata.devDependencies &&
-            packageMetadata.devDependencies[INSTALLED_TEMPLATE_NAME])
+          packageMetadata.devDependencies &&
+          packageMetadata.devDependencies[INSTALLED_TEMPLATE_NAME]
         ) {
           return symlinkInstalledBinary(path.dirname(file));
         }

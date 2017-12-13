@@ -2,9 +2,7 @@
   "name": "@tradie/generator-utils",
   "version": "1.1.0-alpha.b2a4b8e1",
   "main": "lib/index.js",
-  "files": [
-    "lib"
-  ],
+  "files": ["lib", ".flowconfig"],
   "dependencies": {
     "@tradie/match-utils": "^1.1.0-alpha.b2a4b8e1",
     "chalk": "^2.0.1",
@@ -14,7 +12,6 @@
     "fs-extra": "^3.0.1",
     "inquirer": "^3.2.0"
   },
-  "tradie-template": "tradie-template-node-package",
   "scripts": {
     "lint": "tradie lint",
     "clean": "tradie clean",

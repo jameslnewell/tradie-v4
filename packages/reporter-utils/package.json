@@ -2,9 +2,7 @@
   "name": "@tradie/reporter-utils",
   "version": "1.1.0-alpha.b2a4b8e1",
   "main": "lib/index.js",
-  "files": [
-    "lib"
-  ],
+  "files": ["lib", ".flowconfig"],
   "dependencies": {
     "@tradie/cli-utils": "^1.1.0-alpha.b2a4b8e1",
     "chalk": "^2.0.1",
@@ -13,7 +11,6 @@
     "lodash.sortby": "^4.7.0",
     "lodash.trim": "^4.5.1"
   },
-  "tradie-template": "tradie-template-node-package",
   "scripts": {
     "clean": "tradie clean",
     "build": "tradie build",

@@ -1,6 +1,6 @@
 export function sources() {
   return {
-    extends: ['jameslnewell/es'],
+    extends: [require.resolve('eslint-config-jameslnewell/es')],
     env: {node: true},
     rules: {
       'no-console': 1

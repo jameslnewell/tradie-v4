@@ -1,3 +1,4 @@
+// @flow
 import path from 'path';
 import {match, type Filter} from './match';
 import {list} from './list';

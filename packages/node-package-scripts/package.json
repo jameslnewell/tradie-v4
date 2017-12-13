@@ -1,20 +1,17 @@
 {
   "name": "@tradie/node-package-scripts",
-  "description": "An opinionated set of scripts for creating and maintaining node packages.",
+  "description":
+    "An opinionated set of scripts for creating and maintaining node packages.",
   "version": "1.1.0-alpha.b2a4b8e1",
   "repository": "jameslnewell/tradie-v4",
-  "files": [
-    "lib"
-  ],
+  "files": ["lib", ".flowconfig"],
   "bin": {
     "tradie": "lib/index.js"
   },
-  "tradie-template": "tradie-template-node-package",
   "dependencies": {
     "@tradie/cli": "^1.1.0-alpha.b2a4b8e1",
     "@tradie/babel-utils": "^1.1.0-alpha.b2a4b8e1",
     "@tradie/eslint-utils": "^1.1.0-alpha.b2a4b8e1",
-    "@tradie/file-processor-utils": "^1.1.0-alpha.b2a4b8e1",
     "@tradie/file-utils": "^1.1.0-alpha.b2a4b8e1",
     "@tradie/flow-utils": "^1.1.0-alpha.b2a4b8e1",
     "@tradie/generator-utils": "^1.1.0-alpha.b2a4b8e1",
@@ -29,6 +26,7 @@
     "babel-preset-flow": "^6.23.0",
     "babel-register": "^6.26.0",
     "del": "^3.0.0",
+    "eslint-config-jameslnewell": "^3.0.5",
     "semver": "^5.4.1"
   },
   "scripts": {

@@ -2,15 +2,12 @@
   "name": "@tradie/babel-utils",
   "version": "1.1.0-alpha.b2a4b8e1",
   "main": "lib/index.js",
-  "files": [
-    "lib"
-  ],
+  "files": ["lib", ".flowconfig"],
   "dependencies": {
     "babel-core": "^6.24.1",
     "fs-extra": "^3.0.1",
     "chalk": "^2.1.0"
   },
-  "tradie-template": "tradie-template-node-package",
   "scripts": {
     "clean": "tradie clean",
     "build": "tradie build",
