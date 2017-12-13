@@ -83,48 +83,48 @@
     mkdirp "^0.5.1"
     rimraf "^2.5.2"
 
-"@tradie/babel-utils@1.1.0-alpha.989f7efe":
-  version "1.1.0-alpha.989f7efe"
-  resolved "https://registry.yarnpkg.com/@tradie/babel-utils/-/babel-utils-1.1.0-alpha.989f7efe.tgz#52edf1fa1ff01ba37cabe5fb7f02533af3e10fda"
+"@tradie/babel-utils@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@tradie/babel-utils/-/babel-utils-1.1.0.tgz#737823e6c11db3c0e93a2b2c6dfac53e9724599b"
   dependencies:
     babel-core "^6.24.1"
     chalk "^2.1.0"
     fs-extra "^3.0.1"
 
-"@tradie/cli-utils@1.1.0-alpha.989f7efe":
-  version "1.1.0-alpha.989f7efe"
-  resolved "https://registry.yarnpkg.com/@tradie/cli-utils/-/cli-utils-1.1.0-alpha.989f7efe.tgz#141319ab480e2b9599ef01df352991380dad1d85"
+"@tradie/cli-utils@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@tradie/cli-utils/-/cli-utils-1.1.0.tgz#d6c5daf4ee179f0bb1415d77d9ded0ce3b8a81d8"
 
-"@tradie/cli@1.1.0-alpha.989f7efe":
-  version "1.1.0-alpha.989f7efe"
-  resolved "https://registry.yarnpkg.com/@tradie/cli/-/cli-1.1.0-alpha.989f7efe.tgz#ffa34153f7de889d603635086b824e62b537238b"
+"@tradie/cli@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@tradie/cli/-/cli-1.1.0.tgz#90f1ebfc6cafeb75695d6065900ecce59dade530"
   dependencies:
     babel-polyfill "^6.23.0"
     chalk "^1.1.3"
     resolve "^1.3.3"
     yargs "^8.0.1"
 
-"@tradie/eslint-utils@1.1.0-alpha.989f7efe":
-  version "1.1.0-alpha.989f7efe"
-  resolved "https://registry.yarnpkg.com/@tradie/eslint-utils/-/eslint-utils-1.1.0-alpha.989f7efe.tgz#30309a43a25debb6bc974d65975458b4345e50de"
+"@tradie/eslint-utils@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@tradie/eslint-utils/-/eslint-utils-1.1.0.tgz#7a005c52897a4b74d44553df06dba2e7db2a67bd"
   dependencies:
     chalk "^1.1.3"
     eslint "^4.0.0"
     fs-extra "^3.0.1"
     text-table "^0.2.0"
 
-"@tradie/file-utils@1.1.0-alpha.989f7efe":
-  version "1.1.0-alpha.989f7efe"
-  resolved "https://registry.yarnpkg.com/@tradie/file-utils/-/file-utils-1.1.0-alpha.989f7efe.tgz#c660f1417d49455e4f38315cfb0ec703dfdca1a4"
+"@tradie/file-utils@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@tradie/file-utils/-/file-utils-1.1.0.tgz#8e60dedc4291a5db46c863e4044c1269313e0a62"
   dependencies:
     anymatch "^1.3.0"
     chokidar "^1.7.0"
     finder-on-steroids "^0.4.0"
     fs-extra "^4.0.2"
 
-"@tradie/flow-utils@1.1.0-alpha.989f7efe":
-  version "1.1.0-alpha.989f7efe"
-  resolved "https://registry.yarnpkg.com/@tradie/flow-utils/-/flow-utils-1.1.0-alpha.989f7efe.tgz#4eb53864ab2377e11b5655c8e783af1b0690813a"
+"@tradie/flow-utils@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@tradie/flow-utils/-/flow-utils-1.1.0.tgz#99eb827d3ca3e730985dd5794bc34c7eecbf75c3"
   dependencies:
     "@tradie/group-exec-utils" "^1.1.0-alpha.b2a4b8e1"
     chalk "^1.1.3"
@@ -133,9 +133,9 @@
     shell-escape "^0.2.0"
     sprintf-js "^1.1.1"
 
-"@tradie/generator-utils@1.1.0-alpha.989f7efe":
-  version "1.1.0-alpha.989f7efe"
-  resolved "https://registry.yarnpkg.com/@tradie/generator-utils/-/generator-utils-1.1.0-alpha.989f7efe.tgz#da5b7890bf4867dc7f17b5787367e4b6ffb83bff"
+"@tradie/generator-utils@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@tradie/generator-utils/-/generator-utils-1.1.0.tgz#5a0104a8c9e7ba9423b1b0cbe2b337bc192b14c0"
   dependencies:
     "@tradie/match-utils" "^1.1.0-alpha.b2a4b8e1"
     chalk "^2.0.1"
@@ -151,9 +151,9 @@
   dependencies:
     "@tradie/match-utils" "^1.1.0-alpha.b2a4b8e1"
 
-"@tradie/jest-utils@1.1.0-alpha.989f7efe":
-  version "1.1.0-alpha.989f7efe"
-  resolved "https://registry.yarnpkg.com/@tradie/jest-utils/-/jest-utils-1.1.0-alpha.989f7efe.tgz#618a91471a9f4015fb6875afc0053f14aa9e1a6e"
+"@tradie/jest-utils@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@tradie/jest-utils/-/jest-utils-1.1.0.tgz#c3b091f87c00c0bc35167597fd075654537e1764"
   dependencies:
     babel-core "^6.25.0"
     glob "^7.1.2"
@@ -166,18 +166,18 @@
   dependencies:
     anymatch "^1.3.0"
 
-"@tradie/node-package-scripts@1.1.0-alpha.989f7efe":
-  version "1.1.0-alpha.989f7efe"
-  resolved "https://registry.yarnpkg.com/@tradie/node-package-scripts/-/node-package-scripts-1.1.0-alpha.989f7efe.tgz#2c0ca00a8f001a59cd383fd306bee2d77e12345a"
+"@tradie/node-package-scripts@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@tradie/node-package-scripts/-/node-package-scripts-1.1.2.tgz#dd8a29ca1e58ff80a5d322d449ce96accd193687"
   dependencies:
-    "@tradie/babel-utils" "1.1.0-alpha.989f7efe"
-    "@tradie/cli" "1.1.0-alpha.989f7efe"
-    "@tradie/eslint-utils" "1.1.0-alpha.989f7efe"
-    "@tradie/file-utils" "1.1.0-alpha.989f7efe"
-    "@tradie/flow-utils" "1.1.0-alpha.989f7efe"
-    "@tradie/generator-utils" "1.1.0-alpha.989f7efe"
-    "@tradie/jest-utils" "1.1.0-alpha.989f7efe"
-    "@tradie/reporter-utils" "1.1.0-alpha.989f7efe"
+    "@tradie/babel-utils" "^1.1.0"
+    "@tradie/cli" "^1.1.0"
+    "@tradie/eslint-utils" "^1.1.0"
+    "@tradie/file-utils" "^1.1.0"
+    "@tradie/flow-utils" "^1.1.0"
+    "@tradie/generator-utils" "^1.1.0"
+    "@tradie/jest-utils" "^1.1.0"
+    "@tradie/reporter-utils" "^1.1.0"
     babel-plugin-dynamic-import-node "^1.0.2"
     babel-plugin-module-resolver "^3.0.0"
     babel-plugin-transform-class-properties "^6.24.1"
@@ -190,11 +190,11 @@
     eslint-config-jameslnewell "^3.0.5"
     semver "^5.4.1"
 
-"@tradie/reporter-utils@1.1.0-alpha.989f7efe":
-  version "1.1.0-alpha.989f7efe"
-  resolved "https://registry.yarnpkg.com/@tradie/reporter-utils/-/reporter-utils-1.1.0-alpha.989f7efe.tgz#238e269868f7841820259075fc57a5520ab92e57"
+"@tradie/reporter-utils@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@tradie/reporter-utils/-/reporter-utils-1.1.0.tgz#5e5ba5f59a9bc628709218bd65c369280b75ea01"
   dependencies:
-    "@tradie/cli-utils" "1.1.0-alpha.989f7efe"
+    "@tradie/cli-utils" "^1.1.0"
     chalk "^2.0.1"
     lodash.padstart "^4.6.1"
     lodash.sortby "^4.7.0"
