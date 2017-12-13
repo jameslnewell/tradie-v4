@@ -1,13 +1,10 @@
 {
   "name": "@tradie/node-package-scripts",
-  "description": "An opinionated set of scripts for creating and maintaining node packages.",
-  "version": "1.1.4",
+  "description":
+    "An opinionated set of scripts for creating and maintaining node packages.",
+  "version": "1.1.6",
   "repository": "jameslnewell/tradie-v4",
-  "files": [
-    "lib",
-    "tpl",
-    ".flowconfig"
-  ],
+  "files": [".flowconfig", "lib", "tpl"],
   "bin": {
     "tradie": "lib/index.js"
   },

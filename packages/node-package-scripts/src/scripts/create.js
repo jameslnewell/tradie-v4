@@ -14,7 +14,7 @@ function fromFile(file, data = {}) {
 }
 
 function generate(vfs) {
-  vfs.write('package.json', fromFile('package.json', {version}));
+  vfs.write('package.json', fromFile('package.json.tpl', {version}));
   vfs.write('.flowconfig', fromFile('.flowconfig'));
   vfs.write('.gitignore', fromFile('.gitignore'));
   vfs.write('src/index.js', fromFile('src/index.js'));

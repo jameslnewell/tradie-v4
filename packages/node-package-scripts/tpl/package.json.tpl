@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "files": ["lib",".flowconfig"],
   "devDependencies": {
-    "@tradie/node-package-template": "^<%= version %>"
+    "@tradie/node-package-scripts": "^<%= version %>"
   },
   "scripts": {
     "clean": "tradie clean",
