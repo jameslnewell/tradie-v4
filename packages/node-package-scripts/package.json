@@ -1,7 +1,7 @@
 {
   "name": "@tradie/node-package-scripts",
   "description": "An opinionated set of scripts for creating and maintaining node packages.",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "repository": "jameslnewell/tradie-v4",
   "files": [
     ".flowconfig",

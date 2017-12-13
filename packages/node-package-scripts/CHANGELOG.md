@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.1.8"></a>
+## [1.1.8](https://github.com/jameslnewell/tradie-v4/compare/@tradie/node-package-scripts@1.1.7...@tradie/node-package-scripts@1.1.8) (2017-12-13)
+
+
+### Bug Fixes
+
+* use .tpl extension so npm pack includes files and rm old lock files ([b12ec57](https://github.com/jameslnewell/tradie-v4/commit/b12ec57))
+
+
+
+
 <a name="1.1.7"></a>
 ## [1.1.7](https://github.com/jameslnewell/tradie-v4/compare/@tradie/node-package-scripts@1.1.4...@tradie/node-package-scripts@1.1.7) (2017-12-13)
 
