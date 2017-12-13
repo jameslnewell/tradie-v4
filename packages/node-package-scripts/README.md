@@ -100,7 +100,7 @@ which files will should be included in the package.
 Remove generated files and folders.
 
 ```
-tradie clean [--watch] [--coverage]
+tradie clean
 ```
 
 ### `tradie lint`
