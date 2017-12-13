@@ -1,6 +1,6 @@
 {
   "name": "@tradie/node-package-example",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "private": true,
   "main": "lib/index.js",
   "files": [
@@ -11,7 +11,7 @@
     "node": "8"
   },
   "devDependencies": {
-    "@tradie/node-package-scripts": "^1.1.1"
+    "@tradie/node-package-scripts": "^1.1.2"
   },
   "scripts": {
     "clean": "tradie clean",

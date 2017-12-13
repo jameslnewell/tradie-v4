@@ -1,5 +1,5 @@
 <center>
-  <img src="https://github.com/jameslnewell/tradie-v4/blob/separate-builder/docs/img/logo.png" height="40"/>
+  <img src="https://github.com/jameslnewell/tradie-v4/blob/master/docs/img/logo.png" height="40"/>
 </center>
 
 ---
