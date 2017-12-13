@@ -85,13 +85,13 @@ listPackageJSONFiles()
           return;
         }
 
-        const packageMetadata = require(file);
-        if (
-          packageMetadata.devDependencies &&
-          packageMetadata.devDependencies[INSTALLED_TEMPLATE_NAME]
-        ) {
-          return symlinkInstalledBinary(path.dirname(file));
-        }
+        // const packageMetadata = require(file);
+        // if (
+        //   packageMetadata.devDependencies &&
+        //   packageMetadata.devDependencies[INSTALLED_TEMPLATE_NAME]
+        // ) {
+        return symlinkInstalledBinary(path.dirname(file));
+        // }
       })
     )
   )
