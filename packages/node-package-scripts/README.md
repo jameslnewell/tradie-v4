@@ -10,19 +10,19 @@ An opinionated set of scripts for creating and maintaining node packages.
 
 Feel like you spend more time setting up and updating the tools to build, test
 and maintain your project? `@tradie/node-package-scripts` lets you focus on
-writing code and less time setting up and updating the tools to build, test and
-maintain your project. It provides you with a way to keep tooling consistent
-across multiple packages with minimal effort.
+writing code and spend less time setting up and updating the tools to build,
+test and maintain your project. It provides you with a way to keep tooling
+consistent across multiple packages with minimal effort.
 
 ## Usage
 
-Create a folder for your project:
+Create a new folder for your project:
 
 ```
 mkdir my-package && cd my-package
 ```
 
-Generate your project with `tradie`:
+Create the files for your project:
 
 ```
 npx --package @tradie/node-package-scripts tradie create
@@ -134,7 +134,7 @@ tradie test [--watch] [--coverage]
 Run examples.
 
 ```
-tradie example <module>
+tradie example [module]
 ```
 
 ## FAQ\*
@@ -143,7 +143,7 @@ tradie example <module>
 
 ### Can I use the latest language features?
 
-Yes. The following `presets` and `plugins` are configured:
+Yes. The following Babel `presets` and `plugins` are configured:
 
 * `babel-preset-env`
 * `babel-plugin-transform-class-properties`
@@ -152,8 +152,9 @@ Yes. The following `presets` and `plugins` are configured:
 
 ### What versions of node will my package support?
 
-Your sources will be transpiled to support `>=4`. You can change the target node
-version by adding the `engines` key in your `package.json`. For example:
+By default your sources will be transpiled to support Node `>=4`. You can change
+the target Node version by using the `engines` key in your `package.json`. For
+example:
 
 ```json
 {
@@ -174,5 +175,5 @@ You should ignore the `./lib` directory. For example:
 
 ```ini
 [ignore]
-.*/lib/.*
+<PROJECT_ROOT>/lib
 ```

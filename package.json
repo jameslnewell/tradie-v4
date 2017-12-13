@@ -11,7 +11,7 @@
     "@commitlint/cli": "^4.3.0",
     "@commitlint/config-angular": "^4.3.0",
     "@commitlint/prompt-cli": "^4.3.0",
-    "@tradie/node-package-scripts": "1.1.0-alpha.eab7be83",
+    "@tradie/node-package-scripts": "1.1.0-alpha.5a81dc13",
     "fs-extra": "^4.0.2",
     "husky": "^0.14.3",
     "lerna": "^2.0.0",
