@@ -16,6 +16,7 @@ export type Script = {
 };
 
 const _load = async function(path: string) {
+  // $FlowFixMe
   return await import(path).then(module => (module.__esModule ? module.default : module));
 };
 
