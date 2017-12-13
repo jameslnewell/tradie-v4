@@ -1,7 +1,7 @@
 {
   "name": "@tradie/node-package-scripts",
   "description": "An opinionated set of scripts for creating and maintaining node packages.",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "repository": "jameslnewell/tradie-v4",
   "files": [
     ".flowconfig",
@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@tradie/babel-utils": "^1.1.0",
-    "@tradie/cli": "^1.1.0",
+    "@tradie/cli": "^1.1.1",
     "@tradie/eslint-utils": "^1.1.0",
     "@tradie/file-utils": "^1.1.0",
     "@tradie/flow-utils": "^1.1.0",

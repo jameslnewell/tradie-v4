@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.1.1"></a>
+## [1.1.1](https://github.com/jameslnewell/tradie-v4/compare/@tradie/cli@1.1.0...@tradie/cli@1.1.1) (2017-12-13)
+
+
+### Bug Fixes
+
+* flow issues when installed as a dep ([cc0e3da](https://github.com/jameslnewell/tradie-v4/commit/cc0e3da))
+
+
+
+
 <a name="1.1.0-alpha.48d3958a"></a>
 # 1.1.0-alpha.48d3958a (2017-09-28)
 

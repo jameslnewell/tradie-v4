@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.1.9"></a>
+## [1.1.9](https://github.com/jameslnewell/tradie-v4/compare/@tradie/node-package-scripts@1.1.8...@tradie/node-package-scripts@1.1.9) (2017-12-13)
+
+
+### Bug Fixes
+
+* flow issues when installed as a dep ([cc0e3da](https://github.com/jameslnewell/tradie-v4/commit/cc0e3da))
+
+
+
+
 <a name="1.1.8"></a>
 ## [1.1.8](https://github.com/jameslnewell/tradie-v4/compare/@tradie/node-package-scripts@1.1.7...@tradie/node-package-scripts@1.1.8) (2017-12-13)
 

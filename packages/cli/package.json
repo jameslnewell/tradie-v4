@@ -1,6 +1,6 @@
 {
   "name": "@tradie/cli",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A CLI for building web apps. Like create-react-app but configurable via templates.",
   "keywords": [
     "webpack",
