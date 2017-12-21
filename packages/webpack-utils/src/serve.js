@@ -1,18 +1,18 @@
-import {EventEmitter} from 'events';
 import detectPort from 'detect-port';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
-import emit from './emit';
+import createEmitter from './createEmitter';
+import {setImmediate} from 'core-js/library/web/timers';
 
 export default function(config) {
-  const emitter = new EventEmitter();
+  let compiler;
+  let server;
+  let port;
 
-  if (!config) {
-    return emitter;
-  }
+  const createCompiler = async () => {
+    port = await detectPort(3000);
 
-  detectPort(3000).then(port => {
-    const compiler = webpack({
+    compiler = webpack({
       ...config,
       entry: [].concat(
         config.entry, //TODO: support string, array or object
@@ -26,9 +26,11 @@ export default function(config) {
       plugins: [].concat(config.plugins, new webpack.HotModuleReplacementPlugin())
     });
 
-    emit(emitter, compiler);
+    return compiler;
+  };
 
-    const server = new WebpackDevServer(compiler, {
+  const startCompiling = async ({emitter}) => {
+    server = new WebpackDevServer(compiler, {
       contentBase: config.output.path,
       compress: true,
       overlay: true,
@@ -38,15 +40,19 @@ export default function(config) {
       historyApiFallback: true
     });
 
-    server.listen(port, () => {
+    server.listen(port, '127.0.0.1', () => {
       emitter.emit('log', {
         level: 'info',
         message: `Started server on http://localhost:${port}`
       });
     });
+  };
 
-    emitter.close = () => server.close();
-  });
+  const stopCompiling = async () => {
+    if (server) {
+      server.close();
+    }
+  };
 
-  return emitter;
+  return createEmitter(createCompiler, startCompiling, stopCompiling);
 }

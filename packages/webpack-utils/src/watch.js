@@ -1,21 +1,23 @@
-import {EventEmitter} from 'events';
 import webpack from 'webpack';
-import emit from './emit';
+import createEmitter from './createEmitter';
 
 export default function watch(config) {
-  const emitter = new EventEmitter();
+  let compiler;
+  let watcher;
 
-  if (!config) {
-    return emitter;
-  }
+  const createCompiler = () => {
+    compiler = webpack(config);
+  };
 
-  const compiler = webpack(config);
+  const startCompiling = () => {
+    watcher = compiler.watch({});
+  };
 
-  emit(emitter, compiler);
+  const stopCompiling = () => {
+    if (watcher) {
+      watcher.close();
+    }
+  };
 
-  const watcher = compiler.watch({});
-
-  emitter.close = () => watcher.close();
-
-  return emitter;
+  return createEmitter(createCompiler, startCompiling, stopCompiling);
 }

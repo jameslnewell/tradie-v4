@@ -2,10 +2,7 @@
   "name": "@tradie/webpack-utils",
   "version": "1.1.0",
   "main": "lib/index.js",
-  "files": [
-    "lib",
-    ".flowconfig"
-  ],
+  "files": ["lib", ".flowconfig"],
   "dependencies": {
     "detect-port": "^1.2.1",
     "webpack": "^3.4.1",
@@ -16,5 +13,6 @@
     "build": "tradie build",
     "watch": "tradie build --watch",
     "test": "tradie test"
-  }
+  },
+  "license": "MIT"
 }
