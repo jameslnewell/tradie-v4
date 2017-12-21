@@ -1,19 +1,37 @@
 {
-  "name": "node-package-example",
-  "version": "1.0.1",
-  "files": [
-    "lib",
-    ".flowconfig"
-  ],
-  "devDependencies": {
-    "@tradie/node-package-scripts": "^1.1.9"
+  "name": "@tradie/react-component-scripts",
+  "version": "1.0.0",
+  "files": ["lib", ".flowconfig"],
+  "bin": {
+    "tradie": "lib/index.js"
+  },
+  "dependencies": {
+    "@tradie/cli": "^1.1.1",
+    "@tradie/file-utils": "^1.1.0",
+    "@tradie/reporter-utils": "^1.1.0",
+    "@tradie/webpack-utils": "^1.1.0",
+    "@tradie/jest-utils": "^1.1.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-react-constant-elements": "^6.23.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-react": "^6.24.1",
+    "html-webpack-plugin": "^2.30.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "webpack": "^3.10.0"
   },
   "scripts": {
     "clean": "tradie clean",
     "lint": "tradie lint",
-    "build": "tradie build",
+    "build": "tradie build && chmod 0755 ./lib/index.js",
     "watch": "tradie build --watch",
     "test": "tradie test",
-    "prepublishOnly": "tradie clean && tradie lint && tradie test && tradie build"
-  }
+    "prepublishOnly":
+      "tradie clean && tradie lint && tradie test && tradie build"
+  },
+  "license": "MIT"
 }

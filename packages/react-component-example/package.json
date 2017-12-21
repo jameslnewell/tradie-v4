@@ -1,0 +1,21 @@
+{
+  "name": "react-component-example",
+  "private": true,
+  "main": "dist/cjs/index.js",
+  "jsnext:main": "dist/esm/index.js",
+  "files": [".flowconfig", "dist/cjs", "dist/esm"],
+  "dependencies": {
+    "@tradie/react-component-scripts": "^1.0.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "enzyme": "3.2.0",
+    "enzyme-adapter-react-16": "^1.1.1"
+  },
+  "scripts": {
+    "clean": "tradie clean",
+    "lint": "tradie lint",
+    "dev": "tradie dev",
+    "build": "tradie build",
+    "test": "tradie test"
+  }
+}
