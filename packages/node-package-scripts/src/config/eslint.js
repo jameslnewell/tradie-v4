@@ -1,4 +1,4 @@
-export function sources() {
+export function source() {
   return {
     extends: [require.resolve('eslint-config-jameslnewell/es')],
     env: {node: true},
@@ -9,8 +9,8 @@ export function sources() {
   };
 }
 
-export function tests() {
-  const config = sources();
+export function test() {
+  const config = source();
   config.env.jest = true;
   return config;
 }

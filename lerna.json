@@ -6,7 +6,9 @@
   "command": {
     "publish": {
       "access": "public",
-      "message": "chore: publish"
+      "message": "chore: publish",
+      "independent": true,
+      "conventionalCommits": true
     }
   }
 }

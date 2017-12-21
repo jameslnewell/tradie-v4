@@ -2,10 +2,7 @@
   "name": "@tradie/jest-utils",
   "version": "1.1.0",
   "main": "lib/index.js",
-  "files": [
-    "lib",
-    ".flowconfig"
-  ],
+  "files": ["lib", ".flowconfig"],
   "dependencies": {
     "babel-core": "^6.25.0",
     "glob": "^7.1.2",

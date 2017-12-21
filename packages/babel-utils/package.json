@@ -2,10 +2,7 @@
   "name": "@tradie/babel-utils",
   "version": "1.1.0",
   "main": "lib/index.js",
-  "files": [
-    "lib",
-    ".flowconfig"
-  ],
+  "files": ["lib", ".flowconfig"],
   "dependencies": {
     "babel-core": "^6.24.1",
     "chalk": "^2.1.0",

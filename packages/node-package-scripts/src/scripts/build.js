@@ -13,7 +13,7 @@ export default async function(args) {
   const {watch} = args;
   const debug = true;
 
-  const lintSourceFile = linter(eslint.sources());
+  const lintSourceFile = linter(eslint.source());
 
   const reporter = new Reporter({
     context: paths.ROOT,

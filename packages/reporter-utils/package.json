@@ -2,10 +2,7 @@
   "name": "@tradie/reporter-utils",
   "version": "1.1.0",
   "main": "lib/index.js",
-  "files": [
-    "lib",
-    ".flowconfig"
-  ],
+  "files": ["lib", ".flowconfig"],
   "dependencies": {
     "@tradie/cli-utils": "^1.1.0",
     "chalk": "^2.0.1",
