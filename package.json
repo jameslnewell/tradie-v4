@@ -33,6 +33,6 @@
     "prepublishOnly": "echo 'Run `npm run publish` instead.' && exit 1"
   },
   "lint-staged": {
-    "*.js": ["prettier --write", "git add"]
+    "*.{js,jsx,json,css,md}": ["prettier --write", "git add"]
   }
 }
