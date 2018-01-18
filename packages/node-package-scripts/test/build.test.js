@@ -3,6 +3,8 @@ import fs from 'fs-extra';
 import {fixture, exec, read} from './utils';
 
 describe('tradie build', () => {
+  jest.setTimeout(20000);
+
   it('should exit with a code of 0 when there are no errors', async () => {
     const {code} = await exec('build', {cwd: fixture('sum')});
     expect(code).toEqual(0);
