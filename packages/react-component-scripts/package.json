@@ -6,6 +6,7 @@
     "tradie": "lib/index.js"
   },
   "dependencies": {
+    "flow-bin": "^0.63.0",
     "@tradie/cli": "^1.1.1",
     "@tradie/file-utils": "^1.1.0",
     "@tradie/babel-utils": "^1.1.0",

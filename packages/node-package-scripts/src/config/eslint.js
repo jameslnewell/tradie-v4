@@ -1,4 +1,6 @@
-export function source() {
+// @flow
+
+export function sources(): {} {
   return {
     extends: [require.resolve('eslint-config-jameslnewell/es')],
     env: {node: true},
@@ -9,8 +11,9 @@ export function source() {
   };
 }
 
-export function test() {
-  const config = source();
+export function tests() {
+  const config = sources();
+  //$FlowFixMe
   config.env.jest = true;
   return config;
 }

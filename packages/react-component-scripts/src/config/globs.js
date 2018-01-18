@@ -1,3 +1,4 @@
+//@flow
 export const SOURCES = 'src/**/*.{js,jsx}';
 export const EXAMPLE = 'example/**/*.{js,jsx}';
 export const TESTS = '{src,test}/**/*.test.{js,jsx}';

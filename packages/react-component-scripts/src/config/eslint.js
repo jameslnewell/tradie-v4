@@ -1,3 +1,5 @@
+// @flow
+
 export function source() {
   return {
     extends: [require.resolve('eslint-config-jameslnewell/react')],
@@ -15,6 +17,7 @@ export function example() {
 
 export function test() {
   const config = source();
+  //$FlowFixMe
   config.env.jest = true;
   return config;
 }
