@@ -3,7 +3,7 @@
   "private": true,
   "engines": {
     "yarn": "^1.0.0",
-    "node": "^8.5.0"
+    "node": ">=8.5.0"
   },
   "dependencies": {
     "finder-on-steroids": "^0.4.0",
