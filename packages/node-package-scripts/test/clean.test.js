@@ -3,6 +3,8 @@ import fs from 'fs-extra';
 import {fixture, mkdir, exists, exec} from './utils';
 
 describe('tradie clean', () => {
+  jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
+
   it('should exit with a code of 0 when successful', async () => {
     const {code} = await exec('clean', {cwd: fixture('sum')});
     expect(code).toEqual(0);

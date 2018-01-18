@@ -2,6 +2,8 @@ import fs from 'fs-extra';
 import {fixture, exec} from './utils';
 
 describe('tradie lint', () => {
+  jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
+
   it('should exit with a code of 0 when there are no linting errors', async () => {
     const {code} = await exec('lint', {cwd: fixture('sum')});
     expect(code).toEqual(0);
