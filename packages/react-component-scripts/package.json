@@ -1,6 +1,6 @@
 {
   "name": "@tradie/react-component-scripts",
-  "version": "1.0.0",
+  "version": "1.0.0-preview.1",
   "files": ["lib", ".flowconfig"],
   "bin": {
     "tradie": "lib/index.js"
@@ -28,8 +28,7 @@
     "build": "tradie build && chmod 0755 ./lib/index.js",
     "watch": "tradie build --watch",
     "test": "tradie test",
-    "prepublishOnly":
-      "tradie clean && tradie lint && tradie test && tradie build"
+    "prepublishOnly": "tradie clean && tradie lint && tradie test && tradie build"
   },
   "license": "MIT"
 }
