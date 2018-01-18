@@ -1,6 +1,6 @@
 import Reporter from '@tradie/reporter-utils';
 import {compile} from '@tradie/webpack-utils';
-import {copy, rm, name, process as processFiles} from '@tradie/file-utils';
+import {rm, name, process as processFiles} from '@tradie/file-utils';
 import linter from '@tradie/eslint-utils';
 import transpile from '@tradie/babel-utils';
 import Flow from '@tradie/flow-utils';
@@ -12,7 +12,25 @@ import webpack from '../config/webpack';
 
 const debug = process.env.CI || false;
 
-export default async function(options: Options) {
+export default async function() {
+  const createCJSFilename = file =>
+    name(file, '[folder][name].js', {
+      src: paths.CODE_SRC,
+      dest: paths.CODE_DEST_CJS
+    });
+
+  const createESMFilename = file =>
+    name(file, '[folder][name].js', {
+      src: paths.CODE_SRC,
+      dest: paths.CODE_DEST_ESM
+    });
+
+  const createTypeFilename = file =>
+    name(file, '[folder][name].js.flow', {
+      src: paths.CODE_SRC,
+      dest: paths.CODE_DEST_CJS
+    });
+
   const reporter = new Reporter({
     watch: true, //TODO
     directory: paths.ROOT,
@@ -45,33 +63,42 @@ export default async function(options: Options) {
             warnings.forEach(warning => reporter.warning(warning));
           });
 
-          const transpilingCJS = transpile(
-            file,
-            name(file, '[folder][name].js', {
-              src: paths.CODE_SRC,
-              dest: paths.CODE_DEST_CJS
-            }),
-            babel.cjs()
-          );
+          const transpilingCJS = transpile(file, createCJSFilename(file), babel.cjs());
 
-          const transpilingESM = transpile(
-            file,
-            name(file, '[folder][name].js', {
-              src: paths.CODE_SRC,
-              dest: paths.CODE_DEST_ESM
-            }),
-            babel.esm()
-          );
+          const transpilingESM = transpile(file, createESMFilename(file), babel.esm());
 
-          const exporting = flow.export(
-            file,
-            name(file, '[folder][name].js.flow', {
-              src: paths.CODE_SRC,
-              dest: paths.CODE_DEST_CJS
-            })
-          );
+          const exporting = flow.export(file, createTypeFilename(file));
 
           await Promise.all([linting, transpilingCJS, transpilingESM, exporting]);
+        } catch (error) {
+          reporter.error({
+            file: error.file || file,
+            message: debug ? error.stack || error.message : error.message
+          });
+        }
+        reporter.finish();
+      },
+      async delete(file) {
+        try {
+          await rm([createCJSFilename(file), createESMFilename(file), createTypeFilename(file)]);
+        } catch (error) {
+          reporter.error({
+            file: error.file || file,
+            message: debug ? error.stack || error.message : error.message
+          });
+        }
+      }
+    },
+    {
+      include: globs.EXAMPLE,
+      async process(file) {
+        reporter.start();
+        try {
+          const linting = lintExampleFile(file).then(({errors, warnings}) => {
+            errors.forEach(error => reporter.error(error));
+            warnings.forEach(warning => reporter.warning(warning));
+          });
+          await Promise.all([linting]);
         } catch (error) {
           reporter.error({
             file: error.file || file,

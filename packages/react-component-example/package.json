@@ -5,7 +5,7 @@
   "jsnext:main": "dist/esm/index.js",
   "files": [".flowconfig", "dist/cjs", "dist/esm"],
   "dependencies": {
-    "@tradie/react-component-scripts": "^1.0.0",
+    "@tradie/react-component-scripts": "^1.0.0-preview.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "enzyme": "3.2.0",

@@ -3,7 +3,7 @@ import {serve} from '@tradie/webpack-utils';
 import webpack from '../config/webpack';
 import {ROOT} from '../config/paths';
 
-export default async function(options: Options) {
+export default async function() {
   const reporter = new Reporter({
     watch: true,
     directory: ROOT,

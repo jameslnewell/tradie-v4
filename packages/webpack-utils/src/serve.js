@@ -2,7 +2,6 @@ import detectPort from 'detect-port';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import createEmitter from './createEmitter';
-import {setImmediate} from 'core-js/library/web/timers';
 
 export default function(config) {
   let compiler;
