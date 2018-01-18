@@ -34,5 +34,8 @@
     "test": "tradie test",
     "prepublishOnly": "tradie clean && tradie lint && tradie test && tradie build"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "MIT"
 }
