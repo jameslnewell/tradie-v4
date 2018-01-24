@@ -6,15 +6,14 @@
     "tradie": "lib/index.js"
   },
   "dependencies": {
-    "flow-bin": "^0.63.0",
-    "@tradie/cli": "^1.1.1",
-    "@tradie/file-utils": "^1.1.0",
     "@tradie/babel-utils": "^1.1.0",
+    "@tradie/cli": "^1.1.1",
     "@tradie/eslint-utils": "^1.1.0",
+    "@tradie/file-utils": "^1.1.0",
     "@tradie/flow-utils": "^1.1.0",
+    "@tradie/jest-utils": "^1.1.0",
     "@tradie/reporter-utils": "^1.1.0",
     "@tradie/webpack-utils": "^1.1.0",
-    "@tradie/jest-utils": "^1.1.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
@@ -23,6 +22,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react": "^6.24.1",
+    "eslint-config-jameslnewell": "^3.0.5",
     "html-webpack-plugin": "^2.30.1",
     "webpack": "^3.10.0"
   },

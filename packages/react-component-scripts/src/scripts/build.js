@@ -32,7 +32,7 @@ export default async function() {
     });
 
   const reporter = new Reporter({
-    watch: true, //TODO
+    watch: false,
     directory: paths.ROOT,
     startedText: 'Building',
     finishedText: 'Built'
@@ -41,6 +41,19 @@ export default async function() {
   const lintSourceFile = linter(eslint.source());
   const lintExampleFile = linter(eslint.example());
   const flow = new Flow(paths.ROOT);
+
+  reporter.before('finished', async function() {
+    try {
+      const result = await flow.status(); //TODO: exclude files not processed
+      result.errors.forEach(error => reporter.error(error));
+      result.warnings.forEach(warning => reporter.warning(warning));
+    } catch (error) {
+      reporter.error({
+        file: error.file,
+        message: debug ? error.stack || error.message : error.message
+      });
+    }
+  });
 
   // build the example site
   const compiler = compile(webpack({optimize: true}));

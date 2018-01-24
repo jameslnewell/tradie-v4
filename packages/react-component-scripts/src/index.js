@@ -12,6 +12,13 @@ run([
   {
     cmd: 'lint',
     desc: 'Lint',
+    opts: {
+      watch: {
+        default: false,
+        boolean: true,
+        description: 'watch sources, tests and examples and re-lint them when they change'
+      }
+    },
     exec: require.resolve('./scripts/lint')
   },
   {

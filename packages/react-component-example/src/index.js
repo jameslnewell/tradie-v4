@@ -6,3 +6,5 @@ export default class Foo extends React.Component<{}> {
     return <div>Hello World!</div>;
   }
 }
+
+export function foo(a, b) {}
