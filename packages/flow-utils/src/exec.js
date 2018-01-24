@@ -13,7 +13,12 @@ export default function(args: string[] = [], options: {} = {}): Promise<Object> 
     execFile(flowPath, args, {...options, maxBuffer: 2000 * 1024}, (execError, stdout) => {
       if (args.indexOf('ast') !== -1 || args.indexOf('--json') !== -1) {
         try {
-          resolve(JSON.parse(String(stdout)));
+          const json = JSON.parse(String(stdout));
+          if (json && json.exit) {
+            reject(new Error(json.exit.msg));
+          } else {
+            resolve(json);
+          }
         } catch (parseError) {
           reject(parseError);
         }

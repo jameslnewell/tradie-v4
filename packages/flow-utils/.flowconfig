@@ -1,3 +1,4 @@
 [ignore]
 <PROJECT_ROOT>/lib
+.*/__fixtures__
 
