@@ -6,7 +6,7 @@
   "dependencies": {
     "@tradie/group-exec-utils": "^1.1.0-alpha.b2a4b8e1",
     "chalk": "^2.3.0",
-    "flow-bin": "^0.63.1",
+    "flow-bin": "^0.64.0",
     "fs-extra": "^5.0.0",
     "shell-escape": "^0.2.0",
     "sprintf-js": "^1.1.1"
@@ -21,6 +21,5 @@
     "watch": "tradie build --watch",
     "test": "tradie test"
   },
-  "tradie-template": "tradie-template-node-package",
   "license": "MIT"
 }
