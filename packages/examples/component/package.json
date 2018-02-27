@@ -1,0 +1,23 @@
+{
+  "name": "@tradie/component-example",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/cjs/index.js",
+  "jsnext:main": "dist/esm/index.js",
+  "files": [".flowconfig", "dist/cjs", "dist/esm"],
+  "dependencies": {
+    "@tradie/component-scripts": "^1.0.0-preview.1",
+    "enzyme": "3.2.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "eslint-plugin-flowtype": "^2.41.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  },
+  "scripts": {
+    "clean": "tradie clean",
+    "lint": "tradie lint",
+    "dev": "tradie dev",
+    "build": "tradie build",
+    "test": "tradie test"
+  }
+}

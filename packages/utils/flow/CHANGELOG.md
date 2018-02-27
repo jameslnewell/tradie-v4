@@ -5,17 +5,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 <a name="1.2.0-alpha.a573b72a"></a>
 
-# [1.2.0-alpha.a573b72a](https://github.com/jameslnewell/tradie-v4/compare/@tradie/cli@1.1.1...@tradie/cli@1.2.0-alpha.a573b72a) (2018-01-24)
-
-**Note:** Version bump only for package @tradie/cli
-
-<a name="1.1.1"></a>
-
-## [1.1.1](https://github.com/jameslnewell/tradie-v4/compare/@tradie/cli@1.1.0...@tradie/cli@1.1.1) (2017-12-13)
+# [1.2.0-alpha.a573b72a](https://github.com/jameslnewell/tradie-v4/compare/@tradie/flow-utils@1.1.0...@tradie/flow-utils@1.2.0-alpha.a573b72a) (2018-01-24)
 
 ### Bug Fixes
 
-* flow issues when installed as a dep ([cc0e3da](https://github.com/jameslnewell/tradie-v4/commit/cc0e3da))
+* bump versions and add tests ([7927112](https://github.com/jameslnewell/tradie-v4/commit/7927112))
 
 <a name="1.1.0-alpha.48d3958a"></a>
 
@@ -23,7 +17,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-* remove postinstall script ([b40e3a9](https://github.com/jameslnewell/tradie-v4/commit/b40e3a9))
+* linting issues ([b2a4b8e](https://github.com/jameslnewell/tradie-v4/commit/b2a4b8e))
 
 ### Features
 
@@ -35,7 +29,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-* remove postinstall script ([b40e3a9](https://github.com/jameslnewell/tradie-v4/commit/b40e3a9))
+* linting issues ([b2a4b8e](https://github.com/jameslnewell/tradie-v4/commit/b2a4b8e))
 
 ### Features
 
@@ -44,6 +38,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 <a name="1.1.0-alpha.b2a4b8e1"></a>
 
 # 1.1.0-alpha.b2a4b8e1 (2017-09-28)
+
+### Bug Fixes
+
+* linting issues ([b2a4b8e](https://github.com/jameslnewell/tradie-v4/commit/b2a4b8e))
 
 ### Features
 

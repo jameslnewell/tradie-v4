@@ -1,0 +1,22 @@
+{
+  "name": "@tradie/node-example",
+  "version": "1.1.7",
+  "private": true,
+  "main": "lib/index.js",
+  "files": ["lib", ".flowconfig"],
+  "engines": {
+    "node": "8"
+  },
+  "devDependencies": {
+    "@tradie/node-scripts": "^1.1.9"
+  },
+  "scripts": {
+    "clean": "tradie clean",
+    "lint": "tradie lint",
+    "build": "tradie build",
+    "watch": "tradie build --watch",
+    "test": "tradie test",
+    "example": "tradie example",
+    "prepublishOnly": "tradie clean && tradie lint && tradie test && tradie build"
+  }
+}

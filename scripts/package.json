@@ -1,0 +1,11 @@
+{
+  "name": "scripts",
+  "private": true,
+  "version": "1.0.0",
+  "dependencies": {
+    "finder-on-steroids": "^0.4.0",
+    "fs-extra": "^4.0.2",
+    "resolve": "^1.4.0",
+    "@tradie/node-package-scripts": "^1.1.8"
+  }
+}

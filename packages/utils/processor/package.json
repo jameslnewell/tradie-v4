@@ -1,0 +1,18 @@
+{
+  "name": "@tradie/processor-utils",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "files": ["lib", ".flowconfig"],
+  "dependencies": {
+    "@tradie/file-utils": "^1.1.0",
+    "@tradie/reporter-utils": "^1.0.0"
+  },
+  "scripts": {
+    "lint": "tradie lint",
+    "clean": "tradie clean",
+    "build": "tradie build",
+    "watch": "tradie build --watch",
+    "test": "tradie test"
+  },
+  "license": "MIT"
+}

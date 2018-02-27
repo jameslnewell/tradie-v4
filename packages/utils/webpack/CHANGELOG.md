@@ -5,25 +5,23 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 <a name="1.2.0-alpha.a573b72a"></a>
 
-# [1.2.0-alpha.a573b72a](https://github.com/jameslnewell/tradie-v4/compare/@tradie/cli@1.1.1...@tradie/cli@1.2.0-alpha.a573b72a) (2018-01-24)
-
-**Note:** Version bump only for package @tradie/cli
-
-<a name="1.1.1"></a>
-
-## [1.1.1](https://github.com/jameslnewell/tradie-v4/compare/@tradie/cli@1.1.0...@tradie/cli@1.1.1) (2017-12-13)
+# [1.2.0-alpha.a573b72a](https://github.com/jameslnewell/tradie-v4/compare/@tradie/webpack-utils@1.1.0...@tradie/webpack-utils@1.2.0-alpha.a573b72a) (2018-01-24)
 
 ### Bug Fixes
 
-* flow issues when installed as a dep ([cc0e3da](https://github.com/jameslnewell/tradie-v4/commit/cc0e3da))
+* unused dep ([58f5ee6](https://github.com/jameslnewell/tradie-v4/commit/58f5ee6))
+
+### Features
+
+* **webpack-utils:** return a consistent interface ([c3a5e18](https://github.com/jameslnewell/tradie-v4/commit/c3a5e18))
+
+### BREAKING CHANGES
+
+* **webpack-utils:** compile, watch and serve all return the same interface which can be observed for events
 
 <a name="1.1.0-alpha.48d3958a"></a>
 
 # 1.1.0-alpha.48d3958a (2017-09-28)
-
-### Bug Fixes
-
-* remove postinstall script ([b40e3a9](https://github.com/jameslnewell/tradie-v4/commit/b40e3a9))
 
 ### Features
 
@@ -32,10 +30,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 <a name="1.1.0-alpha.20f28a18"></a>
 
 # 1.1.0-alpha.20f28a18 (2017-09-28)
-
-### Bug Fixes
-
-* remove postinstall script ([b40e3a9](https://github.com/jameslnewell/tradie-v4/commit/b40e3a9))
 
 ### Features
 
