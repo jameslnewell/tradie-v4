@@ -5,13 +5,7 @@
     "yarn": "^1.0.0",
     "node": ">=8.5.0"
   },
-  "workspaces": [
-    "packages/cli",
-    "packages/eslint-config",
-    "packages/examples/*",
-    "packages/scripts/*",
-    "packages/utils/*"
-  ],
+  "workspaces": ["packages/*/*"],
   "dependencies": {
     "@commitlint/cli": "^4.3.0",
     "@commitlint/config-angular": "^4.3.0",

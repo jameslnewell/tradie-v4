@@ -23,8 +23,7 @@ Choose a [`template`](https://github.com/jameslnewell/tradie-v4/tree/master/pack
 
 Choose from one of the existing templates below or [build your own](https://github.com/jameslnewell/tradie-v4/blob/master/docs/templates.md).
 
-- [@tradie/node-package-template](https://www.npmjs.com/package/@tradie/node-package-template)
-<!--- [@tradie/react-component-template](https://www.npmjs.com/package/@tradie/react-component-template)-->
-- [@tradie/react-site-template](https://www.npmjs.com/package/@tradie/react-site-template)
-- [@tradie/react-app-template](https://www.npmjs.com/package/@tradie/react-app-template)
-
+* [@tradie/node-package-template](https://www.npmjs.com/package/@tradie/node-package-template)
+  <!--- [@tradie/react-component-template](https://www.npmjs.com/package/@tradie/react-component-template)-->
+* [@tradie/react-site-template](https://www.npmjs.com/package/@tradie/react-site-template)
+* [@tradie/react-app-template](https://www.npmjs.com/package/@tradie/react-app-template)
