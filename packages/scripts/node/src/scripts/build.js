@@ -49,7 +49,7 @@ export default async function(args) {
             transpile.source(file).then(messages => reporter.report(messages))
           ]);
         },
-        async delete(file) {
+        async delete() {
           await Promise.all([
             // TODO:
           ]);

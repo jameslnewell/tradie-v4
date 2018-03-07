@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary,consistent-return */
 import * as fs from 'fs';
 import * as path from 'path';
 import * as util from 'util';
@@ -29,7 +30,7 @@ export default function(options: TranspilerOptions) {
       getScriptVersion: (file: string) => files[file] && files[file].version.toString(),
       getScriptSnapshot: (file: string) => {
         if (!fs.existsSync(file)) {
-          return undefined;
+          return;
         }
         return ts.ScriptSnapshot.fromString(fs.readFileSync(file).toString());
       },
