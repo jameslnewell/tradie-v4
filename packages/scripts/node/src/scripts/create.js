@@ -14,19 +14,17 @@ function fromFile(file, data = {}) {
 }
 
 function generate(vfs) {
-  vfs.write('package.json', fromFile('package.json.tpl', {version}));
-  vfs.write('.flowconfig', fromFile('.flowconfig.tpl'));
-  vfs.write('.gitignore', fromFile('.gitignore.tpl'));
-  vfs.write('src/index.js', fromFile('src/index.js'));
-  vfs.write('src/index.test.js', fromFile('src/index.test.js'));
-  vfs.write('examples/index.js', fromFile('examples/index.js'));
+  vfs.write('package.json', fromFile('package.json.ejs', {version}));
+  vfs.write('.gitignore', fromFile('.gitignore.ejs'));
+  vfs.write('src/index.ts', fromFile('src/index.ts'));
+  vfs.write('src/index.test.ts', fromFile('src/index.test.ts'));
+  vfs.write('examples/index.ts', fromFile('examples/index.ts'));
 }
 
 export default async function() {
   await generator(ROOT, generate);
 
   cp.execSync('yarn');
-  cp.execSync('flow-typed install jest@21 --flowVersion 0.53.0');
 
   console.log('Project created.');
 }

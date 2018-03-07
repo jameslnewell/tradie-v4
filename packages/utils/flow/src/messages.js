@@ -108,7 +108,7 @@ export function formatError(directory: string, error: FlowError) {
 
 export function getErrors(directory: string, result: FlowResult) {
   return result.errors
-    .filter(error => error.level === 'error')
+    .filter(error => error.type === 'error')
     .map(error => ({
       file: error.message[0].path,
       message: formatError(directory, error)
@@ -119,7 +119,7 @@ export function getErrors(directory: string, result: FlowResult) {
 /* eslint-disable no-unused-vars */
 export function getWarnings(directory: string, result: FlowResult) {
   // return result.errors
-  //   .filter(error => error.level === '???')
+  //   .filter(error => error..type === '???')
   //   .map(error => format(directory, error))
   // ;
   return [];

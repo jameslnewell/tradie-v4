@@ -1,23 +1,16 @@
 // import path from 'path';
-import register from 'babel-register';
-import {match} from '@tradie/file-utils';
-
-import * as globs from '../config/globs';
+import {register} from 'ts-node';
 import * as paths from '../config/paths';
-import * as babel from '../config/babel';
+import * as tsconfig from '../config/typescript';
 
 export default function(argv) {
-  const filter = match({
-    context: paths.ROOT,
-    include: [globs.SOURCES, globs.EXAMPLES]
-  });
+  const {module = 'index'} = argv;
 
   register({
-    babelrc: false,
-    extensions: ['.jsx', '.js'],
-    ...babel.examples({root: paths.ROOT}),
-    only: filter
+    // typeCheck: true,
+    skipProject: true,
+    compilerOptions: tsconfig.example()
   });
 
-  return import(`${paths.EXAMPLES_SRC}/${argv.module || 'index'}`);
+  return import(`${paths.EXAMPLES_SRC}/${module}`);
 }

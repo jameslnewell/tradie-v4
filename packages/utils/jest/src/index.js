@@ -1,6 +1,7 @@
 // @flow
-import jest from 'jest';
-export {default as createBabelTransform} from './createBabelTransform';
+import {run} from 'jest-cli';
+export {default as createBabelTransform} from './transform/createBabelTransform';
+export {default as createTypescriptTransform} from './transform/createTypescriptTransform';
 
 type Options = {
   bail?: boolean,
@@ -64,6 +65,6 @@ export default function(options: Options, config: {}): Promise<void> {
 
   return new Promise(() => {
     //TODO: resolve() when completed. see https://github.com/facebook/jest/issues/3737.
-    jest.run(args);
+    run(args);
   });
 }

@@ -22,16 +22,15 @@ export default function(argv) {
     testMatch: [`**/${globs.TESTS}`],
     testPathIgnorePatterns: [
       '<rootDir>/node_modules/',
-      '<rootDir>/src/_\\.test\\.js$', //ignore the test setup file
-      '<rootDir>/test/_\\.test\\.js$', //ignore the test setup file
+      '<rootDir>/src/_\\.test\\.ts$', //ignore the test setup file
+      '<rootDir>/test/_\\.test\\.ts$', //ignore the test setup file
       '<rootDir>/.*/__fixtures__/', //ignore test files within fixtures
       '<rootDir>/.*/__mocks__/' //ignore test files within mocks
     ],
-    moduleFileExtensions: ['jsx', 'js'],
+    moduleFileExtensions: ['tsx', 'ts', 'jsx', 'js', 'json'],
     transform: {
-      '^.+\\.jsx?$': require.resolve('../config/jest/babelTransform')
+      '^.+\\.tsx?$': require.resolve('../config/typescript-transform')
     },
-    mapCoverage: true,
     collectCoverageFrom: [
       `**/${globs.SOURCES}`,
       `!**/${globs.TESTS}`,

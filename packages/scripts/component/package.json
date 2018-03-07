@@ -12,7 +12,7 @@
     "@tradie/eslint-utils": "^1.1.0",
     "@tradie/file-utils": "^1.1.0",
     "@tradie/flow-utils": "^1.1.0",
-    "@tradie/jest-utils": "^1.1.0",
+    "@tradie/jest-utils": "^2.0.0",
     "@tradie/processor-utils": "^1.0.0",
     "@tradie/reporter-utils": "^1.1.0",
     "@tradie/webpack-utils": "^1.1.0",

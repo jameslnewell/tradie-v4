@@ -5,29 +5,20 @@
   "repository": "jameslnewell/tradie-v4",
   "files": [".flowconfig", "lib", "tpl"],
   "bin": {
-    "tradie": "lib/index.js"
+    "node-scripts": "lib/index.js"
   },
   "dependencies": {
-    "@tradie/babel-utils": "^1.1.0",
     "@tradie/cli": "^1.1.1",
-    "@tradie/eslint-utils": "^1.1.0",
     "@tradie/file-utils": "^1.1.0",
-    "@tradie/flow-utils": "^1.1.0",
     "@tradie/generator-utils": "^1.1.0",
-    "@tradie/jest-utils": "^1.1.0",
+    "@tradie/jest-utils": "^2.0.0",
     "@tradie/processor-utils": "^1.0.0",
     "@tradie/reporter-utils": "^1.1.0",
-    "babel-plugin-dynamic-import-node": "^1.0.2",
-    "babel-plugin-module-resolver": "^3.0.0",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-transform-object-rest-spread": "^6.23.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.5.1",
-    "babel-preset-flow": "^6.23.0",
-    "babel-register": "^6.26.0",
-    "del": "^3.0.0",
-    "eslint-config-jameslnewell": "^3.0.5",
-    "semver": "^5.4.1"
+    "@tradie/tslint-utils": "^1.0.0",
+    "@tradie/typescript-utils": "^1.0.0",
+    "ts-jest": "^22.4.0",
+    "ts-node": "^5.0.0",
+    "tslint-config-prettier": "^1.9.0"
   },
   "scripts": {
     "clean": "tradie clean",

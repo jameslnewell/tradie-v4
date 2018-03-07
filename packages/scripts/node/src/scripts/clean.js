@@ -1,4 +1,4 @@
-import del from 'del';
+import {rm} from '@tradie/file-utils';
 import Reporter from '@tradie/reporter-utils';
 
 import * as paths from '../config/paths';
@@ -11,7 +11,7 @@ export default async function() {
 
   reporter.start();
   try {
-    await del([paths.CODE_DEST, paths.COVERAGE_DEST]);
+    await rm([paths.CODE_DEST, paths.COVERAGE_DEST]);
     reporter.finish();
   } catch (error) {
     reporter.error(error);

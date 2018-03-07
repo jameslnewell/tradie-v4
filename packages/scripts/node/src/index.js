@@ -18,19 +18,6 @@ run([
   },
 
   {
-    cmd: 'lint',
-    desc: 'Lint sources, tests and examples',
-    opts: {
-      watch: {
-        default: false,
-        boolean: true,
-        description: 'watch sources, tests and examples and re-lint them when they change'
-      }
-    },
-    exec: resolve('./scripts/lint')
-  },
-
-  {
     cmd: 'build',
     desc: 'Transpile sources',
     opts: {

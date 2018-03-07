@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 export function clear() {
-  //don't output on CI
-  if (process.env.CI) {
+  //don't output on CI or when debugging
+  if (process.env.CI || process.env.DEBUG) {
     return;
   }
 

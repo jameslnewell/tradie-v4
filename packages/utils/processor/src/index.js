@@ -40,9 +40,12 @@ export function process(
           try {
             await processFn(fullFilePath);
           } catch (error) {
-            reporter.error({
+            // console.log(error);
+            reporter.report({
+              type: 'error',
               file,
-              message: error.message
+              text: error.message,
+              trace: error.stack
             });
           }
           reporter.finish();
@@ -65,9 +68,12 @@ export function process(
           try {
             await deleteFn(file);
           } catch (error) {
-            reporter.error({
+            // console.log(error);
+            reporter.report({
+              type: 'error',
               file,
-              message: error.message
+              text: error.message,
+              trace: error.stack
             });
           }
           reporter.finish();

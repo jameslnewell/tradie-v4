@@ -1,40 +1,39 @@
 import {copy, rm, name} from '@tradie/file-utils';
-import linter from '@tradie/eslint-utils';
-import transpile from '@tradie/babel-utils';
-import Flow from '@tradie/flow-utils';
 import {process as processFiles} from '@tradie/processor-utils';
+import linter from '@tradie/tslint-utils';
+import transpiler from '@tradie/typescript-utils';
 import Reporter from '@tradie/reporter-utils';
 
 import * as paths from '../config/paths';
 import * as globs from '../config/globs';
-import * as babel from '../config/babel';
-import * as eslint from '../config/eslint';
+import * as tslint from '../config/tslint';
+import * as tsconfig from '../config/typescript';
 
 export default async function(args) {
   const {watch} = args;
-  const debug = true;
 
-  const lintSourceFile = linter(eslint.sources());
+  const lint = {
+    source: linter(tslint.source()),
+    example: linter(tslint.example()),
+    test: linter(tslint.test())
+  };
+
+  const transpile = {
+    source: transpiler(tsconfig.source()),
+    example: transpiler({
+      ...tsconfig.example(),
+      noEmit: true
+    }),
+    test: transpiler({
+      ...tsconfig.test(),
+      noEmit: true
+    })
+  };
 
   const reporter = new Reporter({
     context: paths.ROOT,
     startedText: 'Building',
     finishedText: 'Built'
-  });
-
-  const flow = new Flow(paths.ROOT);
-
-  reporter.before('finished', async function() {
-    try {
-      const result = await flow.status(); //TODO: exclude files not processed
-      result.errors.forEach(error => reporter.error(error));
-      result.warnings.forEach(warning => reporter.warning(warning));
-    } catch (error) {
-      reporter.error({
-        file: error.file,
-        message: debug ? error.stack || error.message : error.message
-      });
-    }
   });
 
   const processing = processFiles(
@@ -45,51 +44,22 @@ export default async function(args) {
         include: [globs.SOURCES],
         exclude: [globs.TESTS, globs.MOCKS, globs.FIXTURES],
         async process(file) {
-          const linting = lintSourceFile(file).then(({errors, warnings}) => {
-            errors.forEach(error => reporter.error(error));
-            warnings.forEach(warning => reporter.warning(warning));
-          });
-
-          const transpiling = transpile(
-            file,
-            name(file, '[folder][name].js', {
-              src: paths.CODE_SRC,
-              dest: paths.CODE_DEST
-            }),
-            babel.sources({root: paths.ROOT})
-          );
-
-          const exporting = flow.export(
-            file,
-            name(file, '[folder][name].js.flow', {
-              src: paths.CODE_SRC,
-              dest: paths.CODE_DEST
-            })
-          );
-
-          await Promise.all([linting, transpiling, exporting]);
+          await Promise.all([
+            lint.source(file).then(messages => reporter.report(messages)),
+            transpile.source(file).then(messages => reporter.report(messages))
+          ]);
         },
         async delete(file) {
           await Promise.all([
-            rm(
-              name(file, '[folder][name].js', {
-                src: paths.CODE_SRC,
-                dest: paths.CODE_DEST
-              })
-            ),
-            rm(
-              name(file, '[folder][name].js.flow', {
-                src: paths.CODE_SRC,
-                dest: paths.CODE_DEST
-              })
-            )
+            // TODO:
           ]);
         }
       },
-      // copy other files
+
+      // copy other source files
       {
         include: globs.FILES,
-        exclude: [globs.SOURCES, globs.TESTS, globs.MOCKS, globs.FIXTURES],
+        exclude: [globs.SOURCES, globs.TESTS, globs.MOCKS, globs.FIXTURES, globs.EXAMPLES],
         async process(file) {
           await copy(
             file,
@@ -106,6 +76,28 @@ export default async function(args) {
               dest: paths.CODE_DEST
             })
           );
+        }
+      },
+
+      // lint example files
+      {
+        include: [globs.EXAMPLES],
+        async process(file) {
+          await Promise.all([
+            lint.example(file).then(messages => reporter.report(messages)),
+            transpile.example(file).then(messages => reporter.report(messages))
+          ]);
+        }
+      },
+
+      // lint test files
+      {
+        include: [globs.TESTS, globs.MOCKS, globs.FIXTURES],
+        async process(file) {
+          await Promise.all([
+            lint.test(file).then(messages => reporter.report(messages)),
+            transpile.test(file).then(messages => reporter.report(messages))
+          ]);
         }
       }
     ],

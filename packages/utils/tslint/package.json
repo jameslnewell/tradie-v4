@@ -1,12 +1,11 @@
 {
-  "name": "@tradie/jest-utils",
-  "version": "2.0.0",
+  "name": "@tradie/tslint-utils",
+  "version": "1.0.0",
   "main": "lib/index.js",
   "files": ["lib"],
   "dependencies": {
-    "jest-cli": "^22.4.2",
-    "babel-core": "^6.26.0",
-    "typescript": "^2.7.2"
+    "tslint": "^5.9.1",
+    "@tradie/reporter-utils": "^1.1.0"
   },
   "scripts": {
     "clean": "tradie clean",

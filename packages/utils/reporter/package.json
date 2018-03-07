@@ -6,6 +6,7 @@
   "dependencies": {
     "@tradie/cli-utils": "^1.1.0",
     "chalk": "^2.0.1",
+    "lodash.padend": "^4.6.1",
     "lodash.padstart": "^4.6.1",
     "lodash.sortby": "^4.7.0",
     "lodash.trim": "^4.5.1"

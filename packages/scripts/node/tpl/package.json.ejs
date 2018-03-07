@@ -1,14 +1,13 @@
 {
-  "name": "@tradie/node-example",
-  "version": "1.1.7",
-  "private": true,
+  "name": "node-example",
+  "version": "1.0.0",
   "main": "lib/index.js",
   "files": ["lib"],
   "dependencies": {
     "@types/node": "^9.4.6"
   },
   "devDependencies": {
-    "@tradie/node-scripts": "^1.1.9",
+    "@tradie/node-scripts": "^<%= version %>",
     "@types/jest": "^22.2.0"
   },
   "scripts": {
@@ -16,7 +15,8 @@
     "build": "node-scripts build",
     "watch": "node-scripts build --watch",
     "test": "node-scripts test",
-    "example": "node-scripts example",
-    "prepublishOnly": "tradie clean && tradie lint && tradie test && tradie build"
-  }
+    "prepublishOnly":
+      "node-scripts clean && node-scripts lint && node-scripts test && node-scripts build"
+  },
+  "license": "MIT"
 }
