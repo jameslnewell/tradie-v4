@@ -4,10 +4,6 @@
 
 </a>
 
-> The documentation for `tradie` is still a little rough. Please [ask questions
-> and raise bugs on Github](https://github.com/jameslnewell/tradie-v4/issues).
-> PRs are welcome!
-
 A framework for building build tools like `create-react-app` tailored to your
 use case and tech stack.
 
