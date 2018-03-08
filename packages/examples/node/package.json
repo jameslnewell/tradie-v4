@@ -1,6 +1,6 @@
 {
   "name": "@tradie/node-example",
-  "version": "1.1.7",
+  "version": "2.0.0-preview.1",
   "private": true,
   "main": "lib/index.js",
   "files": ["lib"],
@@ -8,7 +8,7 @@
     "@types/node": "^9.4.6"
   },
   "devDependencies": {
-    "@tradie/node-scripts": "^1.1.9",
+    "@tradie/node-scripts": "^1.0.0-preview.1",
     "@types/jest": "^22.2.0"
   },
   "scripts": {

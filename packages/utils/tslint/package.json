@@ -1,11 +1,11 @@
 {
   "name": "@tradie/tslint-utils",
-  "version": "1.0.0",
+  "version": "1.0.0-preview.1",
   "main": "lib/index.js",
   "files": ["lib"],
   "dependencies": {
     "tslint": "^5.9.1",
-    "@tradie/reporter-utils": "^1.1.0"
+    "@tradie/reporter-utils": "^2.0.0-preview.1"
   },
   "scripts": {
     "clean": "tradie clean",
