@@ -2,6 +2,7 @@
   "name": "node-example",
   "version": "1.0.0",
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "files": ["lib"],
   "dependencies": {
     "@types/node": "^9.4.6"
@@ -16,7 +17,7 @@
     "watch": "node-scripts build --watch",
     "test": "node-scripts test",
     "prepublishOnly":
-      "node-scripts clean && node-scripts lint && node-scripts test && node-scripts build"
+      "node-scripts clean && node-scripts build && node-scripts test"
   },
   "license": "MIT"
 }

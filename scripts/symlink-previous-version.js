@@ -3,7 +3,7 @@ const fs = require('fs-extra');
 const resolve = require('resolve');
 const finder = require('finder-on-steroids');
 
-const INSTALLED_TEMPLATE_NAME = '@tradie/node-package-scripts';
+const INSTALLED_TEMPLATE_NAME = '@tradie/node-scripts';
 
 /**
  * Get the installed version of the `tradie` template
@@ -51,17 +51,17 @@ function symlinkInstalledBinary(pkgDir) {
     __dirname,
     'node_modules',
     '@tradie',
-    'node-package-scripts',
+    'node-scripts',
     'lib',
     'index.js'
   );
-  const toFile = path.join(pkgDir, 'node_modules', '.bin', 'tradie');
+  const toFile = path.join(pkgDir, 'node_modules', '.bin', 'node-scripts');
   return symlinkBinary(fromFile, toFile);
 }
 
 function symlinkCurrentBinary(pkgDir) {
   const fromFile = path.join(__dirname, '..', 'packages', 'cli', 'lib', 'tradie.js');
-  const toFile = path.join(pkgDir, 'node_modules', '.bin', 'tradie');
+  const toFile = path.join(pkgDir, 'node_modules', '.bin', 'node-scripts');
   return symlinkBinary(fromFile, toFile);
 }
 

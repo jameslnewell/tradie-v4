@@ -8,7 +8,6 @@
   "dependencies": {
     "@tradie/babel-utils": "^1.1.0",
     "@tradie/cli": "^1.1.1",
-    "@tradie/eslint-config": "^1.0.0",
     "@tradie/eslint-utils": "^1.1.0",
     "@tradie/file-utils": "^1.1.0",
     "@tradie/flow-utils": "^1.1.0",
@@ -30,12 +29,11 @@
     "webpack": "^3.10.0"
   },
   "scripts": {
-    "clean": "tradie clean",
-    "lint": "tradie lint",
-    "build": "tradie build && chmod 0755 ./lib/index.js",
-    "watch": "tradie build --watch",
-    "test": "tradie test",
-    "prepublishOnly": "tradie clean && tradie lint && tradie test && tradie build"
+    "clean": "node-scripts clean",
+    "build": "node-scripts build && chmod 0755 ./lib/index.js",
+    "watch": "node-scripts build --watch",
+    "test": "node-scripts test",
+    "prepublishOnly": "node-scripts clean && tradie lint && tradie test && tradie build"
   },
   "publishConfig": {
     "access": "public"

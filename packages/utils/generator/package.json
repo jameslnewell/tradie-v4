@@ -2,9 +2,13 @@
   "name": "@tradie/generator-utils",
   "version": "1.1.0",
   "main": "lib/index.js",
-  "files": ["lib", ".flowconfig"],
+  "types": "lib/index.d.ts",
+  "files": ["lib"],
   "dependencies": {
-    "@tradie/match-utils": "^1.1.0-alpha.b2a4b8e1",
+    "@tradie/file-utils": "^2.0.0-preview.1",
+    "@types/diff": "^3.5.1",
+    "@types/extend": "^3.0.0",
+    "@types/inquirer": "^0.0.41",
     "chalk": "^2.0.1",
     "diff": "^3.2.0",
     "extend": "^3.0.1",
@@ -13,10 +17,11 @@
     "inquirer": "^3.2.0"
   },
   "scripts": {
-    "lint": "tradie lint",
-    "clean": "tradie clean",
-    "build": "tradie build",
-    "watch": "tradie build --watch",
-    "test": "tradie test"
-  }
+    "lint": "node-scripts lint",
+    "clean": "node-scripts clean",
+    "build": "node-scripts build",
+    "watch": "node-scripts build --watch",
+    "test": "node-scripts test"
+  },
+  "license": "MIT"
 }

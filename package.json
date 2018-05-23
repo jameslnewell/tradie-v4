@@ -27,6 +27,7 @@
       "yarn run lint && yarn run build && lerna publish --canary --exact --npm-tag=next --access=public",
     "commitmsg": "commitlint -e",
     "precommit": "lint-staged",
+    "postinstall": "yarn run link",
     "prepublishOnly": "echo 'Run `npm run publish` instead.' && exit 1"
   },
   "lint-staged": {

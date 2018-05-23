@@ -1,0 +1,19 @@
+{
+  "name": "@jameslnewell/cancelable-promise",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": ["lib"],
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "clean": "node-scripts clean",
+    "build": "node-scripts build",
+    "watch": "node-scripts build --watch",
+    "test": "node-scripts test",
+    "example": "node-scripts example",
+    "prepublishOnly":
+      "node-scripts clean && node-scripts lint && node-scripts test && node-scripts build"
+  },
+  "license": "MIT"
+}

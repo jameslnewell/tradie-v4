@@ -3,6 +3,7 @@
   "version": "2.0.0-preview.1",
   "private": true,
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "files": ["lib"],
   "dependencies": {
     "@types/node": "^9.4.6"
@@ -17,6 +18,6 @@
     "watch": "node-scripts build --watch",
     "test": "node-scripts test",
     "example": "node-scripts example",
-    "prepublishOnly": "tradie clean && tradie lint && tradie test && tradie build"
+    "prepublishOnly": "node-scripts clean && node-scripts build && node-scripts test"
   }
 }

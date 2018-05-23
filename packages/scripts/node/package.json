@@ -21,10 +21,10 @@
     "tslint-config-prettier": "^1.9.0"
   },
   "scripts": {
-    "clean": "tradie clean",
-    "build": "tradie build && chmod 0755 ./lib/index.js",
-    "watch": "tradie build --watch",
-    "test": "tradie test"
+    "clean": "node-scripts clean",
+    "build": "node-scripts build && chmod 0755 ./lib/index.js",
+    "watch": "node-scripts build --watch",
+    "test": "node-scripts test"
   },
   "license": "MIT"
 }

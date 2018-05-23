@@ -2,15 +2,16 @@
   "name": "@tradie/typescript-utils",
   "version": "1.0.0-preview.1",
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "files": ["lib"],
   "dependencies": {
     "@tradie/file-utils": "^2.0.0-preview.1",
     "typescript": "^2.7.2"
   },
   "scripts": {
-    "clean": "tradie clean",
-    "build": "tradie build",
-    "watch": "tradie build --watch",
-    "test": "tradie test"
+    "clean": "node-scripts clean",
+    "build": "node-scripts build",
+    "watch": "node-scripts build --watch",
+    "test": "node-scripts test"
   }
 }

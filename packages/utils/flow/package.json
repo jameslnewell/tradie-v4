@@ -15,11 +15,11 @@
     "strip-ansi": "^4.0.0"
   },
   "scripts": {
-    "lint": "tradie lint",
-    "clean": "tradie clean",
-    "build": "tradie build",
-    "watch": "tradie build --watch",
-    "test": "tradie test"
+    "lint": "node-scripts lint",
+    "clean": "node-scripts clean",
+    "build": "node-scripts build",
+    "watch": "node-scripts build --watch",
+    "test": "node-scripts test"
   },
   "license": "MIT"
 }
