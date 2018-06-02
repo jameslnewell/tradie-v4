@@ -1,6 +1,6 @@
 {
   "name": "@tradie/flow-utils",
-  "version": "1.1.0",
+  "version": "1.2.0-alpha.f106bb76",
   "main": "lib/index.js",
   "files": ["lib", ".flowconfig"],
   "dependencies": {
@@ -15,7 +15,6 @@
     "strip-ansi": "^4.0.0"
   },
   "scripts": {
-    "lint": "node-scripts lint",
     "clean": "node-scripts clean",
     "build": "node-scripts build",
     "watch": "node-scripts build --watch",
