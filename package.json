@@ -20,11 +20,9 @@
     "link": "node scripts/symlink-previous-version.js",
     "upgrade": "lerna exec --concurrency 1 -- npm-check -u",
     "commit": "commit",
-    "lint": "lerna run lint --ignore \"@tradie/component-*\"",
     "build": "lerna run build --ignore \"@tradie/component-*\"",
     "test": "lerna run test --ignore \"@tradie/component-*\"",
-    "publish":
-      "yarn run lint && yarn run build && lerna publish --canary --exact --npm-tag=next --access=public",
+    "publish": "yarn run build && lerna publish --canary --exact --npm-tag=next --access=public",
     "commitmsg": "commitlint -e",
     "precommit": "lint-staged",
     "postinstall": "yarn run link",
