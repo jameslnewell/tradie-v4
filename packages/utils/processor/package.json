@@ -1,13 +1,13 @@
 {
   "name": "@tradie/processor-utils",
-  "version": "2.0.0-alpha.f106bb76",
+  "version": "2.0.0-alpha.0bf35fa6",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": ["lib"],
   "dependencies": {
     "@jameslnewell/cancelable-promise": "1.1.0-alpha.f106bb76",
-    "@tradie/file-utils": "2.0.0-alpha.f106bb76",
-    "@tradie/reporter-utils": "2.1.0-alpha.f106bb76"
+    "@tradie/file-utils": "2.0.0-alpha.0bf35fa6",
+    "@tradie/reporter-utils": "2.1.0-alpha.0bf35fa6"
   },
   "scripts": {
     "clean": "node-scripts clean",

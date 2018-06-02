@@ -1,6 +1,6 @@
 {
   "name": "@tradie/file-utils",
-  "version": "2.0.0-alpha.f106bb76",
+  "version": "2.0.0-alpha.0bf35fa6",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": ["lib"],

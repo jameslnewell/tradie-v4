@@ -1,11 +1,11 @@
 {
   "name": "@tradie/reporter-utils",
-  "version": "2.1.0-alpha.f106bb76",
+  "version": "2.1.0-alpha.0bf35fa6",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": ["lib"],
   "dependencies": {
-    "@tradie/cli-utils": "1.2.0-alpha.f106bb76",
+    "@tradie/cli-utils": "1.2.0-alpha.0bf35fa6",
     "@types/lodash": "^4.14.108",
     "chalk": "^2.4.1",
     "lodash": "^4.17.10"

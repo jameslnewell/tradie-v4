@@ -1,12 +1,12 @@
 {
   "name": "@tradie/typescript-utils",
-  "version": "1.0.0-alpha.f106bb76",
+  "version": "1.0.0-alpha.0bf35fa6",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": ["lib"],
   "dependencies": {
-    "@tradie/file-utils": "2.0.0-alpha.f106bb76",
-    "@tradie/reporter-utils": "2.1.0-alpha.f106bb76",
+    "@tradie/file-utils": "2.0.0-alpha.0bf35fa6",
+    "@tradie/reporter-utils": "2.1.0-alpha.0bf35fa6",
     "typescript": "^2.7.2"
   },
   "scripts": {
