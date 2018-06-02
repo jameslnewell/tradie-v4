@@ -1,4 +1,5 @@
 import { Reporter } from './Reporter';
-export { MessageType, Message } from './types';
+export { MessageType } from './MessageType';
+export { Message } from './Message';
 
 export default Reporter;

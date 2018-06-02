@@ -36,18 +36,18 @@ export function process(
         }
         const filter = match({ context: directory, include, exclude }); // TODO: cache filters
         if (filter(fullFilePath)) {
-          reporter.start();
+          reporter.started();
           try {
             await processFn(fullFilePath);
           } catch (error) {
-            reporter.report({
+            reporter.log({
               type: 'error',
               file,
               text: error.message,
               trace: error.stack
             });
           }
-          reporter.finish();
+          reporter.finished();
         }
       })
     );
@@ -63,18 +63,18 @@ export function process(
         }
         const filter = match({ context: directory, include, exclude }); // TODO: cache filters
         if (filter(file)) {
-          reporter.start();
+          reporter.started();
           try {
             await deleteFn(file);
           } catch (error) {
-            reporter.report({
+            reporter.log({
               type: 'error',
               file,
               text: error.message,
               trace: error.stack
             });
           }
-          reporter.finish();
+          reporter.finished();
         }
       })
     );

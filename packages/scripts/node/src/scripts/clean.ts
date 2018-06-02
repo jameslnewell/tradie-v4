@@ -9,12 +9,12 @@ export default async function () {
     finishedText: 'Cleaned'
   });
 
-  reporter.start();
+  reporter.started();
   try {
     await rm([paths.CODE_DEST, paths.COVERAGE_DEST]);
-    reporter.finish();
+    reporter.finished();
   } catch (error) {
-    reporter.error(error);
+    reporter.failed(error);
   }
 
   return reporter.wait();

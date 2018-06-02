@@ -8,12 +8,13 @@
     "@tradie/cli-utils": "^1.1.0",
     "@types/lodash": "^4.14.108",
     "lodash": "^4.17.10",
-    "chalk": "^2.0.1"
+    "chalk": "^2.4.1"
   },
   "scripts": {
     "clean": "node-scripts clean",
     "build": "node-scripts build",
     "watch": "node-scripts build --watch",
     "test": "node-scripts test"
-  }
+  },
+  "license": "MIT"
 }

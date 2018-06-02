@@ -4,6 +4,7 @@ import * as path from 'path';
 import * as util from 'util';
 import * as ts from 'typescript';
 import { mkdir } from '@tradie/file-utils';
+import { Message } from '@tradie/reporter-utils';
 
 const defaultCompilerOptions = {
   forceConsistentCasingInFileNames: true,
@@ -51,20 +52,20 @@ export default function (options: TranspilerOptions) {
     ts.createDocumentRegistry()
   );
 
-  const getMessages = (file: string) => {
+  const getMessages = (file: string): Message[] => {
     const diagnostics = service
       .getCompilerOptionsDiagnostics() // TODO: only show these when the other two don't return anything?
       .concat(service.getSyntacticDiagnostics(file))
       .concat(service.getSemanticDiagnostics(file));
 
-    return diagnostics.map(diagnostic => {
+    return diagnostics.map((diagnostic): Message => {
       const description = ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n');
       if (diagnostic.file) {
         const { line, character } = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start || 0);
         return {
           source: 'typescript',
           type:
-            diagnostic.category === 1 ? 'error' : diagnostic.category === 0 ? 'warning' : 'info',
+            diagnostic.category === 1 ? 'error' : diagnostic.category === 0 ? 'warn' : 'info',
           file: diagnostic.file.fileName,
           startPosition: {
             line: line + 1,
@@ -76,7 +77,7 @@ export default function (options: TranspilerOptions) {
         return {
           source: 'typescript',
           type:
-            diagnostic.category === 1 ? 'error' : diagnostic.category === 0 ? 'warning' : 'info',
+            diagnostic.category === 1 ? 'error' : diagnostic.category === 0 ? 'warn' : 'info',
           text: description
         };
       }

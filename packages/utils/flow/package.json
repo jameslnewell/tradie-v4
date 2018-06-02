@@ -5,7 +5,7 @@
   "files": ["lib", ".flowconfig"],
   "dependencies": {
     "@tradie/group-exec-utils": "^1.1.0-alpha.b2a4b8e1",
-    "chalk": "^2.3.0",
+    "chalk": "^2.4.1",
     "flow-bin": "^0.64.0",
     "fs-extra": "^5.0.0",
     "shell-escape": "^0.2.0",

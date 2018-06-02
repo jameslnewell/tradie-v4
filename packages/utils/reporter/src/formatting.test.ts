@@ -1,75 +1,55 @@
-import { formatLog, formatLogs } from './formatting';
+/* tslint:disable no-console */
+import { formatMessages } from './formatting';
+import { Message } from '.';
 
-const shortInfo = {
-  level: 'info',
-  message: 'Server started on http://localhost:3000',
-  priority: 0
+const shortInfo: Message = {
+  type: 'info',
+  text: 'Server started on http://localhost:3000',
 };
-const longInfo = {
-  level: 'info',
-  message: 'Server started on http://localhost:3000\nblah blah blah',
-  priority: 0
+const longInfo: Message = {
+  type: 'info',
+  text: 'Server started on http://localhost:3000\nblah blah blah',
 };
-const longInfoWithFile = {
-  level: 'info',
-  message: 'Server started on http://localhost:3000\nblah blah blah',
+const longInfoWithFile: Message = {
+  type: 'info',
+  text: 'Server started on http://localhost:3000\nblah blah blah',
   file: '/foo/bar.js',
-  priority: 0
 };
 
-const shortWarn = {
-  level: 'warn',
-  message: 'That might not work!',
-  priority: 0
+const shortWarn: Message = {
+  type: 'warn',
+  text: 'That might not work!',
 };
-const longWarn = {
-  level: 'warn',
-  message: 'That might not work!\nblah blah blah',
-  priority: 0
+const longWarn: Message = {
+  type: 'warn',
+  text: 'That might not work!\nblah blah blah',
 };
-const longWarnWithFile = {
-  level: 'warn',
-  message: 'That might not work!\nblah blah blah',
+const longWarnWithFile: Message = {
+  type: 'warn',
+  text: 'That might not work!\nblah blah blah',
   file: '/foo/bar.js',
-  priority: 0
 };
 
-const shortError = {
-  level: 'error',
-  message: 'That did not work!',
-  priority: 0
+const error = new Error('That did not work!');
+const shortError: Message = {
+  type: 'error',
+  text: error.message,
 };
-const longError = {
-  level: 'error',
-  message: new Error('That did not work!').stack,
-  priority: 0
+const longError: Message = {
+  type: 'error',
+  text: error.message,
+  trace: error.stack
 };
-const longErrorWithFile = {
-  level: 'error',
-  message: new Error('That did not work!').stack,
+const longErrorWithFile: Message = {
+  type: 'error',
+  text: error.message,
+  trace: error.stack,
   file: '/foo/bar.js',
-  priority: 0
 };
-
-describe('formatLog()', () => {
-  it.skip('should render badge', () => {
-    console.log(formatLog(shortInfo));
-    console.log(formatLog(longInfo));
-    console.log(formatLog(longInfoWithFile));
-
-    console.log(formatLog(shortWarn));
-    console.log(formatLog(longWarn));
-    console.log(formatLog(longWarnWithFile));
-
-    console.log(formatLog(shortError));
-    console.log(formatLog(longError));
-    console.log(formatLog(longErrorWithFile));
-  });
-});
 
 describe('formatLogs()', () => {
-  it.skip('should...', () => {
-    const logs = [shortInfo, shortWarn, longErrorWithFile, shortError];
-    console.log(formatLogs(logs));
+  it('should...', () => {
+    const logs: Message[] = [shortInfo, longInfo, longInfoWithFile, shortWarn, longWarn, longWarnWithFile, shortError, longError, longErrorWithFile];
+    console.log(formatMessages(logs));
   });
 });

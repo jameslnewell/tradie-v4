@@ -11,8 +11,12 @@ export function source(): RawConfigFile {
       'object-literal-sort-keys': false,
       'member-ordering': false,
       'member-access': [true, 'no-public'],
-      'array-type': false
+      'array-type': false,
+      'mocha-avoid-only': true
     },
+    rulesDirectory: [
+      require.resolve('tslint-microsoft-contrib')
+    ],
   };
 }
 

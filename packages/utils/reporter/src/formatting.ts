@@ -2,7 +2,8 @@
 import * as path from 'path';
 import chalk from 'chalk';
 import { padStart, padEnd } from 'lodash';
-import { MessageType, Message } from './types';
+import { MessageType } from './MessageType';
+import { Message } from './Message';
 
 export interface FormatOptions {
   cwd?: string;

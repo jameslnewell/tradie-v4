@@ -3,11 +3,11 @@ export type MessageType = 'info' | 'warn' | 'error';
 export interface Message {
   type: MessageType,
   file?: string,
-  startPosition: {
+  startPosition?: {
     line?: number,
     column?: number
   },
-  endPosition: {
+  endPosition?: {
     line?: number,
     column?: number
   },

@@ -29,13 +29,13 @@ export default async function () {
     finishedText: 'Created'
   });
 
-  reporter.start();
+  reporter.started();
   try {
     await generator(ROOT, generate);
     cp.execSync('yarn');
-    reporter.finish();
+    reporter.finished();
   } catch (error) {
-    reporter.error(error);
+    reporter.failed(error);
   }
 
   return reporter.wait();

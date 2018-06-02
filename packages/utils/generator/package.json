@@ -9,7 +9,7 @@
     "@types/diff": "^3.5.1",
     "@types/extend": "^3.0.0",
     "@types/inquirer": "^0.0.41",
-    "chalk": "^2.0.1",
+    "chalk": "^2.4.1",
     "diff": "^3.2.0",
     "extend": "^3.0.1",
     "finder-on-steroids": "^0.4.0",

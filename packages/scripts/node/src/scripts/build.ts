@@ -45,7 +45,7 @@ export default async function (args: { watch: boolean }) {
         include: [globs.TYPES],
         async process(file) {
           await Promise.all([
-            transpile.source(file).then(messages => reporter.report(messages))
+            transpile.source(file).then(messages => reporter.log(messages))
           ]);
         }
       },
@@ -56,8 +56,8 @@ export default async function (args: { watch: boolean }) {
         exclude: [globs.TESTS, globs.MOCKS, globs.FIXTURES],
         async process(file) {
           await Promise.all([
-            lint.source(file).then(messages => reporter.report(messages)),
-            transpile.source(file).then(messages => reporter.report(messages))
+            lint.source(file).then(messages => reporter.log(messages)),
+            transpile.source(file).then(messages => reporter.log(messages))
           ]);
         },
         async delete() {
@@ -95,19 +95,20 @@ export default async function (args: { watch: boolean }) {
         include: [globs.EXAMPLES],
         async process(file) {
           await Promise.all([
-            lint.example(file).then(messages => reporter.report(messages)),
-            transpile.example(file).then(messages => reporter.report(messages))
+            lint.example(file).then(messages => reporter.log(messages)),
+            transpile.example(file).then(messages => reporter.log(messages))
           ]);
         }
       },
 
       // lint test files
       {
-        include: [globs.TESTS, globs.MOCKS, globs.FIXTURES],
+        include: [globs.TESTS, globs.MOCKS],
+        exclude: [globs.FIXTURES],
         async process(file) {
           await Promise.all([
-            lint.test(file).then(messages => reporter.report(messages)),
-            transpile.test(file).then(messages => reporter.report(messages))
+            lint.test(file).then(messages => reporter.log(messages)),
+            transpile.test(file).then(messages => reporter.log(messages))
           ]);
         }
       }
@@ -118,7 +119,7 @@ export default async function (args: { watch: boolean }) {
 
   process.on('SIGINT', () => {
     processing.cancel();
-    reporter.stop();
+    reporter.stopping();
   });
 
   // wait for processing to finish or be cancelled

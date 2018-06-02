@@ -1,7 +1,8 @@
 /* tslint:disable no-console member-ordering */
 import chalk from 'chalk';
 import { clear } from '@tradie/cli-utils';
-import { MessageType, Message } from './types';
+import { MessageType } from './MessageType';
+import { Message } from './Message';
 import { formatMessages } from './formatting';
 
 export type EventHandler = () => void | Promise<void>;
@@ -13,7 +14,7 @@ export interface Options {
   finishedText?: string;
 };
 
-export default class Reporter {
+export class Reporter {
   /**
    * The number of compilations currently in progress
    */
@@ -22,21 +23,21 @@ export default class Reporter {
   /**
    * The timeout to determine if we're still running
    */
-  private runningTimeout = null;
+  private runningTimeout?: NodeJS.Timer;
 
   private context?: string;
 
-  private promise = null;
+  private promise?: Promise<void>;
 
-  private resolve = null;
+  private resolve?: (value?: void | PromiseLike<void>) => void;
 
-  private reject = null;
+  private reject?: (reason?: any) => void;
 
   private messages: Message[] = [];
 
   private events: { [name: string]: EventHandler[] } = {};
 
-  private readonly watch: boolean;
+  private isWatching: boolean;
 
   /**
    * The text printed when compilation has started
@@ -52,7 +53,7 @@ export default class Reporter {
     const { watch = false, context, startedText = 'Starting', finishedText = 'Finished' } = options;
 
     this.context = context;
-    this.watch = watch;
+    this.isWatching = watch;
 
     this.startedText = startedText;
     this.finishedText = finishedText;
@@ -60,13 +61,9 @@ export default class Reporter {
 
   private resolveOrReject() {
     if (this.hasErrors() && this.reject) {
-      if (this.reject) {
-        this.reject();
-      }
+      this.reject();
     } else if (!this.hasErrors() && this.resolve) {
-      if (this.resolve) {
-        this.resolve();
-      }
+      this.resolve();
     }
   }
 
@@ -110,7 +107,7 @@ export default class Reporter {
     return Promise.all(this.events[event].map(fn => fn())).then(() => {/* do nothing */ });
   }
 
-  public before(event: string, fn: EventHandler) {
+  before(event: string, fn: EventHandler) {
     const type = `before:${event}`;
     if (!this.events[type]) {
       this.events[type] = [];
@@ -119,7 +116,7 @@ export default class Reporter {
     return this;
   }
 
-  public after(event: string, fn: EventHandler) {
+  after(event: string, fn: EventHandler) {
     const type = `after:${event}`;
     if (!this.events[type]) {
       this.events[type] = [];
@@ -128,29 +125,31 @@ export default class Reporter {
     return this;
   }
 
-  public hasInformation() {
+  hasInformation() {
     return this.messages.filter(message => message.type === 'info').length > 0;
   }
 
-  public hasWarnings() {
+  hasWarnings() {
     return this.messages.filter(message => message.type === 'warn').length > 0;
   }
 
-  public hasErrors() {
+  hasErrors() {
     return this.messages.filter(message => message.type === 'error').length > 0;
   }
 
-  public report(messageOrMessages: Message) {
-    [].concat(messageOrMessages).forEach(message => {
-      this.messages.push(message);
-    });
+  log(messageOrMessages: Message | Message[]) {
+    if (Array.isArray(messageOrMessages)) {
+      messageOrMessages.forEach(message => this.messages.push(message));
+    } else {
+      this.messages.push(messageOrMessages);
+    }
     return this;
   }
 
   /**
    * Notify the reporter that a compilation has started
    */
-  public start() {
+  started() {
     ++this.running;
 
     //if this is the first compilation running, and we're not waiting for other compilations to start then
@@ -163,8 +162,10 @@ export default class Reporter {
     }
 
     //clear the running timeout
-    clearTimeout(this.runningTimeout);
-    this.runningTimeout = null;
+    if (this.runningTimeout) {
+      clearTimeout(this.runningTimeout);
+      this.runningTimeout = undefined;
+    }
 
     return this;
   }
@@ -172,7 +173,7 @@ export default class Reporter {
   /**
    * Notify the reporter that a compilation has finished
    */
-  public finish() {
+  finished() {
     --this.running;
 
     //if this is the only compilation running, then we'll wait to see if another compilation starts soon so we don't print
@@ -180,8 +181,10 @@ export default class Reporter {
     if (this.running === 0) {
       this.runningTimeout = setTimeout(async () => {
         //clear the running timeout
-        clearTimeout(this.runningTimeout);
-        this.runningTimeout = null;
+        if (this.runningTimeout) {
+          clearTimeout(this.runningTimeout);
+          this.runningTimeout = undefined;
+        }
 
         //wait for any running compilations to finish
         if (this.running || this.runningTimeout) {
@@ -192,7 +195,7 @@ export default class Reporter {
         try {
           await this.trigger('before:finished');
         } catch (error) {
-          this.errored(error);
+          this.failed(error);
         }
 
         //wait for any running compilations to finish
@@ -207,11 +210,11 @@ export default class Reporter {
         try {
           await this.trigger('after:finished');
         } catch (error) {
-          this.errored(error);
+          this.failed(error);
         }
 
         //if we're not watching and all the compilations have finished, then resolve or reject
-        if (!this.watch && !this.running && !this.runningTimeout) {
+        if (!this.isWatching && !this.running && !this.runningTimeout) {
           this.resolveOrReject();
         }
       }, 100);
@@ -221,12 +224,13 @@ export default class Reporter {
   }
 
   /**
-   * A fatal error occurred. Stop immedietly.
+   * Notify the reporter that a compilation has failed
    * @param {Error} error
    */
-  public errored(error: any) {
-    if (this.reject) {
-      this.reject(error);
+  failed(error: any) {
+    const { reject } = this;
+    if (reject) {
+      reject(error);
     }
     return this;
   }
@@ -234,12 +238,12 @@ export default class Reporter {
   /**
    * Notify the reporter that the compilation is stopping now, or at the end of the current compilation
    */
-  public stop() {
+  stopping() {
     //if there are no running compilations, then resolve or reject now (watching has already stopped)
     if (!this.running && !this.runningTimeout) {
       this.resolveOrReject();
     } else {
-      this.watch = false;
+      this.isWatching = false;
     }
     return this;
   }
@@ -247,14 +251,14 @@ export default class Reporter {
   /**
    * Wait until all the running compilations have stopped and we're no longer watching
    */
-  public wait() {
+  wait() {
     if (!this.promise) {
       this.promise = new Promise((resolve, reject) => {
         this.resolve = resolve;
         this.reject = reject;
 
         //if we're not watching and there are no running compilations, then resolve or reject now
-        if (!this.watch && !this.running && !this.runningTimeout) {
+        if (!this.isWatching && !this.running && !this.runningTimeout) {
           this.resolveOrReject();
         }
       });
