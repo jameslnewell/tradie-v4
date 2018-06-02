@@ -1,4 +1,4 @@
-const fs = jest.genMockFromModule('fs-extra');
+const fs: any = jest.genMockFromModule('fs-extra');
 
 fs.__files = {};
 

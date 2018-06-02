@@ -16,6 +16,7 @@ export function source() {
     target: 'es2017',
     module: 'commonjs',
     moduleResolution: 'node',
+    newLine: 'lf',
     sourceMap: true,
     lib: ['es2017']
   };

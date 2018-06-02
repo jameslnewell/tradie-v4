@@ -1,18 +1,24 @@
 declare module 'finder-on-steroids' {
 
-  export interface Finder {
-    files(): Finder;
-    directories(): Finder;
+  interface FoSFinder {
+    files(): FoSFinder;
+    directories(): FoSFinder;
     find(): Promise<string[]>;
+    filter(filter: (file: string) => boolean): FoSFinder;
   }
 
-  export interface FinderFactory {
-    (dir: string): Finder;
-    __setFiles(files: string[]): Finder;
+  interface FoSFinderFactory {
+    (dir: string): FoSFinder;
+    __setFiles(files: string[]): FoSFinder;
   }
 
-  const finder: FinderFactory;
+  namespace fof {
+    export type Finder = FoSFinder;
+    export type FinderFactory = FoSFinderFactory;
+  }
 
-  export default finder;
+  var fof: FoSFinderFactory;
+
+  export = fof;
 
 }

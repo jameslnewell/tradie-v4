@@ -1,4 +1,4 @@
-import finder from 'finder-on-steroids';
+import finder = require('finder-on-steroids');
 import { match, MatchFilter } from './match';
 
 export interface ListOptions {
