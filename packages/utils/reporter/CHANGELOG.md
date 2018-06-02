@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.1.0-alpha.27c7c657"></a>
+
+# [2.1.0-alpha.27c7c657](https://github.com/jameslnewell/tradie-v4/compare/@tradie/reporter-utils@1.1.0...@tradie/reporter-utils@2.1.0-alpha.27c7c657) (2018-06-02)
+
+### Bug Fixes
+
+* fix moar TS errors ([3ad07c0](https://github.com/jameslnewell/tradie-v4/commit/3ad07c0))
+* scripts ([27c7c65](https://github.com/jameslnewell/tradie-v4/commit/27c7c65))
+
+### Features
+
+* switched node-scripts to typescript ([e523d30](https://github.com/jameslnewell/tradie-v4/commit/e523d30))
+
+<a name="2.1.0-alpha.27c7c657"></a>
+
+# [2.1.0-alpha.27c7c657](https://github.com/jameslnewell/tradie-v4/compare/@tradie/reporter-utils@1.1.0...@tradie/reporter-utils@2.1.0-alpha.27c7c657) (2018-06-02)
+
+### Bug Fixes
+
+* fix moar TS errors ([3ad07c0](https://github.com/jameslnewell/tradie-v4/commit/3ad07c0))
+* scripts ([27c7c65](https://github.com/jameslnewell/tradie-v4/commit/27c7c65))
+
+### Features
+
+* switched node-scripts to typescript ([e523d30](https://github.com/jameslnewell/tradie-v4/commit/e523d30))
+
 <a name="2.1.0-alpha.0bf35fa6"></a>
 
 # [2.1.0-alpha.0bf35fa6](https://github.com/jameslnewell/tradie-v4/compare/@tradie/reporter-utils@1.1.0...@tradie/reporter-utils@2.1.0-alpha.0bf35fa6) (2018-06-02)
