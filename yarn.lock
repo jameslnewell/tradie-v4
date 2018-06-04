@@ -67,7 +67,7 @@
     throat "^4.1.0"
     vorpal "^1.10.0"
 
-"@jameslnewell/cancelable-promise@1.1.0-alpha.f106bb76":
+"@jameslnewell/cancelable-promise@^1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@jameslnewell/cancelable-promise/-/cancelable-promise-1.0.2.tgz#fbf0b4505900364b25ddd1c59f75782cf27084f1"
 

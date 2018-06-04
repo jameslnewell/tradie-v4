@@ -1,11 +1,11 @@
 {
   "name": "@tradie/tslint-utils",
-  "version": "1.0.0-alpha.0bf35fa6",
+  "version": "1.0.0-alpha.4fedd406",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": ["lib"],
   "dependencies": {
-    "@tradie/reporter-utils": "2.1.0-alpha.0bf35fa6",
+    "@tradie/reporter-utils": "2.1.0-alpha.4fedd406",
     "tslint": "^5.9.1"
   },
   "scripts": {

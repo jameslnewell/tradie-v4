@@ -1,12 +1,12 @@
 {
   "name": "@tradie/component-example",
-  "version": "1.1.0-alpha.0bf35fa6",
+  "version": "1.1.0-alpha.4fedd406",
   "private": true,
   "main": "dist/cjs/index.js",
   "jsnext:main": "dist/esm/index.js",
   "files": [".flowconfig", "dist/cjs", "dist/esm"],
   "dependencies": {
-    "@tradie/component-scripts": "1.0.0-alpha.0bf35fa6",
+    "@tradie/component-scripts": "1.0.0-alpha.4fedd406",
     "enzyme": "3.2.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "eslint-plugin-flowtype": "^2.41.1",

@@ -1,6 +1,6 @@
 {
   "name": "@tradie/cli-utils",
-  "version": "1.2.0-alpha.0bf35fa6",
+  "version": "1.2.0-alpha.4fedd406",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": ["lib"],
