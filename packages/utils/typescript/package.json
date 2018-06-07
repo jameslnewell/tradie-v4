@@ -7,6 +7,7 @@
   "dependencies": {
     "@tradie/file-utils": "2.0.0-alpha.4fedd406",
     "@tradie/reporter-utils": "2.1.0-alpha.4fedd406",
+    "flowgen": "^1.2.2",
     "typescript": "^2.7.2"
   },
   "scripts": {

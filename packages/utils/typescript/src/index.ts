@@ -2,6 +2,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as util from 'util';
+import flowgen from 'flowgen';
 import * as ts from 'typescript';
 import { mkdir } from '@tradie/file-utils';
 import { Message } from '@tradie/reporter-utils';
@@ -18,7 +19,6 @@ const defaultCompilerOptions = {
 
 // tslint:disable-next-line no-empty-interface
 export interface TranspilerOptions {
-
 };
 
 export default function (options: TranspilerOptions) {
@@ -100,7 +100,15 @@ export default function (options: TranspilerOptions) {
       await Promise.all(
         output.outputFiles.map(async (outputFile: ts.OutputFile) => {
           await mkdir(path.dirname(outputFile.name));
-          await writeFile(outputFile.name, outputFile.text);
+          await writeFile(outputFile.name, outputFile.text)
+
+          //TODO: make async
+          // write the flow types
+          if (outputFile.name.endsWith('.d.ts')) {
+            const flowName = `${path.dirname(outputFile.name)}/${path.basename(outputFile.name, '.d.ts')}.js.flow`;
+            const flowdef = flowgen.compiler.compileDefinitionString(outputFile.text);
+            await writeFile(flowName, flowdef)
+          }
         })
       );
     }
