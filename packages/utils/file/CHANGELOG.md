@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.0-alpha.1a7ea183"></a>
+
+# [2.0.0-alpha.1a7ea183](https://github.com/jameslnewell/tradie-v4/compare/@tradie/file-utils@1.1.0...@tradie/file-utils@2.0.0-alpha.1a7ea183) (2018-06-04)
+
+### Bug Fixes
+
+* deps ([4fedd40](https://github.com/jameslnewell/tradie-v4/commit/4fedd40))
+* deps ([a41fe42](https://github.com/jameslnewell/tradie-v4/commit/a41fe42))
+* fix moar TS errors ([ff8fb5f](https://github.com/jameslnewell/tradie-v4/commit/ff8fb5f))
+* fix moar TS errors ([3ad07c0](https://github.com/jameslnewell/tradie-v4/commit/3ad07c0))
+* make it deploy ([1a7ea18](https://github.com/jameslnewell/tradie-v4/commit/1a7ea18))
+* scripts ([27c7c65](https://github.com/jameslnewell/tradie-v4/commit/27c7c65))
+
+### Features
+
+* switched node-scripts to typescript ([e523d30](https://github.com/jameslnewell/tradie-v4/commit/e523d30))
+
 <a name="2.0.0-alpha.4fedd406"></a>
 
 # [2.0.0-alpha.4fedd406](https://github.com/jameslnewell/tradie-v4/compare/@tradie/file-utils@1.1.0...@tradie/file-utils@2.0.0-alpha.4fedd406) (2018-06-04)

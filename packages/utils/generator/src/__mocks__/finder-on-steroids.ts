@@ -1,15 +1,13 @@
-import finder = require('finder-on-steroids');
+import finder, {Finder} from 'finder-on-steroids';
 
-let mockFiles: string[] = [];
+let mockPaths: string[] = [];
 
-function createMockFinder(dir: string): finder.Finder {
-  const mockFinder = finder(dir);
-  mockFinder.find = () => Promise.resolve(mockFiles);
-  return mockFinder;
+export default function(directory: string): Finder {
+  const f = finder(directory);
+  f.find = () => Promise.resolve(mockPaths);
+  return f;
 }
 
-(createMockFinder as any).__setFiles = (files: string[]) => {
-  mockFiles = files;
-};
-
-export default createMockFinder;
+export function setPaths(paths: string[]): void {
+  mockPaths = paths;
+}

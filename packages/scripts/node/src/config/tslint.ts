@@ -1,3 +1,4 @@
+import * as path from 'path';
 import { RawConfigFile } from "tslint/lib/configuration";
 
 export function source(): RawConfigFile {
@@ -15,7 +16,7 @@ export function source(): RawConfigFile {
       'mocha-avoid-only': true
     },
     rulesDirectory: [
-      require.resolve('tslint-microsoft-contrib')
+      path.dirname(require.resolve('tslint-microsoft-contrib'))
     ],
   };
 }

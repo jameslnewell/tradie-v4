@@ -1,7 +1,7 @@
 
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import finder = require('finder-on-steroids');
+import finder from 'finder-on-steroids';
 import { match, MatchFilter } from '@tradie/file-utils';
 import { FileMap } from './types';
 

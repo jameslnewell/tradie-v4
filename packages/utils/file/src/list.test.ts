@@ -1,13 +1,17 @@
-import finder = require('finder-on-steroids');
+import finder, {__setPaths} from 'finder-on-steroids';
 import {list} from './list';
+
+declare module 'finder-on-steroids' {
+  export function __setPaths(paths: string[]): void;
+}
 
 describe('list()', () => {
   afterEach(() => {
-    finder.__setFiles([]);
+    __setPaths([]);
   });
 
   it('should list source files', async () => {
-    finder.__setFiles([
+    __setPaths([
       '/users/dev/math/.gitignore',
       '/users/dev/math/package.json',
       '/users/dev/math/src/sum.js',
