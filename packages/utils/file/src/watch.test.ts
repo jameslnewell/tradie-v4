@@ -1,5 +1,12 @@
-import { watch } from './watch';
 import * as chokidar from 'chokidar';
+import { EventEmitter } from 'events';
+import { watch } from './watch';
+
+
+declare module 'chokidar' {
+  export let __watcher: EventEmitter;
+}
+
 
 describe('watcher()', () => {
   it('should call created() with a file', () => {
