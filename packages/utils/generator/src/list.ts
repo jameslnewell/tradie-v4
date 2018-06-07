@@ -5,7 +5,7 @@ import finder from 'finder-on-steroids';
 import { match, MatchFilter } from '@tradie/file-utils';
 import { FileMap } from './types';
 
-export type ListOptions = {
+export interface ListOptions {
   include?: MatchFilter,
   exclude?: MatchFilter
 };

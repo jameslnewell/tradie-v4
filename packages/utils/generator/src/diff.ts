@@ -1,6 +1,6 @@
 import { File, FileMap, FileStatusMap } from './types';
 
-export type DiffOptions = {
+export interface DiffOptions {
   changed?: (oldFile: File, newFile: File) => boolean
 };
 

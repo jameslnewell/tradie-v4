@@ -1,3 +1,4 @@
+/* tslint:disable variable-name */
 import * as chokidar from 'chokidar';
 import { EventEmitter } from 'events';
 import { watch } from './watch';
