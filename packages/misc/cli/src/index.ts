@@ -1,15 +1,12 @@
 import chalk from 'chalk';
 import * as yargs from 'yargs';
 
-export interface ScriptOptions {
-};
-
 export type ScriptFunction = (argv: {}) => Promise<void>;
 
 export interface Script {
   cmd: string,
   desc?: string,
-  opts?: ScriptOptions,
+  opts?: {},
   exec: string | ScriptFunction
 };
 
