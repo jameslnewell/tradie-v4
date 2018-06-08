@@ -47,9 +47,10 @@ const longErrorWithFile: Message = {
   file: '/foo/bar.js',
 };
 
-describe('formatLogs()', () => {
+describe('formatMessages()', () => {
   it('should...', () => {
     const logs: Message[] = [shortInfo, longInfo, longInfoWithFile, shortWarn, longWarn, longWarnWithFile, shortError, longError, longErrorWithFile];
     console.log(formatMessages(logs));
   });
+
 });

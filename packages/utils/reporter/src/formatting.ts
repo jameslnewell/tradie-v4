@@ -4,6 +4,7 @@ import chalk from 'chalk';
 import { padStart, padEnd } from 'lodash';
 import { MessageType } from './MessageType';
 import { Message } from './Message';
+import {groupMessagesByFileAndSortMessagesByStartPosition} from './utils/groupMessagesByFileAndSortMessagesByStartPosition';
 
 export interface FormatOptions {
   cwd?: string;
@@ -77,11 +78,11 @@ function renderTrace(message: Message) {
 }
 
 export function formatMessages(messages: Message[], opts: FormatOptions = {}) {
-  const formattedMessages = messages.map((currentMessage, index) => {
-    const previousMessage = messages[index - 1];
+  const sortedMessages = groupMessagesByFileAndSortMessagesByStartPosition(messages);
+  const formattedMessages = sortedMessages.map((currentMessage, index) => {
+    const previousMessage = sortedMessages[index - 1];
     const { type, file } = currentMessage;
     const { cwd } = opts;
-
     return `${
       shouldShowHeader(currentMessage, previousMessage) ? renderHeader(type, file, cwd) : ''
       }${
