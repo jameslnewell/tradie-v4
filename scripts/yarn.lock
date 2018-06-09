@@ -16,101 +16,320 @@
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
-"@tradie/cli-utils@1.2.0-alpha.0a88ad7c":
-  version "1.2.0-alpha.0a88ad7c"
-  resolved "https://registry.yarnpkg.com/@tradie/cli-utils/-/cli-utils-1.2.0-alpha.0a88ad7c.tgz#c72d2920bbb1be865b424f9898167411a4cb1b1e"
+"@jameslnewell/cancelable-promise@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@jameslnewell/cancelable-promise/-/cancelable-promise-1.0.2.tgz#fbf0b4505900364b25ddd1c59f75782cf27084f1"
 
-"@tradie/cli@2.0.0-alpha.0a88ad7c":
-  version "2.0.0-alpha.0a88ad7c"
-  resolved "https://registry.yarnpkg.com/@tradie/cli/-/cli-2.0.0-alpha.0a88ad7c.tgz#2d92e1875d334b6e9252536538c849c2323e5dd3"
+"@tradie/cli-utils@1.2.0-alpha.5ba089db":
+  version "1.2.0-alpha.5ba089db"
+  resolved "https://registry.yarnpkg.com/@tradie/cli-utils/-/cli-utils-1.2.0-alpha.5ba089db.tgz#1cd2c54b596d57021eeadb7ea0d0f0ebd365b276"
   dependencies:
-    babel-polyfill "^6.23.0"
-    chalk "^1.1.3"
+    "@types/node" "^9.4.6"
+
+"@tradie/cli@2.0.0-alpha.5ba089db":
+  version "2.0.0-alpha.5ba089db"
+  resolved "https://registry.yarnpkg.com/@tradie/cli/-/cli-2.0.0-alpha.5ba089db.tgz#2706f5aa0dc48dafde5f098bf4181295a32d2d7e"
+  dependencies:
+    "@types/yargs" "^11.0.0"
+    chalk "^2.4.1"
     yargs "^8.0.1"
 
-"@tradie/file-utils@2.0.0-alpha.0a88ad7c":
-  version "2.0.0-alpha.0a88ad7c"
-  resolved "https://registry.yarnpkg.com/@tradie/file-utils/-/file-utils-2.0.0-alpha.0a88ad7c.tgz#ac447ca6bd81bc50a3b4ec2bb2995bfb8d5c87ef"
+"@tradie/file-utils@2.0.0-alpha.5ba089db":
+  version "2.0.0-alpha.5ba089db"
+  resolved "https://registry.yarnpkg.com/@tradie/file-utils/-/file-utils-2.0.0-alpha.5ba089db.tgz#599eb8753a367f034a9186df33a0497174a09c82"
   dependencies:
+    "@jameslnewell/cancelable-promise" "^1.0.2"
+    "@types/anymatch" "^1.3.0"
+    "@types/chokidar" "^1.7.5"
+    "@types/del" "^3.0.0"
+    "@types/fs-extra" "^5.0.1"
+    "@types/node" "^6.0.102"
     anymatch "^1.3.0"
     chokidar "^1.7.0"
     del "^3.0.0"
-    finder-on-steroids "^0.4.0"
+    finder-on-steroids "^1.0.2"
     fs-extra "^4.0.2"
 
-"@tradie/generator-utils@1.2.0-alpha.0a88ad7c":
-  version "1.2.0-alpha.0a88ad7c"
-  resolved "https://registry.yarnpkg.com/@tradie/generator-utils/-/generator-utils-1.2.0-alpha.0a88ad7c.tgz#d8b7f6f058b8ae273e39d7088feee44437ce2491"
+"@tradie/generator-utils@1.2.0-alpha.5ba089db":
+  version "1.2.0-alpha.5ba089db"
+  resolved "https://registry.yarnpkg.com/@tradie/generator-utils/-/generator-utils-1.2.0-alpha.5ba089db.tgz#6737592ae3a93b11d4d3fd0fcc6a2171f1341c82"
   dependencies:
-    "@tradie/match-utils" "^1.1.0-alpha.b2a4b8e1"
-    chalk "^2.0.1"
+    "@tradie/file-utils" "2.0.0-alpha.5ba089db"
+    "@types/diff" "^3.5.1"
+    "@types/extend" "^3.0.0"
+    "@types/inquirer" "^0.0.41"
+    chalk "^2.4.1"
     diff "^3.2.0"
     extend "^3.0.1"
-    finder-on-steroids "^0.4.0"
+    finder-on-steroids "^1.0.2"
     fs-extra "^3.0.1"
     inquirer "^3.2.0"
 
-"@tradie/jest-utils@2.0.0-alpha.0a88ad7c":
-  version "2.0.0-alpha.0a88ad7c"
-  resolved "https://registry.yarnpkg.com/@tradie/jest-utils/-/jest-utils-2.0.0-alpha.0a88ad7c.tgz#b5d9a8bc6737c15a6644453021003fc2da474c78"
+"@tradie/jest-utils@2.0.0-alpha.5ba089db":
+  version "2.0.0-alpha.5ba089db"
+  resolved "https://registry.yarnpkg.com/@tradie/jest-utils/-/jest-utils-2.0.0-alpha.5ba089db.tgz#7f02604d351d8e3bf3617da02e1799899894cb2c"
   dependencies:
+    "@types/babel-core" "^6.25.3"
     babel-core "^6.26.0"
     jest-cli "^22.4.2"
     typescript "^2.7.2"
 
-"@tradie/match-utils@^1.1.0-alpha.b2a4b8e1":
-  version "1.1.0-alpha.b2a4b8e1"
-  resolved "https://registry.yarnpkg.com/@tradie/match-utils/-/match-utils-1.1.0-alpha.b2a4b8e1.tgz#fba771d063002a213ac2e20f8bac5872e016123e"
+"@tradie/node-scripts@^1.0.0-alpha.5ba089db":
+  version "1.0.0-alpha.5ba089db"
+  resolved "https://registry.yarnpkg.com/@tradie/node-scripts/-/node-scripts-1.0.0-alpha.5ba089db.tgz#090d7dde986f0c766998203239588995c3c71e32"
   dependencies:
-    anymatch "^1.3.0"
-
-"@tradie/node-scripts@^1.0.0-alpha.0a88ad7c":
-  version "1.0.0-alpha.0a88ad7c"
-  resolved "https://registry.yarnpkg.com/@tradie/node-scripts/-/node-scripts-1.0.0-alpha.0a88ad7c.tgz#4c5b56e2b17fd059f0ee48f4b7d299659a85a257"
-  dependencies:
-    "@tradie/cli" "2.0.0-alpha.0a88ad7c"
-    "@tradie/file-utils" "2.0.0-alpha.0a88ad7c"
-    "@tradie/generator-utils" "1.2.0-alpha.0a88ad7c"
-    "@tradie/jest-utils" "2.0.0-alpha.0a88ad7c"
-    "@tradie/processor-utils" "2.0.0-alpha.0a88ad7c"
-    "@tradie/reporter-utils" "2.1.0-alpha.0a88ad7c"
-    "@tradie/tslint-utils" "1.0.0-alpha.0a88ad7c"
-    "@tradie/typescript-utils" "1.0.0-alpha.0a88ad7c"
+    "@tradie/cli" "2.0.0-alpha.5ba089db"
+    "@tradie/file-utils" "2.0.0-alpha.5ba089db"
+    "@tradie/generator-utils" "1.2.0-alpha.5ba089db"
+    "@tradie/jest-utils" "2.0.0-alpha.5ba089db"
+    "@tradie/processor-utils" "2.0.0-alpha.5ba089db"
+    "@tradie/reporter-utils" "2.1.0-alpha.5ba089db"
+    "@tradie/tslint-utils" "1.0.0-alpha.5ba089db"
+    "@tradie/typescript-utils" "1.0.0-alpha.5ba089db"
     ts-jest "^22.4.0"
     ts-node "^5.0.0"
     tslint-config-prettier "^1.9.0"
+    tslint-microsoft-contrib "^5.0.3"
 
-"@tradie/processor-utils@2.0.0-alpha.0a88ad7c":
-  version "2.0.0-alpha.0a88ad7c"
-  resolved "https://registry.yarnpkg.com/@tradie/processor-utils/-/processor-utils-2.0.0-alpha.0a88ad7c.tgz#3108f485839f018efd58eba5848b394248ad37be"
+"@tradie/processor-utils@2.0.0-alpha.5ba089db":
+  version "2.0.0-alpha.5ba089db"
+  resolved "https://registry.yarnpkg.com/@tradie/processor-utils/-/processor-utils-2.0.0-alpha.5ba089db.tgz#70c1fd0be3a74b865ca1bf2e833151356f99cfb4"
   dependencies:
-    "@tradie/file-utils" "2.0.0-alpha.0a88ad7c"
-    "@tradie/reporter-utils" "2.1.0-alpha.0a88ad7c"
+    "@jameslnewell/cancelable-promise" "^1.0.2"
+    "@tradie/file-utils" "2.0.0-alpha.5ba089db"
+    "@tradie/reporter-utils" "2.1.0-alpha.5ba089db"
 
-"@tradie/reporter-utils@2.1.0-alpha.0a88ad7c":
-  version "2.1.0-alpha.0a88ad7c"
-  resolved "https://registry.yarnpkg.com/@tradie/reporter-utils/-/reporter-utils-2.1.0-alpha.0a88ad7c.tgz#6292c046332f699d956a65db202b450b5cbc09e3"
+"@tradie/reporter-utils@2.1.0-alpha.5ba089db":
+  version "2.1.0-alpha.5ba089db"
+  resolved "https://registry.yarnpkg.com/@tradie/reporter-utils/-/reporter-utils-2.1.0-alpha.5ba089db.tgz#f96d47da8f1054e41c9b566f7d4161ab4f215058"
   dependencies:
-    "@tradie/cli-utils" "1.2.0-alpha.0a88ad7c"
-    chalk "^2.0.1"
-    lodash.padend "^4.6.1"
-    lodash.padstart "^4.6.1"
-    lodash.sortby "^4.7.0"
-    lodash.trim "^4.5.1"
+    "@tradie/cli-utils" "1.2.0-alpha.5ba089db"
+    "@types/lodash" "^4.14.108"
+    chalk "^2.4.1"
+    lodash "^4.17.10"
 
-"@tradie/tslint-utils@1.0.0-alpha.0a88ad7c":
-  version "1.0.0-alpha.0a88ad7c"
-  resolved "https://registry.yarnpkg.com/@tradie/tslint-utils/-/tslint-utils-1.0.0-alpha.0a88ad7c.tgz#ff5f5e611870c2d00e33d41a36c84507df0a4a15"
+"@tradie/tslint-utils@1.0.0-alpha.5ba089db":
+  version "1.0.0-alpha.5ba089db"
+  resolved "https://registry.yarnpkg.com/@tradie/tslint-utils/-/tslint-utils-1.0.0-alpha.5ba089db.tgz#7ed45d1eff69f41aaf59c05e55c978e4dce0d5c8"
   dependencies:
-    "@tradie/reporter-utils" "2.1.0-alpha.0a88ad7c"
+    "@tradie/reporter-utils" "2.1.0-alpha.5ba089db"
     tslint "^5.9.1"
 
-"@tradie/typescript-utils@1.0.0-alpha.0a88ad7c":
-  version "1.0.0-alpha.0a88ad7c"
-  resolved "https://registry.yarnpkg.com/@tradie/typescript-utils/-/typescript-utils-1.0.0-alpha.0a88ad7c.tgz#5d327d8708f77e7f1fc943b6e501fd2a5366fb68"
+"@tradie/typescript-utils@1.0.0-alpha.5ba089db":
+  version "1.0.0-alpha.5ba089db"
+  resolved "https://registry.yarnpkg.com/@tradie/typescript-utils/-/typescript-utils-1.0.0-alpha.5ba089db.tgz#96f6080dfaca26e3f7e60c95892c41e01392e2ce"
   dependencies:
-    "@tradie/file-utils" "2.0.0-alpha.0a88ad7c"
+    "@tradie/file-utils" "2.0.0-alpha.5ba089db"
+    "@tradie/reporter-utils" "2.1.0-alpha.5ba089db"
+    flowgen "^1.2.2"
     typescript "^2.7.2"
+
+"@types/anymatch@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@types/anymatch/-/anymatch-1.3.0.tgz#d1d55958d1fccc5527d4aba29fc9c4b942f563ff"
+
+"@types/babel-core@^6.25.3":
+  version "6.25.4"
+  resolved "https://registry.yarnpkg.com/@types/babel-core/-/babel-core-6.25.4.tgz#de72e73fd72905d3269e4a6243983db4ca01e812"
+  dependencies:
+    "@types/babel-generator" "*"
+    "@types/babel-template" "*"
+    "@types/babel-traverse" "*"
+    "@types/babel-types" "*"
+    "@types/babylon" "*"
+
+"@types/babel-generator@*":
+  version "6.25.1"
+  resolved "https://registry.yarnpkg.com/@types/babel-generator/-/babel-generator-6.25.1.tgz#f86ab3cf132b04597fe6c431d3083aaf1b76b530"
+  dependencies:
+    "@types/babel-types" "*"
+
+"@types/babel-template@*":
+  version "6.25.0"
+  resolved "https://registry.yarnpkg.com/@types/babel-template/-/babel-template-6.25.0.tgz#2505d7b55b88f821d98048b4fdf07b3b22563d30"
+  dependencies:
+    "@types/babel-types" "*"
+    "@types/babylon" "*"
+
+"@types/babel-traverse@*":
+  version "6.25.3"
+  resolved "https://registry.yarnpkg.com/@types/babel-traverse/-/babel-traverse-6.25.3.tgz#34dd69d1e469aee75e20ba00fbc52c7bc717b1c8"
+  dependencies:
+    "@types/babel-types" "*"
+
+"@types/babel-types@*":
+  version "7.0.2"
+  resolved "https://registry.yarnpkg.com/@types/babel-types/-/babel-types-7.0.2.tgz#63dc3e5e7f6367e1819d2bba5213783cd926c5d5"
+
+"@types/babylon@*":
+  version "6.16.2"
+  resolved "https://registry.yarnpkg.com/@types/babylon/-/babylon-6.16.2.tgz#062ce63b693d9af1c246f5aedf928bc9c30589c8"
+  dependencies:
+    "@types/babel-types" "*"
+
+"@types/chokidar@^1.7.5":
+  version "1.7.5"
+  resolved "https://registry.yarnpkg.com/@types/chokidar/-/chokidar-1.7.5.tgz#1fa78c8803e035bed6d98e6949e514b133b0c9b6"
+  dependencies:
+    "@types/events" "*"
+    "@types/node" "*"
+
+"@types/del@^3.0.0":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@types/del/-/del-3.0.1.tgz#4712da8c119873cbbf533ad8dbf1baac5940ac5d"
+  dependencies:
+    "@types/glob" "*"
+
+"@types/diff@^3.5.1":
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/@types/diff/-/diff-3.5.1.tgz#30253f6e177564ad7da707b1ebe46d3eade71706"
+
+"@types/events@*":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@types/events/-/events-1.2.0.tgz#81a6731ce4df43619e5c8c945383b3e62a89ea86"
+
+"@types/extend@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@types/extend/-/extend-3.0.0.tgz#d269e5af1463cd6344272abd814c8a833b914d07"
+
+"@types/fs-extra@^5.0.1":
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/@types/fs-extra/-/fs-extra-5.0.3.tgz#feb31d55eeae3ccd5f92dbce806344a6c777a713"
+  dependencies:
+    "@types/node" "*"
+
+"@types/glob@*":
+  version "5.0.35"
+  resolved "https://registry.yarnpkg.com/@types/glob/-/glob-5.0.35.tgz#1ae151c802cece940443b5ac246925c85189f32a"
+  dependencies:
+    "@types/events" "*"
+    "@types/minimatch" "*"
+    "@types/node" "*"
+
+"@types/inquirer@^0.0.41":
+  version "0.0.41"
+  resolved "https://registry.yarnpkg.com/@types/inquirer/-/inquirer-0.0.41.tgz#0c33027dcd0b0dde234e22afa454f2c75d8b30d2"
+  dependencies:
+    "@types/rx" "*"
+    "@types/through" "*"
+
+"@types/lodash@^4.14.108":
+  version "4.14.109"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.109.tgz#b1c4442239730bf35cabaf493c772b18c045886d"
+
+"@types/minimatch@*", "@types/minimatch@^3.0.3":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
+
+"@types/node@*":
+  version "10.3.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.3.2.tgz#3840ec6c12556fdda6e0e6d036df853101d732a4"
+
+"@types/node@^6.0.102":
+  version "6.0.112"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-6.0.112.tgz#0f37473b1d1ecd30c8bf57215ef4fb558f99cc86"
+
+"@types/node@^9.4.6":
+  version "9.6.21"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.21.tgz#4563c26a53531c5aca943065fcdf2dd562f63cd4"
+
+"@types/rx-core-binding@*":
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/@types/rx-core-binding/-/rx-core-binding-4.0.4.tgz#d969d32f15a62b89e2862c17b3ee78fe329818d3"
+  dependencies:
+    "@types/rx-core" "*"
+
+"@types/rx-core@*":
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/@types/rx-core/-/rx-core-4.0.3.tgz#0b3354b1238cedbe2b74f6326f139dbc7a591d60"
+
+"@types/rx-lite-aggregates@*":
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/@types/rx-lite-aggregates/-/rx-lite-aggregates-4.0.3.tgz#6efb2b7f3d5f07183a1cb2bd4b1371d7073384c2"
+  dependencies:
+    "@types/rx-lite" "*"
+
+"@types/rx-lite-async@*":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@types/rx-lite-async/-/rx-lite-async-4.0.2.tgz#27fbf0caeff029f41e2d2aae638b05e91ceb600c"
+  dependencies:
+    "@types/rx-lite" "*"
+
+"@types/rx-lite-backpressure@*":
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/@types/rx-lite-backpressure/-/rx-lite-backpressure-4.0.3.tgz#05abb19bdf87cc740196c355e5d0b37bb50b5d56"
+  dependencies:
+    "@types/rx-lite" "*"
+
+"@types/rx-lite-coincidence@*":
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/@types/rx-lite-coincidence/-/rx-lite-coincidence-4.0.3.tgz#80bd69acc4054a15cdc1638e2dc8843498cd85c0"
+  dependencies:
+    "@types/rx-lite" "*"
+
+"@types/rx-lite-experimental@*":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@types/rx-lite-experimental/-/rx-lite-experimental-4.0.1.tgz#c532f5cbdf3f2c15da16ded8930d1b2984023cbd"
+  dependencies:
+    "@types/rx-lite" "*"
+
+"@types/rx-lite-joinpatterns@*":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@types/rx-lite-joinpatterns/-/rx-lite-joinpatterns-4.0.1.tgz#f70fe370518a8432f29158cc92ffb56b4e4afc3e"
+  dependencies:
+    "@types/rx-lite" "*"
+
+"@types/rx-lite-testing@*":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@types/rx-lite-testing/-/rx-lite-testing-4.0.1.tgz#21b19d11f4dfd6ffef5a9d1648e9c8879bfe21e9"
+  dependencies:
+    "@types/rx-lite-virtualtime" "*"
+
+"@types/rx-lite-time@*":
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/@types/rx-lite-time/-/rx-lite-time-4.0.3.tgz#0eda65474570237598f3448b845d2696f2dbb1c4"
+  dependencies:
+    "@types/rx-lite" "*"
+
+"@types/rx-lite-virtualtime@*":
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/@types/rx-lite-virtualtime/-/rx-lite-virtualtime-4.0.3.tgz#4b30cacd0fe2e53af29f04f7438584c7d3959537"
+  dependencies:
+    "@types/rx-lite" "*"
+
+"@types/rx-lite@*":
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/@types/rx-lite/-/rx-lite-4.0.5.tgz#b3581525dff69423798daa9a0d33c1e66a5e8c4c"
+  dependencies:
+    "@types/rx-core" "*"
+    "@types/rx-core-binding" "*"
+
+"@types/rx@*":
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/@types/rx/-/rx-4.1.1.tgz#598fc94a56baed975f194574e0f572fd8e627a48"
+  dependencies:
+    "@types/rx-core" "*"
+    "@types/rx-core-binding" "*"
+    "@types/rx-lite" "*"
+    "@types/rx-lite-aggregates" "*"
+    "@types/rx-lite-async" "*"
+    "@types/rx-lite-backpressure" "*"
+    "@types/rx-lite-coincidence" "*"
+    "@types/rx-lite-experimental" "*"
+    "@types/rx-lite-joinpatterns" "*"
+    "@types/rx-lite-testing" "*"
+    "@types/rx-lite-time" "*"
+    "@types/rx-lite-virtualtime" "*"
+
+"@types/through@*":
+  version "0.0.29"
+  resolved "https://registry.yarnpkg.com/@types/through/-/through-0.0.29.tgz#72943aac922e179339c651fa34a4428a4d722f93"
+  dependencies:
+    "@types/node" "*"
+
+"@types/yargs@^11.0.0":
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-11.0.0.tgz#124b9ed9c65b7091cc36da59ae12cbd47d8745ea"
 
 abab@^1.0.4:
   version "1.0.4"
@@ -253,10 +472,6 @@ array-unique@^0.2.1:
 arrify@^1.0.0, arrify@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/arrify/-/arrify-1.0.1.tgz#898508da2226f380df904728456849c1501a4b0d"
-
-asap@~1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/asap/-/asap-1.0.0.tgz#b2a45da5fdfa20b0496fc3768cc27c12fa916a7d"
 
 asn1@~0.2.3:
   version "0.2.3"
@@ -405,14 +620,6 @@ babel-plugin-transform-strict-mode@^6.24.1:
     babel-runtime "^6.22.0"
     babel-types "^6.24.1"
 
-babel-polyfill@^6.23.0:
-  version "6.26.0"
-  resolved "https://registry.yarnpkg.com/babel-polyfill/-/babel-polyfill-6.26.0.tgz#379937abc67d7895970adc621f284cd966cf2153"
-  dependencies:
-    babel-runtime "^6.26.0"
-    core-js "^2.5.0"
-    regenerator-runtime "^0.10.5"
-
 babel-preset-jest@^22.4.0, babel-preset-jest@^22.4.1:
   version "22.4.1"
   resolved "https://registry.yarnpkg.com/babel-preset-jest/-/babel-preset-jest-22.4.1.tgz#efa2e5f5334242a9457a068452d7d09735db172a"
@@ -495,6 +702,10 @@ block-stream@*:
   resolved "https://registry.yarnpkg.com/block-stream/-/block-stream-0.0.9.tgz#13ebfe778a03205cfe03751481ebb4b3300c126a"
   dependencies:
     inherits "~2.0.0"
+
+bluebird@^3.0.5:
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.1.tgz#d9551f9de98f1fcda1e683d17ee91a0602ee2eb9"
 
 boom@2.x.x:
   version "2.10.1"
@@ -590,6 +801,14 @@ chalk@^2.0.0, chalk@^2.0.1, chalk@^2.3.0:
     escape-string-regexp "^1.0.5"
     supports-color "^5.3.0"
 
+chalk@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.1.tgz#18c49ab16a037b6eb0152cc83e3471338215b66e"
+  dependencies:
+    ansi-styles "^3.2.1"
+    escape-string-regexp "^1.0.5"
+    supports-color "^5.3.0"
+
 chardet@^0.4.0:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/chardet/-/chardet-0.4.2.tgz#b5473b33dc97c424e5d98dc87d55d4d8a29c8bf2"
@@ -671,6 +890,10 @@ combined-stream@1.0.6, combined-stream@^1.0.5, combined-stream@~1.0.5:
   dependencies:
     delayed-stream "~1.0.0"
 
+commander@^2.11.0, commander@^2.9.0:
+  version "2.15.1"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-2.15.1.tgz#df46e867d0fc2aec66a34662b406a9ccafff5b0f"
+
 commander@^2.12.1:
   version "2.15.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.15.0.tgz#ad2a23a1c3b036e392469b8012cec6b33b4c1322"
@@ -678,6 +901,13 @@ commander@^2.12.1:
 concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
+
+config-chain@~1.1.5:
+  version "1.1.11"
+  resolved "https://registry.yarnpkg.com/config-chain/-/config-chain-1.1.11.tgz#aba09747dfbe4c3e70e766a6e41586e1859fc6f2"
+  dependencies:
+    ini "^1.3.4"
+    proto-list "~1.2.1"
 
 console-control-strings@^1.0.0, console-control-strings@~1.1.0:
   version "1.1.0"
@@ -840,6 +1070,16 @@ ecc-jsbn@~0.1.1:
   resolved "https://registry.yarnpkg.com/ecc-jsbn/-/ecc-jsbn-0.1.1.tgz#0fc73a9ed5f0d53c38193398523ef7e543777505"
   dependencies:
     jsbn "~0.1.0"
+
+editorconfig@^0.13.2:
+  version "0.13.3"
+  resolved "https://registry.yarnpkg.com/editorconfig/-/editorconfig-0.13.3.tgz#e5219e587951d60958fd94ea9a9a008cdeff1b34"
+  dependencies:
+    bluebird "^3.0.5"
+    commander "^2.9.0"
+    lru-cache "^3.2.0"
+    semver "^5.1.0"
+    sigmund "^1.0.1"
 
 error-ex@^1.2.0:
   version "1.3.1"
@@ -1029,12 +1269,24 @@ find-up@^2.0.0, find-up@^2.1.0:
   dependencies:
     locate-path "^2.0.0"
 
-finder-on-steroids@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/finder-on-steroids/-/finder-on-steroids-0.4.0.tgz#4f185d0fbb85ebbb57cad5acc8251aad72481d69"
+finder-on-steroids@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/finder-on-steroids/-/finder-on-steroids-1.0.2.tgz#f06eba7124614024131a165276240b44c3558b7e"
   dependencies:
+    "@types/minimatch" "^3.0.3"
     minimatch "^3.0.3"
-    readdir-on-steroids "^0.2.2"
+    readdir-on-steroids "^1.1.1"
+
+flowgen@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/flowgen/-/flowgen-1.2.2.tgz#3db933b3149eb2569adc5df5d45b5c9c90c8b41c"
+  dependencies:
+    commander "^2.11.0"
+    js-beautify "^1.6.7"
+    lodash "^4.17.4"
+    paralleljs "^0.2.1"
+    typescript "^2.4.2"
+    typescript-compiler "^1.4.1-2"
 
 for-in@^1.0.1:
   version "1.0.2"
@@ -1338,7 +1590,7 @@ inherits@2, inherits@^2.0.1, inherits@~2.0.0, inherits@~2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
 
-ini@~1.3.0:
+ini@^1.3.4, ini@~1.3.0:
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.5.tgz#eee25f56db1c9ec6085e0c22778083f596abf927"
 
@@ -1844,6 +2096,15 @@ jest-worker@^22.2.2:
   dependencies:
     merge-stream "^1.0.1"
 
+js-beautify@^1.6.7:
+  version "1.7.5"
+  resolved "https://registry.yarnpkg.com/js-beautify/-/js-beautify-1.7.5.tgz#69d9651ef60dbb649f65527b53674950138a7919"
+  dependencies:
+    config-chain "~1.1.5"
+    editorconfig "^0.13.2"
+    mkdirp "~0.5.0"
+    nopt "~3.0.1"
+
 js-tokens@^3.0.0, js-tokens@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"
@@ -2004,25 +2265,17 @@ locate-path@^2.0.0:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
 
-lodash.padend@^4.6.1:
-  version "4.6.1"
-  resolved "https://registry.yarnpkg.com/lodash.padend/-/lodash.padend-4.6.1.tgz#53ccba047d06e158d311f45da625f4e49e6f166e"
-
-lodash.padstart@^4.6.1:
-  version "4.6.1"
-  resolved "https://registry.yarnpkg.com/lodash.padstart/-/lodash.padstart-4.6.1.tgz#d2e3eebff0d9d39ad50f5cbd1b52a7bce6bb611b"
-
 lodash.sortby@^4.7.0:
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/lodash.sortby/-/lodash.sortby-4.7.0.tgz#edd14c824e2cc9c1e0b0a1b42bb5210516a42438"
 
-lodash.trim@^4.5.1:
-  version "4.5.1"
-  resolved "https://registry.yarnpkg.com/lodash.trim/-/lodash.trim-4.5.1.tgz#36425e7ee90be4aa5e27bcebb85b7d11ea47aa57"
-
 lodash@^4.13.1, lodash@^4.14.0, lodash@^4.17.4, lodash@^4.3.0:
   version "4.17.5"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"
+
+lodash@^4.17.10:
+  version "4.17.10"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
 
 longest@^1.0.1:
   version "1.0.1"
@@ -2033,6 +2286,12 @@ loose-envify@^1.0.0:
   resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.3.1.tgz#d1a8ad33fa9ce0e713d65fdd0ac8b748d478c848"
   dependencies:
     js-tokens "^3.0.0"
+
+lru-cache@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-3.2.0.tgz#71789b3b7f5399bec8565dda38aa30d2a097efee"
+  dependencies:
+    pseudomap "^1.0.1"
 
 lru-cache@^4.0.1:
   version "4.1.1"
@@ -2117,7 +2376,7 @@ minimist@~0.0.1:
   version "0.0.10"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-0.0.10.tgz#de3f98543dbf96082be48ad1a0c7cda836301dcf"
 
-"mkdirp@>=0.5 0", mkdirp@^0.5.1:
+"mkdirp@>=0.5 0", mkdirp@^0.5.1, mkdirp@~0.5.0:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   dependencies:
@@ -2174,6 +2433,12 @@ nopt@^4.0.1:
   dependencies:
     abbrev "1"
     osenv "^0.1.4"
+
+nopt@~3.0.1:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/nopt/-/nopt-3.0.6.tgz#c6465dbf08abcd4db359317f79ac68a646b28ff9"
+  dependencies:
+    abbrev "1"
 
 normalize-package-data@^2.3.2:
   version "2.4.0"
@@ -2316,6 +2581,10 @@ p-try@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/p-try/-/p-try-1.0.0.tgz#cbc79cdbaf8fd4228e13f621f2b1a237c1b207b3"
 
+paralleljs@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/paralleljs/-/paralleljs-0.2.1.tgz#ebca745d3e09c01e2bebcc14858891ff4510e926"
+
 parse-glob@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/parse-glob/-/parse-glob-3.0.4.tgz#b2c376cfb11f35513badd173ef0bb6e3a388391c"
@@ -2434,13 +2703,11 @@ process-nextick-args@~2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.0.tgz#a37d732f4271b4ab1ad070d35508e8290788ffaa"
 
-promise@~4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/promise/-/promise-4.0.0.tgz#72d9657988f5e87528293686c61a345ed2054c46"
-  dependencies:
-    asap "~1.0.0"
+proto-list@~1.2.1:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/proto-list/-/proto-list-1.2.4.tgz#212d5bfe1318306a420f6402b8e26ff39647a849"
 
-pseudomap@^1.0.2:
+pseudomap@^1.0.1, pseudomap@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/pseudomap/-/pseudomap-1.0.2.tgz#f052a28da70e618917ef0a8ac34c1ae5a68286b3"
 
@@ -2518,11 +2785,9 @@ readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.0.6, readable
     string_decoder "~1.0.3"
     util-deprecate "~1.0.1"
 
-readdir-on-steroids@^0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/readdir-on-steroids/-/readdir-on-steroids-0.2.2.tgz#2bf4403d6ec672deeba50f6db5611ee7d36cc85a"
-  dependencies:
-    promise "~4.0.0"
+readdir-on-steroids@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/readdir-on-steroids/-/readdir-on-steroids-1.1.1.tgz#eb32764047a6ceac86655899b439f7f726c51247"
 
 readdirp@^2.0.0:
   version "2.1.0"
@@ -2538,10 +2803,6 @@ realpath-native@^1.0.0:
   resolved "https://registry.yarnpkg.com/realpath-native/-/realpath-native-1.0.0.tgz#7885721a83b43bd5327609f0ddecb2482305fdf0"
   dependencies:
     util.promisify "^1.0.0"
-
-regenerator-runtime@^0.10.5:
-  version "0.10.5"
-  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.10.5.tgz#336c3efc1220adcedda2c9fab67b5a7955a33658"
 
 regenerator-runtime@^0.11.0:
   version "0.11.1"
@@ -2724,7 +2985,7 @@ sax@^1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
 
-"semver@2 || 3 || 4 || 5", semver@^5.3.0, semver@^5.4.1:
+"semver@2 || 3 || 4 || 5", semver@^5.1.0, semver@^5.3.0, semver@^5.4.1:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.5.0.tgz#dc4bbc7a6ca9d916dee5d43516f0092b58f7b8ab"
 
@@ -2758,6 +3019,10 @@ shell-quote@^1.6.1:
 shellwords@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/shellwords/-/shellwords-0.1.1.tgz#d6b9181c1a48d397324c84871efbcfc73fc0654b"
+
+sigmund@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/sigmund/-/sigmund-1.0.1.tgz#3ff21f198cad2175f9f3b781853fd94d0d19b590"
 
 signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.2"
@@ -3045,6 +3310,12 @@ tslint-config-prettier@^1.9.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/tslint-config-prettier/-/tslint-config-prettier-1.9.0.tgz#391887644b66de4623f745a6c85672405cbcdcee"
 
+tslint-microsoft-contrib@^5.0.3:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/tslint-microsoft-contrib/-/tslint-microsoft-contrib-5.0.3.tgz#6fc3e238179cd72045c2b422e4d655f4183a8d5c"
+  dependencies:
+    tsutils "^2.12.1"
+
 tslint@^5.9.1:
   version "5.9.1"
   resolved "https://registry.yarnpkg.com/tslint/-/tslint-5.9.1.tgz#1255f87a3ff57eb0b0e1f0e610a8b4748046c9ae"
@@ -3083,6 +3354,14 @@ type-check@~0.3.2:
   resolved "https://registry.yarnpkg.com/type-check/-/type-check-0.3.2.tgz#5884cab512cf1d355e3fb784f30804b2b520db72"
   dependencies:
     prelude-ls "~1.1.2"
+
+typescript-compiler@^1.4.1-2:
+  version "1.4.1-2"
+  resolved "https://registry.yarnpkg.com/typescript-compiler/-/typescript-compiler-1.4.1-2.tgz#ba4f7db22d91534a1929d90009dce161eb72fd3f"
+
+typescript@^2.4.2:
+  version "2.9.1"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.1.tgz#fdb19d2c67a15d11995fd15640e373e09ab09961"
 
 typescript@^2.7.2:
   version "2.7.2"

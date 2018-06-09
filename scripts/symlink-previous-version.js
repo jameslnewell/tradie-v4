@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs-extra');
 const resolve = require('resolve');
-const finder = require('finder-on-steroids');
+const finder = require('finder-on-steroids').default;
 
 const INSTALLED_TEMPLATE_NAME = '@tradie/node-scripts';
 
@@ -22,9 +22,10 @@ function getInstalledVersion() {
 function listPackageJSONFiles() {
   return finder(process.cwd())
     .files()
-    .depth(4)
-    .path('packages/**/package.json')
-    .find();
+    .depth(0, 4)
+    .include('packages/**/package.json')
+    .find()
+    .then(files => files.map(file => path.join(process.cwd(), file)));
 }
 
 function symlinkBinary(fromFile, toFile) {
@@ -71,27 +72,29 @@ console.log(
 );
 console.log();
 listPackageJSONFiles()
-  .then(files =>
-    Promise.all(
-      files.map(file => {
-        const pkgname = require(file).name;
+  .then(
+    files =>
+      console.log(files) ||
+      Promise.all(
+        files.map(file => {
+          const pkgname = require(file).name;
 
-        console.log(`  ${pkgname}:`);
+          console.log(`  ${pkgname}:`);
 
-        if (/example/.test(pkgname)) {
-          console.log('skipped');
-          console.log();
-          return;
-        }
+          if (/example/.test(pkgname)) {
+            console.log('skipped');
+            console.log();
+            return;
+          }
 
-        // const packageMetadata = require(file);
-        // if (
-        //   packageMetadata.devDependencies &&
-        //   packageMetadata.devDependencies[INSTALLED_TEMPLATE_NAME]
-        // ) {
-        return symlinkInstalledBinary(path.dirname(file));
-        // }
-      })
-    )
+          // const packageMetadata = require(file);
+          // if (
+          //   packageMetadata.devDependencies &&
+          //   packageMetadata.devDependencies[INSTALLED_TEMPLATE_NAME]
+          // ) {
+          return symlinkInstalledBinary(path.dirname(file));
+          // }
+        })
+      )
   )
   .catch(error => console.log(error));

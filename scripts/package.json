@@ -6,6 +6,6 @@
     "finder-on-steroids": "^1.0.2",
     "fs-extra": "^4.0.2",
     "resolve": "^1.4.0",
-    "@tradie/node-scripts": "^1.0.0-alpha.0a88ad7c"
+    "@tradie/node-scripts": "^1.0.0-alpha.5ba089db"
   }
 }
