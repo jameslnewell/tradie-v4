@@ -13,7 +13,12 @@ export function source(): RawConfigFile {
       'member-ordering': false,
       'member-access': [true, 'no-public'],
       'array-type': false,
-      'mocha-avoid-only': true
+      'variable-name': false,
+      'unified-signatures': false,
+      'mocha-avoid-only': true,
+      'no-shadowed-variable': [true, {
+        function: false
+      }]
     },
     rulesDirectory: [
       path.dirname(require.resolve('tslint-microsoft-contrib'))
