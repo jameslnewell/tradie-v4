@@ -1,1 +1,2 @@
+
 const foo: number = 'abc';

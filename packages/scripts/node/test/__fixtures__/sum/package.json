@@ -1,0 +1,8 @@
+{
+  "name": "sum",
+  "private": true,
+  "devDependencies": {
+    "@types/jest": "^23.0.0",
+    "@types/node": "^10.3.2"
+  }
+}
