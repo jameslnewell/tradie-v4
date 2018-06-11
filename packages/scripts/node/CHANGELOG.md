@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.0.0-alpha.69057013"></a>
+
+# 1.0.0-alpha.69057013 (2018-06-11)
+
+### Bug Fixes
+
+* add missing example script ([897a96f](https://github.com/jameslnewell/tradie-v4/commit/897a96f))
+* add missing peer deps ([6905701](https://github.com/jameslnewell/tradie-v4/commit/6905701))
+* deps ([a41fe42](https://github.com/jameslnewell/tradie-v4/commit/a41fe42))
+* fix moar TS errors ([ff8fb5f](https://github.com/jameslnewell/tradie-v4/commit/ff8fb5f))
+* fix moar TS errors ([3ad07c0](https://github.com/jameslnewell/tradie-v4/commit/3ad07c0))
+* fixed node-scripts tests ([59edbc2](https://github.com/jameslnewell/tradie-v4/commit/59edbc2))
+* linting ([9be4672](https://github.com/jameslnewell/tradie-v4/commit/9be4672))
+* make it deploy ([1a7ea18](https://github.com/jameslnewell/tradie-v4/commit/1a7ea18))
+* scripts ([27c7c65](https://github.com/jameslnewell/tradie-v4/commit/27c7c65))
+
+### Features
+
+* switched node-scripts to typescript ([e523d30](https://github.com/jameslnewell/tradie-v4/commit/e523d30))
+
 <a name="1.0.0-alpha.5ba089db"></a>
 
 # 1.0.0-alpha.5ba089db (2018-06-09)
