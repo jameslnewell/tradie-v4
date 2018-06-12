@@ -1,5 +1,5 @@
 {
-  "name": "node-example",
+  "name": "<%= name %>",
   "version": "1.0.0",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -16,7 +16,7 @@
     "build": "node-scripts build",
     "watch": "node-scripts build --watch",
     "test": "node-scripts test",
-    "example": "node-scripts exaple",
+    "example": "node-scripts example",
     "prepublishOnly":
       "node-scripts clean && node-scripts build && node-scripts test"
   },

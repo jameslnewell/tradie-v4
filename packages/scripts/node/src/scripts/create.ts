@@ -11,20 +11,23 @@ function fromFile(file: string, data: { [name: string]: string } = {}) {
   const filePath = require.resolve(`../../tpl/${file}`);
   const fileContents = fs.readFileSync(filePath).toString();
   return Object.keys(data).reduce(
-    (contents, name) => fileContents.replace(`<%= ${name} %>`, data[name]),
+    (contents, name) => contents.replace(new RegExp(`<%= ${name} %>`, 'g'), data[name]),
     fileContents
   );
 }
 
-function generate(vfs: VirtualFileSystem) {
-  vfs.write('package.json', fromFile('package.json.ejs', { version: pkg.version }));
-  vfs.write('.gitignore', fromFile('.gitignore.ejs'));
-  vfs.write('src/index.ts', fromFile('src/index.ts'));
-  vfs.write('src/index.test.ts', fromFile('src/index.test.ts'));
-  vfs.write('examples/index.ts', fromFile('examples/index.ts'));
-}
-
 export default async function ({directory = ROOT}: {directory?: string}) {
+  const root = path.resolve(directory);
+
+  const generate = (vfs: VirtualFileSystem) => {
+    vfs.write('README.md', fromFile('README.md.ejs', { name: path.basename(root), version: pkg.version }));
+    vfs.write('package.json', fromFile('package.json.ejs', { name: path.basename(root), version: pkg.version }));
+    vfs.write('.gitignore', fromFile('.gitignore.ejs'));
+    vfs.write('src/index.ts', fromFile('src/index.ts'));
+    vfs.write('src/index.test.ts', fromFile('src/index.test.ts'));
+    vfs.write('examples/index.ts', fromFile('examples/index.ts'));
+  };
+
   const reporter = new Reporter({
     startedText: 'Creating',
     finishedText: 'Created'
@@ -32,7 +35,7 @@ export default async function ({directory = ROOT}: {directory?: string}) {
 
   reporter.started();
   try {
-    await generator(path.resolve(directory), generate);
+    await generator(root, generate);
     cp.execSync('yarn');
     reporter.finished();
   } catch (error) {
