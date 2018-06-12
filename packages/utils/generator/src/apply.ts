@@ -5,8 +5,9 @@ import { FileMap, FileStatusMap } from './types';
 /**
  * Apply differences to disk
  */
-export default function (dest: string, statuses: FileStatusMap, newFiles: FileMap) {
-  return Promise.all(
+export default async function (dest: string, statuses: FileStatusMap, newFiles: FileMap): Promise<void> {
+  await fs.mkdirp(dest);
+  await Promise.all(
     Object.keys(statuses).map(filePath => {
       const status = statuses[filePath];
       const destFilePath = path.resolve(dest, filePath);

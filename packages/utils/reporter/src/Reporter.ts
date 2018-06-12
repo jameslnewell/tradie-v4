@@ -59,6 +59,16 @@ export class Reporter {
     this.finishedText = finishedText;
   }
 
+  private createPromise() {
+    if (!this.promise) {
+      this.promise = new Promise((resolve, reject) => {
+        this.resolve = resolve;
+        this.reject = reject;
+      });
+    }
+    return this.promise;
+  }
+
   private resolveOrReject() {
     if (this.hasErrors() && this.reject) {
       this.reject();
@@ -228,6 +238,7 @@ export class Reporter {
    * @param {Error} error
    */
   failed(error: any) {
+    this.createPromise();
     const { reject } = this;
     if (reject) {
       reject(error);
@@ -251,19 +262,14 @@ export class Reporter {
   /**
    * Wait until all the running compilations have stopped and we're no longer watching
    */
-  wait() {
-    if (!this.promise) {
-      this.promise = new Promise((resolve, reject) => {
-        this.resolve = resolve;
-        this.reject = reject;
+  wait(): Promise<void> {
+    const promise = this.createPromise();
 
-        //if we're not watching and there are no running compilations, then resolve or reject now
-        if (!this.isWatching && !this.running && !this.runningTimeout) {
-          this.resolveOrReject();
-        }
-      });
+    //if we're not watching and there are no running compilations, then resolve or reject now
+    if (!this.isWatching && !this.running && !this.runningTimeout) {
+      this.resolveOrReject();
     }
 
-    return this.promise;
+    return promise;
   }
 }

@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import * as path from 'path';
 import * as cp from 'child_process';
 import Reporter from '@tradie/reporter-utils';
 import generator from '@tradie/generator-utils';
@@ -23,7 +24,7 @@ function generate(vfs: VirtualFileSystem) {
   vfs.write('examples/index.ts', fromFile('examples/index.ts'));
 }
 
-export default async function () {
+export default async function ({directory = ROOT}: {directory?: string}) {
   const reporter = new Reporter({
     startedText: 'Creating',
     finishedText: 'Created'
@@ -31,7 +32,7 @@ export default async function () {
 
   reporter.started();
   try {
-    await generator(ROOT, generate);
+    await generator(path.resolve(directory), generate);
     cp.execSync('yarn');
     reporter.finished();
   } catch (error) {

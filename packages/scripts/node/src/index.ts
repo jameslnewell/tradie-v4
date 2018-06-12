@@ -5,7 +5,7 @@ const resolve = require.resolve;
 
 run([
   {
-    cmd: 'create',
+    cmd: 'create [directory]',
     desc: 'Create a new project',
     exec: resolve('./scripts/create')
   },

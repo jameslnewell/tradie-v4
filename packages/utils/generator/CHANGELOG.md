@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.2.0-alpha.bbb0e62b"></a>
+
+# [1.2.0-alpha.bbb0e62b](https://github.com/jameslnewell/tradie-v4/compare/@tradie/generator-utils@1.1.0...@tradie/generator-utils@1.2.0-alpha.bbb0e62b) (2018-06-11)
+
+### Bug Fixes
+
+* deps ([a41fe42](https://github.com/jameslnewell/tradie-v4/commit/a41fe42))
+* fix moar TS errors ([ff8fb5f](https://github.com/jameslnewell/tradie-v4/commit/ff8fb5f))
+* fix moar TS errors ([3ad07c0](https://github.com/jameslnewell/tradie-v4/commit/3ad07c0))
+* make it deploy ([1a7ea18](https://github.com/jameslnewell/tradie-v4/commit/1a7ea18))
+* scripts ([27c7c65](https://github.com/jameslnewell/tradie-v4/commit/27c7c65))
+* types ([0413576](https://github.com/jameslnewell/tradie-v4/commit/0413576))
+
+### Features
+
+* switched node-scripts to typescript ([e523d30](https://github.com/jameslnewell/tradie-v4/commit/e523d30))
+
 <a name="1.2.0-alpha.69057013"></a>
 
 # [1.2.0-alpha.69057013](https://github.com/jameslnewell/tradie-v4/compare/@tradie/generator-utils@1.1.0...@tradie/generator-utils@1.2.0-alpha.69057013) (2018-06-11)

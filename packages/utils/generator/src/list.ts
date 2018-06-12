@@ -13,26 +13,22 @@ export interface ListOptions {
 /**
  * List all files
  */
-export default function (
+export default async function (
   src: string,
   opts: ListOptions = { exclude: /\/node_modules\// }
 ): Promise<FileMap> {
   const { include, exclude } = opts;
   const filter = (file: string): boolean => match({ include, exclude })(file);
-  return finder(src)
-    .files()
-    .filter(filter)
-    .find()
-    .then((files: string[]) =>
-      Promise.all(files.map((file: string) => fs.readFile(file).then((buffer) => [file, buffer])))
-    )
-    .then((files) =>
-      files.reduce((fileMap: FileMap, file) => {
-        const [filePath, fileBuffer]: [string, Buffer] = file as [string, Buffer];
-        fileMap[path.relative(src, filePath)] = {
-          contents: fileBuffer.toString()
-        };
-        return fileMap;
-      }, {})
-    );
+  const files = await finder(src)
+  .files()
+  .include(filter)
+  .find();
+  const filesAndContents = await Promise.all(files.map((file: string) => fs.readFile(file).then((buffer) => [file, buffer])));
+  return filesAndContents.reduce((fileMap: FileMap, fileAndContents) => {
+    const [filePath, fileBuffer]: [string, Buffer] = fileAndContents as [string, Buffer];
+    fileMap[path.relative(src, filePath)] = {
+      contents: fileBuffer.toString()
+    };
+    return fileMap;
+  }, {});
 }

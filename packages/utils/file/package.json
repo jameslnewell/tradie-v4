@@ -9,13 +9,13 @@
     "@types/anymatch": "^1.3.0",
     "@types/chokidar": "^1.7.5",
     "@types/del": "^3.0.0",
-    "@types/fs-extra": "^5.0.1",
+    "@types/fs-extra": "^5.0.3",
     "@types/node": "^6.0.102",
     "anymatch": "^1.3.0",
     "chokidar": "^1.7.0",
     "del": "^3.0.0",
     "finder-on-steroids": "^1.0.2",
-    "fs-extra": "^4.0.2"
+    "fs-extra": "^6.0.1"
   },
   "scripts": {
     "lint": "node-scripts lint",
