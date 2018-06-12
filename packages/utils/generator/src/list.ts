@@ -26,7 +26,7 @@ export default async function (
   const filesAndContents = await Promise.all(files.map((file: string) => fs.readFile(path.join(src, file)).then((buffer) => [file, buffer])));
   return filesAndContents.reduce((fileMap: FileMap, fileAndContents) => {
     const [filePath, fileBuffer]: [string, Buffer] = fileAndContents as [string, Buffer];
-    fileMap[path.relative(src, filePath)] = {
+    fileMap[path.relative(src, path.join(src, filePath))] = {
       contents: fileBuffer.toString()
     };
     return fileMap;
