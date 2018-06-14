@@ -1,9 +1,11 @@
 {
   "name": "@tradie/cli-utils",
-  "version": "1.2.0-alpha.4fedd406",
+  "version": "1.2.0",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "dependencies": {
     "@types/node": "^9.4.6"
   },

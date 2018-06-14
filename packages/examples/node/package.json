@@ -1,15 +1,17 @@
 {
   "name": "@tradie/node-example",
-  "version": "2.0.0-alpha.4fedd406",
+  "version": "2.0.0",
   "private": true,
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "dependencies": {
     "@types/node": "^9.4.6"
   },
   "devDependencies": {
-    "@tradie/node-scripts": "1.0.0-alpha.4fedd406",
+    "@tradie/node-scripts": "^1.0.0",
     "@types/jest": "^22.2.0"
   },
   "scripts": {

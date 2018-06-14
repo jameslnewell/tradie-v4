@@ -1,8 +1,11 @@
 {
   "name": "@tradie/eslint-utils",
-  "version": "1.2.0-alpha.4fedd406",
+  "version": "1.2.0",
   "main": "lib/index.js",
-  "files": ["lib", ".flowconfig"],
+  "files": [
+    "lib",
+    ".flowconfig"
+  ],
   "peerDependencies": {
     "eslint": "^4.0.0"
   },

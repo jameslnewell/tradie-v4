@@ -1,8 +1,7 @@
 {
   "name": "@tradie/cli",
-  "version": "2.0.0-alpha.4fedd406",
-  "description":
-    "A CLI for building web apps. Like create-react-app but configurable via templates.",
+  "version": "2.0.0",
+  "description": "A CLI for building web apps. Like create-react-app but configurable via templates.",
   "keywords": [
     "webpack",
     "hot-reloading",
@@ -16,7 +15,9 @@
   "repository": "jameslnewell/tradie-v4",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "dependencies": {
     "@types/yargs": "^11.0.0",
     "chalk": "^2.4.1",

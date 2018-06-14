@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.0.0"></a>
+# 1.0.0 (2018-06-14)
+
+
+### Bug Fixes
+
+* add missing example script ([897a96f](https://github.com/jameslnewell/tradie-v4/commit/897a96f))
+* add missing peer deps ([6905701](https://github.com/jameslnewell/tradie-v4/commit/6905701))
+* deps ([a41fe42](https://github.com/jameslnewell/tradie-v4/commit/a41fe42))
+* fix moar TS errors ([ff8fb5f](https://github.com/jameslnewell/tradie-v4/commit/ff8fb5f))
+* fix moar TS errors ([3ad07c0](https://github.com/jameslnewell/tradie-v4/commit/3ad07c0))
+* fixed node-scripts tests ([59edbc2](https://github.com/jameslnewell/tradie-v4/commit/59edbc2))
+* issues in generator ([8b07268](https://github.com/jameslnewell/tradie-v4/commit/8b07268))
+* linting ([9be4672](https://github.com/jameslnewell/tradie-v4/commit/9be4672))
+* make it deploy ([1a7ea18](https://github.com/jameslnewell/tradie-v4/commit/1a7ea18))
+* scripts ([27c7c65](https://github.com/jameslnewell/tradie-v4/commit/27c7c65))
+
+
+### Features
+
+* support user specified dir for the create command ([27e0d56](https://github.com/jameslnewell/tradie-v4/commit/27e0d56))
+* switched node-scripts to typescript ([e523d30](https://github.com/jameslnewell/tradie-v4/commit/e523d30))
+
+
+
+
 <a name="1.0.0-alpha.598aa9d5"></a>
 
 # 1.0.0-alpha.598aa9d5 (2018-06-12)

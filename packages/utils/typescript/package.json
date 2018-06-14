@@ -1,12 +1,14 @@
 {
   "name": "@tradie/typescript-utils",
-  "version": "1.0.0-alpha.4fedd406",
+  "version": "1.0.0",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "dependencies": {
-    "@tradie/file-utils": "2.0.0-alpha.4fedd406",
-    "@tradie/reporter-utils": "2.1.0-alpha.4fedd406",
+    "@tradie/file-utils": "^2.0.0",
+    "@tradie/reporter-utils": "^2.1.0",
     "flowgen": "^1.2.2",
     "typescript": "^2.7.2"
   },

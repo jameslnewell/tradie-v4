@@ -1,28 +1,31 @@
 {
   "name": "@tradie/node-scripts",
   "description": "An opinionated set of scripts for creating and maintaining node packages.",
-  "version": "1.0.0-alpha.4fedd406",
+  "version": "1.0.0",
   "repository": "jameslnewell/tradie-v4",
-  "files": ["lib", "tpl"],
+  "files": [
+    "lib",
+    "tpl"
+  ],
   "bin": {
     "node-scripts": "lib/index.js"
   },
   "dependencies": {
-    "@tradie/cli": "2.0.0-alpha.4fedd406",
-    "@tradie/file-utils": "2.0.0-alpha.4fedd406",
-    "@tradie/generator-utils": "1.2.0-alpha.4fedd406",
-    "@tradie/jest-utils": "2.0.0-alpha.4fedd406",
-    "@tradie/processor-utils": "2.0.0-alpha.4fedd406",
-    "@tradie/reporter-utils": "2.1.0-alpha.4fedd406",
-    "@tradie/tslint-utils": "1.0.0-alpha.4fedd406",
-    "@tradie/typescript-utils": "1.0.0-alpha.4fedd406",
+    "@tradie/cli": "^2.0.0",
+    "@tradie/file-utils": "^2.0.0",
+    "@tradie/generator-utils": "^1.2.0",
+    "@tradie/jest-utils": "^2.0.0",
+    "@tradie/processor-utils": "^2.0.0",
+    "@tradie/reporter-utils": "^2.1.0",
+    "@tradie/tslint-utils": "^1.0.0",
+    "@tradie/typescript-utils": "^1.0.0",
     "jest": "^22.4.2",
-    "typescript": "^2.7.2",
     "ts-jest": "^22.4.0",
     "ts-node": "^5.0.0",
     "tslint": "^5.9.1",
     "tslint-config-prettier": "^1.9.0",
-    "tslint-microsoft-contrib": "^5.0.3"
+    "tslint-microsoft-contrib": "^5.0.3",
+    "typescript": "^2.7.2"
   },
   "scripts": {
     "clean": "node-scripts clean",
