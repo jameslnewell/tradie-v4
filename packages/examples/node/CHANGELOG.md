@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.2"></a>
+## [2.0.2](https://github.com/jameslnewell/tradie-v4/compare/@tradie/node-example@2.0.1...@tradie/node-example@2.0.2) (2018-06-18)
+
+
+
+
+**Note:** Version bump only for package @tradie/node-example
+
 <a name="2.0.1"></a>
 ## [2.0.1](https://github.com/jameslnewell/tradie-v4/compare/@tradie/node-example@2.0.0...@tradie/node-example@2.0.1) (2018-06-18)
 
