@@ -34,9 +34,9 @@
     chalk "^2.4.1"
     yargs "^8.0.1"
 
-"@tradie/file-utils@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@tradie/file-utils/-/file-utils-2.0.0.tgz#909f9fbaff9ef1135a0b2a17c99c9e16571040cf"
+"@tradie/file-utils@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@tradie/file-utils/-/file-utils-2.0.1.tgz#7731a9bf2b672590913617a678ff2e55bd279c7d"
   dependencies:
     "@jameslnewell/cancelable-promise" "^1.0.2"
     "@types/anymatch" "^1.3.0"
@@ -47,21 +47,21 @@
     anymatch "^1.3.0"
     chokidar "^1.7.0"
     del "^3.0.0"
-    finder-on-steroids "^1.0.2"
+    finder-on-steroids "^1.0.3"
     fs-extra "^6.0.1"
 
-"@tradie/generator-utils@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@tradie/generator-utils/-/generator-utils-1.2.0.tgz#639488a2d6d4486152e72d4a864f6e9dd69e2005"
+"@tradie/generator-utils@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@tradie/generator-utils/-/generator-utils-1.2.1.tgz#5598de4d9dfbe19c6312cbbb6eb58d2c880fed74"
   dependencies:
-    "@tradie/file-utils" "^2.0.0"
+    "@tradie/file-utils" "^2.0.1"
     "@types/diff" "^3.5.1"
     "@types/extend" "^3.0.0"
     "@types/inquirer" "^0.0.41"
     chalk "^2.4.1"
     diff "^3.2.0"
     extend "^3.0.1"
-    finder-on-steroids "^1.0.2"
+    finder-on-steroids "^1.0.3"
     fs-extra "^6.0.1"
     inquirer "^3.2.0"
 
@@ -74,18 +74,18 @@
     jest-cli "^22.4.2"
     typescript "^2.7.2"
 
-"@tradie/node-scripts@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@tradie/node-scripts/-/node-scripts-1.1.0.tgz#1199ca2f4dd0ddf534438c735fb7fb323e12da8c"
+"@tradie/node-scripts@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@tradie/node-scripts/-/node-scripts-1.1.1.tgz#38cc948409243b5faf66c2b55e61319be8c56b04"
   dependencies:
     "@tradie/cli" "^2.0.0"
-    "@tradie/file-utils" "^2.0.0"
-    "@tradie/generator-utils" "^1.2.0"
+    "@tradie/file-utils" "^2.0.1"
+    "@tradie/generator-utils" "^1.2.1"
     "@tradie/jest-utils" "^2.0.0"
-    "@tradie/processor-utils" "^3.1.0"
+    "@tradie/processor-utils" "^3.1.1"
     "@tradie/reporter-utils" "^2.1.0"
     "@tradie/tslint-utils" "^1.0.0"
-    "@tradie/typescript-utils" "^1.0.0"
+    "@tradie/typescript-utils" "^1.0.1"
     jest "^22.4.2"
     ts-jest "^22.4.0"
     ts-node "^5.0.0"
@@ -94,12 +94,12 @@
     tslint-microsoft-contrib "^5.0.3"
     typescript "^2.7.2"
 
-"@tradie/processor-utils@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@tradie/processor-utils/-/processor-utils-3.1.0.tgz#b011628a1e07e1c9bc9f5f509499dbc190d0a44f"
+"@tradie/processor-utils@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@tradie/processor-utils/-/processor-utils-3.1.1.tgz#3be24a46b2c8f3a099dbad0fe98fcb383389fcab"
   dependencies:
     "@jameslnewell/cancelable-promise" "^1.0.2"
-    "@tradie/file-utils" "^2.0.0"
+    "@tradie/file-utils" "^2.0.1"
     "@tradie/reporter-utils" "^2.1.0"
 
 "@tradie/reporter-utils@^2.1.0":
@@ -118,11 +118,11 @@
     "@tradie/reporter-utils" "^2.1.0"
     tslint "^5.9.1"
 
-"@tradie/typescript-utils@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@tradie/typescript-utils/-/typescript-utils-1.0.0.tgz#46ef08c25358840209b996cd3fb3ca27865d3320"
+"@tradie/typescript-utils@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@tradie/typescript-utils/-/typescript-utils-1.0.1.tgz#f248ea2f4eb4a27a9e1de670ca985efe24f28e94"
   dependencies:
-    "@tradie/file-utils" "^2.0.0"
+    "@tradie/file-utils" "^2.0.1"
     "@tradie/reporter-utils" "^2.1.0"
     flowgen "^1.2.2"
     typescript "^2.7.2"
@@ -1289,14 +1289,6 @@ find-up@^2.0.0, find-up@^2.1.0:
   resolved "https://registry.yarnpkg.com/find-up/-/find-up-2.1.0.tgz#45d1b7e506c717ddd482775a2b77920a3c0c57a7"
   dependencies:
     locate-path "^2.0.0"
-
-finder-on-steroids@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/finder-on-steroids/-/finder-on-steroids-1.0.2.tgz#f06eba7124614024131a165276240b44c3558b7e"
-  dependencies:
-    "@types/minimatch" "^3.0.3"
-    minimatch "^3.0.3"
-    readdir-on-steroids "^1.1.1"
 
 finder-on-steroids@^1.0.3:
   version "1.0.3"
@@ -2936,10 +2928,6 @@ readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.0.6, readable
     safe-buffer "~5.1.1"
     string_decoder "~1.0.3"
     util-deprecate "~1.0.1"
-
-readdir-on-steroids@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/readdir-on-steroids/-/readdir-on-steroids-1.1.1.tgz#eb32764047a6ceac86655899b439f7f726c51247"
 
 readdir-on-steroids@^1.1.2:
   version "1.1.2"
