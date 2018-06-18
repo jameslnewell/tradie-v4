@@ -2,10 +2,7 @@
   "name": "@tradie/babel-utils",
   "version": "1.2.0",
   "main": "lib/index.js",
-  "files": [
-    "lib",
-    ".flowconfig"
-  ],
+  "files": ["lib"],
   "dependencies": {
     "babel-core": "^6.24.1",
     "chalk": "^2.4.1",
@@ -16,5 +13,6 @@
     "build": "node-scripts build",
     "watch": "node-scripts build --watch",
     "test": "node-scripts test"
-  }
+  },
+  "license": "MIT"
 }

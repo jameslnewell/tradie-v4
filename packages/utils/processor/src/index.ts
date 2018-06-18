@@ -1,98 +1,85 @@
 
 import * as path from 'path';
 import { MatchFilter, MatchFilterArray, list, match, watch, ListOptions } from '@tradie/file-utils';
-import Reporter from '@tradie/reporter-utils';
+import Reporter, {Message} from '@tradie/reporter-utils';
 import CancelablePromise from '@jameslnewell/cancelable-promise';
 
-export interface ProcessOptions {
+export type Filter = MatchFilter;
+
+export type Task =(file: string) => void | Message[] | Promise<void | Message[]>;
+
+export interface Group {
+  include?: Filter;
+  exclude?: Filter;
+  changed?: Task[];
+  removed?: Task[];
+};
+
+export interface Options {
   reporter: Reporter;
-  watch?: boolean;
+  isWatching?: boolean;
 };
 
-export interface ProcessGroup {
-  include?: MatchFilter;
-  exclude?: MatchFilter;
-  process?: (file: string) => void | Promise<void>;
-  delete?: (file: string) => void | Promise<void>;
-};
+// const flatten = (arrays: Filter[]): MatchFilterArray => ([] as MatchFilterArray).concat(...arrays);
 
-const flatten = (arrays: MatchFilter[]): MatchFilterArray => ([] as MatchFilterArray).concat(...arrays);
-
-export function process(
-  directory: string,
-  groups: ProcessGroup[],
-  options: ProcessOptions
+export default function(
+  cwd: string,
+  groups: Group[],
+  options: Options
 ) {
-  const { reporter, watch: isWatching = false } = options;
+  const { reporter, isWatching: isWatching = false } = options;
 
-  // called for each file being created or updated
-  async function onStartProcessing(file: string) {
-    const fullFilePath = path.resolve(directory, file);
+  const runTasks = (type: 'changed' | 'removed') => async (file: string) => {
+    const fullFilePath = path.resolve(cwd, file);
     await Promise.all(
       groups.map(async (group) => {
-        const { process: processFn, include, exclude } = group;
-        if (!processFn) {
+        const { include, exclude } = group;
+
+        // get the tasks
+        const tasks = group[type];
+
+        // check there are some tasks to run
+        if (!tasks || !tasks.length) {
           return;
         }
-        const filter = match({ context: directory, include, exclude }); // TODO: cache filters
+
+        // make sure the filters matches
+        const filter = match({ context: cwd, include, exclude }); // TODO: cache filters
         if (filter(fullFilePath)) {
           reporter.started();
           try {
-            await processFn(fullFilePath);
-          } catch (error) {
-            reporter.log({
-              type: 'error',
-              file,
-              text: error.message,
-              trace: error.stack
+            // run all the tasks and flatten the messages into a flat array of messages
+            const results = await Promise.all(tasks.map(task => task(fullFilePath)));
+            results.forEach((nestMsgs: void | Message[]) => {
+              if (nestMsgs) {
+                reporter.log(nestMsgs);
+              }
             });
+          } catch (error) {
+            reporter.failed(error);
           }
           reporter.finished();
         }
       })
     );
-  }
+  };
 
-  // called for each file being deleted
-  async function onStartDeleting(file: string) {
-    await Promise.all(
-      groups.map(async (group) => {
-        const { delete: deleteFn, include, exclude } = group;
-        if (!deleteFn) {
-          return;
-        }
-        const filter = match({ context: directory, include, exclude }); // TODO: cache filters
-        if (filter(file)) {
-          reporter.started();
-          try {
-            await deleteFn(file);
-          } catch (error) {
-            reporter.log({
-              type: 'error',
-              file,
-              text: error.message,
-              trace: error.stack
-            });
-          }
-          reporter.finished();
-        }
-      })
-    );
-  }
+  const onChange = runTasks('changed');
+  const onRemove = runTasks('removed');
 
   // list included files
-  const listing = list(directory, {
-    include: flatten(groups.map(group => group.include || []))
-  }).then(files => Promise.all(files.map(onStartProcessing)));
+  const listing = list(cwd, {
+    // include: flatten(groups.map(group => group.include || []))
+  }).then(files => Promise.all(files.map(onChange)));
 
   // watch included files
   let watching: CancelablePromise<void>;
   if (isWatching) {
-    watching = watch(directory, {
-      include: flatten(groups.map(group => group.include || [])),
-      created: onStartProcessing,
-      updated: onStartProcessing,
-      deleted: onStartDeleting
+    watching = watch(cwd, {
+      // include: flatten(groups.map(group => group.include || [])),
+      created: onChange,
+      updated: onChange,
+      deleted: onRemove
     });
   } else {
     watching = CancelablePromise.resolve();

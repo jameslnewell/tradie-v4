@@ -1,5 +1,5 @@
 import { copy, rm, name } from '@tradie/file-utils';
-import { process as processFiles } from '@tradie/processor-utils';
+import processFiles from '@tradie/processor-utils';
 import linter from '@tradie/tslint-utils';
 import transpiler from '@tradie/typescript-utils';
 import Reporter from '@tradie/reporter-utils';
@@ -41,80 +41,59 @@ export default async function (args: { watch: boolean }) {
     [
 
       // include typings in the compilation
+      // FIXME: this needs to be done before we check any other files
       {
         include: [globs.TYPES],
-        async process(file) {
-          await Promise.all([
-            transpile.source(file).then(messages => reporter.log(messages))
-          ]);
-        }
+        exclude: [globs.TESTS, globs.MOCKS, globs.FIXTURES],
+        changed: [transpile.source]
       },
 
       // lint, transpile and extract types from source files
       {
         include: [...globs.SOURCES],
         exclude: [globs.TESTS, globs.MOCKS, globs.FIXTURES],
-        async process(file) {
-          await Promise.all([
-            lint.source(file).then(messages => reporter.log(messages)),
-            transpile.source(file).then(messages => reporter.log(messages))
-          ]);
-        },
-        async delete() {
-          await Promise.all([
-            // TODO:
-          ]);
-        }
+        changed: [lint.source, transpile.source],
+        removed: [/* TODO: */]
       },
 
       // copy other source files
       {
         include: globs.FILES,
         exclude: [...globs.SOURCES, globs.TESTS, globs.MOCKS, globs.FIXTURES, globs.EXAMPLES],
-        async process(file) {
-          await copy(
+        changed: [
+          (file: string) => copy(
             file,
             name(file, '[folder][name][ext]', {
               src: paths.CODE_SRC,
               dest: paths.CODE_DEST
             })
-          );
-        },
-        async delete(file) {
-          await rm(
+          )
+        ],
+        removed: [
+          (file: string) => rm(
             name(file, '[folder][name][ext]', {
               src: paths.CODE_SRC,
               dest: paths.CODE_DEST
             })
-          );
-        }
+          )
+        ]
       },
 
       // lint example files
       {
         include: [globs.EXAMPLES],
-        async process(file) {
-          await Promise.all([
-            lint.example(file).then(messages => reporter.log(messages)),
-            transpile.example(file).then(messages => reporter.log(messages))
-          ]);
-        }
+        changed: [lint.example, transpile.example]
       },
 
       // lint test files
       {
         include: [globs.TESTS, globs.MOCKS],
         exclude: [globs.FIXTURES],
-        async process(file) {
-          await Promise.all([
-            lint.test(file).then(messages => reporter.log(messages)),
-            transpile.test(file).then(messages => reporter.log(messages))
-          ]);
-        }
+        changed: [lint.test, transpile.test]
       }
 
     ],
-    { watch, reporter }
+    { reporter, isWatching: watch}
   );
 
   process.on('SIGINT', () => {
