@@ -1,6 +1,6 @@
 {
   "name": "@tradie/processor-utils",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -8,8 +8,8 @@
   ],
   "dependencies": {
     "@jameslnewell/cancelable-promise": "^1.0.2",
-    "@tradie/file-utils": "^2.0.1",
-    "@tradie/reporter-utils": "^2.1.0"
+    "@tradie/file-utils": "^2.0.2",
+    "@tradie/reporter-utils": "^2.1.1"
   },
   "scripts": {
     "clean": "node-scripts clean",

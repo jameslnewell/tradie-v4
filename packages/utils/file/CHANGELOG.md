@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.2"></a>
+## [2.0.2](https://github.com/jameslnewell/tradie-v4/compare/@tradie/file-utils@2.0.1...@tradie/file-utils@2.0.2) (2018-06-18)
+
+
+### Bug Fixes
+
+* bump jest and internal node-scripts ([2543f47](https://github.com/jameslnewell/tradie-v4/commit/2543f47))
+
+
+
+
 <a name="2.0.1"></a>
 ## [2.0.1](https://github.com/jameslnewell/tradie-v4/compare/@tradie/file-utils@2.0.0...@tradie/file-utils@2.0.1) (2018-06-18)
 

@@ -1,9 +1,11 @@
 {
   "name": "@tradie/jest-utils",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "dependencies": {
     "@types/babel-core": "^6.25.3",
     "babel-core": "^6.26.0",
