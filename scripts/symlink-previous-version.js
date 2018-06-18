@@ -19,13 +19,13 @@ function getInstalledVersion() {
  *  built using a previous version of `tradie`.
  * @returns {Promise.<string[]>}
  */
-function listPackageJSONFiles() {
-  return finder(process.cwd())
+async function listPackageJSONFiles() {
+  const files = await finder(path.join(__dirname, '..'))
     .files()
     .depth(0, 4)
     .include('packages/**/package.json')
-    .find()
-    .then(files => files.map(file => path.join(process.cwd(), file)));
+    .find();
+  return files.map(file => path.join(__dirname, '..', file));
 }
 
 function symlinkBinary(fromFile, toFile) {
@@ -66,35 +66,39 @@ function symlinkCurrentBinary(pkgDir) {
   return symlinkBinary(fromFile, toFile);
 }
 
-const version = getInstalledVersion();
-console.log(
-  `Symlinking the installed version of "${INSTALLED_TEMPLATE_NAME}@${version}" to packages:`
-);
-console.log();
-listPackageJSONFiles()
-  .then(
-    files =>
-      console.log(files) ||
-      Promise.all(
-        files.map(file => {
-          const pkgname = require(file).name;
+(async () => {
+  debugger;
+  try {
+    const version = getInstalledVersion();
+    console.log(
+      `Symlinking the installed version of "${INSTALLED_TEMPLATE_NAME}@${version}" to packages:`
+    );
+    console.log();
 
-          console.log(`  ${pkgname}:`);
+    const files = await listPackageJSONFiles();
+    console.log(files);
+    await Promise.all(
+      files.map(file => {
+        const pkgname = require(file).name;
 
-          if (/example/.test(pkgname)) {
-            console.log('skipped');
-            console.log();
-            return;
-          }
+        console.log(`  ${pkgname}:`);
 
-          // const packageMetadata = require(file);
-          // if (
-          //   packageMetadata.devDependencies &&
-          //   packageMetadata.devDependencies[INSTALLED_TEMPLATE_NAME]
-          // ) {
-          return symlinkInstalledBinary(path.dirname(file));
-          // }
-        })
-      )
-  )
-  .catch(error => console.log(error));
+        if (/example/.test(pkgname)) {
+          console.log('skipped');
+          console.log();
+          return;
+        }
+
+        // const packageMetadata = require(file);
+        // if (
+        //   packageMetadata.devDependencies &&
+        //   packageMetadata.devDependencies[INSTALLED_TEMPLATE_NAME]
+        // ) {
+        return symlinkInstalledBinary(path.dirname(file));
+        // }
+      })
+    );
+  } catch (error) {
+    console.error(error);
+  }
+})();

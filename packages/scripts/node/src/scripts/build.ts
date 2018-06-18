@@ -79,13 +79,13 @@ export default async function (args: { watch: boolean }) {
         ]
       },
 
-      // lint example files
+      // lint and check example files
       {
         include: [globs.EXAMPLES],
         changed: [lint.example, transpile.example]
       },
 
-      // lint test files
+      // lint and check test files
       {
         include: [globs.TESTS, globs.MOCKS],
         exclude: [globs.FIXTURES],

@@ -3,9 +3,7 @@
   "version": "1.2.0",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "files": [
-    "lib"
-  ],
+  "files": ["lib"],
   "dependencies": {
     "@tradie/file-utils": "^2.0.0",
     "@types/diff": "^3.5.1",
@@ -14,7 +12,7 @@
     "chalk": "^2.4.1",
     "diff": "^3.2.0",
     "extend": "^3.0.1",
-    "finder-on-steroids": "^1.0.2",
+    "finder-on-steroids": "^1.0.3",
     "fs-extra": "^6.0.1",
     "inquirer": "^3.2.0"
   },

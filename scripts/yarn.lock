@@ -74,15 +74,15 @@
     jest-cli "^22.4.2"
     typescript "^2.7.2"
 
-"@tradie/node-scripts@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@tradie/node-scripts/-/node-scripts-1.0.0.tgz#ca85a32c753324c8ceee9e7ed4a026da8da81822"
+"@tradie/node-scripts@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@tradie/node-scripts/-/node-scripts-1.1.0.tgz#1199ca2f4dd0ddf534438c735fb7fb323e12da8c"
   dependencies:
     "@tradie/cli" "^2.0.0"
     "@tradie/file-utils" "^2.0.0"
     "@tradie/generator-utils" "^1.2.0"
     "@tradie/jest-utils" "^2.0.0"
-    "@tradie/processor-utils" "^2.0.0"
+    "@tradie/processor-utils" "^3.1.0"
     "@tradie/reporter-utils" "^2.1.0"
     "@tradie/tslint-utils" "^1.0.0"
     "@tradie/typescript-utils" "^1.0.0"
@@ -94,9 +94,9 @@
     tslint-microsoft-contrib "^5.0.3"
     typescript "^2.7.2"
 
-"@tradie/processor-utils@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@tradie/processor-utils/-/processor-utils-2.0.0.tgz#58652a81d308e8c5a9a68d35c1e25bf74306dac3"
+"@tradie/processor-utils@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@tradie/processor-utils/-/processor-utils-3.1.0.tgz#b011628a1e07e1c9bc9f5f509499dbc190d0a44f"
   dependencies:
     "@jameslnewell/cancelable-promise" "^1.0.2"
     "@tradie/file-utils" "^2.0.0"
@@ -1297,6 +1297,14 @@ finder-on-steroids@^1.0.2:
     "@types/minimatch" "^3.0.3"
     minimatch "^3.0.3"
     readdir-on-steroids "^1.1.1"
+
+finder-on-steroids@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/finder-on-steroids/-/finder-on-steroids-1.0.3.tgz#bff95ebe751e97a5350f70c5656e52d6633ae4c3"
+  dependencies:
+    "@types/minimatch" "^3.0.3"
+    minimatch "^3.0.3"
+    readdir-on-steroids "^1.1.2"
 
 flowgen@^1.2.2:
   version "1.2.2"
@@ -2932,6 +2940,10 @@ readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.0.6, readable
 readdir-on-steroids@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/readdir-on-steroids/-/readdir-on-steroids-1.1.1.tgz#eb32764047a6ceac86655899b439f7f726c51247"
+
+readdir-on-steroids@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/readdir-on-steroids/-/readdir-on-steroids-1.1.2.tgz#e1962155f81ffe749a219c11cce8f80e2c96326e"
 
 readdirp@^2.0.0:
   version "2.1.0"
