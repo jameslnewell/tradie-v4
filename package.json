@@ -21,7 +21,8 @@
     "upgrade": "lerna exec --concurrency 1 -- npm-check -u",
     "commit": "commit",
     "build": "lerna run build",
-    "test": "lerna run test --scope \"@tradie/processor-utils\" --scope \"@tradie/node-example\"",
+    "test":
+      "lerna run test --scope \"@tradie/node-scripts\" --scope \"@tradie/processor-utils\" --scope \"@tradie/node-example\"",
     "publish:preview":
       "yarn run build && yarn run test && lerna publish --canary --exact --npm-tag=next --access=public",
     "publish:conventional":

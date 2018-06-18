@@ -43,14 +43,14 @@ export default async function (args: { watch: boolean }) {
       // include typings in the compilation
       // FIXME: this needs to be done before we check any other files
       {
-        include: [globs.TYPES],
+        include: globs.TYPES,
         exclude: [globs.TESTS, globs.MOCKS, globs.FIXTURES],
         changed: [transpile.source]
       },
 
       // lint, transpile and extract types from source files
       {
-        include: [...globs.SOURCES],
+        include: globs.SOURCES,
         exclude: [globs.TESTS, globs.MOCKS, globs.FIXTURES],
         changed: [lint.source, transpile.source],
         removed: [/* TODO: */]
