@@ -227,7 +227,7 @@ export class Reporter {
         if (!this.isWatching && !this.running && !this.runningTimeout) {
           this.resolveOrReject();
         }
-      }, 100);
+      }, 250);
     }
 
     return this;
