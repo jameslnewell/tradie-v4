@@ -20,7 +20,7 @@
     "link": "node scripts/symlink-previous-version.js",
     "upgrade": "lerna exec --concurrency 1 -- npm-check -u",
     "commit": "commit",
-    "build": "lerna run build",
+    "build": "node-scripts build",
     "test":
       "lerna run test --scope \"@tradie/node-scripts\" --scope \"@tradie/processor-utils\" --scope \"@tradie/node-example\"",
     "publish:preview":
