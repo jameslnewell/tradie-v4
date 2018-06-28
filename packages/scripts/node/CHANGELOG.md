@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/jameslnewell/tradie-v4/compare/@tradie/node-scripts@1.1.2...@tradie/node-scripts@1.2.0) (2018-06-28)
+
+
+### Bug Fixes
+
+* fix typings and run node-scripts tests ([de978f1](https://github.com/jameslnewell/tradie-v4/commit/de978f1))
+
+
+### Features
+
+* preliminary support for workspaces ([e298285](https://github.com/jameslnewell/tradie-v4/commit/e298285))
+
+
+
+
 <a name="1.1.2"></a>
 ## [1.1.2](https://github.com/jameslnewell/tradie-v4/compare/@tradie/node-scripts@1.1.1...@tradie/node-scripts@1.1.2) (2018-06-18)
 

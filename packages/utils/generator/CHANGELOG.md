@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.2.3"></a>
+## [1.2.3](https://github.com/jameslnewell/tradie-v4/compare/@tradie/generator-utils@1.2.2...@tradie/generator-utils@1.2.3) (2018-06-28)
+
+
+
+
+**Note:** Version bump only for package @tradie/generator-utils
+
 <a name="1.2.2"></a>
 ## [1.2.2](https://github.com/jameslnewell/tradie-v4/compare/@tradie/generator-utils@1.2.1...@tradie/generator-utils@1.2.2) (2018-06-18)
 

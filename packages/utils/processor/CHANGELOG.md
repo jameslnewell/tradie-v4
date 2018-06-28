@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="3.2.0"></a>
+# [3.2.0](https://github.com/jameslnewell/tradie-v4/compare/@tradie/processor-utils@3.1.2...@tradie/processor-utils@3.2.0) (2018-06-28)
+
+
+### Features
+
+* preliminary support for workspaces ([e298285](https://github.com/jameslnewell/tradie-v4/commit/e298285))
+
+
+
+
 <a name="3.1.2"></a>
 ## [3.1.2](https://github.com/jameslnewell/tradie-v4/compare/@tradie/processor-utils@3.1.1...@tradie/processor-utils@3.1.2) (2018-06-18)
 

@@ -1,22 +1,25 @@
 {
   "name": "@tradie/node-scripts",
   "description": "An opinionated set of scripts for creating and maintaining node packages.",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "repository": "jameslnewell/tradie-v4",
-  "files": ["lib", "tpl"],
+  "files": [
+    "lib",
+    "tpl"
+  ],
   "bin": {
     "node-scripts": "lib/index.js"
   },
   "dependencies": {
     "@tradie/cli": "^2.0.0",
-    "@tradie/file-utils": "^2.0.2",
-    "@tradie/generator-utils": "^1.2.2",
+    "@tradie/file-utils": "^2.1.0",
+    "@tradie/generator-utils": "^1.2.3",
     "@tradie/jest-utils": "^3.0.1",
-    "@tradie/processor-utils": "^3.1.2",
+    "@tradie/processor-utils": "^3.2.0",
     "@tradie/reporter-utils": "^2.1.1",
     "@tradie/tslint-utils": "^1.0.1",
-    "@tradie/typescript-utils": "^1.0.2",
-    "@tradie/yarn-utils": "^1.0.0",
+    "@tradie/typescript-utils": "^1.0.3",
+    "@tradie/yarn-utils": "^1.1.0",
     "ts-node": "^5.0.0",
     "tslint": "^5.9.1",
     "tslint-config-prettier": "^1.9.0",

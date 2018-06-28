@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.1.0"></a>
+# [2.1.0](https://github.com/jameslnewell/tradie-v4/compare/@tradie/file-utils@2.0.2...@tradie/file-utils@2.1.0) (2018-06-28)
+
+
+### Features
+
+* preliminary support for workspaces ([e298285](https://github.com/jameslnewell/tradie-v4/commit/e298285))
+
+
+
+
 <a name="2.0.2"></a>
 ## [2.0.2](https://github.com/jameslnewell/tradie-v4/compare/@tradie/file-utils@2.0.1...@tradie/file-utils@2.0.2) (2018-06-18)
 
