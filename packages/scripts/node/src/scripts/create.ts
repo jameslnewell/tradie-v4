@@ -4,7 +4,6 @@ import * as cp from 'child_process';
 import Reporter from '@tradie/reporter-utils';
 import generator from '@tradie/generator-utils';
 import * as pkg from '../../package.json';
-import { ROOT } from '../config/paths';
 import { VirtualFileSystem } from '@tradie/generator-utils';
 
 function fromFile(file: string, data: { [name: string]: string } = {}) {
@@ -16,7 +15,7 @@ function fromFile(file: string, data: { [name: string]: string } = {}) {
   );
 }
 
-export default async function ({directory = ROOT}: {directory?: string}) {
+export default async function ({directory = process.cwd()}: {directory?: string}) {
   const root = path.resolve(directory);
 
   const generate = (vfs: VirtualFileSystem) => {

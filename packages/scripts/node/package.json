@@ -3,10 +3,7 @@
   "description": "An opinionated set of scripts for creating and maintaining node packages.",
   "version": "1.1.2",
   "repository": "jameslnewell/tradie-v4",
-  "files": [
-    "lib",
-    "tpl"
-  ],
+  "files": ["lib", "tpl"],
   "bin": {
     "node-scripts": "lib/index.js"
   },
@@ -19,6 +16,7 @@
     "@tradie/reporter-utils": "^2.1.1",
     "@tradie/tslint-utils": "^1.0.1",
     "@tradie/typescript-utils": "^1.0.2",
+    "@tradie/yarn-utils": "^1.0.0",
     "ts-node": "^5.0.0",
     "tslint": "^5.9.1",
     "tslint-config-prettier": "^1.9.0",

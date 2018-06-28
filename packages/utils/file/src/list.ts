@@ -10,7 +10,6 @@ export function list(dir: string, options: ListOptions = {}): Promise<string[]> 
   const { include, exclude } = options;
 
   const filter = match({
-    context: dir,
     include,
     exclude
   });

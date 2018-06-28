@@ -26,7 +26,7 @@ export default function(
   cwd: string,
   groups: Group[],
   options: Options
-) {
+): CancelablePromise<void> {
   const { reporter, isWatching: isWatching = false } = options;
 
   const runTasks = (type: 'changed' | 'removed') => async (file: string) => {
@@ -86,5 +86,5 @@ export default function(
   }
 
   // wait for processing to complete
-  return CancelablePromise.all([listing, watching]);
+  return CancelablePromise.all([listing, watching]).then(() => {/* do nothing */});
 }

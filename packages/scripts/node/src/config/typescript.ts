@@ -1,10 +1,11 @@
+import * as path from 'path';
 import * as paths from './paths';
 
-export function source() {
+export function source({root}: {root: string}) {
   return {
-    declarationDir: paths.CODE_DEST,
-    outDir: paths.CODE_DEST,
-    rootDir: paths.CODE_SRC,
+    declarationDir: path.join(root, paths.CODE_DEST),
+    outDir: path.join(root, paths.CODE_DEST),
+    rootDir: path.join(root, paths.CODE_SRC),
 
     // normal JS doesn't work with declarations
     // @see https://github.com/Microsoft/TypeScript/issues/7546
@@ -22,16 +23,16 @@ export function source() {
   };
 }
 
-export function example() {
+export function example({root}: {root: string}) {
   return {
-    ...source(),
-    rootDir: paths.ROOT
+    ...source({root}),
+    rootDir: root
   };
 }
 
-export function test() {
+export function test({root}: {root: string}) {
   return {
-    ...source(),
-    rootDir: paths.ROOT
+    ...source({root}),
+    rootDir: root
   };
 }
