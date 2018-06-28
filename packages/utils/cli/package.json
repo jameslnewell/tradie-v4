@@ -1,0 +1,22 @@
+{
+  "name": "@tradie/cli-utils",
+  "version": "1.2.1",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "dependencies": {
+    "@types/node": "^9.4.6"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.1.0"
+  },
+  "scripts": {
+    "clean": "node-scripts clean",
+    "build": "node-scripts build",
+    "watch": "node-scripts build --watch",
+    "test": "node-scripts test"
+  },
+  "license": "MIT"
+}

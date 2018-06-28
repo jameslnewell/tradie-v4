@@ -1,0 +1,19 @@
+{
+  "name": "@tradie/tslint-utils",
+  "version": "1.0.2",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "dependencies": {
+    "@tradie/reporter-utils": "^2.1.2",
+    "tslint": "^5.9.1"
+  },
+  "scripts": {
+    "clean": "node-scripts clean",
+    "build": "node-scripts build",
+    "watch": "node-scripts build --watch",
+    "test": "node-scripts test"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "@tradie/yarn-utils",
+  "version": "1.1.0",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "dependencies": {
+    "@types/node": "^10.3.3",
+    "find-and-read-package-json": "^2.0.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.1.0"
+  },
+  "scripts": {
+    "clean": "node-scripts clean",
+    "build": "node-scripts build",
+    "watch": "node-scripts build --watch",
+    "test": "node-scripts test",
+    "example": "node-scripts example"
+  },
+  "license": "MIT"
+}

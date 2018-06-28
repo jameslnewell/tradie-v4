@@ -9,7 +9,7 @@ managed by [LernaJS](https://lernajs.io).
 `tradie` is
 [dog-fooding](https://en.wikipedia.org/wiki/Eating_your_own_dog_food). That
 means `tradie` is built using a previously published version of
-[`tradie-template-node-package`](../packages/tradie-template-node-package/README.md).
+[`@tradie/node-scripts`](../packages/scripts/node/README.md).
 
 `tradie` requires Node.js v4 or greater and the [Yarn](https://yarnpkg.com/en/)
 package manager.
@@ -22,20 +22,23 @@ package manager.
 
 ### Scripts
 
-| Package                                                          | Version                                                                              | Description                            |
-| ---------------------------------------------------------------- | ------------------------------------------------------------------------------------ | -------------------------------------- |
-| [@tradie/node-package-scripts](../packages/node-package-scripts) | [![npm](https://img.shields.io/npm/v/tradie-template-template-nodejs-package.svg)]() | Scripts for creating a NodeJS package. |
+| Package                                                       | Version                                                           | Description                               |
+| ------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------- |
+| [@tradie/node-scripts](../packages/scripts/node-scripts)      | [![npm](https://img.shields.io/npm/v/@tradie/node-scripts.svg)]() | Scripts for creating a NodeJS package.    |
+| [@tradie/component-scripts](../packages/scripts/node-scripts) | [![npm](https://img.shields.io/npm/v/@tradie/node-scripts.svg)]() | Scripts for creating a component package. |
 
 ### Utilities
 
-| Package                                                   | Version                                                            | Description                                   |
-| --------------------------------------------------------- | ------------------------------------------------------------------ | --------------------------------------------- |
-| [@tradie/babel-utils](../packages/babel-utils)            | [![npm](https://img.shields.io/npm/v/@tradie/babel-utils.svg)]()   | Utilities for transforming code with `babel`. |
-| [@tradie/cli-utils](../packages/@tradie/cli-utils)        | [![npm](https://img.shields.io/npm/v/@tradie/cli-utils.svg)]()     | Utilities for working with the CLI.           |
-| [@tradie/file-utils](../packages/@tradie/file-utils)      | [![npm](https://img.shields.io/npm/v/@tradie/file-utils.svg)]()    | Utilities for working with the file system.   |
-| [tradie-utils-flow](../packages/@tradie/flow-utils)       | [![npm](https://img.shields.io/npm/v/@tradie/flow-utils.svg)]()    | Utilities for checking code with `flowtype`.  |
-| [tradie-utils-jest](../packages/@tradie/jest-utils)       | [![npm](https://img.shields.io/npm/v/@tradie/jest-utils.svg)]()    | Utilities for running tests with `jest`.      |
-| [tradie-webpack-utils](../packages/@tradie/webpack-utils) | [![npm](https://img.shields.io/npm/v/@tradie/webpack-utils.svg)]() | Utilities for creating Webpack configuration. |
+| Package                                            | Version                                                            | Description                                   |
+| -------------------------------------------------- | ------------------------------------------------------------------ | --------------------------------------------- |
+| [@tradie/babel-utils](../packages/utils/babel)     | [![npm](https://img.shields.io/npm/v/@tradie/babel-utils.svg)]()   | Utilities for transforming code with `babel`. |
+| [@tradie/cli-utils](../packages/utils/cli)         | [![npm](https://img.shields.io/npm/v/@tradie/cli-utils.svg)]()     | Utilities for working with the CLI.           |
+| [@tradie/file-utils](../packages/utils/file)       | [![npm](https://img.shields.io/npm/v/@tradie/file-utils.svg)]()    | Utilities for working with the file system.   |
+| [@tradie/flow-utils](../packages/utils/flow)       | [![npm](https://img.shields.io/npm/v/@tradie/flow-utils.svg)]()    | Utilities for checking code with `flowtype`.  |
+| [@tradie/jest-utils](../packages/utils/jest)       | [![npm](https://img.shields.io/npm/v/@tradie/jest-utils.svg)]()    | Utilities for running tests with `jest`.      |
+| [@tradie/tslint-utils](../packages/utils/jest)     | [![npm](https://img.shields.io/npm/v/@tradie/jest-utils.svg)]()    | Utilities for linting Typescript files.       |
+| [@tradie/typescript-utils](../packages/utils/jest) | [![npm](https://img.shields.io/npm/v/@tradie/jest-utils.svg)]()    | Utilities for transpiling Typescript files.   |
+| [@tradie/webpack-utils](../packages/utils/webpack) | [![npm](https://img.shields.io/npm/v/@tradie/webpack-utils.svg)]() | Utilities for creating Webpack configuration. |
 
 ### Deprecated
 
@@ -48,8 +51,8 @@ package manager.
 ## Setup
 
 ```bash
-yarn                 # install shared dependencies
-yarn run bootstrap   # install package specific dependencies
+yarn                 # install dependencies
+yarn run link        # link the previous binary
 yarn run build       # build all the packages
 yarn run test        # test all the packages
 ```
@@ -59,7 +62,7 @@ yarn run test        # test all the packages
 ### Within a single package
 
 The package is built using a previously published version of
-[`@tradie/node-package-scripts`](./packages/node-package-scripts/README.md).
+[`@tradie/node-scripts`](./packages/node-scripts/README.md).
 
 ```bash
 yarn run watch       # build the package and watch for changes

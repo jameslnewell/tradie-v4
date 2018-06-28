@@ -3,36 +3,36 @@
   "private": true,
   "engines": {
     "yarn": "^1.0.0",
-    "node": "^8.5.0"
+    "node": ">=8.5.0"
   },
+  "workspaces": ["packages/*/*"],
   "dependencies": {
-    "finder-on-steroids": "^0.4.0",
     "@commitlint/cli": "^4.3.0",
     "@commitlint/config-angular": "^4.3.0",
     "@commitlint/prompt-cli": "^4.3.0",
-    "@tradie/node-package-scripts": "1.1.0-alpha.989f7efe",
-    "fs-extra": "^4.0.2",
     "husky": "^0.14.3",
     "lerna": "^2.0.0",
     "lint-staged": "^5.0.0",
-    "prettier": "^1.8.2",
-    "resolve": "^1.4.0"
+    "prettier": "^1.8.2"
   },
   "scripts": {
     "clean": "lerna run clean && lerna clean",
-    "bootstrap": "lerna bootstrap && node scripts/symlink-tradie.js",
+    "link": "node scripts/symlink-previous-version.js",
     "upgrade": "lerna exec --concurrency 1 -- npm-check -u",
     "commit": "commit",
-    "lint": "lerna run lint",
-    "build": "lerna run build",
-    "test": "lerna run test",
-    "publish":
-      "yarn run lint && yarn run build && yarn run test && lerna publish --conventional-commits",
+    "build": "node-scripts build",
+    "test":
+      "lerna run test --scope \"@tradie/node-scripts\" --scope \"@tradie/processor-utils\" --scope \"@tradie/node-example\"",
+    "publish:preview":
+      "yarn run build && yarn run test && lerna publish --canary --exact --npm-tag=next --access=public",
+    "publish:conventional":
+      "yarn run build && yarn run test && lerna publish --conventional-commits --access=public",
     "commitmsg": "commitlint -e",
     "precommit": "lint-staged",
+    "postinstall": "yarn run link",
     "prepublishOnly": "echo 'Run `npm run publish` instead.' && exit 1"
   },
   "lint-staged": {
-    "*.js": ["prettier --write", "git add"]
+    "*.{js,jsx,json,css,md}": ["prettier --write", "git add"]
   }
 }

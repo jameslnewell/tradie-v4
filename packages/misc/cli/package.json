@@ -1,0 +1,33 @@
+{
+  "name": "@tradie/cli",
+  "version": "2.0.0",
+  "description": "A CLI for building web apps. Like create-react-app but configurable via templates.",
+  "keywords": [
+    "webpack",
+    "hot-reloading",
+    "jest",
+    "build",
+    "test",
+    "nwb",
+    "create-react-app",
+    "crap"
+  ],
+  "repository": "jameslnewell/tradie-v4",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "dependencies": {
+    "@types/yargs": "^11.0.0",
+    "chalk": "^2.4.1",
+    "yargs": "^8.0.1"
+  },
+  "scripts": {
+    "clean": "node-scripts clean",
+    "build": "node-scripts build",
+    "watch": "node-scripts build --watch",
+    "test": "node-scripts test"
+  },
+  "license": "MIT"
+}

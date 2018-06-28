@@ -1,0 +1,18 @@
+{
+  "name": "@tradie/rollup-utils",
+  "version": "1.2.0",
+  "main": "lib/index.js",
+  "files": [
+    "lib",
+    ".flowconfig"
+  ],
+  "dependencies": {
+    "rollup": "^0.45.2"
+  },
+  "scripts": {
+    "clean": "node-scripts clean",
+    "build": "node-scripts build",
+    "watch": "node-scripts build --watch",
+    "test": "node-scripts test"
+  }
+}

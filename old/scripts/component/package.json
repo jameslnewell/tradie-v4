@@ -1,0 +1,43 @@
+{
+  "name": "@tradie/component-scripts",
+  "private": true,
+  "version": "1.0.0-alpha.4fedd406",
+  "files": ["lib", ".flowconfig"],
+  "bin": {
+    "tradie": "lib/index.js"
+  },
+  "dependencies": {
+    "@tradie/babel-utils": "1.2.0-alpha.4fedd406",
+    "@tradie/cli": "^1.1.1",
+    "@tradie/eslint-utils": "1.2.0-alpha.4fedd406",
+    "@tradie/file-utils": "^1.1.0",
+    "@tradie/flow-utils": "1.2.0-alpha.4fedd406",
+    "@tradie/jest-utils": "2.0.0-alpha.4fedd406",
+    "@tradie/processor-utils": "2.0.0-alpha.4fedd406",
+    "@tradie/reporter-utils": "^1.1.0",
+    "@tradie/webpack-utils": "1.2.0-alpha.4fedd406",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-react-constant-elements": "^6.23.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-react": "^6.24.1",
+    "eslint": "^4.16.0",
+    "eslint-plugin-flowtype": "^2.41.1",
+    "html-webpack-plugin": "^2.30.1",
+    "webpack": "^3.10.0"
+  },
+  "scripts": {
+    "clean": "node-scripts clean",
+    "build": "node-scripts build && chmod 0755 ./lib/index.js",
+    "watch": "node-scripts build --watch",
+    "test": "node-scripts test",
+    "prepublishOnly": "node-scripts clean && node-scripts test && node-scripts build"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT"
+}

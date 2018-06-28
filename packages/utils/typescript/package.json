@@ -1,0 +1,21 @@
+{
+  "name": "@tradie/typescript-utils",
+  "version": "1.0.4",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "dependencies": {
+    "@tradie/file-utils": "^2.1.0",
+    "@tradie/reporter-utils": "^2.1.2",
+    "flowgen": "^1.2.2",
+    "typescript": "^2.7.2"
+  },
+  "scripts": {
+    "clean": "node-scripts clean",
+    "build": "node-scripts build",
+    "watch": "node-scripts build --watch",
+    "test": "node-scripts test"
+  }
+}

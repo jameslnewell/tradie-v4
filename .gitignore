@@ -16,6 +16,8 @@ node_modules
 # ignore build files
 dist
 tmp
+packages/*/lib
+packages/*/*/lib
 
 # ignore IDE files
 .idea
