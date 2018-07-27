@@ -1,5 +1,5 @@
 export const FILES = 'src/**';
-export const SOURCES = 'src/**/*.{ts,tsx}';
+export const SOURCES = 'src/**/*.{ts,tsx}'; // TODO: exclude ".d.ts"
 export const TYPES = ['types/**/*.d.ts', 'typings/**/*.d.ts'];
 export const EXAMPLES = 'examples/**/*.{ts,tsx}';
 export const TESTS = '{src,test}/**/*.test.{ts,tsx}';

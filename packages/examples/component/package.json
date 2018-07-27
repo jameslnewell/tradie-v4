@@ -1,0 +1,26 @@
+{
+  "name": "@tradie/component-example",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/cjs/index.js",
+  "jsnext:main": "dist/esm/index.js",
+  "files": [
+    "dist/cjs",
+    "dist/esm"
+  ],
+  "dependencies": {
+    "@types/react": "^16.4.6",
+    "@types/react-dom": "^16.0.6",
+    "@tradie/component-scripts": "^1.0.0",
+    "enzyme": "3.2.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  },
+  "scripts": {
+    "clean": "component-scripts clean",
+    "dev": "component-scripts dev",
+    "build": "component-scripts build",
+    "test": "component-scripts test"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "moduleResolution": "node",
+    "newLine": "lf",
+    "sourceMap": true,
+    "lib": ["dom", "es2018"]
+  }
+}

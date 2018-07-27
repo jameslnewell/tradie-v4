@@ -5,7 +5,9 @@
     "yarn": "^1.0.0",
     "node": ">=8.5.0"
   },
-  "workspaces": ["packages/*/*"],
+  "workspaces": [
+    "packages/*/*"
+  ],
   "dependencies": {
     "@commitlint/cli": "^4.3.0",
     "@commitlint/config-angular": "^4.3.0",
@@ -20,19 +22,19 @@
     "link": "node scripts/symlink-previous-version.js",
     "upgrade": "lerna exec --concurrency 1 -- npm-check -u",
     "commit": "commit",
-    "build": "node-scripts build",
-    "test":
-      "lerna run test --scope \"@tradie/node-scripts\" --scope \"@tradie/processor-utils\" --scope \"@tradie/node-example\"",
-    "publish:preview":
-      "yarn run build && yarn run test && lerna publish --canary --exact --npm-tag=next --access=public",
-    "publish:conventional":
-      "yarn run build && yarn run test && lerna publish --conventional-commits --access=public",
+    "build": "lerna run build",
+    "test": "lerna run test --scope \"@tradie/node-scripts\" --scope \"@tradie/processor-utils\" --scope \"@tradie/node-example\"",
+    "publish:preview": "yarn run build && yarn run test && lerna publish --canary --exact --npm-tag=next --access=public",
+    "publish:conventional": "yarn run build && yarn run test && lerna publish --conventional-commits --access=public",
     "commitmsg": "commitlint -e",
     "precommit": "lint-staged",
     "postinstall": "yarn run link",
     "prepublishOnly": "echo 'Run `npm run publish` instead.' && exit 1"
   },
   "lint-staged": {
-    "*.{js,jsx,json,css,md}": ["prettier --write", "git add"]
+    "*.{js,jsx,json,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }

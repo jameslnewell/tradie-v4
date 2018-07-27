@@ -1,0 +1,30 @@
+{
+  "name": "@tradie/component-scripts",
+  "version": "1.0.0",
+  "repository": "jameslnewell/tradie-v4",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "tpl"
+  ],
+  "bin": {
+    "component-scripts": "lib/index.js"
+  },
+  "dependencies": {
+    "@types/yargs": "^11.0.0",
+    "yargs": "^11.0.0",
+    "@tradie/component-config": "^1.0.0",
+    "@tradie/yarn-utils": "^2.0.0",
+    "@tradie/reporter-utils": "^2.1.2",
+    "@tradie/webpack-utils": "^2.0.0",
+    "awesome-typescript-loader": "^5.2.0"
+  },
+  "scripts": {
+    "clean": "node-scripts clean",
+    "build": "node-scripts build && chmod 0755 ./lib/index.js",
+    "watch": "node-scripts build --watch",
+    "test": "node-scripts test"
+  },
+  "license": "MIT"
+}

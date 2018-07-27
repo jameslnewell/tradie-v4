@@ -74,7 +74,7 @@
     jest-cli "^22.4.2"
     typescript "^2.7.2"
 
-"@tradie/node-scripts@^1.1.1":
+"@tradie/node-scripts@1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@tradie/node-scripts/-/node-scripts-1.1.1.tgz#38cc948409243b5faf66c2b55e61319be8c56b04"
   dependencies:

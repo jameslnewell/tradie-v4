@@ -1,0 +1,15 @@
+{
+  // "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    // TODO: read from the base config
+    // @see https://github.com/kulshekhar/ts-jest/pull/630
+    "jsx": "react",
+    "moduleResolution": "node",
+    "newLine": "lf",
+    "sourceMap": true,
+    "lib": ["dom", "es2018"],
+
+    "target": "es2017",
+    "module": "commonjs"
+  }
+}

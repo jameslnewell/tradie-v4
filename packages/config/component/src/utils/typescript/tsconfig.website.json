@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "target": "es5",
+    "module": "esnext"
+  },
+  "files": ["../webpack/project-info-types.d.ts"]
+}

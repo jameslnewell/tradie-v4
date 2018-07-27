@@ -197,7 +197,7 @@ export class Reporter {
         }
 
         //wait for any running compilations to finish
-        if (this.running || this.runningTimeout) {
+        if (this.running > 0 || this.runningTimeout) {
           return;
         }
 
@@ -209,7 +209,7 @@ export class Reporter {
         }
 
         //wait for any running compilations to finish
-        if (this.running || this.runningTimeout) {
+        if (this.running > 0 || this.runningTimeout) {
           return;
         }
 
@@ -224,7 +224,7 @@ export class Reporter {
         }
 
         //if we're not watching and all the compilations have finished, then resolve or reject
-        if (!this.isWatching && !this.running && !this.runningTimeout) {
+        if (!this.isWatching && this.running === 0 && !this.runningTimeout) {
           this.resolveOrReject();
         }
       }, 250);
@@ -251,7 +251,7 @@ export class Reporter {
    */
   stopping() {
     //if there are no running compilations, then resolve or reject now (watching has already stopped)
-    if (!this.running && !this.runningTimeout) {
+    if (this.running === 0 && !this.runningTimeout) {
       this.resolveOrReject();
     } else {
       this.isWatching = false;
@@ -266,7 +266,7 @@ export class Reporter {
     const promise = this.createPromise();
 
     //if we're not watching and there are no running compilations, then resolve or reject now
-    if (!this.isWatching && !this.running && !this.runningTimeout) {
+    if (!this.isWatching && this.running === 0 && !this.runningTimeout) {
       this.resolveOrReject();
     }
 

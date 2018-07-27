@@ -1,15 +1,17 @@
 {
   "name": "@tradie/webpack-utils",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "files": [
-    "lib",
-    ".flowconfig"
+    "lib"
   ],
   "dependencies": {
-    "detect-port": "^1.2.1",
-    "webpack": "^3.4.1",
-    "webpack-dev-server": "^2.6.1"
+    "@jameslnewell/cancelable-promise": "^1.0.2",
+    "@types/webpack": "^4.4.4",
+    "@types/webpack-serve": "^1.0.3",
+    "webpack": "^4.12.2",
+    "webpack-serve": "^1.0.4"
   },
   "scripts": {
     "clean": "node-scripts clean",

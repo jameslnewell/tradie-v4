@@ -65,7 +65,7 @@ export default async function (args: { watch: boolean }) {
         // copy other source files
         {
           include: globs.FILES,
-          exclude: [...globs.SOURCES, globs.TESTS, globs.MOCKS, globs.FIXTURES, globs.EXAMPLES],
+          exclude: [globs.SOURCES, globs.TESTS, globs.MOCKS, globs.FIXTURES, globs.EXAMPLES],
           changed: [
             (file: string) => copy(
               file,

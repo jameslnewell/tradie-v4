@@ -1,7 +1,8 @@
 import * as path from 'path';
-import {getWorkspaces} from '../src';
+import { getProjectInfo} from '../src';
 
 (async () => {
-  const workspaces = await getWorkspaces(path.join(__dirname, '../..'));
+  const {root, workspaces} = await getProjectInfo(path.join(__dirname, '../..'));
+  console.log(root)
   console.log(workspaces);
 })();
