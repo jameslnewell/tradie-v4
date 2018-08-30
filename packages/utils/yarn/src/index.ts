@@ -19,7 +19,7 @@ async function findAndReadProjectJSON(cwd: string = '.') {
     return {file: firstFile, json: firstJSON};
   } else {
     try {
-      const {file: secondFile, json: secondJSON} = await findAndReadPackageJSON(path.dirname(firstFile));
+      const {file: secondFile, json: secondJSON} = await findAndReadPackageJSON(path.dirname(path.dirname(firstFile)));
       return {file: secondFile, json: secondJSON};
     } catch (error) {
       return {file: firstFile, json: firstJSON};
