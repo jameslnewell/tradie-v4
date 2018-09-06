@@ -19,7 +19,7 @@
   },
   "scripts": {
     "clean": "node-scripts clean",
-    "build": "node-scripts build && chmod 0755 ./lib/index.js",
+    "_build": "node-scripts build && chmod 0755 ./lib/index.js",
     "watch": "node-scripts build --watch",
     "test": "node-scripts test"
   },

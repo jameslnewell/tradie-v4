@@ -1,24 +1,17 @@
 
-import * as path from 'path';
-import { register } from 'ts-node';
-import {getWorkspaces} from '@tradie/yarn-utils';
-import * as paths from '../config/paths';
-import * as tsconfig from '../config/typescript';
+import * as register from '@babel/register';
+import babelOptions from '../config/babelOptions';
+import runner from './example-runner';
 
 export default async function (options: { module: string }) {
   const { module = 'index' } = options;
-
-  const {root, workspaces} = await getWorkspaces(process.cwd());
-
-  if (workspaces.length > 1) {
-    throw new Error('"node-scripts example" may only be run on a single workspace');
-  }
+  const cwd = process.cwd();
 
   register({
-    // typeCheck: true,
-    skipProject: true,
-    compilerOptions: tsconfig.example({root})
+    ...babelOptions,
+    cwd,
+    extensions: ['.tsx', '.ts']
   });
 
-  await import(`${path.join(workspaces[0], paths.EXAMPLES_SRC)}/${module}`);
+  runner(cwd, module);
 }

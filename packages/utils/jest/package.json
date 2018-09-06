@@ -1,16 +1,13 @@
 {
   "name": "@tradie/jest-utils",
-  "version": "3.0.1",
+  "version": "4.0.0",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "lib"
   ],
   "dependencies": {
-    "@types/babel-core": "^6.25.3",
-    "babel-core": "^6.26.0",
-    "jest-cli": "^23.1.0",
-    "typescript": "^2.7.2"
+    "jest-cli": "^23.5.0"
   },
   "scripts": {
     "clean": "node-scripts clean",

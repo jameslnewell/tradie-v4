@@ -2,10 +2,11 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as util from 'util';
-import flowgen from 'flowgen';
 import * as ts from 'typescript';
 import { mkdir } from '@tradie/file-utils';
 import { Message } from '@tradie/reporter-utils';
+
+const writeFile = util.promisify(fs.writeFile);
 
 const defaultCompilerOptions = {
   forceConsistentCasingInFileNames: true,
@@ -95,23 +96,12 @@ export default function (options: TranspilerOptions) {
     const output = service.getEmitOutput(file);
     const messages = getMessages(file);
 
-    if (!output.emitSkipped) {
-      const writeFile = util.promisify(fs.writeFile);
-      await Promise.all(
-        output.outputFiles.map(async (outputFile: ts.OutputFile) => {
-          await mkdir(path.dirname(outputFile.name));
-          await writeFile(outputFile.name, outputFile.text)
-
-          //TODO: make async
-          // write the flow types
-          if (outputFile.name.endsWith('.d.ts')) {
-            const flowName = `${path.dirname(outputFile.name)}/${path.basename(outputFile.name, '.d.ts')}.js.flow`;
-            const flowdef = flowgen.compiler.compileDefinitionString(outputFile.text);
-            await writeFile(flowName, flowdef)
-          }
-        })
-      );
-    }
+    await Promise.all(
+      output.outputFiles.map(async (outputFile: ts.OutputFile) => {
+        await mkdir(path.dirname(outputFile.name));
+        await writeFile(outputFile.name, outputFile.text)
+      })
+    );
 
     return messages;
   };

@@ -1,6 +1,4 @@
 import { run } from 'jest-cli';
-export { default as createBabelTransform } from './transform/createBabelTransform';
-export { default as createTypescriptTransform } from './transform/createTypescriptTransform';
 
 export interface JestOptions {
   bail?: boolean,
@@ -24,7 +22,7 @@ export interface JestOptions {
   watchAll?: boolean
 };
 
-export default function (options: JestOptions, config: { [name: string]: any }): Promise<void> {
+export default async function (options: JestOptions, config: { [name: string]: any }): Promise<void> {
   const args = ['--config', JSON.stringify(config)];
 
   (Object.keys(options) as (keyof JestOptions)[]).forEach((jestFlag: keyof JestOptions) => {
@@ -40,8 +38,6 @@ export default function (options: JestOptions, config: { [name: string]: any }):
 
   //TODO: support other args? https://facebook.github.io/jest/docs/cli.html
 
-  return new Promise(() => {
-    //TODO: resolve() when completed. see https://github.com/facebook/jest/issues/3737.
-    run(args);
-  });
+  // TODO: use and await runCLI()
+  run(args);
 }

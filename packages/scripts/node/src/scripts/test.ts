@@ -1,24 +1,19 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import jest from '@tradie/jest-utils';
-import {getWorkspaces} from '@tradie/yarn-utils';
 
 import * as paths from '../config/paths';
 import * as globs from '../config/globs';
 
 export default async function (argv: {}) {
-  const {root, workspaces} = await getWorkspaces(process.cwd());
-
-  if (workspaces.length > 1) {
-    throw new Error('Unfortunately jest does not support configuration of multiple workspaces via the CLI at this time.')
-  }
+  const root = process.cwd();
 
   const setupFiles = [];
-  const codeSetupFile = path.join(root, paths.CODE_SRC, '_.test.js');
+  const codeSetupFile = path.join(root, paths.CODE_SRC, '_.test.ts');
   if (fs.existsSync(codeSetupFile)) {
     setupFiles.push(codeSetupFile);
   }
-  const testSetupFile = path.join(root, paths.TESTS_SRC, '_.test.js');
+  const testSetupFile = path.join(root, paths.TESTS_SRC, '_.test.ts');
   if (fs.existsSync(testSetupFile)) {
     setupFiles.push(testSetupFile);
   }
@@ -36,7 +31,7 @@ export default async function (argv: {}) {
     ],
     moduleFileExtensions: ['tsx', 'ts', 'jsx', 'js', 'json'],
     transform: {
-      '^.+\\.tsx?$': require.resolve('../config/typescript-transform')
+      "^.+\\.tsx?$": require.resolve('../config/babelTransform')
     },
     collectCoverageFrom: [
       `**/${globs.SOURCES}`,

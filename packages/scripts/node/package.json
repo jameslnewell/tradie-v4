@@ -1,30 +1,37 @@
 {
   "name": "@tradie/node-scripts",
   "description": "An opinionated set of scripts for creating and maintaining node packages.",
-  "version": "1.2.1",
+  "version": "2.0.0",
   "repository": "jameslnewell/tradie-v4",
   "files": [
     "lib",
-    "tpl"
+    "tpl",
+    "tsconfig.json"
   ],
   "bin": {
     "node-scripts": "lib/index.js"
   },
   "dependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/register": "^7.0.0",
+    "@babel/preset-typescript": "^7.0.0",
+    "@tradie/babel-utils": "^2.0.0",
     "@tradie/cli": "^2.0.0",
     "@tradie/file-utils": "^2.1.0",
     "@tradie/generator-utils": "^1.2.3",
-    "@tradie/jest-utils": "^3.0.1",
+    "@tradie/jest-utils": "^4.0.0",
     "@tradie/processor-utils": "^3.2.1",
     "@tradie/reporter-utils": "^2.1.2",
     "@tradie/tslint-utils": "^1.0.2",
-    "@tradie/typescript-utils": "^1.0.4",
-    "@tradie/yarn-utils": "^1.1.0",
-    "ts-node": "^5.0.0",
+    "@tradie/typescript-utils": "^2.0.0",
+    "ts-jest": "^23.1.4",
     "tslint": "^5.9.1",
     "tslint-config-prettier": "^1.9.0",
     "tslint-microsoft-contrib": "^5.0.3",
-    "typescript": "^2.7.2"
+    "typescript": "^3.0.3"
   },
   "scripts": {
     "clean": "node-scripts clean",
