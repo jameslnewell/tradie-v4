@@ -6,7 +6,8 @@
   "files": [
     "lib",
     "tpl",
-    "tsconfig.json"
+    "tsconfig.json",
+    "tslint.json"
   ],
   "bin": {
     "node-scripts": "lib/index.js"

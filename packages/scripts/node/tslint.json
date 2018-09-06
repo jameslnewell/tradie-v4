@@ -1,0 +1,23 @@
+{
+  "extends": ["tslint:recommended", "tslint-config-prettier"],
+  "rules": {
+    "comment-format": true,
+    "interface-name": false,
+    "interface-over-type-literal": true,
+    "ordered-imports": false,
+    "object-literal-sort-keys": false,
+    "member-ordering": false,
+    "member-access": [true, "no-public"],
+    "array-type": false,
+    "variable-name": false,
+    "unified-signatures": false,
+    "mocha-avoid-only": true,
+    "no-shadowed-variable": [
+      true,
+      {
+        "function": false
+      }
+    ]
+  },
+  "rulesDirectory": ["tslint-microsoft-contrib"]
+}

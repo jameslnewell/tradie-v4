@@ -8,8 +8,8 @@ import Reporter from '@tradie/reporter-utils';
 import * as paths from '../config/paths';
 import * as globs from '../config/globs';
 import babelOptions from '../config/babelOptions';
-import * as tslint from '../config/tslintConfig';
-import * as tsconfig from '../../tsconfig.json';
+import * as tslintConfig from '../config/tslintConfig';
+import * as typescriptConfig from '../../tsconfig.json';
 
 export default async function (args: { watch: boolean }) {
   const { watch } = args;
@@ -22,9 +22,9 @@ export default async function (args: { watch: boolean }) {
   });
 
   const lint = {
-    source: linter(tslint.source()),
-    example: linter(tslint.example()),
-    test: linter(tslint.test())
+    source: linter(tslintConfig.source()),
+    example: linter(tslintConfig.example()),
+    test: linter(tslintConfig.test())
   };
 
   const transpile = (file: string) => babel(file, name(file, '[folder][name].js', {
@@ -33,13 +33,13 @@ export default async function (args: { watch: boolean }) {
   }), babelOptions);
 
   const checkTypes = transpiler({
-    ...tsconfig.compilerOptions,
+    ...typescriptConfig.compilerOptions,
     rootDir: root,
     noEmit: true
   });
 
   const extractAndCheckTypes = transpiler({
-    ...tsconfig.compilerOptions,
+    ...typescriptConfig.compilerOptions,
     rootDir: paths.CODE_SRC,
     outDir: paths.CODE_DEST,
     declaration: true,
