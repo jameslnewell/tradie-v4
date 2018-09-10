@@ -1,6 +1,6 @@
 {
   "name": "@tradie/component-scripts",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "repository": "jameslnewell/tradie-v4",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -14,11 +14,9 @@
   "dependencies": {
     "@types/yargs": "^11.0.0",
     "yargs": "^11.0.0",
-    "@tradie/component-config": "^1.0.0",
-    "@tradie/yarn-utils": "^2.0.0",
-    "@tradie/reporter-utils": "^2.1.2",
-    "@tradie/webpack-utils": "^2.0.0",
-    "awesome-typescript-loader": "^5.2.0"
+    "@tradie/component-preset": "^1.0.0",
+    "@tradie/jest-utils": "^4.0.0",
+    "@tradie/reporter-utils": "^2.1.2"
   },
   "scripts": {
     "clean": "node-scripts clean",

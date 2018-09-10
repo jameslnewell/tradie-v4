@@ -5,6 +5,8 @@ import { MessageType } from './MessageType';
 import { Message } from './Message';
 import { formatMessages } from './formatting';
 
+const RUNNING_TIMEOUT = 250;
+
 export type EventHandler = () => void | Promise<void>;
 
 export interface Options {
@@ -15,10 +17,12 @@ export interface Options {
 };
 
 export class Reporter {
+
   /**
    * The number of compilations currently in progress
    */
   private running = 0;
+  private runningByFile: {[name: string]: number} = {};
 
   /**
    * The timeout to determine if we're still running
@@ -156,23 +160,54 @@ export class Reporter {
     return this;
   }
 
+  private clearLogs(file?: string) {
+    if (file === undefined) {
+      this.messages = [];
+    } else {
+      this.messages = this.messages.filter(message => message.file !== file);
+    }
+  }
+
+  /**
+   * Returns true when:
+   *  - compilation hasn't started
+   *  - compilation has finished
+   */
+  private isCompilationRunning(): boolean {
+    const isGlobalCompilationRunning = this.running > 0;
+    const isFileCompilationRunning = Object.keys(this.runningByFile).reduce((total, file) => total += this.runningByFile[file], 0) > 0;
+    return isGlobalCompilationRunning || isFileCompilationRunning;
+  }
+
+  /**
+   * Returns true when:
+   *  - compilation has finished and we're waiting to see if another compilation will start
+   */
+  private isCompilationWaiting() {
+    return Boolean(this.runningTimeout);
+  }
+
   /**
    * Notify the reporter that a compilation has started
    */
-  started() {
-    ++this.running;
+  started(file?: string) {
 
     //if this is the first compilation running, and we're not waiting for other compilations to start then
-    if (this.running === 1 && !this.runningTimeout) {
+    if (!this.isCompilationRunning() && !this.isCompilationWaiting()) {
       //clear the logs
-      this.messages = [];
-
+      this.clearLogs(file);
       //print the start of the report
       this.printStartOfReport();
     }
 
-    //clear the running timeout
-    if (this.runningTimeout) {
+    if (file == undefined) {
+      ++this.running;
+    } else {
+      ++this.runningByFile[file];
+    }
+
+    //restart the running timeout
+    if (this.isCompilationWaiting()) {
       clearTimeout(this.runningTimeout);
       this.runningTimeout = undefined;
     }
@@ -183,12 +218,16 @@ export class Reporter {
   /**
    * Notify the reporter that a compilation has finished
    */
-  finished() {
-    --this.running;
+  finished(file?: string) {
+    if (file === undefined) {
+      --this.running;
+    } else {
+      --this.runningByFile[file];
+    }
 
     //if this is the only compilation running, then we'll wait to see if another compilation starts soon so we don't print
     // a million success messages
-    if (this.running === 0) {
+    if (!this.isCompilationRunning()) {
       this.runningTimeout = setTimeout(async () => {
         //clear the running timeout
         if (this.runningTimeout) {
@@ -197,7 +236,7 @@ export class Reporter {
         }
 
         //wait for any running compilations to finish
-        if (this.running > 0 || this.runningTimeout) {
+        if (this.isCompilationRunning() || this.isCompilationWaiting()) {
           return;
         }
 
@@ -209,7 +248,7 @@ export class Reporter {
         }
 
         //wait for any running compilations to finish
-        if (this.running > 0 || this.runningTimeout) {
+        if (this.isCompilationRunning() || this.isCompilationWaiting()) {
           return;
         }
 
@@ -224,10 +263,10 @@ export class Reporter {
         }
 
         //if we're not watching and all the compilations have finished, then resolve or reject
-        if (!this.isWatching && this.running === 0 && !this.runningTimeout) {
+        if (!this.isWatching && !this.isCompilationRunning() && !this.isCompilationWaiting()) {
           this.resolveOrReject();
         }
-      }, 250);
+      }, RUNNING_TIMEOUT);
     }
 
     return this;
@@ -251,7 +290,7 @@ export class Reporter {
    */
   stopping() {
     //if there are no running compilations, then resolve or reject now (watching has already stopped)
-    if (this.running === 0 && !this.runningTimeout) {
+    if (!this.isCompilationRunning() && !this.isCompilationWaiting()) {
       this.resolveOrReject();
     } else {
       this.isWatching = false;
@@ -266,7 +305,7 @@ export class Reporter {
     const promise = this.createPromise();
 
     //if we're not watching and there are no running compilations, then resolve or reject now
-    if (!this.isWatching && this.running === 0 && !this.runningTimeout) {
+    if (!this.isWatching && !this.isCompilationRunning() && !this.isCompilationWaiting()) {
       this.resolveOrReject();
     }
 

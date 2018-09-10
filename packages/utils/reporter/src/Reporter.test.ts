@@ -100,10 +100,10 @@ describe('Reporter', () => {
 
     reporter.started();
     setTimeout(() => reporter.finished(), 10);
-    setTimeout(() => reporter.started(), 150);
-    setTimeout(() => reporter.finished(), 160);
-    setTimeout(() => reporter.started(), 270);
-    setTimeout(() => reporter.finished().stopping(), 280);
+    setTimeout(() => reporter.started(), 10 + 250 + 5*1);
+    setTimeout(() => reporter.finished(), 10 + 500 + 5*2);
+    setTimeout(() => reporter.started(), 10 + 750 + 5*3);
+    setTimeout(() => reporter.finished().stopping(), 10 + 1000 + 5*4);
 
     return reporter.wait().then(() => {
       expect((reporter as any).printStartOfReport).toHaveBeenCalledTimes(3);

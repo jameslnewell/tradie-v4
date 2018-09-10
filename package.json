@@ -9,30 +9,26 @@
     "packages/*/*"
   ],
   "dependencies": {
-    "@commitlint/cli": "^4.3.0",
-    "@commitlint/config-angular": "^4.3.0",
-    "@commitlint/prompt-cli": "^4.3.0",
     "husky": "^0.14.3",
     "lerna": "^2.0.0",
     "lint-staged": "^5.0.0",
-    "prettier": "^1.8.2"
+    "prettier": "^1.8.2",
+    "publish-if-not-published": "^1.0.2"
   },
   "scripts": {
     "clean": "lerna run clean && lerna clean",
     "link": "node scripts/symlink-previous-version.js",
     "upgrade": "lerna exec --concurrency 1 -- npm-check -u",
-    "commit": "commit",
     "build": "lerna run build",
     "test": "lerna run test --scope \"@tradie/node-scripts\" --scope \"@tradie/processor-utils\" --scope \"@tradie/node-example\"",
     "publish:preview": "yarn run build && yarn run test && lerna publish --canary --exact --npm-tag=next --access=public",
-    "publish:conventional": "yarn run build && yarn run test && lerna publish --conventional-commits --access=public",
-    "commitmsg": "commitlint -e",
+    "publish:regular": "yarn run build && yarn run test && lerna publish --access=public",
     "precommit": "lint-staged",
     "postinstall": "yarn run link",
     "prepublishOnly": "echo 'Run `npm run publish` instead.' && exit 1"
   },
   "lint-staged": {
-    "*.{js,jsx,json,css,md}": [
+    "*.{js,jsx,json,css,md,.ts,.tsx}": [
       "prettier --write",
       "git add"
     ]

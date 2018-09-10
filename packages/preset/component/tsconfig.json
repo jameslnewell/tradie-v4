@@ -1,9 +1,11 @@
 {
   "compilerOptions": {
     "jsx": "react",
+    "lib": ["dom", "esnext"],
     "moduleResolution": "node",
     "newLine": "lf",
     "sourceMap": true,
-    "lib": ["dom", "es2018"]
+    "strict": true,
+    "target": "esnext"
   }
 }

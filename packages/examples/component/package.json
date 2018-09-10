@@ -9,9 +9,9 @@
     "dist/esm"
   ],
   "dependencies": {
+    "@tradie/component-scripts": "^2.0.0",
     "@types/react": "^16.4.6",
     "@types/react-dom": "^16.0.6",
-    "@tradie/component-scripts": "^1.0.0",
     "enzyme": "3.2.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "react": "^16.2.0",
@@ -22,5 +22,9 @@
     "dev": "component-scripts dev",
     "build": "component-scripts build",
     "test": "component-scripts test"
+  },
+  "devDependencies": {
+    "@types/enzyme": "^3.1.13",
+    "@types/enzyme-adapter-react-16": "^1.0.3"
   }
 }

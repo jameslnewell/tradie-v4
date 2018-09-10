@@ -1,35 +1,33 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { Arguments } from 'yargs';
-import { PackageInfo } from '@tradie/yarn-utils';
 
-export function test({argv, root, workspaces}: {argv: Arguments, root: PackageInfo, workspaces: PackageInfo[]}): any {
+export function test({argv, root}: {argv: Arguments, root: string}): any {
 
-  // TODO: change setup file locations based on whether there are workspaces
   const setupFiles = [];
-  const codeSetupFile = path.join(root.path, 'src/_.test.js');
+  const codeSetupFile = path.join(root, 'src/setup.ts');
   if (fs.existsSync(codeSetupFile)) {
     setupFiles.push(codeSetupFile);
   }
-  const testSetupFile = path.join(root.path,  'test/_.test.js');
+  const testSetupFile = path.join(root,  'test/setup.ts');
   if (fs.existsSync(testSetupFile)) {
     setupFiles.push(testSetupFile);
   }
 
   // TODO: change globs based on whether there are workspaces
   return {
-    rootDir: root.path,
+    rootDir: root,
     testMatch: [`**/{src,test}/**/*.test.{ts,tsx}`],
     testPathIgnorePatterns: [
       '<rootDir>/node_modules/',
-      '<rootDir>/src/_\\.test\\.ts$', //ignore the test setup file
-      '<rootDir>/test/_\\.test\\.ts$', //ignore the test setup file
+      '<rootDir>/src/setup\\.ts$', //ignore the test setup file
+      '<rootDir>/test/setup\\.ts$', //ignore the test setup file
       '<rootDir>/.*/__fixtures__/', //ignore test files within fixtures
       '<rootDir>/.*/__mocks__/' //ignore test files within mocks
     ],
     moduleFileExtensions: ['tsx', 'ts', 'jsx', 'js', 'json'],
     transform: {
-      '^.+\\.tsx?$': require.resolve('ts-jest')
+      '^.+\\.tsx?$': require.resolve('../utils/babelTransform')
     },
     collectCoverageFrom: [
       `**/src/**/*.{ts,tsx}`,
@@ -38,12 +36,6 @@ export function test({argv, root, workspaces}: {argv: Arguments, root: PackageIn
       `!**/{src,test}/**/__fixtures__/**/*`
     ],
     setupFiles,
-    globals: {
-      'ts-jest': {
-        tsConfigFile: require.resolve('../utils/typescript/tsconfig.tests.json'),
-        // enableTsDiagnostics: true // too slow
-      }
-    }
   };
 
 }
