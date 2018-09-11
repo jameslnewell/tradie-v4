@@ -11,6 +11,7 @@ export function cjs() {
           useBuiltIns: 'usage'
         }
       ],
+      require.resolve('@babel/preset-react'),
       require.resolve('@babel/preset-typescript')
     ],
     plugins: [
@@ -32,6 +33,7 @@ export function esm() {
           useBuiltIns: 'usage'
         }
       ],
+      require.resolve('@babel/preset-react'),
       require.resolve('@babel/preset-typescript')
     ],
     plugins: [

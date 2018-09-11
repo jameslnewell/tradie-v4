@@ -47,9 +47,20 @@ export default async function(src: string, dest: string, options?: babel.Transfo
       return [];
     }
     await fs.mkdirs(path.dirname(dest));
-    await fs.writeFile(dest, result.code);
     if (result.map) {
-      await fs.writeFile(`${dest}.map`, JSON.stringify(result.map));
+      await fs.writeFile(
+        dest,
+        `${result.code}\n//# sourceMappingURL=${`${path.basename(dest)}.map`}`
+      );
+      await fs.writeFile(
+        `${dest}.map`,
+        JSON.stringify(result.map)
+      );
+    } else {
+      await fs.writeFile(
+        dest,
+        result.code
+      );
     }
     return [];
   } catch (error) {

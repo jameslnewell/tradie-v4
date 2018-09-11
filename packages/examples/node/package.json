@@ -11,8 +11,8 @@
     "@types/node": "^9.4.6"
   },
   "devDependencies": {
-    "@tradie/node-scripts": "^1.2.1",
-    "@types/jest": "^22.2.0"
+    "@tradie/node-scripts": "^2.0.0",
+    "@types/jest": "^23.3.2"
   },
   "scripts": {
     "clean": "node-scripts clean",

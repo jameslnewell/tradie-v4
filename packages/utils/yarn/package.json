@@ -11,7 +11,7 @@
     "find-and-read-package-json": "^2.0.2"
   },
   "devDependencies": {
-    "@types/jest": "^23.1.0"
+    "@types/jest": "^23.3.2"
   },
   "scripts": {
     "clean": "node-scripts clean",

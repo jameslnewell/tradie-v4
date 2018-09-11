@@ -3,28 +3,27 @@
   "version": "1.0.0",
   "private": true,
   "main": "dist/cjs/index.js",
-  "jsnext:main": "dist/esm/index.js",
+  "module": "dist/esm/index.js",
   "files": [
     "dist/cjs",
     "dist/esm"
   ],
   "dependencies": {
-    "@tradie/component-scripts": "^2.0.0",
     "@types/react": "^16.4.6",
     "@types/react-dom": "^16.0.6",
-    "enzyme": "3.2.0",
-    "enzyme-adapter-react-16": "^1.1.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },
+  "devDependencies": {
+    "@tradie/component-scripts": "^2.0.0",
+    "@types/enzyme": "^3.1.13",
+    "@types/enzyme-adapter-react-16": "^1.0.3",
+    "enzyme": "^3.6.0",
+    "enzyme-adapter-react-16": "^1.5.0"
+  },
   "scripts": {
     "clean": "component-scripts clean",
-    "dev": "component-scripts dev",
     "build": "component-scripts build",
     "test": "component-scripts test"
-  },
-  "devDependencies": {
-    "@types/enzyme": "^3.1.13",
-    "@types/enzyme-adapter-react-16": "^1.0.3"
   }
 }

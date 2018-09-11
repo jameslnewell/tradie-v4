@@ -20,7 +20,7 @@
     "fs-extra": "^6.0.1"
   },
   "devDependencies": {
-    "@types/jest": "^23.1.0"
+    "@types/jest": "^23.3.2"
   },
   "scripts": {
     "lint": "node-scripts lint",

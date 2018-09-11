@@ -7,10 +7,10 @@
     "lib"
   ],
   "dependencies": {
-    "@types/node": "^9.4.6"
+    "@types/node": "^10.9.4"
   },
   "devDependencies": {
-    "@types/jest": "^23.1.0"
+    "@types/jest": "^23.3.2"
   },
   "scripts": {
     "clean": "node-scripts clean",
