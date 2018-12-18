@@ -15,7 +15,7 @@
     "react-dom": "^16.2.0"
   },
   "devDependencies": {
-    "@tradie/component-scripts": "^2.0.0",
+    "@tradie/component-scripts": "^3.0.0",
     "@types/enzyme": "^3.1.13",
     "@types/enzyme-adapter-react-16": "^1.0.3",
     "enzyme": "^3.6.0",

@@ -200,7 +200,7 @@ export class Reporter {
       this.printStartOfReport();
     }
 
-    if (file == undefined) {
+    if (file === undefined) {
       ++this.running;
     } else {
       ++this.runningByFile[file];
@@ -208,8 +208,11 @@ export class Reporter {
 
     //restart the running timeout
     if (this.isCompilationWaiting()) {
-      clearTimeout(this.runningTimeout);
-      this.runningTimeout = undefined;
+      //clear the running timeout
+      if (this.runningTimeout) {
+        clearTimeout(this.runningTimeout);
+        this.runningTimeout = undefined;
+      }
     }
 
     return this;

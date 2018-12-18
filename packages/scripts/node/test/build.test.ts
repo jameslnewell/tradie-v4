@@ -25,7 +25,6 @@ describe('tradie build', () => {
     const {code} = await exec('build', {cwd: fixtureDir});
     expect(code).toEqual(0);
     expect(await read(path.join(fixtureDir, 'lib/index.d.ts'))).toMatchSnapshot();
-    expect(await read(path.join(fixtureDir, 'lib/index.js.flow'))).toMatchSnapshot();
   });
 
   it('should copy other files', async () => {

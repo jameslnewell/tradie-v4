@@ -1,14 +1,22 @@
 import * as fs from 'fs';
 import { Linter, Configuration } from 'tslint';
-import { RawConfigFile } from 'tslint/lib/configuration';
 import { Message } from '@tradie/reporter-utils';
 
-export default function (options: RawConfigFile) {
-  const config = Configuration.parseConfigFile(
-    options,
-    process.cwd(),
-    Configuration.readConfigurationFile
-  );
+export function readConfigFile(configFilePath: string): Configuration.RawConfigFile {
+  return Configuration.readConfigurationFile(configFilePath);
+}
+
+export default function (configOrConfigFilePath: string | Configuration.RawConfigFile) {
+  let config: Configuration.IConfigurationFile;
+  if (typeof configOrConfigFilePath === 'string') {
+    config = Configuration.loadConfigurationFromPath(configOrConfigFilePath);
+  } else {
+    config = Configuration.parseConfigFile(
+      configOrConfigFilePath,
+      process.cwd(),
+      Configuration.readConfigurationFile
+    );
+  }
   const linter = new Linter({
     fix: false,
     formatter: 'json'

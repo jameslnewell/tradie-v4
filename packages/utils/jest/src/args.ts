@@ -56,7 +56,7 @@ export const args = {
     type: 'string',
   },
   ci: {
-    default: isCI,
+    default: Boolean(process.env.CI),
     description:
       'Whether to run Jest in continuous integration (CI) mode. ' +
       'This option is on by default in most popular CI environments. It will ' +

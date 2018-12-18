@@ -12,17 +12,16 @@ exports[`tradie build should export types when there are no errors 1`] = `
 "
 `;
 
-exports[`tradie build should export types when there are no errors 2`] = `
-"declare export default function INVALID NAME REF(...args: number[]): number
-"
-`;
-
 exports[`tradie build should transpile source when there are no errors 1`] = `
 "\\"use strict\\";
-Object.defineProperty(exports, \\"__esModule\\", { value: true });
-function default_1(...args) {
-    return args.reduce((total, arg) => total + arg, 0);
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.default = _default;
+
+function _default(...args) {
+  return args.reduce((total, arg) => total + arg, 0);
 }
-exports.default = default_1;
 //# sourceMappingURL=index.js.map"
 `;

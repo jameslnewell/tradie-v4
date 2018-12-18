@@ -18,6 +18,15 @@ const defaultCompilerOptions = {
   strict: true
 };
 
+export function readConfigFile(configFilePath: string) {
+  const result = ts.readConfigFile(configFilePath, ts.sys.readFile);
+  if (result.error) {
+    throw result.error;
+  } else {
+    return result.config;
+  }
+}
+
 // tslint:disable-next-line no-empty-interface
 export interface TranspilerOptions {
 };

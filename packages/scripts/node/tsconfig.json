@@ -1,15 +1,12 @@
 {
   "compilerOptions": {
+    "allowUnusedLabels": false,
     "lib": ["esnext"],
-    "module": "commonjs",
-    "moduleResolution": "node",
     "newLine": "lf",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "strict": true,
-    "sourceMap": true,
-    "target": "esnext"
+    "strict": true
   }
 }

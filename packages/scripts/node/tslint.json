@@ -11,13 +11,11 @@
     "array-type": false,
     "variable-name": false,
     "unified-signatures": false,
-    "mocha-avoid-only": true,
     "no-shadowed-variable": [
       true,
       {
         "function": false
       }
     ]
-  },
-  "rulesDirectory": ["tslint-microsoft-contrib"]
+  }
 }

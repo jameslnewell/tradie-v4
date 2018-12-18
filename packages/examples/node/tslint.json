@@ -1,0 +1,6 @@
+{
+  "extends": "@tradie/node-scripts/tslint.json",
+  "rules": {
+    "no-console": {"severity": "warning"}
+  }
+}
